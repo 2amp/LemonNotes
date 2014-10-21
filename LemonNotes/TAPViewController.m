@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 2 AM Productions. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "TAPViewController.h"
 
-@interface ViewController ()
+@interface TAPViewController ()
 
 @end
 
-@implementation ViewController
+@implementation TAPViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

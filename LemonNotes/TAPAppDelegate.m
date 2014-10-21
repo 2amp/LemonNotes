@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 2 AM Productions. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "TAPAppDelegate.h"
 
-@interface AppDelegate ()
+@interface TAPAppDelegate ()
 
 @end
 
-@implementation AppDelegate
+@implementation TAPAppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
