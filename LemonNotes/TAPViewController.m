@@ -24,4 +24,24 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)signIn:(id)sender
+{
+    [self showAlertWithTitle:@"Hello!" message:[NSString stringWithFormat:@"Welcome, %@.", self.signInField.text]];
+}
+
+- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message
+{
+    [[[UIAlertView alloc] initWithTitle:title
+                                message:message
+                               delegate:self
+                      cancelButtonTitle:@"OK"
+                      otherButtonTitles:nil]
+     show];
+}
+
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    self.signInField.text = @"";
+}
+
 @end

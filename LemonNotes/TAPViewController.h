@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TAPViewController : UIViewController
+@interface TAPViewController : UIViewController <UIAlertViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UITextField *signInField;
+- (IBAction)signIn:(id)sender;
+
+- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message;
 
 @end
 
