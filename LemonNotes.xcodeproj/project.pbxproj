@@ -1,0 +1,445 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8984EF2E19F61FC100C442FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF2D19F61FC100C442FC /* main.m */; };
+		8984EF3119F61FC100C442FC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF3019F61FC100C442FC /* AppDelegate.m */; };
+		8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF3219F61FC100C442FC /* LemonNotes.xcdatamodeld */; };
+		8984EF3719F61FC100C442FC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF3619F61FC100C442FC /* ViewController.m */; };
+		8984EF3A19F61FC100C442FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8984EF3819F61FC100C442FC /* Main.storyboard */; };
+		8984EF3C19F61FC100C442FC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8984EF3B19F61FC100C442FC /* Images.xcassets */; };
+		8984EF3F19F61FC100C442FC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8984EF3D19F61FC100C442FC /* LaunchScreen.xib */; };
+		8984EF4B19F61FC100C442FC /* LemonNotesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF4A19F61FC100C442FC /* LemonNotesTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8984EF4519F61FC100C442FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8984EF2019F61FC100C442FC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8984EF2719F61FC100C442FC;
+			remoteInfo = LemonNotes;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		8984EF2819F61FC100C442FC /* LemonNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LemonNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8984EF2C19F61FC100C442FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8984EF2D19F61FC100C442FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		8984EF2F19F61FC100C442FC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		8984EF3019F61FC100C442FC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		8984EF3319F61FC100C442FC /* LemonNotes.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LemonNotes.xcdatamodel; sourceTree = "<group>"; };
+		8984EF3519F61FC100C442FC /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		8984EF3619F61FC100C442FC /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		8984EF3919F61FC100C442FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8984EF3B19F61FC100C442FC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		8984EF3E19F61FC100C442FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		8984EF4419F61FC100C442FC /* LemonNotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LemonNotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8984EF4919F61FC100C442FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8984EF4A19F61FC100C442FC /* LemonNotesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LemonNotesTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8984EF2519F61FC100C442FC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8984EF4119F61FC100C442FC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8984EF1F19F61FC100C442FC = {
+			isa = PBXGroup;
+			children = (
+				8984EF2A19F61FC100C442FC /* LemonNotes */,
+				8984EF4719F61FC100C442FC /* LemonNotesTests */,
+				8984EF2919F61FC100C442FC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8984EF2919F61FC100C442FC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8984EF2819F61FC100C442FC /* LemonNotes.app */,
+				8984EF4419F61FC100C442FC /* LemonNotesTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8984EF2A19F61FC100C442FC /* LemonNotes */ = {
+			isa = PBXGroup;
+			children = (
+				8984EF2F19F61FC100C442FC /* AppDelegate.h */,
+				8984EF3019F61FC100C442FC /* AppDelegate.m */,
+				8984EF3519F61FC100C442FC /* ViewController.h */,
+				8984EF3619F61FC100C442FC /* ViewController.m */,
+				8984EF3819F61FC100C442FC /* Main.storyboard */,
+				8984EF3B19F61FC100C442FC /* Images.xcassets */,
+				8984EF3D19F61FC100C442FC /* LaunchScreen.xib */,
+				8984EF3219F61FC100C442FC /* LemonNotes.xcdatamodeld */,
+				8984EF2B19F61FC100C442FC /* Supporting Files */,
+			);
+			path = LemonNotes;
+			sourceTree = "<group>";
+		};
+		8984EF2B19F61FC100C442FC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8984EF2C19F61FC100C442FC /* Info.plist */,
+				8984EF2D19F61FC100C442FC /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8984EF4719F61FC100C442FC /* LemonNotesTests */ = {
+			isa = PBXGroup;
+			children = (
+				8984EF4A19F61FC100C442FC /* LemonNotesTests.m */,
+				8984EF4819F61FC100C442FC /* Supporting Files */,
+			);
+			path = LemonNotesTests;
+			sourceTree = "<group>";
+		};
+		8984EF4819F61FC100C442FC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8984EF4919F61FC100C442FC /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8984EF2719F61FC100C442FC /* LemonNotes */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8984EF4E19F61FC100C442FC /* Build configuration list for PBXNativeTarget "LemonNotes" */;
+			buildPhases = (
+				8984EF2419F61FC100C442FC /* Sources */,
+				8984EF2519F61FC100C442FC /* Frameworks */,
+				8984EF2619F61FC100C442FC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LemonNotes;
+			productName = LemonNotes;
+			productReference = 8984EF2819F61FC100C442FC /* LemonNotes.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8984EF4319F61FC100C442FC /* LemonNotesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8984EF5119F61FC100C442FC /* Build configuration list for PBXNativeTarget "LemonNotesTests" */;
+			buildPhases = (
+				8984EF4019F61FC100C442FC /* Sources */,
+				8984EF4119F61FC100C442FC /* Frameworks */,
+				8984EF4219F61FC100C442FC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8984EF4619F61FC100C442FC /* PBXTargetDependency */,
+			);
+			name = LemonNotesTests;
+			productName = LemonNotesTests;
+			productReference = 8984EF4419F61FC100C442FC /* LemonNotesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8984EF2019F61FC100C442FC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = TAP;
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "2 AM Productions";
+				TargetAttributes = {
+					8984EF2719F61FC100C442FC = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					8984EF4319F61FC100C442FC = {
+						CreatedOnToolsVersion = 6.1;
+						TestTargetID = 8984EF2719F61FC100C442FC;
+					};
+				};
+			};
+			buildConfigurationList = 8984EF2319F61FC100C442FC /* Build configuration list for PBXProject "LemonNotes" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8984EF1F19F61FC100C442FC;
+			productRefGroup = 8984EF2919F61FC100C442FC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8984EF2719F61FC100C442FC /* LemonNotes */,
+				8984EF4319F61FC100C442FC /* LemonNotesTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8984EF2619F61FC100C442FC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8984EF3A19F61FC100C442FC /* Main.storyboard in Resources */,
+				8984EF3F19F61FC100C442FC /* LaunchScreen.xib in Resources */,
+				8984EF3C19F61FC100C442FC /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8984EF4219F61FC100C442FC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8984EF2419F61FC100C442FC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8984EF3119F61FC100C442FC /* AppDelegate.m in Sources */,
+				8984EF2E19F61FC100C442FC /* main.m in Sources */,
+				8984EF3719F61FC100C442FC /* ViewController.m in Sources */,
+				8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8984EF4019F61FC100C442FC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8984EF4B19F61FC100C442FC /* LemonNotesTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8984EF4619F61FC100C442FC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8984EF2719F61FC100C442FC /* LemonNotes */;
+			targetProxy = 8984EF4519F61FC100C442FC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		8984EF3819F61FC100C442FC /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8984EF3919F61FC100C442FC /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		8984EF3D19F61FC100C442FC /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8984EF3E19F61FC100C442FC /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8984EF4C19F61FC100C442FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		8984EF4D19F61FC100C442FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8984EF4F19F61FC100C442FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = LemonNotes/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		8984EF5019F61FC100C442FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = LemonNotes/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		8984EF5219F61FC100C442FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = LemonNotesTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LemonNotes.app/LemonNotes";
+			};
+			name = Debug;
+		};
+		8984EF5319F61FC100C442FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = LemonNotesTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LemonNotes.app/LemonNotes";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8984EF2319F61FC100C442FC /* Build configuration list for PBXProject "LemonNotes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8984EF4C19F61FC100C442FC /* Debug */,
+				8984EF4D19F61FC100C442FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8984EF4E19F61FC100C442FC /* Build configuration list for PBXNativeTarget "LemonNotes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8984EF4F19F61FC100C442FC /* Debug */,
+				8984EF5019F61FC100C442FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		8984EF5119F61FC100C442FC /* Build configuration list for PBXNativeTarget "LemonNotesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8984EF5219F61FC100C442FC /* Debug */,
+				8984EF5319F61FC100C442FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8984EF3219F61FC100C442FC /* LemonNotes.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8984EF3319F61FC100C442FC /* LemonNotes.xcdatamodel */,
+			);
+			currentVersion = 8984EF3319F61FC100C442FC /* LemonNotes.xcdatamodel */;
+			path = LemonNotes.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 8984EF2019F61FC100C442FC /* Project object */;
+}
