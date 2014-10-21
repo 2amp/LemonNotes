@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		8984EF2E19F61FC100C442FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF2D19F61FC100C442FC /* main.m */; };
-		8984EF3119F61FC100C442FC /* TAPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF3019F61FC100C442FC /* TAPAppDelegate.m */; };
 		8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF3219F61FC100C442FC /* LemonNotes.xcdatamodeld */; };
 		8984EF3A19F61FC100C442FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8984EF3819F61FC100C442FC /* Main.storyboard */; };
 		8984EF3C19F61FC100C442FC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8984EF3B19F61FC100C442FC /* Images.xcassets */; };
 		8984EF3F19F61FC100C442FC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8984EF3D19F61FC100C442FC /* LaunchScreen.xib */; };
 		8984EF4B19F61FC100C442FC /* LemonNotesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF4A19F61FC100C442FC /* LemonNotesTests.m */; };
-		8984EF5519F6270600C442FC /* TAPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF5419F6270600C442FC /* TAPViewController.m */; };
+		8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF5819F6341000C442FC /* TAPAppDelegate.m */; };
+		8984EF5C19F6341000C442FC /* TAPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF5A19F6341000C442FC /* TAPViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,17 +31,17 @@
 		8984EF2819F61FC100C442FC /* LemonNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LemonNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8984EF2C19F61FC100C442FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8984EF2D19F61FC100C442FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		8984EF2F19F61FC100C442FC /* TAPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TAPAppDelegate.h; sourceTree = "<group>"; };
-		8984EF3019F61FC100C442FC /* TAPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TAPAppDelegate.m; sourceTree = "<group>"; };
 		8984EF3319F61FC100C442FC /* LemonNotes.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LemonNotes.xcdatamodel; sourceTree = "<group>"; };
-		8984EF3519F61FC100C442FC /* TAPViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TAPViewController.h; sourceTree = "<group>"; };
 		8984EF3919F61FC100C442FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8984EF3B19F61FC100C442FC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8984EF3E19F61FC100C442FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		8984EF4419F61FC100C442FC /* LemonNotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LemonNotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8984EF4919F61FC100C442FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8984EF4A19F61FC100C442FC /* LemonNotesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LemonNotesTests.m; sourceTree = "<group>"; };
-		8984EF5419F6270600C442FC /* TAPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPViewController.m; sourceTree = "<group>"; };
+		8984EF5719F6341000C442FC /* TAPAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPAppDelegate.h; sourceTree = "<group>"; };
+		8984EF5819F6341000C442FC /* TAPAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPAppDelegate.m; sourceTree = "<group>"; };
+		8984EF5919F6341000C442FC /* TAPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPViewController.h; sourceTree = "<group>"; };
+		8984EF5A19F6341000C442FC /* TAPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,10 +83,7 @@
 		8984EF2A19F61FC100C442FC /* LemonNotes */ = {
 			isa = PBXGroup;
 			children = (
-				8984EF2F19F61FC100C442FC /* TAPAppDelegate.h */,
-				8984EF3019F61FC100C442FC /* TAPAppDelegate.m */,
-				8984EF3519F61FC100C442FC /* TAPViewController.h */,
-				8984EF5419F6270600C442FC /* TAPViewController.m */,
+				8984EF5619F633EA00C442FC /* Classes */,
 				8984EF3819F61FC100C442FC /* Main.storyboard */,
 				8984EF3B19F61FC100C442FC /* Images.xcassets */,
 				8984EF3D19F61FC100C442FC /* LaunchScreen.xib */,
@@ -120,6 +117,17 @@
 				8984EF4919F61FC100C442FC /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8984EF5619F633EA00C442FC /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				8984EF5719F6341000C442FC /* TAPAppDelegate.h */,
+				8984EF5819F6341000C442FC /* TAPAppDelegate.m */,
+				8984EF5919F6341000C442FC /* TAPViewController.h */,
+				8984EF5A19F6341000C442FC /* TAPViewController.m */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -223,9 +231,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8984EF3119F61FC100C442FC /* TAPAppDelegate.m in Sources */,
 				8984EF2E19F61FC100C442FC /* main.m in Sources */,
-				8984EF5519F6270600C442FC /* TAPViewController.m in Sources */,
+				8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */,
+				8984EF5C19F6341000C442FC /* TAPViewController.m in Sources */,
 				8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
