@@ -15,11 +15,13 @@
  */
 @interface TAPViewController : UIViewController <UIAlertViewDelegate>
 
-	@property (weak, nonatomic) IBOutlet UITextField *signInField;
+@property (nonatomic, strong) NSURLSession *urlSession;
 
-	- (IBAction)signIn:(id)sender;
+@property (weak, nonatomic) IBOutlet UITextField *signInField;
 
-	- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message;
+- (IBAction)signIn:(id)sender;
+
+- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message;
 
 @end
 

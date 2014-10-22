@@ -42,7 +42,8 @@
 		8984EF5819F6341000C442FC /* TAPAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPAppDelegate.m; sourceTree = "<group>"; };
 		8984EF5919F6341000C442FC /* TAPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPViewController.h; sourceTree = "<group>"; };
 		8984EF5A19F6341000C442FC /* TAPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPViewController.m; sourceTree = "<group>"; };
-		95BAB2E819F76C6F008C23C0 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		8984EF5E19F77EDF00C442FC /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		8984EF5F19F77EED00C442FC /* apikeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = apikeys.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +85,7 @@
 		8984EF2A19F61FC100C442FC /* LemonNotes */ = {
 			isa = PBXGroup;
 			children = (
+				8984EF5D19F77EC300C442FC /* Utils */,
 				8984EF5619F633EA00C442FC /* Classes */,
 				8984EF3819F61FC100C442FC /* Main.storyboard */,
 				8984EF3B19F61FC100C442FC /* Images.xcassets */,
@@ -123,13 +125,21 @@
 		8984EF5619F633EA00C442FC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				95BAB2E819F76C6F008C23C0 /* Constants.h */,
 				8984EF5719F6341000C442FC /* TAPAppDelegate.h */,
 				8984EF5819F6341000C442FC /* TAPAppDelegate.m */,
 				8984EF5919F6341000C442FC /* TAPViewController.h */,
 				8984EF5A19F6341000C442FC /* TAPViewController.m */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		8984EF5D19F77EC300C442FC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8984EF5E19F77EDF00C442FC /* Constants.h */,
+				8984EF5F19F77EED00C442FC /* apikeys.h */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

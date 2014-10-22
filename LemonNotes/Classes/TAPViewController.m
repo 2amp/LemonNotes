@@ -1,11 +1,11 @@
 
 #import "TAPViewController.h"
 #import "Constants.h"
+#import "apikeys.h"
 
 @interface TAPViewController ()
 
-	@property (nonatomic) NSMutableData* urlData;
-	@property (nonatomic) NSString* summonerName;
+@property (nonatomic) NSString* summonerName;
 
 @end
 
@@ -16,11 +16,13 @@
  * Method: viewDidLoad
  * Usage: called when view is loaded
  * --------------------------
- *
+ * Initializes an NSURLSession instance for data requests.
  */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    self.urlSession = [NSURLSession sessionWithConfiguration:config];
 }
 
 /**
@@ -43,19 +45,50 @@
  * Usage: called when user taps "Sign In"
  * --------------------------
  * Sets whatever is entered in signInField as summonerName.
- * If nothing is enetered, alerts Login Error wih "Invalid Summoner Name".
- * Otherwise, calls makeApiCall.
+ * If nothing is entered, shows a login error prompting the user to enter a 
+ * summoner name. Otherwise, makes the summoner name info API call.
  */
 - (IBAction)signIn:(id)sender
 {
 	self.summonerName = self.signInField.text;
 	
 	if ([self.summonerName isEqual: @""])
-		[self showAlertWithTitle:@"Login Error" message:@"Invalide Summoner Name"];
+    {
+		[self showAlertWithTitle:@"Error" message:@"Please enter a summoner name."];
+    }
 	else
 	{
-		NSString* call = @"https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/bohuim?api_key=a02d4573-4795-4568-8294-e1ac09eba851";
-		[self makeApiCall:call];
+		NSString *requestString = [NSString stringWithFormat:@"https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/%@?api_key=%@",
+                                   self.summonerName, API_KEY];
+        NSURL *url = [NSURL URLWithString:[requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        void (^completionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
+        {
+            if (!error)
+            {
+                NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+                NSError* jsonParsingError = nil;
+                NSDictionary* summonerInfo = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParsingError];
+                if (jsonParsingError)
+                {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self showAlertWithTitle:@"JSON Error" message:[jsonParsingError localizedDescription]];
+                    });
+                }
+                else
+                {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self showAlertWithTitle:self.summonerName
+                                         message:[NSString stringWithFormat:@"Level: %@", summonerInfo[self.summonerName][@"summonerLevel"]]];
+                    });
+                }
+            }
+            else
+            {
+                NSLog(@"There was an error with the API call!");
+            }
+        };
+        NSURLSessionDataTask *dataTask = [self.urlSession dataTaskWithURL:url completionHandler:completionHandler];
+        [dataTask resume];
 	}
 }
 
@@ -85,7 +118,7 @@
 }
 
 /**
- * Method: alerView:willDissmissWithButtonIndex
+ * Method: alertView:willDissmissWithButtonIndex
  * Usage: called when user presses a button on UIAlertView
  * --------------------------
  * Fired when "OK" button is pressed (since there are no other buttons).
@@ -98,76 +131,5 @@
 {
     self.signInField.text = @"";
 }
-
-
-
-/* ========== API Call Methods ============================== */
-
-/**
- * Method: makeAPICall
- * Usage: request data from Riot
- * --------------------------
- * Creates a NSURLRequest with the given callURL.
- * Makes a connection with that request and callback delegate as self.
- * 
- * @param callURL - string containing the API call as defined by Riot
- */
-- (void)makeApiCall:(NSString *)callURL
-{
-	NSURLRequest* request = [[NSURLRequest alloc] initWithURL: [NSURL URLWithString:callURL]];
-	NSURLConnection* connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-}
-
-/**
- * Mehtod: connection:didReceiveResponse
- * Usage: NSURLConnection callback when response is given
- * --------------------------
- * Initializes urlData
- * 
- * @param connection
- * @param response - response object of the connection
- */
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-	self.urlData = [[NSMutableData alloc] init];
-}
-
-/**
- * Mehtod: connection:didReceiveData
- * Usage: NSURLConnection callback when data is given
- * --------------------------
- * Everytime data is provided, it is appended to urlData.
- *
- * @param connection
- * @param data - NSData of data from connection
- */
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-	[self.urlData appendData:data];
-}
-
-/**
- * Method: connectionDidFinishLoading:connection
- * Usage: NSURLConnection callback when connection is done
- * --------------------------
- * NSError object jsonParsingError is initialized as nil.
- * NSJSONSerialization is called to convert urlData(json) into NSDictionary,
- * with 0 options, and any errors reported to jsonParsingError.
- * If there's an error, show it in an alert window.
- * Otherwise, show the summonerName as title and summonerLevel as message.
- * 
- * @param connection
- */
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-	NSError* jsonParsingError = nil;
-	NSDictionary* data = [NSJSONSerialization JSONObjectWithData:self.urlData options:0 error:&jsonParsingError];
-	
-	if (jsonParsingError)
-		[self showAlertWithTitle:@"JSON Error" message:[jsonParsingError localizedDescription]];
-	else
-		[self showAlertWithTitle:self.summonerName
-						 message:[NSString stringWithFormat:@"Level: %@", data[self.summonerName][@"summonerLevel"]] ];
-}
-
 
 @end
