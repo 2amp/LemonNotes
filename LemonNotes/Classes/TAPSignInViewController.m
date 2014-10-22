@@ -1,16 +1,16 @@
 
-#import "TAPViewController.h"
+#import "TAPSignInViewController.h"
 #import "Constants.h"
 #import "apikeys.h"
 
-@interface TAPViewController ()
+@interface TAPSignInViewController ()
 
 @property (nonatomic) NSString* summonerName;
 
 @end
 
 
-@implementation TAPViewController
+@implementation TAPSignInViewController
 
 /**
  * Method: viewDidLoad
@@ -45,13 +45,13 @@
  * Usage: called when user taps "Sign In"
  * --------------------------
  * Sets whatever is entered in signInField as summonerName.
- * If nothing is entered, shows a login error prompting the user to enter a 
+ * If nothing is entered, shows a login error prompting the user to enter a
  * summoner name. Otherwise, makes the summoner name info API call.
  */
 - (IBAction)signIn:(id)sender
 {
 	self.summonerName = self.signInField.text;
-	
+
 	if ([self.summonerName isEqual: @""])
     {
 		[self showAlertWithTitle:@"Error" message:@"Please enter a summoner name."];
@@ -65,11 +65,15 @@
         {
             if (!error)
             {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.activityIndicator stopAnimating];
+                });
                 NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
                 NSError* jsonParsingError = nil;
                 NSDictionary* summonerInfo = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParsingError];
                 if (jsonParsingError)
                 {
+                    // Make sure to only do GUI updates on the main thread
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self showAlertWithTitle:@"JSON Error" message:[jsonParsingError localizedDescription]];
                     });
@@ -89,6 +93,7 @@
         };
         NSURLSessionDataTask *dataTask = [self.urlSession dataTaskWithURL:url completionHandler:completionHandler];
         [dataTask resume];
+        [self.activityIndicator startAnimating];
 	}
 }
 

@@ -14,7 +14,7 @@
 		8984EF3F19F61FC100C442FC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8984EF3D19F61FC100C442FC /* LaunchScreen.xib */; };
 		8984EF4B19F61FC100C442FC /* LemonNotesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF4A19F61FC100C442FC /* LemonNotesTests.m */; };
 		8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF5819F6341000C442FC /* TAPAppDelegate.m */; };
-		8984EF5C19F6341000C442FC /* TAPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF5A19F6341000C442FC /* TAPViewController.m */; };
+		8984EF5C19F6341000C442FC /* TAPSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF5A19F6341000C442FC /* TAPSignInViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,8 +40,8 @@
 		8984EF4A19F61FC100C442FC /* LemonNotesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LemonNotesTests.m; sourceTree = "<group>"; };
 		8984EF5719F6341000C442FC /* TAPAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPAppDelegate.h; sourceTree = "<group>"; };
 		8984EF5819F6341000C442FC /* TAPAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPAppDelegate.m; sourceTree = "<group>"; };
-		8984EF5919F6341000C442FC /* TAPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPViewController.h; sourceTree = "<group>"; };
-		8984EF5A19F6341000C442FC /* TAPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPViewController.m; sourceTree = "<group>"; };
+		8984EF5919F6341000C442FC /* TAPSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSignInViewController.h; sourceTree = "<group>"; };
+		8984EF5A19F6341000C442FC /* TAPSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPSignInViewController.m; sourceTree = "<group>"; };
 		8984EF5E19F77EDF00C442FC /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		8984EF5F19F77EED00C442FC /* apikeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = apikeys.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -127,8 +127,8 @@
 			children = (
 				8984EF5719F6341000C442FC /* TAPAppDelegate.h */,
 				8984EF5819F6341000C442FC /* TAPAppDelegate.m */,
-				8984EF5919F6341000C442FC /* TAPViewController.h */,
-				8984EF5A19F6341000C442FC /* TAPViewController.m */,
+				8984EF5919F6341000C442FC /* TAPSignInViewController.h */,
+				8984EF5A19F6341000C442FC /* TAPSignInViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -245,7 +245,7 @@
 			files = (
 				8984EF2E19F61FC100C442FC /* main.m in Sources */,
 				8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */,
-				8984EF5C19F6341000C442FC /* TAPViewController.m in Sources */,
+				8984EF5C19F6341000C442FC /* TAPSignInViewController.m in Sources */,
 				8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
