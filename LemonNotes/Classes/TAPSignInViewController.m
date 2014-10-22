@@ -45,13 +45,13 @@
  * Usage: called when user taps "Sign In"
  * --------------------------
  * Sets whatever is entered in signInField as summonerName.
- * If nothing is entered, shows a login error prompting the user to enter a 
+ * If nothing is entered, shows a login error prompting the user to enter a
  * summoner name. Otherwise, makes the summoner name info API call.
  */
 - (IBAction)signIn:(id)sender
 {
 	self.summonerName = self.signInField.text;
-	
+
 	if ([self.summonerName isEqual: @""])
     {
 		[self showAlertWithTitle:@"Error" message:@"Please enter a summoner name."];
