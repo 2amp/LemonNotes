@@ -1,8 +1,0 @@
-Riot API Requests
-------------------
-
-https://na.api.pvp.net/<api call>?api_key=<key>
-
-Dennis' key = a02d4573-4795-4568-8294-e1ac09eba851
-
-	ex) https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/bohuim?api_key=a02d4573-4795-4568-8294-e1ac09eba851
