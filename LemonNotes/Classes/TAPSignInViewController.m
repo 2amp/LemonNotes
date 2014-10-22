@@ -1,16 +1,16 @@
 
-#import "TAPViewController.h"
+#import "TAPSignInViewController.h"
 #import "Constants.h"
 #import "apikeys.h"
 
-@interface TAPViewController ()
+@interface TAPSignInViewController ()
 
 @property (nonatomic) NSString* summonerName;
 
 @end
 
 
-@implementation TAPViewController
+@implementation TAPSignInViewController
 
 /**
  * Method: viewDidLoad
@@ -65,11 +65,15 @@
         {
             if (!error)
             {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.activityIndicator stopAnimating];
+                });
                 NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
                 NSError* jsonParsingError = nil;
                 NSDictionary* summonerInfo = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParsingError];
                 if (jsonParsingError)
                 {
+                    // Make sure to only do GUI updates on the main thread
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self showAlertWithTitle:@"JSON Error" message:[jsonParsingError localizedDescription]];
                     });
@@ -89,6 +93,7 @@
         };
         NSURLSessionDataTask *dataTask = [self.urlSession dataTaskWithURL:url completionHandler:completionHandler];
         [dataTask resume];
+        [self.activityIndicator startAnimating];
 	}
 }
 

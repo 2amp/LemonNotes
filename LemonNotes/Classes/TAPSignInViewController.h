@@ -13,11 +13,12 @@
  * Controls the front view of the app.
  * Provides text field to enter summonerName and sign in.
  */
-@interface TAPViewController : UIViewController <UIAlertViewDelegate>
+@interface TAPSignInViewController : UIViewController <UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSURLSession *urlSession;
 
 @property (weak, nonatomic) IBOutlet UITextField *signInField;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 - (IBAction)signIn:(id)sender;
 

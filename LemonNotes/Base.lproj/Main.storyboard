@@ -5,10 +5,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Sign In View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="TAPViewController" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="TAPSignInViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -31,17 +31,23 @@
                                     <action selector="signIn:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="HEY-iq-uaa"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="icp-S1-coZ">
+                                <rect key="frame" x="564" y="128" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="icp-S1-coZ" firstAttribute="leading" secondItem="fYm-Uw-5oD" secondAttribute="trailing" constant="-20" id="3HN-cV-Evr"/>
                             <constraint firstItem="fYm-Uw-5oD" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="103" id="7Kg-bt-cj2"/>
                             <constraint firstAttribute="centerX" secondItem="TBx-3y-AP0" secondAttribute="centerX" constant="-0.5" id="NxG-wA-bOj"/>
                             <constraint firstItem="TBx-3y-AP0" firstAttribute="top" secondItem="fYm-Uw-5oD" secondAttribute="bottom" constant="8" id="eoa-Ka-W4R"/>
+                            <constraint firstItem="icp-S1-coZ" firstAttribute="top" secondItem="fYm-Uw-5oD" secondAttribute="bottom" constant="-25" id="g7C-ct-LIW"/>
                             <constraint firstItem="fYm-Uw-5oD" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="kzu-R0-0W4"/>
                             <constraint firstItem="fYm-Uw-5oD" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="pp4-hL-jts"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="icp-S1-coZ" id="Y5R-Lo-4xF"/>
                         <outlet property="signInField" destination="fYm-Uw-5oD" id="fPX-Sp-3M8"/>
                     </connections>
                 </viewController>
