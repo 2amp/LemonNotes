@@ -42,6 +42,7 @@
 		8984EF5819F6341000C442FC /* TAPAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPAppDelegate.m; sourceTree = "<group>"; };
 		8984EF5919F6341000C442FC /* TAPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPViewController.h; sourceTree = "<group>"; };
 		8984EF5A19F6341000C442FC /* TAPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPViewController.m; sourceTree = "<group>"; };
+		95BAB2E819F76C6F008C23C0 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +123,7 @@
 		8984EF5619F633EA00C442FC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				95BAB2E819F76C6F008C23C0 /* Constants.h */,
 				8984EF5719F6341000C442FC /* TAPAppDelegate.h */,
 				8984EF5819F6341000C442FC /* TAPAppDelegate.m */,
 				8984EF5919F6341000C442FC /* TAPViewController.h */,

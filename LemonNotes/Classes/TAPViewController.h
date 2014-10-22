@@ -1,19 +1,25 @@
-//
-//  ViewController.h
-//  LemonNotes
-//
-//  Created by Christopher Fu on 10/21/14.
-//  Copyright (c) 2014 2 AM Productions. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 
+/**
+ * Class: TAPViewController
+ * Type: Controller of view of app
+ * --------------------------
+ * Extends UIViewController (duh)
+ *
+ * Conforms to protocols:
+ *		<UIAlertViewDelegate>
+ *
+ * Controls the front view of the app.
+ * Provides text field to enter summonerName and sign in.
+ */
 @interface TAPViewController : UIViewController <UIAlertViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *signInField;
-- (IBAction)signIn:(id)sender;
+	@property (weak, nonatomic) IBOutlet UITextField *signInField;
 
-- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message;
+	- (IBAction)signIn:(id)sender;
+
+	- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message;
 
 @end
 
