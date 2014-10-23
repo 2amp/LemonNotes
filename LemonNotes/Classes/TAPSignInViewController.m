@@ -1,14 +1,11 @@
-
 #import "TAPSignInViewController.h"
+#import "TAPStartGameViewController.h"
 #import "Constants.h"
 #import "apikeys.h"
 
 @interface TAPSignInViewController ()
 
-@property (nonatomic) NSString* summonerName;
-
 @end
-
 
 @implementation TAPSignInViewController
 
@@ -38,7 +35,7 @@
 
 
 
-/* ========== Controller Event Callbacks ============================== */
+/* ========== (START) Controller Event Callbacks ============================ */
 
 /**
  * Method: signIn
@@ -46,7 +43,9 @@
  * --------------------------
  * Sets whatever is entered in signInField as summonerName.
  * If nothing is entered, shows a login error prompting the user to enter a
- * summoner name. Otherwise, makes the summoner name info API call.
+ * summoner name. Otherwise, makes the summoner name info API call. 
+ * If the entered summoner name was not found, display an error. Otherwise,
+ * segue to the start game view controller with the provided summoner info. 
  */
 - (IBAction)signIn:(id)sender
 {
@@ -65,26 +64,41 @@
         {
             if (!error)
             {
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                // Make sure to only do GUI updates on the main thread
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.activityIndicator stopAnimating];
                 });
-                NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-                NSError* jsonParsingError = nil;
-                NSDictionary* summonerInfo = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParsingError];
-                if (jsonParsingError)
+                if (httpResponse.statusCode != 404)
                 {
-                    // Make sure to only do GUI updates on the main thread
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self showAlertWithTitle:@"JSON Error" message:[jsonParsingError localizedDescription]];
-                    });
+                    NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+                    NSError* jsonParsingError = nil;
+                    NSDictionary* summonerInfo = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParsingError];
+                    if (jsonParsingError)
+                    {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self showAlertWithTitle:@"JSON Error" message:[jsonParsingError localizedDescription]];
+                        });
+                    }
+                    else
+                    {
+//                        dispatch_async(dispatch_get_main_queue(), ^{
+//                            [self showAlertWithTitle:self.summonerName
+//                                             message:[NSString stringWithFormat:@"Level: %@", summonerInfo[self.summonerName][@"summonerLevel"]]];
+//                        });
+                        self.idNumber = summonerInfo[self.summonerName][@"id"];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self performSegueWithIdentifier:@"showStartGame" sender:self];
+                        });
+                    }
                 }
                 else
                 {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [self showAlertWithTitle:self.summonerName
-                                         message:[NSString stringWithFormat:@"Level: %@", summonerInfo[self.summonerName][@"summonerLevel"]]];
+                        [self showAlertWithTitle:@"Error" message:@"The summoner name you entered was not found."];
                     });
                 }
+
             }
             else
             {
@@ -97,9 +111,9 @@
 	}
 }
 
+/* ========== (END) Controller Event Callbacks ============================== */
 
-
-/* ========== View Alert Methods ============================== */
+/* ========== (START) View Alert Methods ============================== */
 
 /**
  * Method: showAlertWithTitle:message:
@@ -135,6 +149,30 @@
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     self.signInField.text = @"";
+    
+}
+
+/* ========== (END) View Alert Methods ============================== */
+
+/**
+ * Method: prepareForSegue:sender
+ * Usage: Automatically called when performing a segue to the next view 
+ * controller.
+ * --------------------------
+ * Sets up the start game view controller with the summoner name and ID number
+ * that was fetched earlier.
+ *
+ * @param segue
+ * @param sender
+ */
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"showStartGame"])
+    {
+        TAPStartGameViewController *vc = segue.destinationViewController;
+        vc.summonerName = self.summonerName;
+        vc.idNumber = self.idNumber;
+    }
 }
 
 @end

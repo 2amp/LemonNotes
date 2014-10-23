@@ -2,20 +2,17 @@
 #import <UIKit/UIKit.h>
 
 /**
- * Class: TAPViewController
- * Type: Controller of view of app
+ * Class: TAPSignInViewController
+ * Type: Root view controller
  * --------------------------
- * Extends UIViewController (duh)
- *
- * Conforms to protocols:
- *		<UIAlertViewDelegate>
- *
- * Controls the front view of the app.
- * Provides text field to enter summonerName and sign in.
+ * Initial view controller presented to the user. Contains a text field for the 
+ * user to enter summonerName and sign in.
  */
 @interface TAPSignInViewController : UIViewController <UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSURLSession *urlSession;
+@property (nonatomic) NSString *summonerName;
+@property (nonatomic) NSNumber *idNumber;
 
 @property (weak, nonatomic) IBOutlet UITextField *signInField;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;

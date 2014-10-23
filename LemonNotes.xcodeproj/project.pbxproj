@@ -15,6 +15,7 @@
 		8984EF4B19F61FC100C442FC /* LemonNotesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF4A19F61FC100C442FC /* LemonNotesTests.m */; };
 		8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF5819F6341000C442FC /* TAPAppDelegate.m */; };
 		8984EF5C19F6341000C442FC /* TAPSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF5A19F6341000C442FC /* TAPSignInViewController.m */; };
+		89A86C0B19F8E60300477FC6 /* TAPStartGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,8 @@
 		8984EF5A19F6341000C442FC /* TAPSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPSignInViewController.m; sourceTree = "<group>"; };
 		8984EF5E19F77EDF00C442FC /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		8984EF5F19F77EED00C442FC /* apikeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = apikeys.h; sourceTree = "<group>"; };
+		89A86C0919F8E60300477FC6 /* TAPStartGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPStartGameViewController.h; sourceTree = "<group>"; };
+		89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPStartGameViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +132,8 @@
 				8984EF5819F6341000C442FC /* TAPAppDelegate.m */,
 				8984EF5919F6341000C442FC /* TAPSignInViewController.h */,
 				8984EF5A19F6341000C442FC /* TAPSignInViewController.m */,
+				89A86C0919F8E60300477FC6 /* TAPStartGameViewController.h */,
+				89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -246,6 +251,7 @@
 				8984EF2E19F61FC100C442FC /* main.m in Sources */,
 				8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */,
 				8984EF5C19F6341000C442FC /* TAPSignInViewController.m in Sources */,
+				89A86C0B19F8E60300477FC6 /* TAPStartGameViewController.m in Sources */,
 				8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
