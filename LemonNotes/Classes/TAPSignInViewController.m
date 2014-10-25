@@ -57,18 +57,50 @@
     }
 	else
 	{
-		NSString *requestString = [NSString stringWithFormat:@"https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/%@?api_key=%@",
-                                   self.summonerName, API_KEY];
-        NSURL *url = [NSURL URLWithString:[requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        void (^completionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
+        // Completion handler for recentGamesDataTask
+        void (^recentGamesCompletionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
+        {
+            if (!error)
+            {
+                NSError* jsonParsingError = nil;
+                NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+                NSDictionary* recentGames = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParsingError];
+                if (jsonParsingError)
+                {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.activityIndicator stopAnimating];
+                        [self showAlertWithTitle:@"JSON Error" message:[jsonParsingError localizedDescription]];
+                    });
+                }
+                else
+                {
+                    NSLog(@"%@", recentGames[@"matches"]);
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.activityIndicator stopAnimating];
+                        [self performSegueWithIdentifier:@"showStartGame" sender:self];
+                    });
+                }
+            }
+            else
+            {
+                NSLog(@"There was an error with the API call!");
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.activityIndicator stopAnimating];
+                });
+            }
+        };
+        
+        NSString *summonerInfoRequestString = [NSString stringWithFormat:@"https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/%@?api_key=%@",
+                                               self.summonerName, API_KEY];
+        NSURL *summonerInfoUrl = [NSURL URLWithString:[summonerInfoRequestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        
+        // Completion handler for summonerInfoDataTask
+        void (^summonerInfoCompletionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
         {
             if (!error)
             {
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
                 // Make sure to only do GUI updates on the main thread
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.activityIndicator stopAnimating];
-                });
                 if (httpResponse.statusCode != 404)
                 {
                     NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
@@ -77,24 +109,29 @@
                     if (jsonParsingError)
                     {
                         dispatch_async(dispatch_get_main_queue(), ^{
+                            [self.activityIndicator stopAnimating];
                             [self showAlertWithTitle:@"JSON Error" message:[jsonParsingError localizedDescription]];
                         });
                     }
                     else
                     {
-//                        dispatch_async(dispatch_get_main_queue(), ^{
-//                            [self showAlertWithTitle:self.summonerName
-//                                             message:[NSString stringWithFormat:@"Level: %@", summonerInfo[self.summonerName][@"summonerLevel"]]];
-//                        });
-                        self.idNumber = summonerInfo[self.summonerName][@"id"];
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [self performSegueWithIdentifier:@"showStartGame" sender:self];
-                        });
+                        // We need to set up recentGamesDataTask in the completion handler of summonerInfoDataTask because
+                        // it we need to fetch the summoner ID first. I'm not sure if this is the best way to do it, but
+                        // at least it works.
+                        self.idNumber = summonerInfo[[summonerInfo allKeys][0]][@"id"];
+                        NSString *recentGamesRequestString = [NSString stringWithFormat:@"https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/%@?api_key=%@",
+                                                              self.idNumber, API_KEY];
+                        NSURL *recentGamesUrl = [NSURL URLWithString:[recentGamesRequestString
+                                                                      stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+                        NSURLSessionDataTask *recentGamesDataTask = [self.urlSession dataTaskWithURL:recentGamesUrl
+                                                                                   completionHandler:recentGamesCompletionHandler];
+                        [recentGamesDataTask resume];
                     }
                 }
                 else
                 {
                     dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.activityIndicator stopAnimating];
                         [self showAlertWithTitle:@"Error" message:@"The summoner name you entered was not found."];
                     });
                 }
@@ -103,10 +140,14 @@
             else
             {
                 NSLog(@"There was an error with the API call!");
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.activityIndicator stopAnimating];
+                });
             }
         };
-        NSURLSessionDataTask *dataTask = [self.urlSession dataTaskWithURL:url completionHandler:completionHandler];
-        [dataTask resume];
+
+        NSURLSessionDataTask *summonerInfoDataTask = [self.urlSession dataTaskWithURL:summonerInfoUrl completionHandler:summonerInfoCompletionHandler];
+        [summonerInfoDataTask resume];
         [self.activityIndicator startAnimating];
 	}
 }
