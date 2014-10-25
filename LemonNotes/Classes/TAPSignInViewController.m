@@ -50,6 +50,9 @@
  * Sets summonerName as enetered text and resets text.
  * Removes keyboard with resignFirstResponder.
  * Manually calls signIn with textField as sender.
+ * 
+ * @param textField
+ * @return BOOL - YES to implement default textField behavior
  */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -69,7 +72,10 @@
  * If nothing is entered, shows a login error prompting the user to enter a
  * summoner name. Otherwise, makes the summoner name info API call. 
  * If the entered summoner name was not found, display an error. Otherwise,
- * segue to the start game view controller with the provided summoner info. 
+ * segue to the start game view controller with the provided summoner info.
+ *
+ * @param sender - now textField is indirect sender
+ * @return IBAction
  */
 - (IBAction)signIn:(id)sender
 {
