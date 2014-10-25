@@ -41,19 +41,19 @@ not
 
 - Pointers are written with a space after the type and no space before the variable pointer name.
 
-        NSMutableArray *array = [[NSMutableArray alloc] init];
+    	NSMutableArray *array = [[NSMutableArray alloc] init];
 
 - Document all methods with an appropriate block comment indicating what the method does and any side effects or "gotchas" that may not be immediately obvious. 
 All parameters and return values should be described, with the exception of obvious ones such as "- (IBAction)" and ":(UIView\*) view"
 		/**
-         * Method: signIn
-         * Usage: called when user taps "Sign In"
-         * --------------------------
-         * Sets whatever is entered in signInField as summonerName.
-         * If nothing is entered, shows a login error prompting the user to enter a
-         * summoner name. Otherwise, makes the summoner name info API call.
-         * 
-         * @param <param name> - desc of what is given
-         * @param <return type> - desc of what is returned
-         */
+		 * Method: signIn
+		 * Usage: called when user taps "Sign In"
+		 * --------------------------
+		 * Sets whatever is entered in signInField as summonerName.
+		 * If nothing is entered, shows a login error prompting the user to enter a
+		 * summoner name. Otherwise, makes the summoner name info API call.
+		 * 
+		 * @param <param name> - desc of what is given
+		 * @param <return type> - desc of what is returned
+		 */
 In addition, use inline comments inside the method body to point out lines of interest.
