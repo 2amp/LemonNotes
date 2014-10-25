@@ -1,14 +1,20 @@
+
 #import "TAPSignInViewController.h"
 #import "TAPStartGameViewController.h"
 #import "Constants.h"
 #import "apikeys.h"
 
+
+
 @interface TAPSignInViewController ()
 
 @end
 
+
+
 @implementation TAPSignInViewController
 
+#pragma mark View Messages
 /**
  * Method: viewDidLoad
  * Usage: called when view is loaded
@@ -32,16 +38,34 @@
 {
     [super didReceiveMemoryWarning];
 }
+#pragma mark -
 
 
 
-/* ========== (START) Controller Event Callbacks ============================ */
+#pragma mark Controller Event Callbacks
+/**
+ * Method: textFieldShouldReturn
+ * Usag: called when user taps "Done" on textField
+ * --------------------------
+ * Sets summonerName as enetered text and resets text.
+ * Removes keyboard with resignFirstResponder.
+ * Manually calls signIn with textField as sender.
+ */
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    self.summonerName = self.signInField.text;
+    self.signInField.text = @"";
+    [textField resignFirstResponder];
+    
+    [self signIn:textField];
+    
+    return YES;
+}
 
 /**
  * Method: signIn
  * Usage: called when user taps "Sign In"
  * --------------------------
- * Sets whatever is entered in signInField as summonerName.
  * If nothing is entered, shows a login error prompting the user to enter a
  * summoner name. Otherwise, makes the summoner name info API call. 
  * If the entered summoner name was not found, display an error. Otherwise,
@@ -49,8 +73,6 @@
  */
 - (IBAction)signIn:(id)sender
 {
-	self.summonerName = self.signInField.text;
-
 	if ([self.summonerName isEqual: @""])
     {
 		[self showAlertWithTitle:@"Error" message:@"Please enter a summoner name."];
@@ -151,11 +173,11 @@
         [self.activityIndicator startAnimating];
 	}
 }
+#pragma mark -
 
-/* ========== (END) Controller Event Callbacks ============================== */
 
-/* ========== (START) View Alert Methods ============================== */
 
+#pragma mark Alert Methods
 /**
  * Method: showAlertWithTitle:message:
  * Usage: pop alert window on screen
@@ -192,9 +214,11 @@
     self.signInField.text = @"";
     
 }
+#pragma mark -
 
-/* ========== (END) View Alert Methods ============================== */
 
+
+#pragma mark Navigation Events
 /**
  * Method: prepareForSegue:sender
  * Usage: Automatically called when performing a segue to the next view 
