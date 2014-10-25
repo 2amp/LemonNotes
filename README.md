@@ -58,3 +58,39 @@ All parameters and return values should be described, with the exception of obvi
 		 * @param <return type> - desc of what is returned
 		 */
 In addition, use inline comments inside the method body to point out lines of interest.
+
+- In cases of file formatting, and section separation. 
+Place `#import` at the very top of the file, between an empty line and  `@interface` statement.
+For ease of reading, every sections will have one line of padding within and be separated with 3 empty lines from the next section.
+Use `#pragma mark <Section Name>` to denote start of section and `#pragma mark -` to denote end.
+But, do *not* include padding lines for `#pragma mark` statements
+
+		
+		#import "TAPViewController.h"
+		
+		
+		
+		@interface TAPViewController()
+		
+			...
+			
+		@end
+		
+		
+		
+		@implementation TAPViewController
+			
+			#pragma mark Custom Assessor
+			/**
+			 * Method: someMethod
+		     * Usage: some desc about usage
+		     * --------------------------
+		     * some desc about method
+		     */
+			- (void)someMethod
+			{
+				...
+			}
+			#pragma mark -
+			
+		@end

@@ -1,10 +1,3 @@
-//
-//  TAPStartGameViewController.h
-//  LemonNotes
-//
-//  Created by Christopher Fu on 10/23/14.
-//  Copyright (c) 2014 2 AM Productions. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 
