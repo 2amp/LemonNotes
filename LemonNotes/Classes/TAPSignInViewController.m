@@ -8,13 +8,6 @@
 
 @interface TAPSignInViewController ()
 
-@property (weak, nonatomic) IBOutlet UITextField *signInField;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-
-- (IBAction)signIn:(id)sender;
-
-- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message;
-
 @end
 
 
