@@ -45,6 +45,7 @@ not
 
 - Document all methods with an appropriate block comment indicating what the method does and any side effects or "gotchas" that may not be immediately obvious. 
 All parameters and return values should be described, with the exception of obvious ones such as "- (IBAction)" and ":(UIView\*) view"
+
 		/**
 		 * Method: signIn
 		 * Usage: called when user taps "Sign In"
