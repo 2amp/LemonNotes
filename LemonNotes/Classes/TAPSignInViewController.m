@@ -14,7 +14,7 @@
 
 @implementation TAPSignInViewController
 
-#pragma mark View Messages
+#pragma mark - View Messages
 /**
  * Method: viewDidLoad
  * Usage: called when view is loaded
@@ -38,11 +38,10 @@
 {
     [super didReceiveMemoryWarning];
 }
-#pragma mark -
 
 
 
-#pragma mark Controller Event Callbacks
+#pragma mark - Controller Event Callbacks
 /**
  * Method: textFieldShouldReturn
  * Usag: called when user taps "Done" on textField
@@ -50,7 +49,7 @@
  * Sets summonerName as enetered text and resets text.
  * Removes keyboard with resignFirstResponder.
  * Manually calls signIn with textField as sender.
- * 
+ *
  * @param textField
  * @return BOOL - YES to implement default textField behavior
  */
@@ -59,9 +58,9 @@
     self.summonerName = self.signInField.text;
     self.signInField.text = @"";
     [textField resignFirstResponder];
-    
-    [self signIn:textField];
-    
+
+    [self signIn];
+
     return YES;
 }
 
@@ -70,21 +69,21 @@
  * Usage: called when user taps "Sign In"
  * --------------------------
  * If nothing is entered, shows a login error prompting the user to enter a
- * summoner name. Otherwise, makes the summoner name info API call. 
+ * summoner name. Otherwise, makes the summoner name info API call.
  * If the entered summoner name was not found, display an error. Otherwise,
  * segue to the start game view controller with the provided summoner info.
  *
  * @param sender - now textField is indirect sender
  * @return IBAction
  */
-- (IBAction)signIn:(id)sender
+- (void)signIn
 {
-	if ([self.summonerName isEqual: @""])
+    if ([self.summonerName isEqual: @""])
     {
-		[self showAlertWithTitle:@"Error" message:@"Please enter a summoner name."];
+        [self showAlertWithTitle:@"Error" message:@"Please enter a summoner name."];
     }
-	else
-	{
+    else
+    {
         // Completion handler for recentGamesDataTask
         void (^recentGamesCompletionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
         {
@@ -117,11 +116,11 @@
                 });
             }
         };
-        
+
         NSString *summonerInfoRequestString = [NSString stringWithFormat:@"https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/%@?api_key=%@",
                                                self.summonerName, API_KEY];
         NSURL *summonerInfoUrl = [NSURL URLWithString:[summonerInfoRequestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        
+
         // Completion handler for summonerInfoDataTask
         void (^summonerInfoCompletionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
         {
@@ -177,13 +176,12 @@
         NSURLSessionDataTask *summonerInfoDataTask = [self.urlSession dataTaskWithURL:summonerInfoUrl completionHandler:summonerInfoCompletionHandler];
         [summonerInfoDataTask resume];
         [self.activityIndicator startAnimating];
-	}
+    }
 }
-#pragma mark -
 
 
 
-#pragma mark Alert Methods
+#pragma mark - Alert Methods
 /**
  * Method: showAlertWithTitle:message:
  * Usage: pop alert window on screen
@@ -218,16 +216,15 @@
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     self.signInField.text = @"";
-    
+
 }
-#pragma mark -
 
 
 
-#pragma mark Navigation Events
+#pragma mark - Navigation Events
 /**
  * Method: prepareForSegue:sender
- * Usage: Automatically called when performing a segue to the next view 
+ * Usage: Automatically called when performing a segue to the next view
  * controller.
  * --------------------------
  * Sets up the start game view controller with the summoner name and ID number

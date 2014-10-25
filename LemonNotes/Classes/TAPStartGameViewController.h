@@ -6,7 +6,7 @@
  * Type:
  * --------------------------
  * After the user has signed in, asks the user for information about the current
- * game such as the player's side, whether or not the player is the team 
+ * game such as the player's side, whether or not the player is the team
  * captain, and who his teammates are.
  *
  * summonerName and idNumber are passed in by the sign in view controller before

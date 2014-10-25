@@ -8,7 +8,7 @@ LemonNotes is an app that helps League of Legends summoners with the pick and ba
 This is just a preliminary style guide at the moment. More guidelines will be added as necessary.
 
 - Indents are four spaces. Do not use tabs.
-- One space after conditionals and loops. *Always* use brackets, even if there is only one statement in the body. Brackets go on a new line. ````else```` goes on a new line as well.
+- One space after conditionals and loops. *Always* use brackets, even if there is only one statement in the body. Brackets go on a new line. `else` goes on a new line as well.
 
         if (!error)
         {
@@ -41,56 +41,51 @@ not
 
 - Pointers are written with a space after the type and no space before the variable pointer name.
 
-    	NSMutableArray *array = [[NSMutableArray alloc] init];
+        NSMutableArray *array = [[NSMutableArray alloc] init];
 
-- Document all methods with an appropriate block comment indicating what the method does and any side effects or "gotchas" that may not be immediately obvious. 
-All parameters and return values should be described, with the exception of obvious ones such as "- (IBAction)" and ":(UIView\*) view"
+- Document all methods with an appropriate block comment indicating what the method does and any side effects or "gotchas" that may not be immediately obvious. All parameters and return values should be documented as well, with the exception of obvious ones such as `- (IBAction)` and `:(UIView *)view`
 
-		/**
-		 * Method: signIn
-		 * Usage: called when user taps "Sign In"
-		 * --------------------------
-		 * Sets whatever is entered in signInField as summonerName.
-		 * If nothing is entered, shows a login error prompting the user to enter a
-		 * summoner name. Otherwise, makes the summoner name info API call.
-		 * 
-		 * @param <param name> - desc of what is given
-		 * @param <return type> - desc of what is returned
-		 */
+        /**
+         * Method: signIn
+         * Usage: called when user taps "Sign In"
+         * --------------------------
+         * Sets whatever is entered in signInField as summonerName.
+         * If nothing is entered, shows a login error prompting the user to enter a
+         * summoner name. Otherwise, makes the summoner name info API call.
+         *
+         * @param <param name> - description of parameter
+         * @param <return type> - description of return value
+         */
 In addition, use inline comments inside the method body to point out lines of interest.
 
-- In cases of file formatting, and section separation. 
-Place `#import` at the very top of the file, between an empty line and  `@interface` statement.
-For ease of reading, every sections will have one line of padding within and be separated with 3 empty lines from the next section.
-Use `#pragma mark <Section Name>` to denote start of section and `#pragma mark -` to denote end.
-But, do *not* include padding lines for `#pragma mark` statements
+- `#import` statements go after one new line at the top of each file. Use three lines to separate the `#import` statements from the start of the `@interface` and three lines to separate the `@end` of the `@interface` from the start of the `@implementation`. For ease of reading, the `@interface` and `@implementation` sections will have one line of padding within. Use `#pragma mark - <Section Name>` to denote start of sections in the body of the file. Do *not* include padding lines for `#pragma mark -` statements.
 
-		
-		#import "TAPViewController.h"
-		
-		
-		
-		@interface TAPViewController()
-		
-			...
-			
-		@end
-		
-		
-		
-		@implementation TAPViewController
-			
-			#pragma mark Custom Assessor
-			/**
-			 * Method: someMethod
-		     * Usage: some desc about usage
-		     * --------------------------
-		     * some desc about method
-		     */
-			- (void)someMethod
-			{
-				...
-			}
-			#pragma mark -
-			
-		@end
+        // Start of file
+
+        #import "TAPViewController.h"
+        // Three lines of padding
+
+
+        @interface TAPViewController()
+        // One line of padding
+        ...
+        // One line of padding
+        @end
+        // Three lines of padding
+
+
+        @implementation TAPViewController
+        // One line of padding
+        #pragma mark - Section Name
+        /**
+         * Method: someMethod
+         * Usage: some desc about usage
+         * --------------------------
+         * some desc about method
+         */
+        - (void)someMethod
+        {
+            ...
+        }
+        // One line of padding
+        @end
