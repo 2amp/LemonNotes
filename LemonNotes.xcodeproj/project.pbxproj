@@ -229,7 +229,7 @@
 			attributes = {
 				CLASSPREFIX = TAP;
 				LastUpgradeCheck = 0610;
-				ORGANIZATIONNAME = "2 AM Productions";
+				ORGANIZATIONNAME = "2AM Productions";
 				TargetAttributes = {
 					8984EF2719F61FC100C442FC = {
 						CreatedOnToolsVersion = 6.1;

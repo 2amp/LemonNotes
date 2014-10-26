@@ -61,7 +61,7 @@ In addition, use inline comments inside the method body to point out lines of in
 - `#import` statements go after one new line at the top of each file. Use three lines to separate the `#import` statements from the start of the `@interface` and three lines to separate the `@end` of the `@interface` from the start of the `@implementation`. For ease of reading, the `@interface` and `@implementation` sections will have one line of padding within. Use `#pragma mark - <Section Name>` to denote start of sections in the body of the file. Do *not* include padding lines for `#pragma mark -` statements.
 
         // Start of file
-
+        // One line of padding
         #import "TAPViewController.h"
         // Three lines of padding
 
