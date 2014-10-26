@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSURLSession *urlSession;
 @property (nonatomic) NSString *summonerName;
 @property (nonatomic) NSNumber *idNumber;
+@property (nonatomic) NSDictionary *championIds;
 
 @property (weak, nonatomic) IBOutlet UITextField *signInField;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;

@@ -17,15 +17,68 @@
 #pragma mark View Messages
 /**
  * Method: viewDidLoad
- * Usage: called when view is loaded
+ * Usage: called when view has loaded
  * --------------------------
- * Initializes an NSURLSession instance for data requests.
+ *
  */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
+
+/**
+ * Method: viewWillAppear:
+ * Usage: called when view will appear
+ * --------------------------
+ * Initializes an NSURLSession instance for data requests. Performs a champion
+ * ID data request to populate self.championIds with a dictionary mapping each
+ * champion ID to the name of the champion.
+ */
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     self.urlSession = [NSURLSession sessionWithConfiguration:config];
+    NSString *championIdsRequestString = [NSString stringWithFormat:@"https://na.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=%@", API_KEY];
+    NSURL *championIdsRequestUrl = [NSURL URLWithString:[championIdsRequestString
+                                                         stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    void (^completionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
+    {
+        if (!error)
+        {
+            NSError* jsonParsingError = nil;
+            NSDictionary* championIdsDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParsingError];
+            if (jsonParsingError)
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.activityIndicator stopAnimating];
+                    [self showAlertWithTitle:@"JSON Error" message:[jsonParsingError localizedDescription]];
+                });
+            }
+            else
+            {
+                NSMutableDictionary *championIds = [NSMutableDictionary dictionaryWithDictionary:[championIdsDict objectForKey:@"data"]];
+                NSArray *keys = [championIds allKeys];
+                for (NSString *key in keys)
+                {
+                    NSDictionary *info = [championIds objectForKey:key];
+                    [championIds removeObjectForKey:key];
+                    [championIds setObject:info forKey:[info objectForKey:@"id"]];
+                }
+                self.championIds = [NSDictionary dictionaryWithDictionary:championIds];
+            }
+        }
+        else
+        {
+            NSLog(@"There was an error with the API call!");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.activityIndicator stopAnimating];
+            });
+        }
+        
+    };
+    NSURLSessionDataTask *dataTask = [self.urlSession dataTaskWithURL:championIdsRequestUrl completionHandler:completionHandler];
+    [dataTask resume];
 }
 
 /**
@@ -99,6 +152,10 @@
                 else
                 {
                     NSLog(@"%@", recentGames[@"matches"]);
+                    for (NSDictionary *match in recentGames[@"matches"])
+                    {
+                        NSLog(@"%@", match[@"participants"][0][@"championId"]);
+                    }
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.activityIndicator stopAnimating];
                         [self performSegueWithIdentifier:@"showStartGame" sender:self];
