@@ -14,7 +14,7 @@
 
 @implementation TAPSignInViewController
 
-#pragma mark - View Messages
+#pragma mark View Messages
 /**
  * Method: viewDidLoad
  * Usage: called when view is loaded
@@ -72,9 +72,6 @@
  * summoner name. Otherwise, makes the summoner name info API call.
  * If the entered summoner name was not found, display an error. Otherwise,
  * segue to the start game view controller with the provided summoner info.
- *
- * @param sender - now textField is indirect sender
- * @return IBAction
  */
 - (void)signIn
 {
