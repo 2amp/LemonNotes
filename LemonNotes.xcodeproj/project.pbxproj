@@ -17,9 +17,10 @@
 		8984EF5C19F6341000C442FC /* TAPSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF5A19F6341000C442FC /* TAPSignInViewController.m */; };
 		89A86C0B19F8E60300477FC6 /* TAPStartGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */; };
 		950070E819FB83BA00C29780 /* Lemon Notes Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 950070E419FB83BA00C29780 /* Lemon Notes Logo.png */; };
-		950070E919FB83BA00C29780 /* Lemon Notes Logo.idraw in Resources */ = {isa = PBXBuildFile; fileRef = 950070E619FB83BA00C29780 /* Lemon Notes Logo.idraw */; };
 		950070EA19FB83BA00C29780 /* test.txt in Resources */ = {isa = PBXBuildFile; fileRef = 950070E719FB83BA00C29780 /* test.txt */; };
 		950070EC19FB8A3700C29780 /* Lemon Notes Logo (Aligned).png in Resources */ = {isa = PBXBuildFile; fileRef = 950070EB19FB8A3700C29780 /* Lemon Notes Logo (Aligned).png */; };
+		955222BB19FDA7BD005AB935 /* TAPMatchViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 955222BA19FDA7BD005AB935 /* TAPMatchViewCell.m */; };
+		955222BD19FDB001005AB935 /* 2AM Productions Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 955222BC19FDB001005AB935 /* 2AM Productions Logo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,9 +53,13 @@
 		89A86C0919F8E60300477FC6 /* TAPStartGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPStartGameViewController.h; sourceTree = "<group>"; };
 		89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPStartGameViewController.m; sourceTree = "<group>"; };
 		950070E419FB83BA00C29780 /* Lemon Notes Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Notes Logo.png"; sourceTree = "<group>"; };
-		950070E619FB83BA00C29780 /* Lemon Notes Logo.idraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lemon Notes Logo.idraw"; sourceTree = "<group>"; };
 		950070E719FB83BA00C29780 /* test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.txt; sourceTree = "<group>"; };
 		950070EB19FB8A3700C29780 /* Lemon Notes Logo (Aligned).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Notes Logo (Aligned).png"; sourceTree = "<group>"; };
+		955222B919FDA7BD005AB935 /* TAPMatchViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPMatchViewCell.h; sourceTree = "<group>"; };
+		955222BA19FDA7BD005AB935 /* TAPMatchViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPMatchViewCell.m; sourceTree = "<group>"; };
+		955222BC19FDB001005AB935 /* 2AM Productions Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2AM Productions Logo.png"; sourceTree = "<group>"; };
+		955222C119FDB023005AB935 /* 2AM Productions Logo.idraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = "2AM Productions Logo.idraw"; sourceTree = "<group>"; };
+		955222C219FDB023005AB935 /* Lemon Notes Logo.idraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lemon Notes Logo.idraw"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +146,7 @@
 				8984EF5819F6341000C442FC /* TAPAppDelegate.m */,
 				8984EF5919F6341000C442FC /* TAPSignInViewController.h */,
 				8984EF5A19F6341000C442FC /* TAPSignInViewController.m */,
+				955222B819FD92EE005AB935 /* MatchHistory */,
 				89A86C0919F8E60300477FC6 /* TAPStartGameViewController.h */,
 				89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */,
 			);
@@ -168,17 +174,28 @@
 		950070E319FB83BA00C29780 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				955222BC19FDB001005AB935 /* 2AM Productions Logo.png */,
 				950070E419FB83BA00C29780 /* Lemon Notes Logo.png */,
 				950070EB19FB8A3700C29780 /* Lemon Notes Logo (Aligned).png */,
-				950070E519FB83BA00C29780 /* Source */,
+				955222C019FDB023005AB935 /* Source */,
 			);
 			path = Images;
 			sourceTree = "<group>";
 		};
-		950070E519FB83BA00C29780 /* Source */ = {
+		955222B819FD92EE005AB935 /* MatchHistory */ = {
 			isa = PBXGroup;
 			children = (
-				950070E619FB83BA00C29780 /* Lemon Notes Logo.idraw */,
+				955222B919FDA7BD005AB935 /* TAPMatchViewCell.h */,
+				955222BA19FDA7BD005AB935 /* TAPMatchViewCell.m */,
+			);
+			path = MatchHistory;
+			sourceTree = "<group>";
+		};
+		955222C019FDB023005AB935 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				955222C119FDB023005AB935 /* 2AM Productions Logo.idraw */,
+				955222C219FDB023005AB935 /* Lemon Notes Logo.idraw */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -264,12 +281,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				950070E919FB83BA00C29780 /* Lemon Notes Logo.idraw in Resources */,
 				950070EC19FB8A3700C29780 /* Lemon Notes Logo (Aligned).png in Resources */,
 				950070E819FB83BA00C29780 /* Lemon Notes Logo.png in Resources */,
 				8984EF3A19F61FC100C442FC /* Main.storyboard in Resources */,
 				8984EF3F19F61FC100C442FC /* LaunchScreen.xib in Resources */,
 				950070EA19FB83BA00C29780 /* test.txt in Resources */,
+				955222BD19FDB001005AB935 /* 2AM Productions Logo.png in Resources */,
 				8984EF3C19F61FC100C442FC /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -292,6 +309,7 @@
 				8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */,
 				8984EF5C19F6341000C442FC /* TAPSignInViewController.m in Sources */,
 				89A86C0B19F8E60300477FC6 /* TAPStartGameViewController.m in Sources */,
+				955222BB19FDA7BD005AB935 /* TAPMatchViewCell.m in Sources */,
 				8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
