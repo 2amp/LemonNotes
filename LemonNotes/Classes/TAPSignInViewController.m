@@ -184,7 +184,7 @@
                 if (jsonParsingError)
                 {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.activityIndicator stopAnimating];
+                        [self exitLoadingState];
                         [self showAlertWithTitle:@"JSON Error" message:[jsonParsingError localizedDescription]];
                     });
                 }
@@ -224,6 +224,31 @@
     NSURLSessionDataTask *summonerInfoDataTask = [self.urlSession dataTaskWithURL:summonerInfoUrl completionHandler:summonerInfoCompletionHandler];
     [summonerInfoDataTask resume];
     [self.activityIndicator startAnimating];
+}
+
+
+
+#pragma mark - TAPHasLoadingState Protocol
+/**
+ * Method: enterLoadingState
+ * Usage: called by data loader to enter loading state
+ * --------------------------
+ * Starts activity indicator
+ */
+- (void)enterLoadingState
+{
+    [self.activityIndicator startAnimating];
+}
+
+/**
+ * Method: exitLoadingState
+ * Usage: called by data loader to exit loading state
+ * --------------------------
+ * Stops activity indicator
+ */
+- (void)exitLoadingState
+{
+    [self.activityIndicator stopAnimating];
 }
 
 

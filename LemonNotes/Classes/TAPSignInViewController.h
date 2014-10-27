@@ -1,5 +1,6 @@
 
 #import <UIKit/UIKit.h>
+#import "TAPProtocols.h"
 
 /**
  * Class: TAPSignInViewController
@@ -9,7 +10,7 @@
  * user to enter summonerName and sign in.
  */
 @interface TAPSignInViewController : UIViewController
-            <NSURLSessionTaskDelegate, UITextFieldDelegate>
+            <NSURLSessionTaskDelegate, UITextFieldDelegate, TAPHasLoadingState>
 
 @property (nonatomic, strong) NSURLSession *urlSession;
 @property (nonatomic) NSString *summonerName;
