@@ -126,10 +126,9 @@
  * Method: signIn
  * Usage: called when user taps "Sign In"
  * --------------------------
- * If nothing is entered, shows a login error prompting the user to enter a
- * summoner name. Otherwise, makes the summoner name info API call.
- * If the entered summoner name was not found, display an error. Otherwise,
- * segue to the start game view controller with the provided summoner info.
+ * Makes the summoner name info API call.
+ * If the entered summoner name was not found, display an error. 
+ * Otherwise, segue to the start game view controller with the provided summoner info.
  * In addition, add the summoner name and ID numbers to the standard user 
  * defaults.
  */
