@@ -13,7 +13,7 @@
 
 @property (nonatomic, strong) NSURLSession *urlSession;
 @property (nonatomic) NSString *summonerName;
-@property (nonatomic) NSNumber *idNumber;
+@property (nonatomic) NSNumber *summonerId;
 @property (nonatomic) NSDictionary *championIds;
 
 @property (weak, nonatomic) IBOutlet UITextField *signInField;
