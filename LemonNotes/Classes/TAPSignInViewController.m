@@ -208,7 +208,6 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.activityIndicator stopAnimating];
                     [self showAlertWithTitle:@"Error" message:@"The summoner name you entered was not found."];
-                    self.signInField.text = @"";
                 });
             }
 
