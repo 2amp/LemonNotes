@@ -135,20 +135,58 @@
  */
 - (void)signIn
 {
-    if ([self.summonerName isEqual: @""])
+    // Completion handler for recentGamesDataTask
+    void (^recentGamesCompletionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
     {
-        [self showAlertWithTitle:@"Error" message:@"Please enter a summoner name."];
-    }
-    else
-    {
-        // Completion handler for recentGamesDataTask
-        void (^recentGamesCompletionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
+        if (!error)
         {
-            if (!error)
+            NSError* jsonParsingError = nil;
+            NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+            NSDictionary* recentGames = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParsingError];
+            if (jsonParsingError)
             {
-                NSError* jsonParsingError = nil;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.activityIndicator stopAnimating];
+                    [self showAlertWithTitle:@"JSON Error" message:[jsonParsingError localizedDescription]];
+                });
+            }
+            else
+            {
+                NSLog(@"%@", recentGames[@"matches"]);
+                for (NSDictionary *match in recentGames[@"matches"])
+                {
+                    NSLog(@"%@", match[@"participants"][0][@"championId"]);
+                }
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.activityIndicator stopAnimating];
+                    [self performSegueWithIdentifier:@"showStartGame" sender:self];
+                });
+            }
+        }
+        else
+        {
+            NSLog(@"There was an error with the API call!");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.activityIndicator stopAnimating];
+            });
+        }
+    };
+
+    NSString *summonerInfoRequestString = [NSString stringWithFormat:@"https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/%@?api_key=%@", self.summonerName, API_KEY];
+    NSURL *summonerInfoUrl = [NSURL URLWithString:[summonerInfoRequestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+    // Completion handler for summonerInfoDataTask
+    void (^summonerInfoCompletionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
+    {
+        if (!error)
+        {
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+            // Make sure to only do GUI updates on the main thread
+            if (httpResponse.statusCode != 404)
+            {
                 NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-                NSDictionary* recentGames = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParsingError];
+                NSError* jsonParsingError = nil;
+                NSDictionary* summonerInfo = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParsingError];
                 if (jsonParsingError)
                 {
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -158,86 +196,40 @@
                 }
                 else
                 {
-                    NSLog(@"%@", recentGames[@"matches"]);
-                    for (NSDictionary *match in recentGames[@"matches"])
-                    {
-                        NSLog(@"%@", match[@"participants"][0][@"championId"]);
-                    }
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.activityIndicator stopAnimating];
-                        [self performSegueWithIdentifier:@"showStartGame" sender:self];
-                    });
+                    // We need to set up recentGamesDataTask in the completion handler of summonerInfoDataTask because
+                    // it we need to fetch the summoner ID first. I'm not sure if this is the best way to do it, but
+                    // at least it works.
+                    self.idNumber = summonerInfo[[summonerInfo allKeys][0]][@"id"];
+                    NSString *recentGamesRequestString = [NSString stringWithFormat:@"https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/%@?api_key=%@",
+                                                          self.idNumber, API_KEY];
+                    NSURL *recentGamesUrl = [NSURL URLWithString:[recentGamesRequestString
+                                                                  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+                    NSURLSessionDataTask *recentGamesDataTask = [self.urlSession dataTaskWithURL:recentGamesUrl
+                                                                               completionHandler:recentGamesCompletionHandler];
+                    [recentGamesDataTask resume];
                 }
             }
             else
             {
-                NSLog(@"There was an error with the API call!");
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.activityIndicator stopAnimating];
+                    [self showAlertWithTitle:@"Error" message:@"The summoner name you entered was not found."];
                 });
             }
-        };
 
-        NSString *summonerInfoRequestString = [NSString stringWithFormat:@"https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/%@?api_key=%@",
-                                               self.summonerName, API_KEY];
-        NSURL *summonerInfoUrl = [NSURL URLWithString:[summonerInfoRequestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-
-        // Completion handler for summonerInfoDataTask
-        void (^summonerInfoCompletionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
+        }
+        else
         {
-            if (!error)
-            {
-                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                // Make sure to only do GUI updates on the main thread
-                if (httpResponse.statusCode != 404)
-                {
-                    NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-                    NSError* jsonParsingError = nil;
-                    NSDictionary* summonerInfo = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParsingError];
-                    if (jsonParsingError)
-                    {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [self.activityIndicator stopAnimating];
-                            [self showAlertWithTitle:@"JSON Error" message:[jsonParsingError localizedDescription]];
-                        });
-                    }
-                    else
-                    {
-                        // We need to set up recentGamesDataTask in the completion handler of summonerInfoDataTask because
-                        // it we need to fetch the summoner ID first. I'm not sure if this is the best way to do it, but
-                        // at least it works.
-                        self.idNumber = summonerInfo[[summonerInfo allKeys][0]][@"id"];
-                        NSString *recentGamesRequestString = [NSString stringWithFormat:@"https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/%@?api_key=%@",
-                                                              self.idNumber, API_KEY];
-                        NSURL *recentGamesUrl = [NSURL URLWithString:[recentGamesRequestString
-                                                                      stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-                        NSURLSessionDataTask *recentGamesDataTask = [self.urlSession dataTaskWithURL:recentGamesUrl
-                                                                                   completionHandler:recentGamesCompletionHandler];
-                        [recentGamesDataTask resume];
-                    }
-                }
-                else
-                {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.activityIndicator stopAnimating];
-                        [self showAlertWithTitle:@"Error" message:@"The summoner name you entered was not found."];
-                    });
-                }
+            NSLog(@"There was an error with the API call!");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.activityIndicator stopAnimating];
+            });
+        }
+    };
 
-            }
-            else
-            {
-                NSLog(@"There was an error with the API call!");
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.activityIndicator stopAnimating];
-                });
-            }
-        };
-
-        NSURLSessionDataTask *summonerInfoDataTask = [self.urlSession dataTaskWithURL:summonerInfoUrl completionHandler:summonerInfoCompletionHandler];
-        [summonerInfoDataTask resume];
-        [self.activityIndicator startAnimating];
-    }
+    NSURLSessionDataTask *summonerInfoDataTask = [self.urlSession dataTaskWithURL:summonerInfoUrl completionHandler:summonerInfoCompletionHandler];
+    [summonerInfoDataTask resume];
+    [self.activityIndicator startAnimating];
 }
 
 
@@ -258,26 +250,10 @@
 {
     [[[UIAlertView alloc] initWithTitle:title
                                 message:message
-                               delegate:self
+                               delegate:nil
                       cancelButtonTitle:@"OK"
                       otherButtonTitles:nil]
      show];
-}
-
-/**
- * Method: alertView:willDissmissWithButtonIndex
- * Usage: called when user presses a button on UIAlertView
- * --------------------------
- * Fired when "OK" button is pressed (since there are no other buttons).
- * Rests signInField to empty string.
- *
- * @param alertView
- * @param buttonIndex - index of the pressed button on the alert windows
- */
-- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    self.signInField.text = @"";
-
 }
 
 

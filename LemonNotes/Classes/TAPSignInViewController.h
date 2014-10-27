@@ -9,7 +9,7 @@
  * user to enter summonerName and sign in.
  */
 @interface TAPSignInViewController : UIViewController
-            <UIAlertViewDelegate, NSURLSessionTaskDelegate, UITextFieldDelegate>
+            <NSURLSessionTaskDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) NSURLSession *urlSession;
 @property (nonatomic) NSString *summonerName;
