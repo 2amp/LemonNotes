@@ -37,6 +37,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    NSString *savedSummonerName = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerName"];
+    if (savedSummonerName != nil && ![savedSummonerName isEqualToString:@""])
+    {
+        self.signInField.text = savedSummonerName;
+    }
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     self.urlSession = [NSURLSession sessionWithConfiguration:config];
     NSString *championIdsRequestString = [NSString stringWithFormat:@"https://na.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=%@", API_KEY];
@@ -109,6 +114,8 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     self.summonerName = self.signInField.text;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:self.summonerName forKey:@"summonerName"];
     self.signInField.text = @"";
     [textField resignFirstResponder];
 
