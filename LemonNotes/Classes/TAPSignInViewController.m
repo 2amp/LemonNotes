@@ -39,16 +39,22 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    //checks stored summonerName, if exists, enter it to signInField
     NSString *savedSummonerName = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerName"];
     if (savedSummonerName != nil && ![savedSummonerName isEqualToString:@""])
     {
         self.signInField.text = savedSummonerName;
     }
+    
+    //maps champion names to ids
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     self.urlSession = [NSURLSession sessionWithConfiguration:config];
-    NSString *championIdsRequestString = [NSString stringWithFormat:@"https://na.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=%@", API_KEY];
+    
+    NSString *championIdsRequestString = [NSString stringWithFormat:kLoLStaticDataChampionList, @"na"];
     NSURL *championIdsRequestUrl = [NSURL URLWithString:[championIdsRequestString
                                                          stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
     void (^completionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
     {
         if (!error)
@@ -189,7 +195,7 @@
                 if (jsonParsingError)
                 {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [self exitLoadingState];
+                        [self.activityIndicator stopAnimating];
                         [self showAlertWithTitle:@"JSON Error" message:[jsonParsingError localizedDescription]];
                     });
                 }
@@ -235,31 +241,6 @@
     NSURLSessionDataTask *summonerInfoDataTask = [self.urlSession dataTaskWithURL:summonerInfoUrl completionHandler:summonerInfoCompletionHandler];
     [summonerInfoDataTask resume];
     [self.activityIndicator startAnimating];
-}
-
-
-
-#pragma mark - TAPHasLoadingState Protocol
-/**
- * Method: enterLoadingState
- * Usage: called by data loader to enter loading state
- * --------------------------
- * Starts activity indicator
- */
-- (void)enterLoadingState
-{
-    [self.activityIndicator startAnimating];
-}
-
-/**
- * Method: exitLoadingState
- * Usage: called by data loader to exit loading state
- * --------------------------
- * Stops activity indicator
- */
-- (void)exitLoadingState
-{
-    [self.activityIndicator stopAnimating];
 }
 
 
