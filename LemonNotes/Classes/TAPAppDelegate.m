@@ -18,6 +18,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    NSDictionary *appDefaults = @{@"summonerName": @"", @"summonerId": [NSNumber numberWithInt:0]};
+    [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
     return YES;
 }
 

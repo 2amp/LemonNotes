@@ -30,6 +30,8 @@
  * Method: viewWillAppear:
  * Usage: called when view will appear
  * --------------------------
+ * If a successful summoner search was previously made, set the sign in field 
+ * text to the last summoner name that was searched.
  * Initializes an NSURLSession instance for data requests. Performs a champion
  * ID data request to populate self.championIds with a dictionary mapping each
  * champion ID to the name of the champion.
@@ -37,7 +39,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    NSString *savedSummonerName = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerName"];
+    if (savedSummonerName != nil && ![savedSummonerName isEqualToString:@""])
+    {
+        self.signInField.text = savedSummonerName;
+    }
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     self.urlSession = [NSURLSession sessionWithConfiguration:config];
     NSString *championIdsRequestString = [NSString stringWithFormat:@"https://na.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=%@", API_KEY];
@@ -100,9 +106,8 @@
  * Method: textFieldShouldReturn
  * Usag: called when user taps "Done" on textField
  * --------------------------
- * Sets summonerName as enetered text and resets text.
- * Removes keyboard with resignFirstResponder.
- * Manually calls signIn with textField as sender.
+ * Sets summonerName as entered text. Removes keyboard with 
+ * resignFirstResponder. Calls signIn.
  *
  * @param textField
  * @return BOOL - YES to implement default textField behavior
@@ -110,7 +115,6 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     self.summonerName = self.signInField.text;
-    self.signInField.text = @"";
     [textField resignFirstResponder];
 
     [self signIn];
@@ -122,10 +126,11 @@
  * Method: signIn
  * Usage: called when user taps "Sign In"
  * --------------------------
- * If nothing is entered, shows a login error prompting the user to enter a
- * summoner name. Otherwise, makes the summoner name info API call.
- * If the entered summoner name was not found, display an error. Otherwise,
- * segue to the start game view controller with the provided summoner info.
+ * Makes the summoner name info API call.
+ * If the entered summoner name was not found, display an error. 
+ * Otherwise, segue to the start game view controller with the provided summoner info.
+ * In addition, add the summoner name and ID numbers to the standard user 
+ * defaults.
  */
 - (void)signIn
 {
@@ -193,9 +198,15 @@
                     // We need to set up recentGamesDataTask in the completion handler of summonerInfoDataTask because
                     // it we need to fetch the summoner ID first. I'm not sure if this is the best way to do it, but
                     // at least it works.
-                    self.idNumber = summonerInfo[[summonerInfo allKeys][0]][@"id"];
+                    // Once we have verified that the entered summoner name is valid, add it to
+                    // [NSUserDefaults standardUserDefaults].
+                    NSLog(@"Saving user info!");
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    [defaults setObject:self.summonerName forKey:@"summonerName"];
+                    self.summonerId = summonerInfo[[summonerInfo allKeys][0]][@"id"];
+                    [defaults setObject:self.summonerId forKey:@"summonerId"];
                     NSString *recentGamesRequestString = [NSString stringWithFormat:@"https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/%@?api_key=%@",
-                                                          self.idNumber, API_KEY];
+                                                          self.summonerId, API_KEY];
                     NSURL *recentGamesUrl = [NSURL URLWithString:[recentGamesRequestString
                                                                   stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
                     NSURLSessionDataTask *recentGamesDataTask = [self.urlSession dataTaskWithURL:recentGamesUrl
@@ -295,7 +306,7 @@
     {
         TAPStartGameViewController *vc = segue.destinationViewController;
         vc.summonerName = self.summonerName;
-        vc.idNumber = self.idNumber;
+        vc.idNumber = self.summonerId;
     }
 }
 
