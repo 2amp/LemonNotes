@@ -24,6 +24,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSLog(@"%@", apiURL(kLoLStaticDataChampionList, @"na", nil));
 }
 
 /**
@@ -50,10 +52,6 @@
     //maps champion names to ids
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     self.urlSession = [NSURLSession sessionWithConfiguration:config];
-    
-    NSString *championIdsRequestString = [NSString stringWithFormat:kLoLStaticDataChampionList, @"na"];
-    NSURL *championIdsRequestUrl = [NSURL URLWithString:[championIdsRequestString
-                                                         stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     void (^completionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
     {
@@ -83,14 +81,15 @@
         }
         else
         {
-            NSLog(@"There was an error with the API call!");
+            NSLog(@"There was an error with the champion API call!");
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.activityIndicator stopAnimating];
             });
         }
         
     };
-    NSURLSessionDataTask *dataTask = [self.urlSession dataTaskWithURL:championIdsRequestUrl completionHandler:completionHandler];
+    NSURLSessionDataTask *dataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLStaticDataChampionList, @"na", nil)
+                                                    completionHandler:completionHandler];
     [dataTask resume];
 }
 

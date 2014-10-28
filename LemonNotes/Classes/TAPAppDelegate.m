@@ -18,7 +18,34 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    NSDictionary *appDefaults = @{@"summonerName": @"", @"summonerId": [NSNumber numberWithInt:0]};
+    NSDictionary *appDefaults = @{
+    
+        @"users": @{
+            @"mainUser":@{
+                @"summonerName": @"",
+                @"summonerId": [NSNumber numberWithInt:0]
+            }
+        },
+        
+        @"version": @{
+            @"v": @"4.18.1",
+            @"dd": @"4.17.1",
+            @"cdn": @"http://ddragon.leagueoflegends.com/cdn",
+            @"lg": @"0.152.55",
+            @"n": @{
+                @"champion": @"4.18.1",
+                @"profileicon": @"4.18.1",
+                @"item": @"4.18.1",
+                @"mastery": @"4.17.1",
+                @"language": @"4.17.1",
+                @"summoner": @"4.18.1",
+                @"rune": @"4.17.1"
+            },
+            @"profileiconmax": @28,
+            @"l": @"en_US",
+            @"css": @"0.152.55"
+        }
+    };
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
     return YES;
 }

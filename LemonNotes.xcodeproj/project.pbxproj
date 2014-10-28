@@ -19,6 +19,7 @@
 		950070E819FB83BA00C29780 /* Lemon Notes Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 950070E419FB83BA00C29780 /* Lemon Notes Logo.png */; };
 		950070EA19FB83BA00C29780 /* test.txt in Resources */ = {isa = PBXBuildFile; fileRef = 950070E719FB83BA00C29780 /* test.txt */; };
 		950070EC19FB8A3700C29780 /* Lemon Notes Logo (Aligned).png in Resources */ = {isa = PBXBuildFile; fileRef = 950070EB19FB8A3700C29780 /* Lemon Notes Logo (Aligned).png */; };
+		950B2C421A00296A00DD8A23 /* RiotDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 950B2C411A00296A00DD8A23 /* RiotDataManager.m */; };
 		955222BB19FDA7BD005AB935 /* TAPMatchViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 955222BA19FDA7BD005AB935 /* TAPMatchViewCell.m */; };
 		955222BD19FDB001005AB935 /* 2AM Productions Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 955222BC19FDB001005AB935 /* 2AM Productions Logo.png */; };
 /* End PBXBuildFile section */
@@ -53,6 +54,8 @@
 		950070E419FB83BA00C29780 /* Lemon Notes Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Notes Logo.png"; sourceTree = "<group>"; };
 		950070E719FB83BA00C29780 /* test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.txt; sourceTree = "<group>"; };
 		950070EB19FB8A3700C29780 /* Lemon Notes Logo (Aligned).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Notes Logo (Aligned).png"; sourceTree = "<group>"; };
+		950B2C401A00296A00DD8A23 /* RiotDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RiotDataManager.h; sourceTree = "<group>"; };
+		950B2C411A00296A00DD8A23 /* RiotDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RiotDataManager.m; sourceTree = "<group>"; };
 		950FB68C19FE37B1005F870F /* apikeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = apikeys.h; sourceTree = "<group>"; };
 		950FB68D19FE37B1005F870F /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		955222B919FDA7BD005AB935 /* TAPMatchViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPMatchViewCell.h; sourceTree = "<group>"; };
@@ -178,6 +181,8 @@
 			children = (
 				950FB68C19FE37B1005F870F /* apikeys.h */,
 				950FB68D19FE37B1005F870F /* Constants.h */,
+				950B2C401A00296A00DD8A23 /* RiotDataManager.h */,
+				950B2C411A00296A00DD8A23 /* RiotDataManager.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -308,6 +313,7 @@
 				8984EF2E19F61FC100C442FC /* main.m in Sources */,
 				8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */,
 				8984EF5C19F6341000C442FC /* TAPSignInViewController.m in Sources */,
+				950B2C421A00296A00DD8A23 /* RiotDataManager.m in Sources */,
 				89A86C0B19F8E60300477FC6 /* TAPStartGameViewController.m in Sources */,
 				955222BB19FDA7BD005AB935 /* TAPMatchViewCell.m in Sources */,
 				8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */,
