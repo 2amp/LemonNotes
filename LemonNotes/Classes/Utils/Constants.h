@@ -13,27 +13,36 @@
  */
 
 //riot api urls
-#define baseURL @"https://na.api.pvp.net"
+#define baseURL @"https://{region}.api.pvp.net"
 
 //static-data
-#define staticDataURL baseURL "/api/lol/static-data/%@/v1.2/"
-static NSString* kLoLStaticDataChampionList = staticDataURL @"champion"         apiKey;
-static NSString* kLoLStaticDataChampionId   = staticDataURL @"champion/%@"      apiKey;
-static NSString* kLoLStaticDataItemList     = staticDataURL @"item"             apiKey;
-static NSString* kLoLStaticDataItemId       = staticDataURL @"item/%@"          apiKey;
-static NSString* kLoLStaticDataMasteryList  = staticDataURL @"mastery"          apiKey;
-static NSString* kLoLStaticDataMasteryId    = staticDataURL @"mastery/%@"       apiKey;
-static NSString* kLoLStaticDataRuneList     = staticDataURL @"rune"             apiKey;
-static NSString* kLoLStaticDataRuneId       = staticDataURL @"rune/%@"          apiKey;
-static NSString* kLoLStaticDataSpellList    = staticDataURL @"summoner-spell"   apiKey;
-static NSString* kLoLStaticDataSpellId      = staticDataURL @"summoner-spell/%@"apiKey;
+#define pathStaticData baseURL "/api/lol/static-data/{region}/v1.2"
+static NSString* kLoLStaticDataChampionList = pathStaticData "/champion"         apiKey;
+static NSString* kLoLStaticDataChampionId   = pathStaticData "/champion/%@"      apiKey;
+static NSString* kLoLStaticDataItemList     = pathStaticData "/item"             apiKey;
+static NSString* kLoLStaticDataItemId       = pathStaticData "/item/%@"          apiKey;
+static NSString* kLoLStaticDataMasteryList  = pathStaticData "/mastery"          apiKey;
+static NSString* kLoLStaticDataMasteryId    = pathStaticData "/mastery/%@"       apiKey;
+static NSString* kLoLStaticDataRuneList     = pathStaticData "/rune"             apiKey;
+static NSString* kLoLStaticDataRuneId       = pathStaticData "/rune/%@"          apiKey;
+static NSString* kLoLStaticDataSpellList    = pathStaticData "/summoner-spell"   apiKey;
+static NSString* kLoLStaticDataSpellId      = pathStaticData "/summoner-spell/%@"apiKey;
 
 //summoner
-#define summonerURL baseURL "/api/lol/%@/v1.4/summoner/"
-static NSString* kLoLSummonerByName         = summonerURL   @"by-name/%@"       apiKey;
-static NSString* kLoLSummoner               = summonerURL   @"%@"               apiKey;
-static NSString* kLoLSummonerNames          = summonerURL   @"%@/name"          apiKey;
-static NSString* kLoLSummonerMasteries      = summonerURL   @"%@/masteries"     apiKey;
-static NSString* kLoLSummonerRunes          = summonerURL   @"%@/runes"         apiKey;
+#define pathSummoner baseURL "/api/lol/{region}/v1.4/summoner/"
+static NSString* kLoLSummonerByName         = pathSummoner "by-name/%@"       apiKey;
+static NSString* kLoLSummoner               = pathSummoner "%@"               apiKey;
+static NSString* kLoLSummonerNames          = pathSummoner "%@/name"          apiKey;
+static NSString* kLoLSummonerMasteries      = pathSummoner "%@/masteries"     apiKey;
+static NSString* kLoLSummonerRunes          = pathSummoner "%@/runes"         apiKey;
+
+
+NSURL* apiURL(NSString *call, NSString *region, NSString *param)
+{
+    NSString *format = [call stringByReplacingOccurrencesOfString:@"{region}" withString:region];
+    NSString *urlStr = [NSString stringWithFormat:format, param];
+    
+    return [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+}
 
 #endif
