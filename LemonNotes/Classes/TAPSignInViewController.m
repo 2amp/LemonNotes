@@ -278,6 +278,10 @@
     if ([segue.identifier isEqualToString:@"showStartGame"])
     {
         TAPStartGameViewController *vc = segue.destinationViewController;
+        UITabBarController *tabBarVC = segue.destinationViewController;
+        TAPStartGameViewController *startGameVC = tabBarVC.viewControllers[0];
+        startGameVC.summonerName = self.summonerName;
+        startGameVC.idNumber = self.summonerId;
     }
 }
 
