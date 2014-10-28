@@ -37,8 +37,8 @@
 }
 
 /**
- *
- *
+ * Method: init
+ * Usage: init for RiotDataManager
  * --------------------------
  *
  */
@@ -47,7 +47,7 @@
     self = [super init];
     if (self)
     {
-        //load versions
+        //load versions from userDefaults here
     }
     return self;
 }

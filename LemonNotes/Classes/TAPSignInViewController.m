@@ -23,10 +23,7 @@
  */
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    
-    NSLog(@"%@", apiURL(kLoLStaticDataChampionList, @"na", nil));
-}
+    [super viewDidLoad];}
 
 /**
  * Method: viewWillAppear:
@@ -176,9 +173,6 @@
         }
     };
 
-    NSString *summonerInfoRequestString = [NSString stringWithFormat:@"https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/%@?api_key=%@", self.summonerName, API_KEY];
-    NSURL *summonerInfoUrl = [NSURL URLWithString:[summonerInfoRequestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-
     // Completion handler for summonerInfoDataTask
     void (^summonerInfoCompletionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
     {
@@ -210,11 +204,9 @@
                     [defaults setObject:self.summonerName forKey:@"summonerName"];
                     self.summonerId = summonerInfo[[summonerInfo allKeys][0]][@"id"];
                     [defaults setObject:self.summonerId forKey:@"summonerId"];
-                    NSString *recentGamesRequestString = [NSString stringWithFormat:@"https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/%@?api_key=%@",
-                                                          self.summonerId, API_KEY];
-                    NSURL *recentGamesUrl = [NSURL URLWithString:[recentGamesRequestString
-                                                                  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-                    NSURLSessionDataTask *recentGamesDataTask = [self.urlSession dataTaskWithURL:recentGamesUrl
+                    
+                    NSURLSessionDataTask *recentGamesDataTask = [self.urlSession dataTaskWithURL: apiURL(kLoLMatchHistory, @"na",
+                                                                                [NSString stringWithFormat:@"%@", self.summonerId])
                                                                                completionHandler:recentGamesCompletionHandler];
                     [recentGamesDataTask resume];
                 }
@@ -237,7 +229,8 @@
         }
     };
 
-    NSURLSessionDataTask *summonerInfoDataTask = [self.urlSession dataTaskWithURL:summonerInfoUrl completionHandler:summonerInfoCompletionHandler];
+    NSURLSessionDataTask *summonerInfoDataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLSummonerByName, @"na", self.summonerName)
+                                                                completionHandler:summonerInfoCompletionHandler];
     [summonerInfoDataTask resume];
     [self.activityIndicator startAnimating];
 }
@@ -285,8 +278,6 @@
     if ([segue.identifier isEqualToString:@"showStartGame"])
     {
         TAPStartGameViewController *vc = segue.destinationViewController;
-        vc.summonerName = self.summonerName;
-        vc.idNumber = self.summonerId;
     }
 }
 
