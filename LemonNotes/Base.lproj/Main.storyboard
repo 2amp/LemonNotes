@@ -65,25 +65,6 @@
             <point key="canvasLocation" x="98" y="126"/>
         </scene>
         <!--Item-->
-        <scene sceneID="4vt-NY-uS8">
-            <objects>
-                <viewController id="yw0-Sf-pRZ" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="aLo-IB-m51"/>
-                        <viewControllerLayoutGuide type="bottom" id="2g0-aQ-h90"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="2Q1-ND-TUX">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="BPH-7o-S5g"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nkz-8l-Nei" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2131" y="725"/>
-        </scene>
-        <!--Item-->
         <scene sceneID="PXa-NC-SsV">
             <objects>
                 <viewController id="atR-Qs-Cne" customClass="TAPStartGameViewController" sceneMemberID="viewController">
@@ -180,7 +161,7 @@
             </objects>
             <point key="canvasLocation" x="2131" y="-85"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Item-->
         <scene sceneID="q73-Kj-dUf">
             <objects>
                 <tableViewController id="KRd-Bz-JlA" sceneMemberID="viewController">
@@ -189,7 +170,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="200" id="I6t-KV-zIO" customClass="TAPMatchViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="matchHistoryCell" rowHeight="200" id="I6t-KV-zIO" customClass="TAPMatchViewCell">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I6t-KV-zIO" id="4cW-bi-9i6">
@@ -232,7 +213,7 @@
                                             <rect key="frame" x="108" y="93" width="50" height="50"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Victory" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rsl-ZB-2SM">
-                                            <rect key="frame" x="8" y="14" width="100" height="21"/>
+                                            <rect key="frame" x="8" y="8" width="100" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
@@ -247,12 +228,13 @@
                             <outlet property="delegate" destination="KRd-Bz-JlA" id="qOQ-Xz-SNy"/>
                         </connections>
                     </tableView>
+                    <tabBarItem key="tabBarItem" title="Item" id="y47-DS-ibL"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Msv-EZ-30F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="697" y="705"/>
+            <point key="canvasLocation" x="2131" y="707"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="60V-rb-JSC">
@@ -266,7 +248,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="atR-Qs-Cne" kind="relationship" relationship="viewControllers" id="Lqa-Zk-ZEs"/>
-                        <segue destination="yw0-Sf-pRZ" kind="relationship" relationship="viewControllers" id="ZP7-cf-imQ"/>
+                        <segue destination="KRd-Bz-JlA" kind="relationship" relationship="viewControllers" id="21D-GU-QlV"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Obe-65-eWJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
