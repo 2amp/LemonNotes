@@ -205,7 +205,7 @@
                     self.summonerId = summonerInfo[[summonerInfo allKeys][0]][@"id"];
                     [defaults setObject:self.summonerId forKey:@"summonerId"];
                     
-                    NSURLSessionDataTask *recentGamesDataTask = [self.urlSession dataTaskWithURL: apiURL(kLoLMatchHistory, @"na",
+                    NSURLSessionDataTask *recentGamesDataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLMatchHistory, @"na",
                                                                                 [NSString stringWithFormat:@"%@", self.summonerId])
                                                                                completionHandler:recentGamesCompletionHandler];
                     [recentGamesDataTask resume];
@@ -277,7 +277,6 @@
 {
     if ([segue.identifier isEqualToString:@"showStartGame"])
     {
-        TAPStartGameViewController *vc = segue.destinationViewController;
         UITabBarController *tabBarVC = segue.destinationViewController;
         TAPStartGameViewController *startGameVC = tabBarVC.viewControllers[0];
         startGameVC.summonerName = self.summonerName;

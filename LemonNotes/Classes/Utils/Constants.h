@@ -55,7 +55,7 @@ static NSString* kLoLStatusRegion           = pathStatus    "/%@"               
 static NSString* kLoLMatch                  = pathMatch      "/%@"              apiKey; //{matchId}
 
 //match history
-#define pathMatchHistory baseURL "/api/lol/{reigion}/v2.2/matchhistory"
+#define pathMatchHistory baseURL "/api/lol/{region}/v2.2/matchhistory"
 static NSString* kLoLMatchHistory           = pathMatchHistory "/%@"            apiKey; //{summonerId}
 
 //stats
