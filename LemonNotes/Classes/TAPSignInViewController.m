@@ -3,6 +3,7 @@
 #import "TAPStartGameViewController.h"
 #import "Constants.h"
 #import "apikeys.h"
+#import "RiotDataManager.h"
 
 
 
@@ -67,6 +68,8 @@
             {
                 NSMutableDictionary *championIds = [NSMutableDictionary dictionaryWithDictionary:[championIdsDict objectForKey:@"data"]];
                 NSArray *keys = [championIds allKeys];
+                RiotDataManager* test = [RiotDataManager sharedManager];
+                NSString *format = @"INSERT INTO ChampionList(id, [key], name, title) values(%@, \"%@\", \"%@\", \"%@\")";
                 for (NSString *key in keys)
                 {
                     NSDictionary *info = [championIds objectForKey:key];
