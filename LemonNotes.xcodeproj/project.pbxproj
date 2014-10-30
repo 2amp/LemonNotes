@@ -635,6 +635,7 @@
 		894BFB231A008C76009A1F1F /* SummonerRevive.png in Resources */ = {isa = PBXBuildFile; fileRef = 894BF8B01A008C76009A1F1F /* SummonerRevive.png */; };
 		894BFB241A008C76009A1F1F /* SummonerSmite.png in Resources */ = {isa = PBXBuildFile; fileRef = 894BF8B11A008C76009A1F1F /* SummonerSmite.png */; };
 		894BFB251A008C76009A1F1F /* SummonerTeleport.png in Resources */ = {isa = PBXBuildFile; fileRef = 894BF8B21A008C76009A1F1F /* SummonerTeleport.png */; };
+		894BFB2E1A00B34D009A1F1F /* TAPMatchHistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 894BFB2D1A00B34D009A1F1F /* TAPMatchHistoryTableViewController.m */; };
 		8984EF2E19F61FC100C442FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF2D19F61FC100C442FC /* main.m */; };
 		8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF3219F61FC100C442FC /* LemonNotes.xcdatamodeld */; };
 		8984EF3A19F61FC100C442FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8984EF3819F61FC100C442FC /* Main.storyboard */; };
@@ -648,7 +649,6 @@
 		950070EA19FB83BA00C29780 /* test.txt in Resources */ = {isa = PBXBuildFile; fileRef = 950070E719FB83BA00C29780 /* test.txt */; };
 		950070EC19FB8A3700C29780 /* Lemon Notes Logo (Aligned).png in Resources */ = {isa = PBXBuildFile; fileRef = 950070EB19FB8A3700C29780 /* Lemon Notes Logo (Aligned).png */; };
 		950B2C421A00296A00DD8A23 /* RiotDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 950B2C411A00296A00DD8A23 /* RiotDataManager.m */; };
-		955222BB19FDA7BD005AB935 /* TAPMatchViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 955222BA19FDA7BD005AB935 /* TAPMatchViewCell.m */; };
 		955222BD19FDB001005AB935 /* 2AM Productions Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 955222BC19FDB001005AB935 /* 2AM Productions Logo.png */; };
 /* End PBXBuildFile section */
 
@@ -1292,6 +1292,8 @@
 		894BF8B01A008C76009A1F1F /* SummonerRevive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SummonerRevive.png; sourceTree = "<group>"; };
 		894BF8B11A008C76009A1F1F /* SummonerSmite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SummonerSmite.png; sourceTree = "<group>"; };
 		894BF8B21A008C76009A1F1F /* SummonerTeleport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SummonerTeleport.png; sourceTree = "<group>"; };
+		894BFB2C1A00B34D009A1F1F /* TAPMatchHistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPMatchHistoryTableViewController.h; sourceTree = "<group>"; };
+		894BFB2D1A00B34D009A1F1F /* TAPMatchHistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPMatchHistoryTableViewController.m; sourceTree = "<group>"; };
 		8984EF2819F61FC100C442FC /* LemonNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LemonNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8984EF2C19F61FC100C442FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8984EF2D19F61FC100C442FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1315,8 +1317,6 @@
 		950B2C411A00296A00DD8A23 /* RiotDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RiotDataManager.m; sourceTree = "<group>"; };
 		950FB68C19FE37B1005F870F /* apikeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = apikeys.h; sourceTree = "<group>"; };
 		950FB68D19FE37B1005F870F /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		955222B919FDA7BD005AB935 /* TAPMatchViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPMatchViewCell.h; sourceTree = "<group>"; };
-		955222BA19FDA7BD005AB935 /* TAPMatchViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPMatchViewCell.m; sourceTree = "<group>"; };
 		955222BC19FDB001005AB935 /* 2AM Productions Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2AM Productions Logo.png"; sourceTree = "<group>"; };
 		955222C119FDB023005AB935 /* 2AM Productions Logo.idraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = "2AM Productions Logo.idraw"; sourceTree = "<group>"; };
 		955222C219FDB023005AB935 /* Lemon Notes Logo.idraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lemon Notes Logo.idraw"; sourceTree = "<group>"; };
@@ -2061,9 +2061,10 @@
 				950FB68B19FE37B1005F870F /* Utils */,
 				8984EF5919F6341000C442FC /* TAPSignInViewController.h */,
 				8984EF5A19F6341000C442FC /* TAPSignInViewController.m */,
-				955222B819FD92EE005AB935 /* MatchHistory */,
 				89A86C0919F8E60300477FC6 /* TAPStartGameViewController.h */,
 				89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */,
+				894BFB2C1A00B34D009A1F1F /* TAPMatchHistoryTableViewController.h */,
+				894BFB2D1A00B34D009A1F1F /* TAPMatchHistoryTableViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -2103,15 +2104,6 @@
 				950B2C411A00296A00DD8A23 /* RiotDataManager.m */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		955222B819FD92EE005AB935 /* MatchHistory */ = {
-			isa = PBXGroup;
-			children = (
-				955222B919FDA7BD005AB935 /* TAPMatchViewCell.h */,
-				955222BA19FDA7BD005AB935 /* TAPMatchViewCell.m */,
-			);
-			path = MatchHistory;
 			sourceTree = "<group>";
 		};
 		955222C019FDB023005AB935 /* Source */ = {
@@ -2857,11 +2849,11 @@
 			files = (
 				8984EF2E19F61FC100C442FC /* main.m in Sources */,
 				894BF63B1A008858009A1F1F /* UIImage+UIImageAdditions.m in Sources */,
+				894BFB2E1A00B34D009A1F1F /* TAPMatchHistoryTableViewController.m in Sources */,
 				8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */,
 				8984EF5C19F6341000C442FC /* TAPSignInViewController.m in Sources */,
 				950B2C421A00296A00DD8A23 /* RiotDataManager.m in Sources */,
 				89A86C0B19F8E60300477FC6 /* TAPStartGameViewController.m in Sources */,
-				955222BB19FDA7BD005AB935 /* TAPMatchViewCell.m in Sources */,
 				8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

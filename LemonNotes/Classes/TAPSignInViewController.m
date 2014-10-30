@@ -1,6 +1,7 @@
 
 #import "TAPSignInViewController.h"
 #import "TAPStartGameViewController.h"
+#import "TAPMatchHistoryTableViewController.h"
 #import "Constants.h"
 #import "apikeys.h"
 
@@ -142,7 +143,6 @@
         if (!error)
         {
             NSError* jsonParsingError = nil;
-            NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
             NSDictionary* recentGames = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParsingError];
             if (jsonParsingError)
             {
@@ -154,6 +154,7 @@
             else
             {
                 NSLog(@"%@", recentGames[@"matches"]);
+                self.recentGames = recentGames[@"matches"];
                 for (NSDictionary *match in recentGames[@"matches"])
                 {
                     NSLog(@"%@", match[@"participants"][0][@"championId"]);
@@ -281,6 +282,9 @@
         TAPStartGameViewController *startGameVC = tabBarVC.viewControllers[0];
         startGameVC.summonerName = self.summonerName;
         startGameVC.idNumber = self.summonerId;
+        TAPMatchHistoryTableViewController *matchHistoryVC = tabBarVC.viewControllers[1];
+        matchHistoryVC.recentGames = self.recentGames;
+        matchHistoryVC.championIds = self.championIds;
     }
 }
 

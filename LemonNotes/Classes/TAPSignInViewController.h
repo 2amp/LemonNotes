@@ -14,7 +14,8 @@
 @property (nonatomic, strong) NSURLSession *urlSession;
 @property (nonatomic) NSString *summonerName;
 @property (nonatomic) NSNumber *summonerId;
-@property (nonatomic) NSDictionary *championIds;
+@property (nonatomic) NSArray *recentGames;
+@property (nonatomic) NSDictionary *championIds; // eventually move to RiotDataManager?
 
 @property (weak, nonatomic) IBOutlet UITextField *signInField;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
