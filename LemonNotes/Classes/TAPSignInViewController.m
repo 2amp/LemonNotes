@@ -3,6 +3,7 @@
 #import "TAPStartGameViewController.h"
 #import "Constants.h"
 #import "apikeys.h"
+#import "DBManager.h"
 #import "RiotDataManager.h"
 
 
@@ -24,7 +25,8 @@
  */
 - (void)viewDidLoad
 {
-    [super viewDidLoad];}
+    [super viewDidLoad];
+}
 
 /**
  * Method: viewWillAppear:
@@ -39,6 +41,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    DBManager *test = [[DBManager alloc] init];
+    [test openDBWithFilename:@"LoLStaticData.sql"];
+    NSArray *cols = [test runResultsQuery:@"SELECT * FROM ChampionList"];
+    [test closeDB];
+    NSLog(@"Champions: %@", cols);
     
     //checks stored summonerName, if exists, enter it to signInField
     NSString *savedSummonerName = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerName"];
@@ -68,8 +76,6 @@
             {
                 NSMutableDictionary *championIds = [NSMutableDictionary dictionaryWithDictionary:[championIdsDict objectForKey:@"data"]];
                 NSArray *keys = [championIds allKeys];
-                RiotDataManager* test = [RiotDataManager sharedManager];
-                NSString *format = @"INSERT INTO ChampionList(id, [key], name, title) values(%@, \"%@\", \"%@\", \"%@\")";
                 for (NSString *key in keys)
                 {
                     NSDictionary *info = [championIds objectForKey:key];

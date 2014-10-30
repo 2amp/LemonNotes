@@ -12,6 +12,5 @@
 @interface RiotDataManager : NSObject
 
 + (RiotDataManager *)sharedManager;
-- (void)runQuery:(const char*)query isExectuable:(BOOL)executable;
 
 @end

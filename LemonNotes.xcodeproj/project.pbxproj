@@ -25,6 +25,7 @@
 		951E464D1A00CD170073BD2D /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 951E464C1A00CD170073BD2D /* libsqlite3.dylib */; };
 		951E464F1A00D2460073BD2D /* LoLStaticData.sql in Resources */ = {isa = PBXBuildFile; fileRef = 951E464E1A00D2460073BD2D /* LoLStaticData.sql */; };
 		955222BB19FDA7BD005AB935 /* TAPMatchViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 955222BA19FDA7BD005AB935 /* TAPMatchViewCell.m */; };
+		95F2E0F31A020E9E00B15F11 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F2E0F21A020E9E00B15F11 /* DBManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,8 @@
 		951E464E1A00D2460073BD2D /* LoLStaticData.sql */ = {isa = PBXFileReference; lastKnownFileType = file; path = LoLStaticData.sql; sourceTree = "<group>"; };
 		955222B919FDA7BD005AB935 /* TAPMatchViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPMatchViewCell.h; sourceTree = "<group>"; };
 		955222BA19FDA7BD005AB935 /* TAPMatchViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPMatchViewCell.m; sourceTree = "<group>"; };
+		95F2E0F11A020E9E00B15F11 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
+		95F2E0F21A020E9E00B15F11 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +179,8 @@
 			children = (
 				950FB68C19FE37B1005F870F /* apikeys.h */,
 				950FB68D19FE37B1005F870F /* Constants.h */,
+				95F2E0F11A020E9E00B15F11 /* DBManager.h */,
+				95F2E0F21A020E9E00B15F11 /* DBManager.m */,
 				950B2C401A00296A00DD8A23 /* RiotDataManager.h */,
 				950B2C411A00296A00DD8A23 /* RiotDataManager.m */,
 			);
@@ -341,6 +346,7 @@
 				89A86C0B19F8E60300477FC6 /* TAPStartGameViewController.m in Sources */,
 				955222BB19FDA7BD005AB935 /* TAPMatchViewCell.m in Sources */,
 				8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */,
+				95F2E0F31A020E9E00B15F11 /* DBManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
