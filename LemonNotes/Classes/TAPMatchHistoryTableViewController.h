@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TAPMatchHistoryTableViewController : UITableViewController
+@interface TAPMatchHistoryTableViewController : UIViewController
 
 @property (nonatomic) NSDictionary *championIds;
 @property (nonatomic) NSArray *recentGames;
