@@ -15,7 +15,7 @@
 /**
  * @method viewDidLoad
  * 
- * Called when VC enters screen
+ * Called when view is loaded to memory
  * Sets the summoner name label text to the name of the summoner.
  */
 - (void)viewDidLoad

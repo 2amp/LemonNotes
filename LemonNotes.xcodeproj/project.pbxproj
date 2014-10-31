@@ -2135,14 +2135,14 @@
 		950FB68B19FE37B1005F870F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				89591DE71A03136000F00637 /* DBManager.h */,
-				89591DE81A03136000F00637 /* DBManager.m */,
-				894BF6391A008858009A1F1F /* UIImage+UIImageAdditions.h */,
-				894BF63A1A008858009A1F1F /* UIImage+UIImageAdditions.m */,
 				950FB68C19FE37B1005F870F /* apikeys.h */,
 				950FB68D19FE37B1005F870F /* Constants.h */,
+				89591DE71A03136000F00637 /* DBManager.h */,
+				89591DE81A03136000F00637 /* DBManager.m */,
 				950B2C401A00296A00DD8A23 /* RiotDataManager.h */,
 				950B2C411A00296A00DD8A23 /* RiotDataManager.m */,
+				894BF6391A008858009A1F1F /* UIImage+UIImageAdditions.h */,
+				894BF63A1A008858009A1F1F /* UIImage+UIImageAdditions.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
