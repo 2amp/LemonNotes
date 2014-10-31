@@ -18,9 +18,10 @@
 
 + (RiotDataManager *)sharedManager;
 
-- (void)updateChampionList;
-- (void)updateSummonerSpellList;
+- (void)updateChampionIds;
+- (void)updateSummonerSpells;
 - (NSString *)championNameForId:(NSNumber *)championId;
 - (NSString *)championKeyForId:(NSNumber *)championId;
+- (NSString *)summonerSpellKeyForId:(NSNumber *)spellId;
 
 @end

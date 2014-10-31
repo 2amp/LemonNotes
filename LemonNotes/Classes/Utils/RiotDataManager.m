@@ -91,13 +91,11 @@
 
 #pragma mark - Champion Static Data Methods
 /**
- * @method updateChampionList
- *
  * Updates the championIds dictionary by calling Riot API.
  * @note Currently uses NSURLSession, but should call 
  *       some sort of NetworkManager to take care of networking.
  */
-- (void)updateChampionList
+- (void)updateChampionIds
 {
     /// maps champion names to ids
     void (^completionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
@@ -128,11 +126,9 @@
 }
 
 /**
- * @method updateSummonerSpellList
- *
  * Updates the summoner spell dictionary by calling Riot API.
  */
-- (void)updateSummonerSpellList
+- (void)updateSummonerSpells
 {
     /// maps summoner spell ids to names
     void (^completionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
@@ -194,6 +190,11 @@
 - (NSString *)championKeyForId:(NSNumber *)championId
 {
     return self.championIds[championId][@"key"];
+}
+
+- (NSString *)summonerSpellKeyForId:(NSNumber *)spellId
+{
+    return self.summonerSpells[spellId][@"key"];
 }
 
 @end
