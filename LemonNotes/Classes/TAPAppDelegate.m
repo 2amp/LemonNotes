@@ -1,12 +1,7 @@
-//
-//  AppDelegate.m
-//  LemonNotes
-//
-//  Created by Christopher Fu on 10/21/14.
-//  Copyright (c) 2014 2 AM Productions. All rights reserved.
-//
 
 #import "TAPAppDelegate.h"
+#import "RiotDataManager.h"
+
 
 @interface TAPAppDelegate ()
 
@@ -23,6 +18,7 @@
         @"summonerId": [NSNumber numberWithInt:0]
     };
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
+    [RiotDataManager sharedManager];
     return YES;
 }
 

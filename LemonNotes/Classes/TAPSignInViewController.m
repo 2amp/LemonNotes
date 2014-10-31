@@ -3,9 +3,7 @@
 #import "TAPStartGameViewController.h"
 #import "TAPMatchHistoryTableViewController.h"
 #import "Constants.h"
-#import "apikeys.h"
 #import "DBManager.h"
-#import "RiotDataManager.h"
 
 
 

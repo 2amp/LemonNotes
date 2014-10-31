@@ -7,6 +7,8 @@
 //
 
 #import "TAPMatchHistoryTableViewController.h"
+#import "RiotDataManager.h"
+#import "UIImage+UIImageAdditions.h"
 
 @interface TAPMatchHistoryTableViewController ()
 
@@ -57,8 +59,12 @@
     {
         outcome.text = @"Defeat";
     }
+    UIImageView *championImageView = (UIImageView *)[cell viewWithTag:101];
+    NSString *imagePath = [NSString stringWithFormat:@"%@.png", [[RiotDataManager sharedManager] championKeyForId:participant[@"championId"]]];
+    UIImage *championImage = [UIImage imageNamed:imagePath scaledToWidth:60 height:60];
+    championImageView.image = championImage;
     UILabel *championName = (UILabel *)[cell viewWithTag:102];
-    championName.text = self.championIds[participant[@"championId"]][@"name"];
+    championName.text = [[RiotDataManager sharedManager] championNameForId:participant[@"championId"]];
     return cell;
 }
 

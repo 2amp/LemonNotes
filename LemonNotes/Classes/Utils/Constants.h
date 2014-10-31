@@ -95,7 +95,7 @@ static NSString* kLoLTeam                   = pathTeam      "/%@"               
  * @param param - any parameters to pass in API call
  * @return NSURL* with correct URL string for API call
  */
-NSURL* apiURL(NSString *call, NSString *region, NSString *param)
+static inline NSURL* apiURL(NSString *call, NSString *region, NSString *param)
 {
     NSString *format = [call stringByReplacingOccurrencesOfString:@"{region}" withString:region];
     NSString *urlStr = [NSString stringWithFormat:format, param];

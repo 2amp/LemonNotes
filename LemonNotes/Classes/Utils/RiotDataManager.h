@@ -13,4 +13,7 @@
 
 + (RiotDataManager *)sharedManager;
 
+- (NSString *)championNameForId:(NSNumber *)championId;
+- (NSString *)championKeyForId:(NSNumber *)championId;
+
 @end
