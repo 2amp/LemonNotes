@@ -1,16 +1,16 @@
 
+/**
+ * @header Constants.h
+ *
+ * Defines all the Riot API URL call patterns as constants.
+ * Provides convenient static C function to get API URL
+ * using one of the defined patterns and other params.
+ */
 #ifndef LemonNotes_Constants_h
 #define LemonNotes_Constants_h
 
+///apiKey should be defined individually
 #import "apikeys.h"
-
-/**
- * File: Constants
- * Type: Header
- * --------------------------
- * Defines all the Riot API call URLs as constants.
- * Every URL's first param must be the region.
- */
 
 //riot api urls
 #define baseURL @"https://{region}.api.pvp.net"
@@ -79,21 +79,21 @@ static NSString* kLoLTeam                   = pathTeam      "/%@"               
 
 
 /**
- * Func: apiURL
- * Usage: static c function for getting Riot API URLs
- * --------------------------
+ * @function apiURL
+ * @breif Usage: static c function for getting Riot API URLs
+ *
  * Given one of the call formats constants defined, a region, and param
  * returns a NSURL pointer with the correct API call.
  *
- * NOTE: Caller should know whether call contains a param.
+ * @note Caller should know whether call contains a param.
  *       Giving a param to an API call without parameters will not cause an error,
  *       but caller should pass param as nil when API call doesn't require one.
  *       Some API calls also allow for comma-separated IDs.
  *
- * @param call - one of the predefined call formats
+ * @param call   - one of the predefined call formats
  * @param region - region of API call
- * @param param - any parameters to pass in API call
- * @return NSURL* with correct URL string for API call
+ * @param param  - any parameters to pass in API call
+ * @return NSURL object with correct API call with given params
  */
 static inline NSURL* apiURL(NSString *call, NSString *region, NSString *param)
 {

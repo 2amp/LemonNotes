@@ -6,7 +6,6 @@
 #import "RiotDataManager.h"
 
 
-
 @interface TAPSignInViewController ()
 
 @end
@@ -17,10 +16,9 @@
 
 #pragma mark View Messages
 /**
- * Method: viewDidLoad
- * Usage: called when view has loaded
- * --------------------------
- *
+ * @method viewDidLoad
+ * 
+ * Called when view enters the screen
  */
 - (void)viewDidLoad
 {
@@ -28,18 +26,15 @@
 }
 
 /**
- * Method: viewWillAppear:
- * Usage: called when view will appear
- * --------------------------
+ * @method viewWillAppear:
+ *
  * If a successful summoner search was previously made, set the sign in field 
  * text to the last summoner name that was searched.
- * Initializes an NSURLSession instance for data requests. 
+ * Initializes an NSURLSession instance for data requests.
  */
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    [RiotDataManager sharedManager];
     
     //checks stored summonerName, if exists, enter it to signInField
     NSString *savedSummonerName = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerName"];
@@ -56,26 +51,27 @@
 }
 
 /**
- * Method: didReceiveMemoryWarning
- * Usage: called when memory warning is fired
- * --------------------------
+ * @method didReceiveMemoryWarning
  *
+ * Called when VC receives memory warning
  */
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
 
+
+
 #pragma mark - Controller Event Callbacks
 /**
- * Method: textFieldShouldReturn
- * Usag: called when user taps "Done" on textField
- * --------------------------
- * Sets summonerName as entered text. Removes keyboard with 
- * resignFirstResponder. Calls signIn.
+ * @method textFieldShouldReturn
  *
- * @param textField
- * @return BOOL - YES to implement default textField behavior
+ * Called when user taps "Done" on textField.
+ * Sets summonerName as entered text. 
+ * Removes keyboard with resignFirstResponder and calls signIn.
+ *
+ * @param textField textField with enetered summonerName
+ * @return YES to implement default textField behavior
  */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -88,11 +84,12 @@
 }
 
 /**
+ * @method signIn
+ *
  * Makes the summoner name info API call.
  * If the entered summoner name was not found, display an error. 
  * Otherwise, segue to the start game view controller with the provided summoner info.
- * In addition, add the summoner name and ID numbers to the standard user 
- * defaults.
+ * In addition, add the summoner name and ID numbers to the standard user defaults.
  */
 - (void)signIn
 {
@@ -202,15 +199,11 @@
 
 #pragma mark - Alert Methods
 /**
- * Method: showAlertWithTitle:message:
- * Usage: pop alert window on screen
- * --------------------------
+ * @method showAlertWithTitle:message:
+ *
  * Creates an UIAlertView object with the given title & message
  * along with self as delegate, "OK" as cancel button, and no other buttons.
  * Immediately shows the window
- *
- * @param title
- * @param message
  */
 - (void)showAlertWithTitle:(NSString *)title message:(NSString *)message
 {
@@ -226,16 +219,11 @@
 
 #pragma mark - Navigation Events
 /**
- * Method: prepareForSegue:sender
- * Usage: Automatically called when performing a segue to the next view
- * controller.
- * --------------------------
- * Sets up the start game view controller with the summoner name and ID number
- * that was fetched earlier.
- * Sets up the match history view controller with the fetched recent games.
+ * @method prepareForSegue:sender:
  *
- * @param segue
- * @param sender
+ * Automatically called when performing a segue to the next view controller.
+ * Sets up the start game view controller with the summoner name and ID number that was fetched earlier.
+ * Sets up the match history view controller with the fetched recent games.
  */
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
