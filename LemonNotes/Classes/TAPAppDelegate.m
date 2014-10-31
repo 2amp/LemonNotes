@@ -21,7 +21,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //data updates
-    [[RiotDataManager sharedManager] updateChampionList];
+    [[RiotDataManager sharedManager] updateChampionIds];
+    [[RiotDataManager sharedManager] updateSummonerSpells];
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"summonerId"];
     NSString *summonerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerId"];
  
     //programmatically setup initialVC
