@@ -3,8 +3,6 @@
 #import "TAPStartGameViewController.h"
 #import "TAPMatchHistoryTableViewController.h"
 #import "Constants.h"
-#import "RiotDataManager.h"
-
 
 
 @interface TAPSignInViewController ()
@@ -17,52 +15,51 @@
 
 #pragma mark View Messages
 /**
- *
+ * @method viewDidLoad
+ * 
+ * Called when view enters the screen
  */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    self.urlSession = [NSURLSession sessionWithConfiguration:config];
 }
 
 /**
+ * @method viewWillAppear:
+ *
  * If a successful summoner search was previously made, set the sign in field 
  * text to the last summoner name that was searched.
- * Initializes an NSURLSession instance for data requests. 
+ * Initializes an NSURLSession instance for data requests.
  */
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    [RiotDataManager sharedManager];
-    
-    //checks stored summonerName, if exists, enter it to signInField
-    NSString *savedSummonerName = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerName"];
-    if (savedSummonerName != nil && ![savedSummonerName isEqualToString:@""])
-    {
-        self.signInField.text = savedSummonerName;
-    }
-    
-
-    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    self.urlSession = [NSURLSession sessionWithConfiguration:config];
-    
-    // champion names to ids mapping moved to RiotDataManager
 }
 
 /**
+ * @method didReceiveMemoryWarning
  *
+ * Called when VC receives memory warning
  */
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
 
+
+
 #pragma mark - Controller Event Callbacks
 /**
- * Sets summonerName as entered text. Removes keyboard with 
- * resignFirstResponder. Calls signIn.
+ * @method textFieldShouldReturn
  *
- * @param textField the text field
+ * Called when user taps "Done" on textField.
+ * Sets summonerName as entered text. 
+ * Removes keyboard with resignFirstResponder and calls signIn.
+ *
+ * @param textField textField with enetered summonerName
  * @return YES to implement default textField behavior
  */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -76,11 +73,12 @@
 }
 
 /**
+ * @method signIn
+ *
  * Makes the summoner name info API call.
  * If the entered summoner name was not found, display an error. 
  * Otherwise, segue to the start game view controller with the provided summoner info.
- * In addition, add the summoner name and ID numbers to the standard user 
- * defaults.
+ * In addition, add the summoner name and ID numbers to the standard user defaults.
  */
 - (void)signIn
 {
@@ -111,7 +109,7 @@
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.activityIndicator stopAnimating];
-                    [self performSegueWithIdentifier:@"showStartGame" sender:self];
+                    [self performSegueWithIdentifier:@"showMain" sender:self];
                 });
             }
         }
@@ -150,11 +148,12 @@
                     // at least it works.
                     // Once we have verified that the entered summoner name is valid, add it to
                     // [NSUserDefaults standardUserDefaults].
-                    NSLog(@"Saving user info!");
                     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                     [defaults setObject:self.summonerName forKey:@"summonerName"];
                     self.summonerId = summonerInfo[[summonerInfo allKeys][0]][@"id"];
                     [defaults setObject:self.summonerId forKey:@"summonerId"];
+                    [defaults synchronize];
+                    
                     
                     NSURLSessionDataTask *recentGamesDataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLMatchHistory, @"na",
                                                                                 [NSString stringWithFormat:@"%@", self.summonerId])
@@ -190,12 +189,11 @@
 
 #pragma mark - Alert Methods
 /**
+ * @method showAlertWithTitle:message:
+ *
  * Creates an UIAlertView object with the given title & message
  * along with self as delegate, "OK" as cancel button, and no other buttons.
  * Immediately shows the window
- *
- * @param title the title of the alert
- * @param message the message of the alert
  */
 - (void)showAlertWithTitle:(NSString *)title message:(NSString *)message
 {
@@ -211,12 +209,11 @@
 
 #pragma mark - Navigation Events
 /**
- * Sets up the start game view controller with the summoner name and ID number
- * that was fetched earlier.
- * Sets up the match history view controller with the fetched recent games.
+ * @method prepareForSegue:sender:
  *
- * @param segue the segue
- * @param sender the sender
+ * Automatically called when performing a segue to the next view controller.
+ * Sets up the start game view controller with the summoner name and ID number that was fetched earlier.
+ * Sets up the match history view controller with the fetched recent games.
  */
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

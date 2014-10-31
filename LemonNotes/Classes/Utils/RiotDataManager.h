@@ -3,11 +3,13 @@
 
 /**
  * @class RiotDataManager
- * @brief Singleton manager to get LoL related data.
+ * @brief RiotDataManager
  *
- * Manages various static data so that it does not have to be passed among view
- * controllers.
- * Currently only contains a dictionary of champion ID number to info mappings.
+ * RiotDataManager acts as a intermeidate class for
+ * ViewControllers to fetch various LoL static data
+ * so that every class does not implement its own data retrieval.
+ * 
+ * @note Currently only contains a dictionary of champion ID number to info mappings.
  *
  * @author Bohui Moon, Chris Fu
  * @version 0.1
@@ -16,6 +18,7 @@
 
 + (RiotDataManager *)sharedManager;
 
+- (void)updateChampionList;
 - (NSString *)championNameForId:(NSNumber *)championId;
 - (NSString *)championKeyForId:(NSNumber *)championId;
 

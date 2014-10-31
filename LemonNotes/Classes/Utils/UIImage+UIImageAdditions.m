@@ -6,10 +6,16 @@
 @implementation UIImage (UIImageAdditions)
 
 /**
- * Method: imageNamed:scaledToWidth:height:
- * Usage: [UIImage imageNamed:path scaledToWidth:width height:height]
- * --------------------------
+ * @method imageNamed:scaledToWidth:height:
+ * 
+ * @brief [UIImage imageNamed:path scaledToWidth:width height:height]
+ *
  * Returns a UIImage from the provided path scaled to the provided dimensions.
+ *
+ * @param name      NSString of the image
+ * @param width     CGFloat value of width
+ * @param height    CGFloat value of height
+ * @return UIImage object with given name and dimension
  */
 + (UIImage *)imageNamed:(NSString *)name scaledToWidth:(CGFloat)width height:(CGFloat)height
 {

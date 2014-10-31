@@ -8,13 +8,16 @@
 @interface TAPMatchHistoryTableViewController ()
 
 @end
+#pragma mark -
 
 
 
 @implementation TAPMatchHistoryTableViewController
-#pragma mark - Init Methods
+#pragma mark Init Methods
 /**
+ * @method viewDidLoad
  *
+ * Called when VC enters screen
  */
 - (void)viewDidLoad
 {
@@ -28,40 +31,55 @@
 }
 
 /**
- *
+ * @method didReceiveMemoryWarning
+ * 
+ * Called when VC is overusing memory
  */
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+
+
 #pragma mark - Table View Data Source Methods
 /**
- * The match history table view only has one section.
+ * @method numberOfSectionsInTableView:
+ *
+ * Returns 1 because match history only has 1 section
+ *
+ * @param tableView requesting the data
+ * @return 1
  */
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
 
 /**
- * Method: tableView:numberOfRowsInSection:
- * Usage: called automatically
- * --------------------------
+ * @method tableView:numberOfRowsInSection:
  *
+ * Returns the number of recentGames
+ *
+ * @param tableView requesting the data
+ * @param section   to get number of rows
+ * @return number of rows in given section
  */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     return self.recentGames.count;
 }
 
 /**
- * Generates a match history table cell based on the matchHistoryCell prototype 
+ * @method tableView:cellForRowAtIndexPath
+ *
+ * Generates a match history table cell based on the matchHistoryCell prototype
  * in Main.storyboard.
- * @param tableView the table view
+ *
+ * @param tableView requesting data
  * @param indexPath the index path of the requested cell
+ * @return cell containing critical match information
  *
  * @code View tags
  * 100: (UILabel *)         Outcome label
