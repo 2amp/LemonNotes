@@ -8,6 +8,7 @@
 
 @property (nonatomic) NSURLSession *urlSession;
 @property (nonatomic) NSDictionary *championIds;
+@property (nonatomic) NSDictionary *summonerSpells;
 
 - (BOOL)version:(NSString *)newVersion isHigherThan:(NSString *)currentVersion;
 
@@ -124,6 +125,48 @@
     NSURLSessionDataTask *dataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLStaticDataChampionList, @"na", nil)
                                                     completionHandler:completionHandler];
     [dataTask resume];
+}
+
+/**
+ * @method updateSummonerSpellList
+ *
+ * Updates the summoner spell dictionary by calling Riot API.
+ */
+- (void)updateSummonerSpellList
+{
+    /// maps summoner spell ids to names
+    void (^completionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
+    {
+        if (!error)
+        {
+            NSError* jsonParsingError = nil;
+            NSDictionary* summonerSpellsDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParsingError];
+            if (jsonParsingError)
+            {
+                NSLog(@"%@", jsonParsingError);
+            }
+            else
+            {
+                NSMutableDictionary *summonerSpells = [NSMutableDictionary dictionaryWithDictionary:[summonerSpellsDict objectForKey:@"data"]];
+                NSArray *keys = [summonerSpells allKeys];
+                for (NSString *key in keys)
+                {
+                    NSDictionary *info = [summonerSpells objectForKey:key];
+                    [summonerSpells removeObjectForKey:key];
+                    [summonerSpells setObject:info forKey:[info objectForKey:@"id"]];
+                }
+                self.summonerSpells = [NSDictionary dictionaryWithDictionary:summonerSpells];
+            }
+        }
+        else
+        {
+            NSLog(@"There was an error with the champion API call!");
+        }
+    };
+    NSURLSessionDataTask *dataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLStaticDataSpellList, @"na", nil)
+                                                    completionHandler:completionHandler];
+    [dataTask resume];
+
 }
 
 /**
