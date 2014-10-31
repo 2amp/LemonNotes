@@ -12,7 +12,7 @@
 @property (nonatomic, weak) IBOutlet UILabel* summonerRankLabel;
 @property (nonatomic, weak) IBOutlet UIImageView* summonerIconView;
 
-- (void)updateSummonerInfo;
+- (IBAction)update:(id)sender;
 
 @end
 
@@ -26,12 +26,7 @@
 {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
     {
-        [self updateSummonerInfo];
         
-        NSString *iconPath = [NSString stringWithFormat:@"%@.png", [self.summonerInfo objectForKey:@"profileIconId"]];
-        self.summonerIconView.image = [UIImage imageNamed:iconPath scaledToWidth:100 height:100];
-        self.summonerNameLabel.text = (NSString *)[self.summonerInfo objectForKey:@"name"];
-        self.summonerRankLabel.text = [NSString stringWithFormat:@"Level %@", [self.summonerInfo objectForKey:@"summonerLevel"]];
     }
     return self;
 }
@@ -44,6 +39,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self update:self];
 }
 
 
@@ -54,7 +51,7 @@
  *
  *
  */
-- (void)updateSummonerInfo
+- (IBAction)update:(id)sender
 {
     NSString *summonerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerId"];
     NSLog(@"summonerId: %@", summonerId);
@@ -63,7 +60,13 @@
     {
         NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         self.summonerInfo = jsonData[ [jsonData allKeys][0] ];
-        NSLog(@"%@", [self.summonerInfo objectForKey:@"name"]);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *iconPath = [NSString stringWithFormat:@"%@.png", [self.summonerInfo objectForKey:@"profileIconId"]];
+            self.summonerIconView.image = [UIImage imageNamed:iconPath scaledToWidth:100 height:100];
+            self.summonerNameLabel.text = [self.summonerInfo objectForKey:@"name"];
+            self.summonerRankLabel.text = [NSString stringWithFormat:@"Level %@", [self.summonerInfo objectForKey:@"summonerLevel"]];
+        });
     };
     
     NSURLSessionDataTask *summonerInfoDataTask = [[NSURLSession sharedSession]
