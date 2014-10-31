@@ -33,9 +33,7 @@
  * --------------------------
  * If a successful summoner search was previously made, set the sign in field 
  * text to the last summoner name that was searched.
- * Initializes an NSURLSession instance for data requests. Performs a champion
- * ID data request to populate self.championIds with a dictionary mapping each
- * champion ID to the name of the champion.
+ * Initializes an NSURLSession instance for data requests. 
  */
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -50,48 +48,11 @@
         self.signInField.text = savedSummonerName;
     }
     
-    //maps champion names to ids
+
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     self.urlSession = [NSURLSession sessionWithConfiguration:config];
     
-    void (^completionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
-    {
-        if (!error)
-        {
-            NSError* jsonParsingError = nil;
-            NSDictionary* championIdsDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParsingError];
-            if (jsonParsingError)
-            {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.activityIndicator stopAnimating];
-                    [self showAlertWithTitle:@"JSON Error" message:[jsonParsingError localizedDescription]];
-                });
-            }
-            else
-            {
-                NSMutableDictionary *championIds = [NSMutableDictionary dictionaryWithDictionary:[championIdsDict objectForKey:@"data"]];
-                NSArray *keys = [championIds allKeys];
-                for (NSString *key in keys)
-                {
-                    NSDictionary *info = [championIds objectForKey:key];
-                    [championIds removeObjectForKey:key];
-                    [championIds setObject:info forKey:[info objectForKey:@"id"]];
-                }
-                self.championIds = [NSDictionary dictionaryWithDictionary:championIds];
-            }
-        }
-        else
-        {
-            NSLog(@"There was an error with the champion API call!");
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.activityIndicator stopAnimating];
-            });
-        }
-        
-    };
-    NSURLSessionDataTask *dataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLStaticDataChampionList, @"na", nil)
-                                                    completionHandler:completionHandler];
-    [dataTask resume];
+    // champion names to ids mapping moved to RiotDataManager
 }
 
 /**
@@ -104,8 +65,6 @@
 {
     [super didReceiveMemoryWarning];
 }
-
-
 
 #pragma mark - Controller Event Callbacks
 /**
@@ -154,7 +113,10 @@
             else
             {
                 NSLog(@"%@", recentGames[@"matches"]);
-                self.recentGames = recentGames[@"matches"];
+                // for some reason matchhistory gives matches from oldest to most recent,
+                // so reverse the recentGames array to prepare for display on table view
+                // in TAPMatchHistoryViewController
+                self.recentGames = [[recentGames[@"matches"] reverseObjectEnumerator] allObjects];
                 for (NSDictionary *match in recentGames[@"matches"])
                 {
                     NSLog(@"%@", match[@"participants"][0][@"championId"]);
@@ -270,6 +232,7 @@
  * --------------------------
  * Sets up the start game view controller with the summoner name and ID number
  * that was fetched earlier.
+ * Sets up the match history view controller with the fetched recent games.
  *
  * @param segue
  * @param sender
@@ -284,7 +247,6 @@
         startGameVC.idNumber = self.summonerId;
         TAPMatchHistoryTableViewController *matchHistoryVC = tabBarVC.viewControllers[1];
         matchHistoryVC.recentGames = self.recentGames;
-        matchHistoryVC.championIds = self.championIds;
     }
 }
 

@@ -3,12 +3,22 @@
 #import "UIImage+UIImageAdditions.h"
 #import "RiotDataManager.h"
 
+
+
 @interface TAPMatchHistoryTableViewController ()
 
 @end
 
-@implementation TAPMatchHistoryTableViewController
 
+
+@implementation TAPMatchHistoryTableViewController
+#pragma mark - Init Methods
+/**
+ * Method: viewDidLoad
+ * Usage: called when view has loaded
+ * --------------------------
+ *
+ */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -20,24 +30,55 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+/**
+ * Method: didReceiveMemoryWarning
+ * Usage: called when memory warning is fired
+ * --------------------------
+ *
+ */
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+#pragma mark - Table View Data Source Methods
+/**
+ * Method: numberOfSectionsInTableView:
+ * Usage: called automatically
+ * --------------------------
+ * The match history table view only has one section.
+ */
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
     // Return the number of sections.
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+/**
+ * Method: tableView:numberOfRowsInSection:
+ * Usage: called automatically
+ * --------------------------
+ *
+ */
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     // Return the number of rows in the section.
     return self.recentGames.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+/**
+ * Generates a match history table cell based on the matchHistoryCell prototype 
+ * in Main.storyboard.
+ * @param tableView
+ * @param indexPath the index path of the requested cell
+ *
+ * @code View tags
+ * 100: (UILabel *)         Outcome label
+ * 101: (UIImageView *)     Champion icon
+ * 102: (UILabel *)         Champion name label
+ */
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     NSDictionary *match = self.recentGames[indexPath.row];
     NSDictionary *participant = match[@"participants"][0];
     NSDictionary *stats = participant[@"stats"];

@@ -11,6 +11,10 @@
 
 @implementation TAPStartGameViewController
 
+#pragma mark - Init Methods
+/**
+ * Sets the summoner name label text to the name of the summoner.
+ */
 - (void)viewDidLoad
 {
     [super viewDidLoad];

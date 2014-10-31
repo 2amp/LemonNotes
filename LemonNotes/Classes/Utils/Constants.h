@@ -9,7 +9,7 @@
  * Type: Header
  * --------------------------
  * Defines all the Riot API call URLs as constants.
- * Every URL's first param must be the region
+ * Every URL's first param must be the region.
  */
 
 //riot api urls

@@ -1,7 +1,8 @@
 
 #import "RiotDataManager.h"
 #import "Constants.h"
-#import <sqlite3.h>
+
+
 
 @interface RiotDataManager()
 
@@ -11,21 +12,15 @@
 @end
 
 
-#pragma mark -
+
 @implementation RiotDataManager
 
-#pragma mark Synthesize Properties
-
-
-#pragma mark - Setup Methods
+#pragma mark - Init Methods
 /**
- * Func: sharedManager
- * Usage: to call singleton of RiotDataManager
- * --------------------------
- * Uses thread safe method to create (if not already created)
+ * Uses thread safe GCD method to create (if not already created)
  * and return singleton of RiotDataManager
  *
- * @return RiotDataManager* singleton
+ * @return RiotDataManager instance
  */
 + (RiotDataManager *)sharedManager
 {
@@ -37,6 +32,11 @@
     return sharedManager;
 }
 
+/**
+ * Initializes an NSURLSession instance for data requests.
+ * Performs a champion ID data request to populate self.championIds with a 
+ * dictionary mapping each champion ID to the name of the champion.
+ */
 - (instancetype)init
 {
     self = [super init];
@@ -46,6 +46,7 @@
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
         self.urlSession = [NSURLSession sessionWithConfiguration:config];
         
+        // maps champion names to ids
         void (^completionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
         {
             if (!error)
@@ -82,10 +83,17 @@
     return self;
 }
 
+#pragma mark - Champion Static Data Methods
+/**
+ * Gets the name of the champion with the given ID.
+ *
+ * @param championId
+ */
 - (NSString *)championNameForId:(NSNumber *)championId
 {
     return self.championIds[championId][@"name"];
 }
+
 
 - (NSString *)championKeyForId:(NSNumber *)championId
 {

@@ -1,8 +1,16 @@
 
 #import "UIImage+UIImageAdditions.h"
 
+
+
 @implementation UIImage (UIImageAdditions)
 
+/**
+ * Method: imageNamed:scaledToWidth:height:
+ * Usage: [UIImage imageNamed:path scaledToWidth:width height:height]
+ * --------------------------
+ * Returns a UIImage from the provided path scaled to the provided dimensions.
+ */
 + (UIImage *)imageNamed:(NSString *)name scaledToWidth:(CGFloat)width height:(CGFloat)height
 {
     UIImage *image = [UIImage imageNamed:name];

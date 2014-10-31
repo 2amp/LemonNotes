@@ -2,14 +2,12 @@
 #import <UIKit/UIKit.h>
 
 /**
- * Class: TAPMatchHistoryTableViewController
- * Type: table view controller
- * --------------------------
- * 
+ * Displays a table view of recent matches played by the summoner. Matches are 
+ * fetched using the matchhistory endpoint (see Constants.h). Currently only
+ * ranked matches are displayed, most recent first.
  */
 @interface TAPMatchHistoryTableViewController : UIViewController
 
-@property (nonatomic) NSDictionary *championIds;
 @property (nonatomic) NSArray *recentGames;
 
 @end
