@@ -1,6 +1,8 @@
 
 #import "TAPAppDelegate.h"
 #import "RiotDataManager.h"
+#import "TAPMainViewController.h"
+#import "TAPSignInViewController.h"
 
 
 
@@ -18,13 +20,22 @@
  */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     [[RiotDataManager sharedManager] updateChampionList];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:nil forKey:@"mainUser"];
-    
-    [defaults synchronize];
+ 
+    //select VC based on whether registered summonerId exists
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *initialVC;
+    if ( [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerId"] )
+    {
+        initialVC = [storyboard instantiateViewControllerWithIdentifier:@"TAPMainViewController"];
+    }
+    else
+    {
+        initialVC = [storyboard instantiateViewControllerWithIdentifier:@"TAPSignInViewController"];
+    }
+    self.window.rootViewController = initialVC;
+    [self.window makeKeyAndVisible];
     
     return YES;
 }

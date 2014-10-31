@@ -35,19 +35,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    //checks stored summonerName, if exists, enter it to signInField
-    NSString *savedSummonerName = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerName"];
-    if (savedSummonerName != nil && ![savedSummonerName isEqualToString:@""])
-    {
-        self.signInField.text = savedSummonerName;
-    }
-    
-
-    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    self.urlSession = [NSURLSession sessionWithConfiguration:config];
-    
-    // champion names to ids mapping moved to RiotDataManager
 }
 
 /**
@@ -76,6 +63,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     self.summonerName = self.signInField.text;
+    NSLog(@"Name: %@", self.summonerName);
     [textField resignFirstResponder];
 
     [self signIn];
@@ -93,9 +81,11 @@
  */
 - (void)signIn
 {
+    NSLog(@"0");
     // Completion handler for recentGamesDataTask
     void (^recentGamesCompletionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
     {
+        NSLog(@"1");
         if (!error)
         {
             NSError* jsonParsingError = nil;
@@ -120,7 +110,7 @@
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.activityIndicator stopAnimating];
-                    [self performSegueWithIdentifier:@"showStartGame" sender:self];
+                    [self performSegueWithIdentifier:@"showMain" sender:self];
                 });
             }
         }
@@ -136,6 +126,7 @@
     // Completion handler for summonerInfoDataTask
     void (^summonerInfoCompletionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
     {
+        NSLog(@"2");
         if (!error)
         {
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
@@ -159,11 +150,12 @@
                     // at least it works.
                     // Once we have verified that the entered summoner name is valid, add it to
                     // [NSUserDefaults standardUserDefaults].
-                    NSLog(@"Saving user info!");
                     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                     [defaults setObject:self.summonerName forKey:@"summonerName"];
                     self.summonerId = summonerInfo[[summonerInfo allKeys][0]][@"id"];
                     [defaults setObject:self.summonerId forKey:@"summonerId"];
+                    [defaults synchronize];
+                    
                     
                     NSURLSessionDataTask *recentGamesDataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLMatchHistory, @"na",
                                                                                 [NSString stringWithFormat:@"%@", self.summonerId])
