@@ -2,9 +2,6 @@
 #import <UIKit/UIKit.h>
 
 /**
- * Class: TAPSignInViewController
- * Type: view controller
- * --------------------------
  * Initial view controller presented to the user. Contains a text field for the
  * user to enter summonerName and sign in.
  */

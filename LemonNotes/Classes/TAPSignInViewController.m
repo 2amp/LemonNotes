@@ -17,9 +17,6 @@
 
 #pragma mark View Messages
 /**
- * Method: viewDidLoad
- * Usage: called when view has loaded
- * --------------------------
  *
  */
 - (void)viewDidLoad
@@ -28,9 +25,6 @@
 }
 
 /**
- * Method: viewWillAppear:
- * Usage: called when view will appear
- * --------------------------
  * If a successful summoner search was previously made, set the sign in field 
  * text to the last summoner name that was searched.
  * Initializes an NSURLSession instance for data requests. 
@@ -56,9 +50,6 @@
 }
 
 /**
- * Method: didReceiveMemoryWarning
- * Usage: called when memory warning is fired
- * --------------------------
  *
  */
 - (void)didReceiveMemoryWarning
@@ -68,14 +59,11 @@
 
 #pragma mark - Controller Event Callbacks
 /**
- * Method: textFieldShouldReturn
- * Usag: called when user taps "Done" on textField
- * --------------------------
  * Sets summonerName as entered text. Removes keyboard with 
  * resignFirstResponder. Calls signIn.
  *
- * @param textField
- * @return BOOL - YES to implement default textField behavior
+ * @param textField the text field
+ * @return YES to implement default textField behavior
  */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -202,15 +190,12 @@
 
 #pragma mark - Alert Methods
 /**
- * Method: showAlertWithTitle:message:
- * Usage: pop alert window on screen
- * --------------------------
  * Creates an UIAlertView object with the given title & message
  * along with self as delegate, "OK" as cancel button, and no other buttons.
  * Immediately shows the window
  *
- * @param title
- * @param message
+ * @param title the title of the alert
+ * @param message the message of the alert
  */
 - (void)showAlertWithTitle:(NSString *)title message:(NSString *)message
 {
@@ -226,16 +211,12 @@
 
 #pragma mark - Navigation Events
 /**
- * Method: prepareForSegue:sender
- * Usage: Automatically called when performing a segue to the next view
- * controller.
- * --------------------------
  * Sets up the start game view controller with the summoner name and ID number
  * that was fetched earlier.
  * Sets up the match history view controller with the fetched recent games.
  *
- * @param segue
- * @param sender
+ * @param segue the segue
+ * @param sender the sender
  */
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

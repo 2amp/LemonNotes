@@ -16,19 +16,7 @@
 
 + (RiotDataManager *)sharedManager;
 
-/**
- * Gets the name of the champion with the given ID.
- *
- * @param championId
- */
 - (NSString *)championNameForId:(NSNumber *)championId;
-
-/**
- * Gets the key of the champion with the given ID. The key is used as the file
- * name of the champion icon image.
- *
- * @param championId
- */
 - (NSString *)championKeyForId:(NSNumber *)championId;
 
 @end

@@ -87,14 +87,19 @@
 /**
  * Gets the name of the champion with the given ID.
  *
- * @param championId
+ * @param championId the champion ID
  */
 - (NSString *)championNameForId:(NSNumber *)championId
 {
     return self.championIds[championId][@"name"];
 }
 
-
+/**
+ * Gets the key of the champion with the given ID. The key is used as the file
+ * name of the champion icon image.
+ *
+ * @param championId the champion ID
+ */
 - (NSString *)championKeyForId:(NSNumber *)championId
 {
     return self.championIds[championId][@"key"];

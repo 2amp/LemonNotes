@@ -14,9 +14,6 @@
 @implementation TAPMatchHistoryTableViewController
 #pragma mark - Init Methods
 /**
- * Method: viewDidLoad
- * Usage: called when view has loaded
- * --------------------------
  *
  */
 - (void)viewDidLoad
@@ -31,9 +28,6 @@
 }
 
 /**
- * Method: didReceiveMemoryWarning
- * Usage: called when memory warning is fired
- * --------------------------
  *
  */
 - (void)didReceiveMemoryWarning {
@@ -43,9 +37,6 @@
 
 #pragma mark - Table View Data Source Methods
 /**
- * Method: numberOfSectionsInTableView:
- * Usage: called automatically
- * --------------------------
  * The match history table view only has one section.
  */
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -69,7 +60,7 @@
 /**
  * Generates a match history table cell based on the matchHistoryCell prototype 
  * in Main.storyboard.
- * @param tableView
+ * @param tableView the table view
  * @param indexPath the index path of the requested cell
  *
  * @code View tags
@@ -95,11 +86,12 @@
         outcome.text = @"Defeat";
     }
     UIImageView *championImageView = (UIImageView *)[cell viewWithTag:101];
-    NSString *imagePath = [NSString stringWithFormat:@"%@.png", [[RiotDataManager sharedManager] championKeyForId:participant[@"championId"]]];
+    RiotDataManager *dataManager = [RiotDataManager sharedManager];
+    NSString *imagePath = [NSString stringWithFormat:@"%@.png", [dataManager championKeyForId:participant[@"championId"]]];
     UIImage *championImage = [UIImage imageNamed:imagePath scaledToWidth:60 height:60];
     championImageView.image = championImage;
     UILabel *championName = (UILabel *)[cell viewWithTag:102];
-    championName.text = [[RiotDataManager sharedManager] championNameForId:participant[@"championId"]];
+    championName.text = [dataManager championNameForId:participant[@"championId"]];
     return cell;
 }
 
