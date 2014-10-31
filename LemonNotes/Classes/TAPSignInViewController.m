@@ -17,7 +17,7 @@
 /**
  * @method viewDidLoad
  * 
- * Called when view enters the screen
+ * Called when view is loaded to memory
  */
 - (void)viewDidLoad
 {
