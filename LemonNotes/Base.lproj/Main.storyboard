@@ -8,7 +8,7 @@
         <!--Sign In View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController storyboardIdentifier="TAPSignInViewController" id="vXZ-lx-hvc" customClass="TAPSignInViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignInVC" id="vXZ-lx-hvc" customClass="TAPSignInViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -245,7 +245,7 @@
         <!--Main View Controller-->
         <scene sceneID="N9p-t7-1l6">
             <objects>
-                <viewController storyboardIdentifier="TAPMainViewController" id="bD5-L1-o3W" customClass="TAPMainViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainVC" id="bD5-L1-o3W" customClass="TAPMainViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3nK-yC-5Y5"/>
                         <viewControllerLayoutGuide type="bottom" id="auY-W0-U3i"/>
@@ -253,28 +253,16 @@
                     <view key="view" contentMode="scaleToFill" id="Tqc-EI-aSb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cjo-QI-7ud">
-                                <rect key="frame" x="184" y="311" width="46" height="30"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="test:" destination="bD5-L1-o3W" eventType="touchUpInside" id="wHs-UU-cVH"/>
-                                </connections>
-                            </button>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <segue destination="bwd-f2-Fw5" kind="show" identifier="showStartGame" id="PZC-5E-df9"/>
-                        <segue destination="vXZ-lx-hvc" kind="show" identifier="showSignIn" id="iF8-Rc-EbA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Tl-yU-jSz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1191" y="550"/>
+            <point key="canvasLocation" x="1720" y="550"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="60V-rb-JSC">

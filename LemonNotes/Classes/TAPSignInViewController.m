@@ -3,7 +3,6 @@
 #import "TAPStartGameViewController.h"
 #import "TAPMatchHistoryTableViewController.h"
 #import "Constants.h"
-#import "RiotDataManager.h"
 
 
 @interface TAPSignInViewController ()
@@ -81,11 +80,9 @@
  */
 - (void)signIn
 {
-    NSLog(@"0");
     // Completion handler for recentGamesDataTask
     void (^recentGamesCompletionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
     {
-        NSLog(@"1");
         if (!error)
         {
             NSError* jsonParsingError = nil;
@@ -126,7 +123,6 @@
     // Completion handler for summonerInfoDataTask
     void (^summonerInfoCompletionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
     {
-        NSLog(@"2");
         if (!error)
         {
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;

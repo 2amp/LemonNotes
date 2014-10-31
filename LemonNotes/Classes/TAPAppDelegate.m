@@ -20,23 +20,18 @@
  */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+    //data updates
     [[RiotDataManager sharedManager] updateChampionList];
+    NSString *summonerName = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerName"];
  
-    //select VC based on whether registered summonerId exists
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *initialVC;
-    if ( [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerId"] )
-    {
-        initialVC = [storyboard instantiateViewControllerWithIdentifier:@"TAPMainViewController"];
-    }
-    else
-    {
-        initialVC = [storyboard instantiateViewControllerWithIdentifier:@"TAPSignInViewController"];
-    }
-    self.window.rootViewController = initialVC;
-    [self.window makeKeyAndVisible];
+    //programmatically setup initialVC
+    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     
+    NSString *initialVCID = summonerName ? @"MainVC" : @"SignInVC";
+    self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]
+                                      instantiateViewControllerWithIdentifier:initialVCID];
+    
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
