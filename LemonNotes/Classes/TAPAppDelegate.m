@@ -22,12 +22,12 @@
 {
     //data updates
     [[RiotDataManager sharedManager] updateChampionList];
-    NSString *summonerName = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerName"];
+    NSString *summonerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerId"];
  
     //programmatically setup initialVC
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     
-    NSString *initialVCID = summonerName ? @"MainVC" : @"SignInVC";
+    NSString *initialVCID = summonerId ? @"MainVC" : @"SignInVC";
     self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]
                                       instantiateViewControllerWithIdentifier:initialVCID];
     

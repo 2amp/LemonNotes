@@ -22,6 +22,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    self.urlSession = [NSURLSession sessionWithConfiguration:config];
 }
 
 /**
@@ -62,7 +65,6 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     self.summonerName = self.signInField.text;
-    NSLog(@"Name: %@", self.summonerName);
     [textField resignFirstResponder];
 
     [self signIn];
