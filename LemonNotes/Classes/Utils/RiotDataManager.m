@@ -42,7 +42,6 @@
     self = [super init];
     if (self)
     {
-        
         //maps champion names to ids
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
         self.urlSession = [NSURLSession sessionWithConfiguration:config];

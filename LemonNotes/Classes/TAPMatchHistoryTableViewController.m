@@ -1,14 +1,7 @@
-//
-//  TAPMatchHistoryTableViewController.m
-//  LemonNotes
-//
-//  Created by Christopher Fu on 10/29/14.
-//  Copyright (c) 2014 2AM Productions. All rights reserved.
-//
 
 #import "TAPMatchHistoryTableViewController.h"
-#import "RiotDataManager.h"
 #import "UIImage+UIImageAdditions.h"
+#import "RiotDataManager.h"
 
 @interface TAPMatchHistoryTableViewController ()
 
@@ -16,7 +9,8 @@
 
 @implementation TAPMatchHistoryTableViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.

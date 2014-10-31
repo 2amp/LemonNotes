@@ -1,13 +1,12 @@
-//
-//  TAPMatchHistoryTableViewController.h
-//  LemonNotes
-//
-//  Created by Christopher Fu on 10/29/14.
-//  Copyright (c) 2014 2AM Productions. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 
+/**
+ * Class: TAPMatchHistoryTableViewController
+ * Type: table view controller
+ * --------------------------
+ * 
+ */
 @interface TAPMatchHistoryTableViewController : UIViewController
 
 @property (nonatomic) NSDictionary *championIds;

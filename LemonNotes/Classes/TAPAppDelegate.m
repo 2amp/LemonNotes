@@ -18,7 +18,7 @@
         @"summonerId": [NSNumber numberWithInt:0]
     };
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
-    [RiotDataManager sharedManager];
+    
     return YES;
 }
 

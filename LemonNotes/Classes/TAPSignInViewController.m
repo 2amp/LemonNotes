@@ -3,7 +3,7 @@
 #import "TAPStartGameViewController.h"
 #import "TAPMatchHistoryTableViewController.h"
 #import "Constants.h"
-#import "DBManager.h"
+#import "RiotDataManager.h"
 
 
 
@@ -41,11 +41,7 @@
 {
     [super viewWillAppear:animated];
     
-    DBManager *test = [[DBManager alloc] init];
-    [test openDBWithFilename:@"LoLStaticData.sql"];
-    NSArray *cols = [test runResultsQuery:@"SELECT * FROM ChampionList"];
-    [test closeDB];
-    NSLog(@"Champions: %@", cols);
+    [RiotDataManager sharedManager];
     
     //checks stored summonerName, if exists, enter it to signInField
     NSString *savedSummonerName = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerName"];
@@ -133,9 +129,6 @@
 }
 
 /**
- * Method: signIn
- * Usage: called when user taps "Sign In"
- * --------------------------
  * Makes the summoner name info API call.
  * If the entered summoner name was not found, display an error. 
  * Otherwise, segue to the start game view controller with the provided summoner info.

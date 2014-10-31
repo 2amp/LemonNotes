@@ -3,7 +3,7 @@
 
 /**
  * Class: TAPStartGameViewController
- * Type:
+ * Type: view controller
  * --------------------------
  * After the user has signed in, asks the user for information about the current
  * game such as the player's side, whether or not the player is the team
