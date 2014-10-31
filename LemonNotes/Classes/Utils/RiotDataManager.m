@@ -1,22 +1,21 @@
 
 #import "RiotDataManager.h"
-
-
+#import <sqlite3.h>
 
 @interface RiotDataManager()
 
-@property (nonatomic, strong) NSMutableDictionary *currentVersions;
+
 
 @end
 
 
-
+#pragma mark -
 @implementation RiotDataManager
 
-#pragma mark - Synthesize Properties
+#pragma mark Synthesize Properties
 
 
-#pragma mark - Init Methods
+#pragma mark - Setup Methods
 /**
  * Func: sharedManager
  * Usage: to call singleton of RiotDataManager
@@ -36,21 +35,26 @@
     return sharedManager;
 }
 
-/**
- * Method: init
- * Usage: init for RiotDataManager
- * --------------------------
- *
- */
-- (id)init
-{
-    self = [super init];
-    if (self)
-    {
-        //load versions from userDefaults here
-    }
-    return self;
-}
+
+
+
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

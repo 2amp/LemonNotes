@@ -4,6 +4,8 @@
 #import "TAPMatchHistoryTableViewController.h"
 #import "Constants.h"
 #import "apikeys.h"
+#import "DBManager.h"
+#import "RiotDataManager.h"
 
 
 
@@ -24,7 +26,8 @@
  */
 - (void)viewDidLoad
 {
-    [super viewDidLoad];}
+    [super viewDidLoad];
+}
 
 /**
  * Method: viewWillAppear:
@@ -39,6 +42,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    DBManager *test = [[DBManager alloc] init];
+    [test openDBWithFilename:@"LoLStaticData.sql"];
+    NSArray *cols = [test runResultsQuery:@"SELECT * FROM ChampionList"];
+    [test closeDB];
+    NSLog(@"Champions: %@", cols);
     
     //checks stored summonerName, if exists, enter it to signInField
     NSString *savedSummonerName = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerName"];
