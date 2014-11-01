@@ -15,7 +15,10 @@
 
 /**
  * @method application:didFinishLaunchingWithOptions
- *
+ * 
+ * Always deletes any existing summonerId value from user defaults to 
+ * temporarily default to the sign in VC in order to fetch match history data 
+ * until we get data caching in Core Data working.
  * Registers any template for NSUserDefaults.
  */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

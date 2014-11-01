@@ -17,4 +17,8 @@
  */
 @interface TAPMainViewController : UIViewController
 
+@property (nonatomic) NSArray *recentGames;
+
+- (IBAction)matchesTapped:(id)sender;
+
 @end

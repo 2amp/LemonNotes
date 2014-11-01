@@ -117,7 +117,6 @@
         {
             NSLog(@"There was an error with the champion API call!");
         }
-        
     };
     
     NSURLSessionDataTask *dataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLStaticDataChampionList, @"na", nil)
@@ -198,20 +197,3 @@
 }
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -2,6 +2,7 @@
 #import "TAPSignInViewController.h"
 #import "TAPStartGameViewController.h"
 #import "TAPMatchHistoryTableViewController.h"
+#import "TAPMainViewController.h"
 #import "Constants.h"
 
 
@@ -212,19 +213,15 @@
  * @method prepareForSegue:sender:
  *
  * Automatically called when performing a segue to the next view controller.
- * Sets up the start game view controller with the summoner name and ID number that was fetched earlier.
- * Sets up the match history view controller with the fetched recent games.
+ * Sets up the main view controller with an array containing the summoner's 
+ * recently played games.
  */
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"showStartGame"])
+    if ([segue.identifier isEqualToString:@"showMain"])
     {
-        UITabBarController *tabBarVC = segue.destinationViewController;
-        TAPStartGameViewController *startGameVC = tabBarVC.viewControllers[0];
-        startGameVC.summonerName = self.summonerName;
-        startGameVC.idNumber = self.summonerId;
-        TAPMatchHistoryTableViewController *matchHistoryVC = tabBarVC.viewControllers[1];
-        matchHistoryVC.recentGames = self.recentGames;
+        TAPMainViewController *mainVC = segue.destinationViewController;
+        mainVC.recentGames = self.recentGames;
     }
 }
 
