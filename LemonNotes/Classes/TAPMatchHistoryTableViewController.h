@@ -13,7 +13,7 @@
  * @author Chris Fu
  * @version 0.1
  */
-@interface TAPMatchHistoryTableViewController : UIViewController
+@interface TAPMatchHistoryTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic) NSArray *recentGames;
 

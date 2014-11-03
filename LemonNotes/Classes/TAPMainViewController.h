@@ -15,7 +15,7 @@
  * @author Bohui Moon
  * @version 0.1
  */
-@interface TAPMainViewController : UIViewController
+@interface TAPMainViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic) NSArray *recentGames;
 
