@@ -98,14 +98,15 @@
             }
             else
             {
-                NSLog(@"%@", recentGames[@"matches"]);
-                // for some reason matchhistory gives matches from oldest to most recent,
-                // so reverse the recentGames array to prepare for display on table view
-                // in TAPMatchHistoryViewController
-                self.recentGames = [[recentGames[@"matches"] reverseObjectEnumerator] allObjects];
-                for (NSDictionary *match in recentGames[@"matches"])
+                //NSLog(@"%@", recentGames[@"games"]);
+                //MatchHistory API call replaced with RecentGames API Call
+                //now shows normal games too, and some of the
+                //JSON key values were changed accordingly
+                //also, no longer flips the array, because Riot returns recent first
+                self.recentGames = [NSArray arrayWithArray:recentGames[@"games"]];
+                for (NSDictionary *match in self.recentGames)
                 {
-                    NSLog(@"%@", match[@"participants"][0][@"championId"]);
+                    NSLog(@"%@", match[@"championId"]);
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.activityIndicator stopAnimating];
@@ -155,7 +156,7 @@
                     [defaults synchronize];
                     
                     
-                    NSURLSessionDataTask *recentGamesDataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLMatchHistory, @"na",
+                    NSURLSessionDataTask *recentGamesDataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLGameBySummoner, @"na",
                                                                                 [NSString stringWithFormat:@"%@", self.summonerId])
                                                                                completionHandler:recentGamesCompletionHandler];
                     [recentGamesDataTask resume];

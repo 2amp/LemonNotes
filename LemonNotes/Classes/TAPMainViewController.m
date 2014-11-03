@@ -139,18 +139,17 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *match = self.recentGames[indexPath.row];
-    NSDictionary *participant = match[@"participants"][0];
-    NSDictionary *stats = participant[@"stats"];
+    NSDictionary *stats = match[@"stats"];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"matchHistoryCell" forIndexPath:indexPath];
     RiotDataManager *dataManager = [RiotDataManager sharedManager];
 
     // Configure the cell...
-    UILabel *outcome = (UILabel *)[cell viewWithTag:100];
-    UIImageView *championImageView = (UIImageView *)[cell viewWithTag:101];
-    UILabel *championName = (UILabel *)[cell viewWithTag:102];
+    UILabel     *outcome                = (UILabel *)    [cell viewWithTag:100];
+    UIImageView *championImageView      = (UIImageView *)[cell viewWithTag:101];
+    UILabel     *championName           = (UILabel *)    [cell viewWithTag:102];
     UIImageView *summonerIcon1ImageView = (UIImageView *)[cell viewWithTag:103];
     UIImageView *summonerIcon2ImageView = (UIImageView *)[cell viewWithTag:104];
-    UILabel *scoreLabel = (UILabel *)[cell viewWithTag:105];
+    UILabel     *scoreLabel             = (UILabel *)    [cell viewWithTag:105];
 
     if ([stats[@"winner"] boolValue])
     {
@@ -163,20 +162,23 @@
         outcome.textColor = [UIColor redColor];
     }
 
-    NSString *imagePath = [NSString stringWithFormat:@"%@.png", [dataManager championKeyForId:participant[@"championId"]]];
+    NSString *imagePath = [NSString stringWithFormat:@"%@.png", [dataManager championKeyForId:match[@"championId"]]];
     UIImage *championImage = [UIImage imageNamed:imagePath scaledToWidth:60 height:60];
     championImageView.image = championImage;
 
-    NSString *summonerIcon1ImagePath = [NSString stringWithFormat:@"%@.png", [dataManager summonerSpellKeyForId:participant[@"spell1Id"]]];
+    NSString *summonerIcon1ImagePath = [NSString stringWithFormat:@"%@.png", [dataManager summonerSpellKeyForId:match[@"spell1Id"]]];
     UIImage *summonerIcon1Image = [UIImage imageNamed:summonerIcon1ImagePath];
-    NSString *summonerIcon2ImagePath = [NSString stringWithFormat:@"%@.png", [dataManager summonerSpellKeyForId:participant[@"spell2Id"]]];
+    NSString *summonerIcon2ImagePath = [NSString stringWithFormat:@"%@.png", [dataManager summonerSpellKeyForId:match[@"spell2Id"]]];
     UIImage *summonerIcon2Image = [UIImage imageNamed:summonerIcon2ImagePath];
     summonerIcon1ImageView.image = summonerIcon1Image;
     summonerIcon2ImageView.image = summonerIcon2Image;
+    
+    NSNumber *kills = stats[@"championsKilled"] ? stats[@"championsKilled"] : @0;
+    NSNumber *deaths = stats[@"numDeaths"] ? stats[@"numDeaths"] : @0;
+    NSNumber *assists = stats[@"assists"] ? stats[@"assists"] : @0;
+    scoreLabel.text = [NSString stringWithFormat:@"%@/%@/%@", kills, deaths, assists];
 
-    scoreLabel.text = [NSString stringWithFormat:@"%@/%@/%@", stats[@"kills"], stats[@"deaths"], stats[@"assists"]];
-
-    championName.text = [dataManager championNameForId:participant[@"championId"]];
+    championName.text = [dataManager championNameForId:match[@"championId"]];
     return cell;
 }
 
