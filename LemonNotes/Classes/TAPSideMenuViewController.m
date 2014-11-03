@@ -28,26 +28,18 @@
 */
 
 #pragma mark - UITableView Delegate
+/**
+ * When a selection in the side menu is tapped, switches to the selected vc.
+ *
+ * @param tableView the table view
+ * @param indexPath the index path of the selection
+ */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    // FIXME: Currently instantiates a new vc every time we switch between vcs. We'll probably have to keep a reference to
-    // each vc so we don't keep instantiating new vcs?
-    switch (indexPath.row)
-    {
-        case 0:
-            [self.sideMenuViewController setContentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"homeVC"]
-                                                         animated:YES];
-            [self.sideMenuViewController hideMenuViewController];
-            break;
-        case 1:
-            [self.sideMenuViewController setContentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"gameStartVC"]
-                                                         animated:YES];
-            [self.sideMenuViewController hideMenuViewController];
-            break;
-        default:
-            break;
-    }
+    // contentViewControllers is populated by awakeFromNib 
+    [self.sideMenuViewController setContentViewController:self.contentViewControllers[indexPath.row] animated:YES];
+    [self.sideMenuViewController hideMenuViewController];
 }
 
 #pragma mark - Table View Data Source Methods
@@ -63,7 +55,11 @@
 }
 
 /**
- * TODO: Will change in the future.
+ * TODO: Will change in the future. Currently the only choices are Home and
+ * Start Game.
+ * @param tableView the table view requesting the data
+ * @param section the section to get number of rows from
+ * @return number of rows in given section
  */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -71,7 +67,15 @@
 }
 
 /**
+ * Generates a match history table cell based on the sideMenuCell prototype
+ * in Main.storyboard.
  *
+ * @param tableView the table view requesting data
+ * @param indexPath the index path of the requested cell
+ * @return cell containing a label with the name of the selection
+ *
+ * @code View tags
+ * 100: (UILabel *) Label with name of selection
  */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

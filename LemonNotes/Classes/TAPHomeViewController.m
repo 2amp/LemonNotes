@@ -110,8 +110,8 @@
  *
  * Returns the number of recentGames
  *
- * @param tableView requesting the data
- * @param section   to get number of rows
+ * @param tableView the table view requesting the data
+ * @param section the section to get number of rows from
  * @return number of rows in given section
  */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

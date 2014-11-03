@@ -1,5 +1,6 @@
 
 #import "TAPRootViewController.h"
+#import "TAPSideMenuViewController.h"
 
 @interface TAPRootViewController ()
 
@@ -18,12 +19,16 @@
 }
 
 /**
- *
+ * Initializes the content vc and left menu vc (side menu vc). The side menu vc's
+ * array of content vcs is populated here.
  */
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
     self.contentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"homeVC"];
     self.leftMenuViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"sideMenuVC"];
+    TAPSideMenuViewController *sideMenuViewController = (TAPSideMenuViewController *)self.leftMenuViewController;
+    sideMenuViewController.contentViewControllers = @[self.contentViewController,  [self.storyboard instantiateViewControllerWithIdentifier:@"startGameVC"]];
 }
 
 /*

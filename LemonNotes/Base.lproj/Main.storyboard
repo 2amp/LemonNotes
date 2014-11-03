@@ -67,7 +67,7 @@
         <!--Game-->
         <scene sceneID="PXa-NC-SsV">
             <objects>
-                <viewController storyboardIdentifier="gameStartVC" title="Game" id="atR-Qs-Cne" customClass="TAPStartGameViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="startGameVC" title="Game" id="atR-Qs-Cne" customClass="TAPStartGameViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5OC-FK-Hyi"/>
                         <viewControllerLayoutGuide type="bottom" id="4Ba-rK-75J"/>
