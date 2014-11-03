@@ -1,7 +1,7 @@
 
 #import "TAPSignInViewController.h"
 #import "TAPStartGameViewController.h"
-#import "TAPMainViewController.h"
+#import "TAPRootViewController.h"
 #import "Constants.h"
 
 
@@ -103,13 +103,14 @@
                 // so reverse the recentGames array to prepare for display on table view
                 // in TAPMatchHistoryViewController
                 self.recentGames = [[recentGames[@"matches"] reverseObjectEnumerator] allObjects];
+                [[NSUserDefaults standardUserDefaults] setObject:self.recentGames forKey:@"recentGames"];
                 for (NSDictionary *match in recentGames[@"matches"])
                 {
                     NSLog(@"%@", match[@"participants"][0][@"championId"]);
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.activityIndicator stopAnimating];
-                    [self performSegueWithIdentifier:@"showMain" sender:self];
+                    [self performSegueWithIdentifier:@"showRoot" sender:self];
                 });
             }
         }
@@ -217,10 +218,10 @@
  */
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"showMain"])
+    if ([segue.identifier isEqualToString:@"showRoot"])
     {
-        TAPMainViewController *mainVC = segue.destinationViewController;
-        mainVC.recentGames = self.recentGames;
+        TAPRootViewController *rootVC = segue.destinationViewController;
+        rootVC.recentGames = self.recentGames;
     }
 }
 

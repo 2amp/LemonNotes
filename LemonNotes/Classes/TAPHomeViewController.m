@@ -1,12 +1,12 @@
 
-#import "TAPMainViewController.h"
+#import "TAPHomeViewController.h"
 #import "UIImage+UIImageAdditions.h"
 #import "RiotDataManager.h"
 #import "Constants.h"
 
 
 
-@interface TAPMainViewController()
+@interface TAPHomeViewController()
 
 @property (nonatomic) NSDictionary *summonerInfo;
 @property (nonatomic, weak) IBOutlet UILabel* summonerNameLabel;
@@ -19,7 +19,7 @@
 
 
 
-@implementation TAPMainViewController
+@implementation TAPHomeViewController
 
 #pragma mark - View Messages
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -39,7 +39,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    self.recentGames = [[NSUserDefaults standardUserDefaults] objectForKey:@"recentGames"];
     [self update:self];
 }
 
