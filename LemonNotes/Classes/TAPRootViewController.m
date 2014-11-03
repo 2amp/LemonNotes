@@ -1,10 +1,3 @@
-//
-//  TAPMainViewController.m
-//  LemonNotes
-//
-//  Created by Christopher Fu on 11/3/14.
-//  Copyright (c) 2014 2AM Productions. All rights reserved.
-//
 
 #import "TAPRootViewController.h"
 
@@ -24,6 +17,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+/**
+ *
+ */
 - (void)awakeFromNib
 {
     self.contentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"homeVC"];

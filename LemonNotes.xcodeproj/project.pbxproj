@@ -645,6 +645,8 @@
 		895922D61A0330F600F00637 /* SummonerSmite.png in Resources */ = {isa = PBXBuildFile; fileRef = 895920631A0330F600F00637 /* SummonerSmite.png */; };
 		895922D71A0330F600F00637 /* SummonerTeleport.png in Resources */ = {isa = PBXBuildFile; fileRef = 895920641A0330F600F00637 /* SummonerTeleport.png */; };
 		895922DD1A075E9C00F00637 /* TAPRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 895922DC1A075E9C00F00637 /* TAPRootViewController.m */; };
+		895922E01A07FD9000F00637 /* TAPSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 895922DF1A07FD9000F00637 /* TAPSideMenuViewController.m */; };
+		895922E21A080F5A00F00637 /* side_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 895922E11A080F5A00F00637 /* side_menu.png */; };
 		8984EF2E19F61FC100C442FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF2D19F61FC100C442FC /* main.m */; };
 		8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF3219F61FC100C442FC /* LemonNotes.xcdatamodeld */; };
 		8984EF3A19F61FC100C442FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8984EF3819F61FC100C442FC /* Main.storyboard */; };
@@ -1310,6 +1312,9 @@
 		895920641A0330F600F00637 /* SummonerTeleport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SummonerTeleport.png; sourceTree = "<group>"; };
 		895922DB1A075E9C00F00637 /* TAPRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPRootViewController.h; sourceTree = "<group>"; };
 		895922DC1A075E9C00F00637 /* TAPRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPRootViewController.m; sourceTree = "<group>"; };
+		895922DE1A07FD9000F00637 /* TAPSideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSideMenuViewController.h; sourceTree = "<group>"; };
+		895922DF1A07FD9000F00637 /* TAPSideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPSideMenuViewController.m; sourceTree = "<group>"; };
+		895922E11A080F5A00F00637 /* side_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = side_menu.png; sourceTree = "<group>"; };
 		8984EF2819F61FC100C442FC /* LemonNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LemonNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8984EF2C19F61FC100C442FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8984EF2D19F61FC100C442FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1367,6 +1372,7 @@
 		895918EE1A03130A00F00637 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				895922E11A080F5A00F00637 /* side_menu.png */,
 				895918EF1A03130A00F00637 /* 2AM Productions Logo.png */,
 				89591A681A03130B00F00637 /* Lemon Notes Logo (Aligned).png */,
 				89591A691A03130B00F00637 /* Lemon Notes Logo.png */,
@@ -2126,6 +2132,8 @@
 				89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */,
 				895922DB1A075E9C00F00637 /* TAPRootViewController.h */,
 				895922DC1A075E9C00F00637 /* TAPRootViewController.m */,
+				895922DE1A07FD9000F00637 /* TAPSideMenuViewController.h */,
+				895922DF1A07FD9000F00637 /* TAPSideMenuViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -2843,6 +2851,7 @@
 				895921231A0330F600F00637 /* 3041.png in Resources */,
 				89591DD51A03130B00F00637 /* 2AM Productions Logo.idraw in Resources */,
 				895922971A0330F600F00637 /* 663.png in Resources */,
+				895922E21A080F5A00F00637 /* side_menu.png in Resources */,
 				895921D71A0330F600F00637 /* 3455.png in Resources */,
 				895922A11A0330F600F00637 /* 673.png in Resources */,
 				895920EB1A0330F600F00637 /* 1038.png in Resources */,
@@ -2950,6 +2959,7 @@
 				950B2C421A00296A00DD8A23 /* RiotDataManager.m in Sources */,
 				89A86C0B19F8E60300477FC6 /* TAPStartGameViewController.m in Sources */,
 				8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */,
+				895922E01A07FD9000F00637 /* TAPSideMenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

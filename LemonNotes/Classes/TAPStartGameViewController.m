@@ -21,8 +21,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.summonerNameLabel.text = self.summonerName;
+    NSLog(@"TAPStartGameViewController viewDidLoad %p", &self);
 }
 
 /**

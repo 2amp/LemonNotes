@@ -3,7 +3,7 @@
 
 /**
  * @class TAPSignInViewController
- * @breif TAPSignInViewController
+ * @brief TAPSignInViewController
  *
  * Initial view controller presented to the user. 
  * Contains a text field for the user to enter summonerName, and a nice logo.

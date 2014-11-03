@@ -43,18 +43,15 @@ not
 
         NSMutableArray *array = [[NSMutableArray alloc] init];
 
-- Document all methods with an appropriate block comment indicating what the method does and any side effects or "gotchas" that may not be immediately obvious. All parameters and return values should be documented as well, with the exception of obvious ones such as `- (IBAction)` and `:(UIView *)view`
+- Document all methods with an appropriate block comment indicating what the method does and any side effects or "gotchas" that may not be immediately obvious. All parameters and return values should be documented as well, with the exception of obvious ones such as `- (IBAction)` and `:(UIView *)view`. Adhere to the HeaderDoc style.
 
         /**
-         * Method: signIn
-         * Usage: called when user taps "Sign In"
-         * --------------------------
          * Sets whatever is entered in signInField as summonerName.
          * If nothing is entered, shows a login error prompting the user to enter a
          * summoner name. Otherwise, makes the summoner name info API call.
          *
-         * @param <param name> - description of parameter
-         * @param <return type> - description of return value
+         * @param <param name> description of parameter
+         * @return description of return value
          */
 In addition, use inline comments inside the method body to point out lines of interest.
 

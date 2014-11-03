@@ -41,6 +41,7 @@
     [super viewDidLoad];
     self.recentGames = [[NSUserDefaults standardUserDefaults] objectForKey:@"recentGames"];
     [self update:self];
+    NSLog(@"TAPHomeViewController viewDidLoad %p", &self);
 }
 
 #pragma mark - Private methods
