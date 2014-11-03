@@ -1,7 +1,7 @@
 
 #import "TAPAppDelegate.h"
 #import "RiotDataManager.h"
-#import "TAPMainViewController.h"
+#import "TAPHomeViewController.h"
 #import "TAPSignInViewController.h"
 
 
@@ -30,7 +30,7 @@
     NSString *summonerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerId"];
  
     //programmatically setup initialVC
-    NSString *initialVCID = summonerId ? @"MainVC" : @"SignInVC";
+    NSString *initialVCID = summonerId ? @"rootVC" : @"signInVC";
     self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]
                                       instantiateViewControllerWithIdentifier:initialVCID];
     

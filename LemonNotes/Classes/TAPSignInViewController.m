@@ -1,7 +1,7 @@
 
 #import "TAPSignInViewController.h"
 #import "TAPStartGameViewController.h"
-#import "TAPMainViewController.h"
+#import "TAPRootViewController.h"
 #import "Constants.h"
 
 
@@ -98,19 +98,20 @@
             }
             else
             {
-                //NSLog(@"%@", recentGames[@"games"]);
                 //MatchHistory API call replaced with RecentGames API Call
                 //now shows normal games too, and some of the
                 //JSON key values were changed accordingly
                 //also, no longer flips the array, because Riot returns recent first
-                self.recentGames = [NSArray arrayWithArray:recentGames[@"games"]];
+                self.recentGames = recentGames[@"games"];
+                NSLog(@"%@", self.recentGames);
+                [[NSUserDefaults standardUserDefaults] setObject:self.recentGames forKey:@"recentGames"];
                 for (NSDictionary *match in self.recentGames)
                 {
                     NSLog(@"%@", match[@"championId"]);
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.activityIndicator stopAnimating];
-                    [self performSegueWithIdentifier:@"showMain" sender:self];
+                    [self performSegueWithIdentifier:@"showRoot" sender:self];
                 });
             }
         }
@@ -218,10 +219,10 @@
  */
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"showMain"])
+    if ([segue.identifier isEqualToString:@"showRoot"])
     {
-        TAPMainViewController *mainVC = segue.destinationViewController;
-        mainVC.recentGames = self.recentGames;
+        TAPRootViewController *rootVC = segue.destinationViewController;
+        rootVC.recentGames = self.recentGames;
     }
 }
 
