@@ -1,6 +1,5 @@
 
 #import "TAPMainViewController.h"
-#import "TAPMatchHistoryTableViewController.h"
 #import "UIImage+UIImageAdditions.h"
 #import "RiotDataManager.h"
 #import "Constants.h"
@@ -84,17 +83,11 @@
 
 #pragma mark - Navigation Events
 /**
- * Before seguing to the tab bar vc, pass recently played games to match history
- * vc.
+ * Currently no segue from the main vc occurs. Will soon change!
  */
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"showTabBar"])
-    {
-        UITabBarController *tabBarController = segue.destinationViewController;
-        TAPMatchHistoryTableViewController *matchHistoryVC = tabBarController.viewControllers[1];
-        matchHistoryVC.recentGames = self.recentGames;
-    }
+
 }
 
 #pragma mark - Table View Data Source Methods

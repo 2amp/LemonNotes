@@ -1,7 +1,6 @@
 
 #import "TAPSignInViewController.h"
 #import "TAPStartGameViewController.h"
-#import "TAPMatchHistoryTableViewController.h"
 #import "TAPMainViewController.h"
 #import "Constants.h"
 

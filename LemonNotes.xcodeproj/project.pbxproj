@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		894BF63B1A008858009A1F1F /* UIImage+UIImageAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 894BF63A1A008858009A1F1F /* UIImage+UIImageAdditions.m */; };
-		894BFB2E1A00B34D009A1F1F /* TAPMatchHistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 894BFB2D1A00B34D009A1F1F /* TAPMatchHistoryTableViewController.m */; };
 		89591B6C1A03130B00F00637 /* 2AM Productions Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 895918EF1A03130A00F00637 /* 2AM Productions Logo.png */; };
 		89591CE31A03130B00F00637 /* Lemon Notes Logo (Aligned).png in Resources */ = {isa = PBXBuildFile; fileRef = 89591A681A03130B00F00637 /* Lemon Notes Logo (Aligned).png */; };
 		89591CE41A03130B00F00637 /* Lemon Notes Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 89591A691A03130B00F00637 /* Lemon Notes Logo.png */; };
@@ -670,8 +669,6 @@
 /* Begin PBXFileReference section */
 		894BF6391A008858009A1F1F /* UIImage+UIImageAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UIImageAdditions.h"; sourceTree = "<group>"; };
 		894BF63A1A008858009A1F1F /* UIImage+UIImageAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UIImageAdditions.m"; sourceTree = "<group>"; };
-		894BFB2C1A00B34D009A1F1F /* TAPMatchHistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPMatchHistoryTableViewController.h; sourceTree = "<group>"; };
-		894BFB2D1A00B34D009A1F1F /* TAPMatchHistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPMatchHistoryTableViewController.m; sourceTree = "<group>"; };
 		895918EF1A03130A00F00637 /* 2AM Productions Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2AM Productions Logo.png"; sourceTree = "<group>"; };
 		89591A681A03130B00F00637 /* Lemon Notes Logo (Aligned).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Notes Logo (Aligned).png"; sourceTree = "<group>"; };
 		89591A691A03130B00F00637 /* Lemon Notes Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Notes Logo.png"; sourceTree = "<group>"; };
@@ -2117,8 +2114,6 @@
 				8984EF5A19F6341000C442FC /* TAPSignInViewController.m */,
 				89A86C0919F8E60300477FC6 /* TAPStartGameViewController.h */,
 				89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */,
-				894BFB2C1A00B34D009A1F1F /* TAPMatchHistoryTableViewController.h */,
-				894BFB2D1A00B34D009A1F1F /* TAPMatchHistoryTableViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -2883,7 +2878,6 @@
 			files = (
 				8984EF2E19F61FC100C442FC /* main.m in Sources */,
 				894BF63B1A008858009A1F1F /* UIImage+UIImageAdditions.m in Sources */,
-				894BFB2E1A00B34D009A1F1F /* TAPMatchHistoryTableViewController.m in Sources */,
 				89591DE91A03136000F00637 /* DBManager.m in Sources */,
 				8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */,
 				95F162E11A034C9B00DECF93 /* TAPMainViewController.m in Sources */,
