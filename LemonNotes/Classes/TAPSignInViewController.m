@@ -104,6 +104,8 @@
                 //also, no longer flips the array, because Riot returns recent first
                 self.recentGames = recentGames[@"games"];
                 NSLog(@"%@", self.recentGames);
+                // Currently we are storing recent games in the standard user defaults. This
+                // is a temporary measure until we finalize Core Data caching.
                 [[NSUserDefaults standardUserDefaults] setObject:self.recentGames forKey:@"recentGames"];
                 for (NSDictionary *match in self.recentGames)
                 {
@@ -214,16 +216,10 @@
  * @method prepareForSegue:sender:
  *
  * Automatically called when performing a segue to the next view controller.
- * Sets up the main view controller with an array containing the summoner's 
- * recently played games.
  */
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"showRoot"])
-    {
-        TAPRootViewController *rootVC = segue.destinationViewController;
-        rootVC.recentGames = self.recentGames;
-    }
+
 }
 
 @end

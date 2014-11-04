@@ -152,7 +152,7 @@
     UIImageView *summonerIcon2ImageView = (UIImageView *)[cell viewWithTag:104];
     UILabel     *scoreLabel             = (UILabel *)    [cell viewWithTag:105];
 
-    if ([stats[@"winner"] boolValue])
+    if ([stats[@"win"] boolValue])
     {
         outcome.text = @"Victory";
         outcome.textColor = [UIColor colorWithRed:0 green:0.4 blue:0 alpha:1];
