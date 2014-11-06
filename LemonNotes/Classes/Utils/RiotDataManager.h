@@ -1,5 +1,6 @@
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
 /**
@@ -19,16 +20,12 @@
 
 + (RiotDataManager *)sharedManager;
 
-//Accounts & games
-- (void)addSummoner:(NSNumber *)summonerId;
-- (void)deleteSummoner:(NSNumber *)summonerId;
-- (void)recordGames:(NSArray *)games forSummoner:(NSNumber *)summonerId;
+@property (nonatomic) NSDictionary *champions;
+@property (nonatomic) NSDictionary *summonerSpells;
+
 
 //static data
 - (void)updateChampionIds;
 - (void)updateSummonerSpells;
-- (NSString *)championNameForId:(NSNumber *)championId;
-- (NSString *)championKeyForId:(NSNumber *)championId;
-- (NSString *)summonerSpellKeyForId:(NSNumber *)spellId;
 
 @end

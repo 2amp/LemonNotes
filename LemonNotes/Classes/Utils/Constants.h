@@ -13,7 +13,7 @@
 #import "apikeys.h"
 
 //riot api urls
-#define baseURL @"https://{region}.api.pvp.net"
+static NSString* baseURL = @"https://{server}.api.pvp.net";
 
 //regions
 static const int numRegions = 10;
@@ -21,65 +21,65 @@ static const int numRegions = 10;
 
 
 //champion
-#define pathChampion baseURL "/api/lol/{region}/v1.2/champion"
-static NSString* kLoLChampionList           = pathChampion ""                   apiKey;
-static NSString* kLoLChampion               = pathChampion "/%@"                apiKey; //{id}
+#define pathChampion @"api/lol/{region}/v1.2/champion"
+static NSString* kLoLChampionList        = pathChampion "";
+static NSString* kLoLChampion            = pathChampion "/{path}";                 //{id}
 
 //game
-#define pathGame baseURL "/api/lol/{region}/v1.3/game/by-summoner"
-static NSString* kLoLGameBySummoner         = pathGame  "/%@/recent"            apiKey; //{summonerId}
+#define pathGame @"api/lol/{region}/v1.3/game/by-summoner"
+static NSString* kLoLGameBySummoner      = pathGame  "/{path}/recent";             //{summonerId}
 
 //league
-#define pathLeague baseURL "/api/lol/{region}/v2.5/league"
-static NSString* kLoLLeagueSummoner         = pathLeague "/by-summoner/%@"      apiKey; //{summonerIds}
-static NSString* kLoLLeagueSummonerEntry    = pathLeague "/by-summoner/%@/entry"apiKey; //{summonerIds}
-static NSString* kLoLLeagueTeam             = pathLeague "/by-team/%@"          apiKey; //{summonerIds}
-static NSString* kLoLLeagueTeamEntry        = pathLeague "/by-team/%@/entry"    apiKey; //{summonerIds}
-static NSString* kLoLLeagueChallenger       = pathLeague "/challenger"          apiKey; //{summonerIds}
+#define pathLeague @"api/lol/{region}/v2.5/league"
+static NSString* kLoLLeagueSummoner      = pathLeague "/by-summoner/{path}";       //{summonerIds}
+static NSString* kLoLLeagueSummonerEntry = pathLeague "/by-summoner/{path}/entry"; //{summonerIds}
+static NSString* kLoLLeagueTeam          = pathLeague "/by-team/{path}";           //{summonerIds}
+static NSString* kLoLLeagueTeamEntry     = pathLeague "/by-team/{path}/entry";     //{summonerIds}
+static NSString* kLoLLeagueChallenger    = pathLeague "/challenger";               //{summonerIds}
 
 //static-data
-#define pathStaticData baseURL "/api/lol/static-data/{region}/v1.2"
-static NSString* kLoLStaticDataChampionList = pathStaticData "/champion"         apiKey;
-static NSString* kLoLStaticDataChampion     = pathStaticData "/champion/%@"      apiKey; //{id}
-static NSString* kLoLStaticDataItemList     = pathStaticData "/item"             apiKey;
-static NSString* kLoLStaticDataItem         = pathStaticData "/item/%@"          apiKey; //{id}
-static NSString* kLoLStaticDataMasteryList  = pathStaticData "/mastery"          apiKey;
-static NSString* kLoLStaticDataMastery      = pathStaticData "/mastery/%@"       apiKey; //{id}
-static NSString* kLoLStaticDataRuneList     = pathStaticData "/rune"             apiKey;
-static NSString* kLoLStaticDataRune         = pathStaticData "/rune/%@"          apiKey;
-static NSString* kLoLStaticDataSpellList    = pathStaticData "/summoner-spell"   apiKey;
-static NSString* kLoLStaticDataSpell        = pathStaticData "/summoner-spell/%@"apiKey;
+#define pathStatic @"api/lol/static-data/{region}/v1.2"
+static NSString* kLoLStaticChampionList  = pathStatic "/champion";
+static NSString* kLoLStaticChampion      = pathStatic "/champion/{path}";    //{id}
+static NSString* kLoLStaticItemList      = pathStatic "/item";
+static NSString* kLoLStaticItem          = pathStatic "/item/{path}";        //{id}
+static NSString* kLoLStaticMasteryList   = pathStatic "/mastery";
+static NSString* kLoLStaticMastery       = pathStatic "/mastery/{path}";     //{id}
+static NSString* kLoLStaticRuneList      = pathStatic "/rune";
+static NSString* kLoLStaticRune          = pathStatic "/rune/{path}";
+static NSString* kLoLStaticSpellList     = pathStatic "/summoner-spell";
+static NSString* kLoLStaticSpell         = pathStatic "/summoner-spell/{path}";
 
 //status
-#define pathStatus baseURL "/shards"
-static NSString* kLoLStatus                 = pathStatus    ""                  apiKey;
-static NSString* kLoLStatusRegion           = pathStatus    "/%@"               apiKey; //{region}
+#define pathStatus @"shards"
+static NSString* kLoLStatus              = pathStatus   "";
+static NSString* kLoLStatusRegion        = pathStatus   "/{path}";           //{region}
 
 //match
-#define pathMatch baseURL "/api/lol/{region}/v2.2"
-static NSString* kLoLMatch                  = pathMatch      "/%@"              apiKey; //{matchId}
+#define pathMatch @"api/lol/{region}/v2.2"
+static NSString* kLoLMatch               = pathMatch    "/{path}";           //{matchId}
 
 //match history
-#define pathMatchHistory baseURL "/api/lol/{region}/v2.2/matchhistory"
-static NSString* kLoLMatchHistory           = pathMatchHistory "/%@"            apiKey; //{summonerId}
+#define pathMatchHistory @"api/lol/{region}/v2.2/matchhistory"
+static NSString* kLoLMatchHistory     = pathMatchHistory "/{path}";          //{summonerId}
 
 //stats
-#define pathStats baseURL "/api/lol/{region}/v1.3/stats/by-summoner"
-static NSString* kLoLStatsRanked            = pathStats "/%@/ranked"            apiKey; //{summonerId}
-static NSString* kLoLStatsSummary           = pathStats "/%@/ranked"            apiKey; //{summonerId}
+#define pathStats @"api/lol/{region}/v1.3/stats/by-summoner"
+static NSString* kLoLStatsRanked         = pathStats    "/{path}/ranked";    //{summonerId}
+static NSString* kLoLStatsSummary        = pathStats    "/{path}/summary";   //{summonerId}
 
 //summoner
-#define pathSummoner baseURL "/api/lol/{region}/v1.4/summoner"
-static NSString* kLoLSummonerByName         = pathSummoner  "/by-name/%@"       apiKey; //{summonerName}
-static NSString* kLoLSummoner               = pathSummoner  "/%@"               apiKey; //{summonerId}
-static NSString* kLoLSummonerNames          = pathSummoner  "/%@/name"          apiKey; //{summonerId}
-static NSString* kLoLSummonerMasteries      = pathSummoner  "/%@/masteries"     apiKey; //{summonerId}
-static NSString* kLoLSummonerRunes          = pathSummoner  "/%@/runes"         apiKey; //{summonerId}
+#define pathSummoner @"api/lol/{region}/v1.4/summoner"
+static NSString* kLoLSummonerByName      = pathSummoner "/by-name/{path}";   //{summonerName}
+static NSString* kLoLSummoner            = pathSummoner "/{path}";           //{summonerId}
+static NSString* kLoLSummonerNames       = pathSummoner "/{path}/name";      //{summonerId}
+static NSString* kLoLSummonerMasteries   = pathSummoner "/{path}/masteries"; //{summonerId}
+static NSString* kLoLSummonerRunes       = pathSummoner "/{path}/runes";     //{summonerId}
 
 //team
-#define pathTeam baseURL "/api/lol/{region}/v2.4/team"
-static NSString* kLoLTeamBySummoner         = pathTeam      "/by-summoner/%@"   apiKey; //{summonerIds}
-static NSString* kLoLTeam                   = pathTeam      "/%@"               apiKey; //{teamIds}
+#define pathTeam @"api/lol/{region}/v2.4/team"
+static NSString* kLoLTeamBySummoner      = pathTeam    "/by-summoner/{path}"; //{summonerIds}
+static NSString* kLoLTeam                = pathTeam    "/{path}";             //{teamIds}
 
 
 
@@ -97,15 +97,26 @@ static NSString* kLoLTeam                   = pathTeam      "/%@"               
  *
  * @param call   - one of the predefined call formats
  * @param region - region of API call
- * @param param  - any parameters to pass in API call
+ * @param pathParam  - any path parameters to pass in API call
+ * @param queryParam - any query parameters to pass in API call, must end in & if any
  * @return NSURL object with correct API call with given params
  */
-static inline NSURL* apiURL(NSString *call, NSString *region, NSString *param)
+static inline NSURL* apiURL(NSString *call, NSString *region, NSString *pathParam, NSString *queryParam)
 {
-    NSString *format = [call stringByReplacingOccurrencesOfString:@"{region}" withString:region];
-    NSString *urlStr = [NSString stringWithFormat:format, param];
+    NSString *url = [NSString stringWithFormat:@"%@/%@?{query}api_key=%@", baseURL, call, API_KEY];
     
-    return [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    BOOL global = [region  isEqual:@"euw"] || [region  isEqual:@"kr"] || [region isEqual:@"ru"] || [region isEqual:@"tr"];
+    NSString *server = global ? @"global" : region;
+    if (!pathParam) pathParam = @"";
+    if (!queryParam) queryParam = @"";
+    
+    url = [url stringByReplacingOccurrencesOfString:@"{server}" withString:server];
+    url = [url stringByReplacingOccurrencesOfString:@"{region}" withString:region];
+    url = [url stringByReplacingOccurrencesOfString:@"{path}"  withString:pathParam];
+    url = [url stringByReplacingOccurrencesOfString:@"{query}" withString:queryParam];
+    NSLog(@"api call: %@", url);
+    
+    return [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 }
 
 #endif

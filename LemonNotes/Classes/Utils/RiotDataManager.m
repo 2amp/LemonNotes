@@ -17,13 +17,9 @@
 
 //URL
 @property (nonatomic) NSURLSession *urlSession;
-@property (nonatomic) NSDictionary *championIds;
-@property (nonatomic) NSDictionary *summonerSpells;
 
 //Private util methods
 - (BOOL)version:(NSString *)newVersion isHigherThan:(NSString *)currentVersion;
-- (NSNumber *)latestGameIdForSummoner:(NSNumber *)summonerId;
-- (NSManagedObject *)isRegisteredSummoner:(NSNumber *)summonerId;
 
 @end
 
@@ -100,72 +96,8 @@
     return NO;
 }
 
-/**
- * @method fetchSummoner
- *
- * Returns
- *
- * @return NSManagedObject of requested summoner
- */
-- (NSManagedObject *)fetchSummoner:(NSNumber *)summonerId
-{
-    NSFetchRequest      *summonerFetch  = [[NSFetchRequest alloc] init];
-    NSEntityDescription *summonerEntity = [NSEntityDescription entityForName:@"summoner" inManagedObjectContext:self.managedObjectContext];
-    NSPredicate         *idPredicate    = [NSPredicate predicateWithFormat: @"summonerId == %@", summonerId];
-    [summonerFetch setEntity:summonerEntity];
-    [summonerFetch setPredicate:idPredicate];
-    
-    NSError *error = nil;
-    NSArray *result = [self.managedObjectContext executeFetchRequest:summonerFetch error:&error];
-    
-    //summoner found
-    if ([result count] == 0)
-    {
-        NSManagedObject *newSummoner = [NSEntityDescription insertNewObjectForEntityForName:@"Summoner"
-                                                                        inManagedObjectContext:self.managedObjectContext];
-        
-    }
-    return result[0];
-}
-
-- (NSNumber *)latestGameIdForSummoner:(NSNumber *)summonerId
-{
-    NSFetchRequest      *gamesFetch  = [[NSFetchRequest alloc] init];
-    NSEntityDescription *gamesEntity = [NSEntityDescription entityForName:@"Game" inManagedObjectContext:self.managedObjectContext];
-    NSPredicate         *summonerObj = [NSPredicate predicateWithFormat:@"summoner == %@", [self fetchSummoner:summonerId]];
-    NSSortDescriptor    *gameIdSort  = [[NSSortDescriptor alloc] initWithKey:@"gameId" ascending:NO];
-    [gamesFetch setEntity:gamesEntity];
-    [gamesFetch setPredicate:summonerObj];
-    [gamesFetch setSortDescriptors:@[gameIdSort]];
-    
-    NSError *error = nil;
-    NSArray *games = [self.managedObjectContext executeFetchRequest:gamesFetch error:&error];
-    if (error)
-    {
-        NSLog(@"Error while fetching games: %@", error);
-        return @(-1);
-    }
-    if ([games count] < 1)
-    {
-        return @0;
-    }
-    return [games[0] valueForKey:@"gameId"];
-}
-
 
 #pragma mark - Champion Static Data Methods
-- (void)recordGames:(NSArray *)games forSummoner:(NSNumber *)summonerId
-{
-    NSNumber *latestGameId = [self latestGameIdForSummoner:summonerId];
-    for (NSDictionary *game in games)
-    {
-        if (game[@"gameId"] > latestGameId)
-        {
-            
-        }
-    }
-}
-
 /**
  * Updates the championIds dictionary by calling Riot API.
  * @note Currently uses NSURLSession, but should call 
@@ -178,16 +110,7 @@
     {
         if (!error)
         {
-            NSDictionary* championIdsDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-            NSMutableDictionary *championIds = [NSMutableDictionary dictionaryWithDictionary:[championIdsDict objectForKey:@"data"]];
-            NSArray *keys = [championIds allKeys];
-            for (NSString *key in keys)
-            {
-                NSDictionary *info = [championIds objectForKey:key];
-                [championIds removeObjectForKey:key];
-                [championIds setObject:info forKey:[info objectForKey:@"id"]];
-            }
-            self.championIds = [NSDictionary dictionaryWithDictionary:championIds];
+            self.champions = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil][@"data"];
         }
         else
         {
@@ -195,9 +118,8 @@
         }
     };
     
-    NSURLSessionDataTask *dataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLStaticDataChampionList, @"na", nil)
-                                                    completionHandler:completionHandler];
-    [dataTask resume];
+    [[self.urlSession dataTaskWithURL:apiURL(kLoLStaticChampionList, @"na", @"", @"dataById=true&") completionHandler:completionHandler]
+     resume];
 }
 
 /**
@@ -210,66 +132,18 @@
     {
         if (!error)
         {
-            NSError* jsonParsingError = nil;
-            NSDictionary* summonerSpellsDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParsingError];
-            if (jsonParsingError)
-            {
-                NSLog(@"%@", jsonParsingError);
-            }
-            else
-            {
-                NSMutableDictionary *summonerSpells = [NSMutableDictionary dictionaryWithDictionary:[summonerSpellsDict objectForKey:@"data"]];
-                NSArray *keys = [summonerSpells allKeys];
-                for (NSString *key in keys)
-                {
-                    NSDictionary *info = [summonerSpells objectForKey:key];
-                    [summonerSpells removeObjectForKey:key];
-                    [summonerSpells setObject:info forKey:[info objectForKey:@"id"]];
-                }
-                self.summonerSpells = [NSDictionary dictionaryWithDictionary:summonerSpells];
-            }
+            self.summonerSpells = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil][@"data"];
+            NSLog(@"%@", self.summonerSpells);
         }
         else
         {
             NSLog(@"There was an error with the champion API call!");
         }
     };
-    NSURLSessionDataTask *dataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLStaticDataSpellList, @"na", nil)
-                                                    completionHandler:completionHandler];
-    [dataTask resume];
+    
+    [[self.urlSession dataTaskWithURL:apiURL(kLoLStaticSpellList, @"na", @"", @"dataById=true&") completionHandler:completionHandler]
+     resume];
 
-}
-
-/**
- * @method championNameForId:
- *
- * Gets the name of the champion with the given ID.
- *
- * @param championId id number of champion
- * @return NSString* champion key
- */
-- (NSString *)championNameForId:(NSNumber *)championId
-{
-    return self.championIds[championId][@"name"];
-}
-
-/**
- * @method championKeyForId
- *
- * Gets the key of the champion with the given ID. 
- * The key is used as the file name of the champion icon image.
- *
- * @param championId id number of champion
- * @return NSString* champion key
- */
-- (NSString *)championKeyForId:(NSNumber *)championId
-{
-    return self.championIds[championId][@"key"];
-}
-
-- (NSString *)summonerSpellKeyForId:(NSNumber *)spellId
-{
-    return self.summonerSpells[spellId][@"key"];
 }
 
 

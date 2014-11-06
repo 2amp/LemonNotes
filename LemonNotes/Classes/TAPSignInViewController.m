@@ -159,8 +159,7 @@
                     [defaults synchronize];
                     
                     
-                    NSURLSessionDataTask *recentGamesDataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLGameBySummoner, @"na",
-                                                                                [NSString stringWithFormat:@"%@", self.summonerId])
+                    NSURLSessionDataTask *recentGamesDataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLGameBySummoner, @"na", [self.summonerId stringValue], @"")
                                                                                completionHandler:recentGamesCompletionHandler];
                     [recentGamesDataTask resume];
                 }
@@ -183,7 +182,7 @@
         }
     };
 
-    NSURLSessionDataTask *summonerInfoDataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLSummonerByName, @"na", self.summonerName)
+    NSURLSessionDataTask *summonerInfoDataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLSummonerByName, @"na", self.summonerName, @"")
                                                                 completionHandler:summonerInfoCompletionHandler];
     [summonerInfoDataTask resume];
     [self.activityIndicator startAnimating];
