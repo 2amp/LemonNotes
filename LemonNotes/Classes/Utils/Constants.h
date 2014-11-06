@@ -15,6 +15,11 @@
 //riot api urls
 #define baseURL @"https://{region}.api.pvp.net"
 
+//regions
+static const int numRegions = 10;
+//NSString* regions[] = {@"na", @"kr", @"euw", @"eune", @"oce", @"br", @"las", @"lan", @"ru", @"tr"};
+
+
 //champion
 #define pathChampion baseURL "/api/lol/{region}/v1.2/champion"
 static NSString* kLoLChampionList           = pathChampion ""                   apiKey;
