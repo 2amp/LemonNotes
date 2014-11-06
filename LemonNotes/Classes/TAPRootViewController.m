@@ -25,10 +25,15 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+    
     self.contentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"homeVC"];
     self.leftMenuViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"sideMenuVC"];
+    
     TAPSideMenuViewController *sideMenuViewController = (TAPSideMenuViewController *)self.leftMenuViewController;
-    sideMenuViewController.contentViewControllers = @[self.contentViewController,  [self.storyboard instantiateViewControllerWithIdentifier:@"startGameVC"]];
+    sideMenuViewController.contentViewControllers = @[
+        self.contentViewController,
+        [self.storyboard instantiateViewControllerWithIdentifier:@"startGameVC"]
+    ];
 }
 
 /*

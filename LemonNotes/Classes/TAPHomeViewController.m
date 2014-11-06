@@ -21,16 +21,7 @@
 
 @implementation TAPHomeViewController
 
-#pragma mark - View Messages
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
-    {
-
-    }
-    return self;
-}
-
+#pragma mark View Messages
 /**
  * @method viewDidLoad
  *
@@ -39,12 +30,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.recentGames = [[NSUserDefaults standardUserDefaults] objectForKey:@"recentGames"];
+    
     [self update:self];
     NSLog(@"TAPHomeViewController viewDidLoad %p", &self);
 }
 
-#pragma mark - Private methods
+
+
+#pragma mark - IBActions
 /**
  * @method updateSummonerInfo
  *
@@ -52,28 +45,10 @@
  */
 - (IBAction)update:(id)sender
 {
-    NSString *summonerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerId"];
-    NSLog(@"summonerId: %@", summonerId);
-
-    void (^summonerInfoHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
-    {
-        NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        self.summonerInfo = jsonData[[jsonData allKeys][0]];
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSString *iconPath = [NSString stringWithFormat:@"%@.png", [self.summonerInfo objectForKey:@"profileIconId"]];
-            self.summonerIconView.image = [UIImage imageNamed:iconPath scaledToWidth:100 height:100];
-            self.summonerNameLabel.text = [self.summonerInfo objectForKey:@"name"];
-            self.summonerRankLabel.text = [NSString stringWithFormat:@"Level %@", [self.summonerInfo objectForKey:@"summonerLevel"]];
-        });
-    };
-
-    NSURLSessionDataTask *summonerInfoDataTask = [[NSURLSession sharedSession] dataTaskWithURL:apiURL(kLoLSummoner, @"na", summonerId)
-                                                                             completionHandler:summonerInfoHandler];
-    [summonerInfoDataTask resume];
+    NSNumber *summonerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerId"];
+    [[RiotDataManager sharedManager] updateGamesForSummoner:summonerId];
 }
 
-#pragma mark - IBActions
 /**
  * When the matches button is tapped, segue to the tab bar vc.
  */
@@ -81,6 +56,8 @@
 {
     [self performSegueWithIdentifier:@"showTabBar" sender:self];
 }
+
+
 
 #pragma mark - Navigation Events
 /**
@@ -90,6 +67,8 @@
 {
 
 }
+
+
 
 #pragma mark - Table View Data Source Methods
 /**

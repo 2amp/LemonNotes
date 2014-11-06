@@ -1,5 +1,6 @@
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
 /**
  * @class RiotDataManager
@@ -18,6 +19,12 @@
 
 + (RiotDataManager *)sharedManager;
 
+//Accounts & games
+- (void)addSummoner:(NSNumber *)summonerId;
+- (void)deleteSummoner:(NSNumber *)summonerId;
+- (void)recordGames:(NSArray *)games forSummoner:(NSNumber *)summonerId;
+
+//static data
 - (void)updateChampionIds;
 - (void)updateSummonerSpells;
 - (NSString *)championNameForId:(NSNumber *)championId;
