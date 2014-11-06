@@ -11,6 +11,4 @@
  */
 @interface TAPRootViewController : RESideMenu
 
-@property (nonatomic) NSArray *recentGames;
-
 @end
