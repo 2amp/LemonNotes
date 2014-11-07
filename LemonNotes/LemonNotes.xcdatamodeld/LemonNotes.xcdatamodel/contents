@@ -22,11 +22,11 @@
         <attribute name="id" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="lastMatchId" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
-        <attribute name="region" attributeType="String" syncable="YES"/>
+        <attribute name="region" attributeType="String" defaultValueString="na" syncable="YES"/>
         <relationship name="matches" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Match" inverseName="summoner" inverseEntity="Match" syncable="YES"/>
     </entity>
     <elements>
         <element name="Match" positionX="-4889" positionY="81" width="128" height="285"/>
-        <element name="Summoner" positionX="-5105" positionY="77" width="128" height="120"/>
+        <element name="Summoner" positionX="-5105" positionY="77" width="128" height="118"/>
     </elements>
 </model>
