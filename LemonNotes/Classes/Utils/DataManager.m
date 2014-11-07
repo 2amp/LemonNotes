@@ -101,6 +101,14 @@
     return NO;
 }
 
+/**
+ * @method currentSummonerEntity
+ *
+ * Returns the summoner entity corresponding to the summoner set in NSUserDefaults.
+ * If the summoner entity does not exists, it creates a new one.
+ *
+ * @return Summoner entity of current summoner
+ */
 - (Summoner *)currentSummonerEntity
 {
     // get summonerId
