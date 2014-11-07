@@ -104,12 +104,11 @@
 - (Summoner *)currentSummonerEntity
 {
     // get summonerId
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *summonerId = [defaults objectForKey:@"currentSummoner"][@"id"];
+    NSDictionary *summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
     
     // fetch for summoner entity with summonerId
     NSFetchRequest *summonerFetch = [NSFetchRequest fetchRequestWithEntityName:@"Summoner"];
-    [summonerFetch setPredicate:[NSPredicate predicateWithFormat:@"id == %@", summonerId]];
+    [summonerFetch setPredicate:[NSPredicate predicateWithFormat:@"id == %@", summonerInfo[@"id"]]];
     
     NSError *error = nil;
     NSArray *result = [self.managedObjectContext executeFetchRequest:summonerFetch error:&error];
@@ -117,10 +116,13 @@
     // if no result, create and recursively return
     if ([result count] == 0)
     {
-        [NSEntityDescription
-         insertNewObjectForEntityForName:@"Summoner"
-         inManagedObjectContext:self.managedObjectContext];
-        return [self currentSummonerEntity];
+        Summoner *newSummoner = [NSEntityDescription insertNewObjectForEntityForName:@"Summoner"
+                                                              inManagedObjectContext:self.managedObjectContext];
+        
+        [newSummoner setValue:summonerInfo[@"region"] forKey:@"region"];
+        [newSummoner setValue:summonerInfo[@"name"]   forKey:@"name"];
+        [newSummoner setValue:summonerInfo[@"id"]     forKey:@"id"];
+        return newSummoner;
     }
     
     // ensured there is one & only 1 summoner entity with summonerId
@@ -181,17 +183,10 @@
  */
 - (void)registerSummoner
 {
-    NSDictionary *summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
-    
-    NSManagedObject *summoner = [NSEntityDescription insertNewObjectForEntityForName:@"Summoner"
-                                                              inManagedObjectContext:self.managedObjectContext];
-    
+    Summoner *summoner = [self currentSummonerEntity];
     NSNumber *lastMatchId = [self saveRecentMatchesForSummoner:summoner];
-    
-    [summoner setValue:lastMatchId             forKey:@"lastMatchId"];
-    [summoner setValue:summonerInfo[@"region"] forKey:@"region"];
-    [summoner setValue:summonerInfo[@"name"]   forKey:@"name"];
-    [summoner setValue:summonerInfo[@"id"]     forKey:@"id"];
+    [summoner setValue:lastMatchId forKey:@"lastMatchId"];
+    [self saveContext];
 }
 
 /**
@@ -206,7 +201,7 @@
  * @param summoner NSManagedObject of summoner to update match history
  * @return NSNumber of last matchId
  */
-- (NSNumber *)saveRecentMatchesForSummoner:(NSManagedObject *)summoner
+- (NSNumber *)saveRecentMatchesForSummoner:(Summoner *)summoner
 {
     NSDictionary *summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
     NSNumber *summonerId = summonerInfo[@"id"];
