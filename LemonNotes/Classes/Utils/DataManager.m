@@ -136,8 +136,11 @@
     
     NSError *error = nil;
     NSArray *result = [self.managedObjectContext executeFetchRequest:summonerFetch error:&error];
-    
-    NSLog(@"%@", result);
+
+    for (Summoner *summoner in result)
+    {
+        NSLog(@"%@", summoner);
+    }
 }
 
 
