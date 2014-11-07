@@ -27,6 +27,7 @@
 //recent games
 @property (nonatomic) NSArray *recentMatches;
 - (void)loadRecentMatches;
+- (void)summonerDump;
 
 //static data
 @property (nonatomic) NSDictionary *champions;

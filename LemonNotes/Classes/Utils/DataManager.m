@@ -127,6 +127,17 @@
     return result[0];
 }
 
+- (void)summonerDump
+{
+    // fetch for summoner entity with summonerId
+    NSFetchRequest *summonerFetch = [NSFetchRequest fetchRequestWithEntityName:@"Summoner"];
+    
+    NSError *error = nil;
+    NSArray *result = [self.managedObjectContext executeFetchRequest:summonerFetch error:&error];
+    
+    NSLog(@"%@", result);
+}
+
 
 
 #pragma mark -
