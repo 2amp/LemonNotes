@@ -39,10 +39,17 @@
  *
  * Called when viewWillAppear
  */
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:YES];
+    [super viewWillAppear:YES];
     
+    //DOESNT WORK
+    NSDictionary *currentUserInfo = [DataManager sharedManager].currentSummonerInfo;
+    //self.summonerNameLabel.text = currentUserInfo[@"name"];
+    //self.summonerLevelLabel.text = currentUserInfo[@"summonerLevel"];
+//    self.summonerIconView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", currentUserInfo[@"profileIconId"]]
+//                                        scaledToWidth:80
+//                                               height:80];
 }
 
 

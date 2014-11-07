@@ -94,15 +94,14 @@
         else
         {
             NSDictionary *summonerInfo = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil][self.summonerName];
-            //[DataManager sharedManager].currentSummonerInfo = summonerInfo;
+            [DataManager sharedManager].currentSummonerInfo = summonerInfo;
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:summonerInfo[@"id"]   forKey:@"currentSummonerId"];
             [defaults setObject:summonerInfo[@"name"] forKey:@"currentSummonerName"];
             
-            NSLog(@"stop");
             [self.activityIndicator stopAnimating];
-            //[self performSegueWithIdentifier:@"showRoot" sender:self];
+            [self performSegueWithIdentifier:@"showRoot" sender:self];
         }
     }];
     [getSummonerInfo resume];

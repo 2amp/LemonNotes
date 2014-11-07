@@ -450,7 +450,6 @@
                         <outlet property="summonerIconView" destination="haW-k7-tKW" id="dbV-xS-B9Q"/>
                         <outlet property="summonerLevelLabel" destination="BTN-XN-uLG" id="B9M-8h-51B"/>
                         <outlet property="summonerNameLabel" destination="mg1-Fp-XAv" id="ada-Un-wfS"/>
-                        <outlet property="summonerRankLabel" destination="BTN-XN-uLG" id="gQy-1a-zfk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yRC-i5-PwI" userLabel="First Responder" sceneMemberID="firstResponder"/>
