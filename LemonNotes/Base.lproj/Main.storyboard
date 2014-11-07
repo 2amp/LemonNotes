@@ -39,12 +39,6 @@
                                     <constraint firstAttribute="height" constant="20" id="UWN-7c-Ig7"/>
                                 </constraints>
                             </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTI-pO-g15">
-                                <rect key="frame" x="278" y="389" width="46" height="30"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.52988997558486139" green="0.81274263015629644" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>

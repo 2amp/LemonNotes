@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8119449E9E609C136045669B"
-               BuildableName = "libPods-RESideMenu.a"
-               BlueprintName = "Pods-RESideMenu"
+               BlueprintIdentifier = "351C9089D3FF8E1B1B91C2CC"
+               BuildableName = "libPods-TRVSURLSessionOperation.a"
+               BlueprintName = "Pods-TRVSURLSessionOperation"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
