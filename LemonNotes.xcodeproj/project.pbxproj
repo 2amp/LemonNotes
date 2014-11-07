@@ -654,6 +654,8 @@
 		8984EF4B19F61FC100C442FC /* LemonNotesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF4A19F61FC100C442FC /* LemonNotesTests.m */; };
 		8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF5819F6341000C442FC /* TAPAppDelegate.m */; };
 		8984EF5C19F6341000C442FC /* TAPSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF5A19F6341000C442FC /* TAPSignInViewController.m */; };
+		89A3D2151A0D00F7001E6AE2 /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = 89A3D2141A0D00F7001E6AE2 /* Match.m */; };
+		89A3D2181A0D00F8001E6AE2 /* Summoner.m in Sources */ = {isa = PBXBuildFile; fileRef = 89A3D2171A0D00F8001E6AE2 /* Summoner.m */; };
 		89A86C0B19F8E60300477FC6 /* TAPStartGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */; };
 		950B2C421A00296A00DD8A23 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 950B2C411A00296A00DD8A23 /* DataManager.m */; };
 		958136101A0C8B69000D8D43 /* NSURLSession+SynchronousTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581360F1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.m */; };
@@ -1327,6 +1329,10 @@
 		8984EF5819F6341000C442FC /* TAPAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPAppDelegate.m; sourceTree = "<group>"; };
 		8984EF5919F6341000C442FC /* TAPSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSignInViewController.h; sourceTree = "<group>"; };
 		8984EF5A19F6341000C442FC /* TAPSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPSignInViewController.m; sourceTree = "<group>"; };
+		89A3D2131A0D00F7001E6AE2 /* Match.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Match.h; sourceTree = "<group>"; };
+		89A3D2141A0D00F7001E6AE2 /* Match.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Match.m; sourceTree = "<group>"; };
+		89A3D2161A0D00F8001E6AE2 /* Summoner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Summoner.h; sourceTree = "<group>"; };
+		89A3D2171A0D00F8001E6AE2 /* Summoner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Summoner.m; sourceTree = "<group>"; };
 		89A86C0919F8E60300477FC6 /* TAPStartGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPStartGameViewController.h; sourceTree = "<group>"; };
 		89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPStartGameViewController.m; sourceTree = "<group>"; };
 		950B2C401A00296A00DD8A23 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
@@ -2121,6 +2127,7 @@
 		8984EF5619F633EA00C442FC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				89A3D2121A0D00E1001E6AE2 /* Model Classes */,
 				950FB68B19FE37B1005F870F /* Utils */,
 				8984EF5719F6341000C442FC /* TAPAppDelegate.h */,
 				8984EF5819F6341000C442FC /* TAPAppDelegate.m */,
@@ -2136,6 +2143,17 @@
 				895922DF1A07FD9000F00637 /* TAPSideMenuViewController.m */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		89A3D2121A0D00E1001E6AE2 /* Model Classes */ = {
+			isa = PBXGroup;
+			children = (
+				89A3D2161A0D00F8001E6AE2 /* Summoner.h */,
+				89A3D2171A0D00F8001E6AE2 /* Summoner.m */,
+				89A3D2131A0D00F7001E6AE2 /* Match.h */,
+				89A3D2141A0D00F7001E6AE2 /* Match.m */,
+			);
+			path = "Model Classes";
 			sourceTree = "<group>";
 		};
 		950070E219FB83BA00C29780 /* Resources */ = {
@@ -2952,6 +2970,7 @@
 				8984EF2E19F61FC100C442FC /* main.m in Sources */,
 				894BF63B1A008858009A1F1F /* UIImage+UIImageAdditions.m in Sources */,
 				8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */,
+				89A3D2151A0D00F7001E6AE2 /* Match.m in Sources */,
 				95F162E11A034C9B00DECF93 /* TAPHomeViewController.m in Sources */,
 				895922DD1A075E9C00F00637 /* TAPRootViewController.m in Sources */,
 				8984EF5C19F6341000C442FC /* TAPSignInViewController.m in Sources */,
@@ -2960,6 +2979,7 @@
 				89A86C0B19F8E60300477FC6 /* TAPStartGameViewController.m in Sources */,
 				8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */,
 				895922E01A07FD9000F00637 /* TAPSideMenuViewController.m in Sources */,
+				89A3D2181A0D00F8001E6AE2 /* Summoner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -2,6 +2,9 @@
 #import "DataManager.h"
 #import "Constants.h"
 #import "NSURLSession+SynchronousTask.h"
+#import "Summoner.h"
+#import "Match.h"
+
 
 
 @interface DataManager()
@@ -20,7 +23,7 @@
 
 //Private util methods
 - (BOOL)version:(NSString *)newVersion isHigherThan:(NSString *)currentVersion;
-- (NSManagedObject *)currentSummonerEntity;
+- (Summoner *)currentSummonerEntity;
 
 @end
 
@@ -98,29 +101,29 @@
     return NO;
 }
 
-- (NSManagedObject *)currentSummonerEntity
+- (Summoner *)currentSummonerEntity
 {
-    //get summonerId
+    // get summonerId
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSNumber *summonerId = [defaults objectForKey:@"currentSummoner"][@"id"];
     
-    //fetch for summoner entity with summonerId
+    // fetch for summoner entity with summonerId
     NSFetchRequest *summonerFetch = [NSFetchRequest fetchRequestWithEntityName:@"Summoner"];
     [summonerFetch setPredicate:[NSPredicate predicateWithFormat:@"id == %@", summonerId]];
     
     NSError *error = nil;
     NSArray *result = [self.managedObjectContext executeFetchRequest:summonerFetch error:&error];
     
-    //if no result, create and recursively return
+    // if no result, create and recursively return
     if ([result count] == 0)
     {
-        NSManagedObject *newSummoner = [NSEntityDescription
-                                        insertNewObjectForEntityForName:@"Summoner"
-                                        inManagedObjectContext:self.managedObjectContext];
+        [NSEntityDescription
+         insertNewObjectForEntityForName:@"Summoner"
+         inManagedObjectContext:self.managedObjectContext];
         return [self currentSummonerEntity];
     }
     
-    //ensured there is one & only 1 summoner entity with summonerId
+    // ensured there is one & only 1 summoner entity with summonerId
     return result[0];
 }
 
@@ -129,7 +132,7 @@
 #pragma mark -
 - (void)loadRecentMatches
 {
-    NSManagedObject *summoner = [self currentSummonerEntity];
+    Summoner *summoner = [self currentSummonerEntity];
 
     NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"Match"];
     NSPredicate *summonerPredicate     = [NSPredicate predicateWithFormat:@"summoner == %@", summoner];
@@ -141,7 +144,7 @@
     NSArray *matchEntities = [self.managedObjectContext executeFetchRequest:fetch error:&error];
     
     NSMutableArray *matches = [[NSMutableArray alloc] init];
-    for (NSManagedObject *matchEntity in matchEntities)
+    for (Match *matchEntity in matchEntities)
     {
         NSMutableDictionary *match = [[NSMutableDictionary alloc] init];
         for (NSPropertyDescription *property in [NSEntityDescription entityForName:@"Match" inManagedObjectContext:self.managedObjectContext])

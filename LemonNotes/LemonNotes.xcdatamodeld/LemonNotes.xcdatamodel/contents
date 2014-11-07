@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A389" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Match" syncable="YES">
+    <entity name="Match" representedClassName="Match" syncable="YES">
         <attribute name="mapId" attributeType="Integer 16" syncable="YES"/>
         <attribute name="matchCreation" attributeType="Integer 32" syncable="YES"/>
         <attribute name="matchDuration" attributeType="Integer 32" syncable="YES"/>
@@ -18,7 +18,7 @@
         <attribute name="teams" attributeType="Transformable" syncable="YES"/>
         <relationship name="summoner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Summoner" inverseName="matches" inverseEntity="Summoner" syncable="YES"/>
     </entity>
-    <entity name="Summoner" syncable="YES">
+    <entity name="Summoner" representedClassName="Summoner" syncable="YES">
         <attribute name="id" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="lastMatchId" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
@@ -26,7 +26,7 @@
         <relationship name="matches" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Match" inverseName="summoner" inverseEntity="Match" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Match" positionX="-4889" positionY="81" width="128" height="283"/>
-        <element name="Summoner" positionX="-5105" positionY="77" width="128" height="118"/>
+        <element name="Match" positionX="-4889" positionY="81" width="128" height="285"/>
+        <element name="Summoner" positionX="-5105" positionY="77" width="128" height="120"/>
     </elements>
 </model>

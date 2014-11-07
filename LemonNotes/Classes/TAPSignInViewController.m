@@ -90,33 +90,39 @@
 - (void)signInWithSummoner:(NSString *)summonerName
 {
     [self.activityIndicator startAnimating];
-    
-    NSError *error;
-    NSHTTPURLResponse *response;
-    NSURL *url = apiURL(kLoLSummonerByName, @"na", summonerName, @"");
-    NSData *data = [NSURLSession sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
-    
-    if (response.statusCode == 404)
+    void (^completionHandler)(NSData *data, NSURLResponse *, NSError *error) = ^(NSData *data, NSURLResponse *response, NSError *error)
     {
-        [self.activityIndicator startAnimating];
-        [self showAlertWithTitle:@"Error" message:@"Summoner not found"];
-    }
-    else
-    {
-        NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSMutableDictionary *summonerInfo = [dataDictionary[summonerName] mutableCopy];
-        [summonerInfo setObject:@"na" forKey:@"region"];
-        [[NSUserDefaults standardUserDefaults] setObject:[summonerInfo copy] forKey:@"currentSummoner"];
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        if (httpResponse.statusCode == 404)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.activityIndicator stopAnimating];
+                [self showAlertWithTitle:@"Error" message:@"Summoner not found"];
+            });
+        }
+        else
+        {
+            NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            NSMutableDictionary *summonerInfo = [dataDictionary[summonerName] mutableCopy];
+            [summonerInfo setObject:@"na" forKey:@"region"];
+            [[NSUserDefaults standardUserDefaults] setObject:[summonerInfo copy] forKey:@"currentSummoner"];
 
-        //register this summoner
-        DataManager *manager = [DataManager sharedManager];
-        [manager registerSummoner];
-        [manager loadRecentMatches];
+            //register this summoner
+            DataManager *manager = [DataManager sharedManager];
+            [manager registerSummoner];
+            [manager loadRecentMatches];
 
-        //stop loading spin & show root
-        [self.activityIndicator stopAnimating];
-        [self performSegueWithIdentifier:@"showRoot" sender:self];
-    }
+            //stop loading spin & show root
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.activityIndicator stopAnimating];
+                [self performSegueWithIdentifier:@"showRoot" sender:self];
+            });
+        }
+    };
+    NSURLSessionDataTask *getSummonerInfo = [self.urlSession dataTaskWithURL:apiURL(kLoLSummonerByName, @"na", summonerName, @"")
+                                                           completionHandler:completionHandler];
+    [getSummonerInfo resume];
+    [self.activityIndicator startAnimating];
 }
 
 
