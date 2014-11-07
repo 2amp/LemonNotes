@@ -114,7 +114,6 @@ static inline NSURL* apiURL(NSString *call, NSString *region, NSString *pathPara
     url = [url stringByReplacingOccurrencesOfString:@"{region}" withString:region];
     url = [url stringByReplacingOccurrencesOfString:@"{path}"  withString:pathParam];
     url = [url stringByReplacingOccurrencesOfString:@"{query}" withString:queryParam];
-    NSLog(@"api call: %@", url);
     
     return [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 }

@@ -1,6 +1,6 @@
 
 #import "TAPAppDelegate.h"
-#import "RiotDataManager.h"
+#import "DataManager.h"
 #import "TAPHomeViewController.h"
 #import "TAPSignInViewController.h"
 
@@ -23,6 +23,10 @@
  */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //for now clear defaults
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+
     //register values for defaults that have never been set before
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{
         @"realm":@{
@@ -39,12 +43,12 @@
         }
     }];
     
-    
     //data updates
-    [[RiotDataManager sharedManager] updateChampionIds];
-    [[RiotDataManager sharedManager] updateSummonerSpells];
+    [[DataManager sharedManager] updateChampionIds];
+    [[DataManager sharedManager] updateSummonerSpells];
     NSString *summonerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerId"];
- 
+    NSLog(@"summonerId: %@", summonerId);
+    
     //programmatically setup initialVC
     NSString *initialVCID = summonerId ? @"rootVC" : @"signInVC";
     self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]

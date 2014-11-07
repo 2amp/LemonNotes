@@ -1,10 +1,10 @@
 
-#import "RiotDataManager.h"
+#import "DataManager.h"
 #import "Constants.h"
 
 
 
-@interface RiotDataManager()
+@interface DataManager()
 
 //Core Data
 @property (nonatomic, strong, readonly) NSManagedObjectModel *managedObjectModel;
@@ -15,30 +15,30 @@
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator;
 - (void)saveContext;
 
-//URL
-@property (nonatomic) NSURLSession *urlSession;
-
 //Private util methods
 - (BOOL)version:(NSString *)newVersion isHigherThan:(NSString *)currentVersion;
+
+//Network Data
+@property (nonatomic) NSURLSession *urlSession;
 
 @end
 
 
 
-@implementation RiotDataManager
+@implementation DataManager
 
 #pragma mark - Init Methods
 /**
  * @method sharedManager
  *
- * Returns a singleton of RiotDataManager
+ * Returns a singleton of DataManager
  * using a threadsafe GCD initialization.
  *
- * @return RiotDataManager instance
+ * @return DataManager instance
  */
-+ (RiotDataManager *)sharedManager
++ (instancetype)sharedManager
 {
-    static RiotDataManager *sharedManager = nil;
+    static DataManager *sharedManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedManager = [[self alloc] init];
@@ -58,7 +58,8 @@
     self = [super init];
     if (self)
     {
-        self.urlSession = [NSURLSession sharedSession];
+        NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+        self.urlSession = [NSURLSession sessionWithConfiguration:config];
     }
     return self;
 }
@@ -97,6 +98,11 @@
 }
 
 
+
+#pragma mark -
+
+
+
 #pragma mark - Champion Static Data Methods
 /**
  * Updates the championIds dictionary by calling Riot API.
@@ -133,7 +139,6 @@
         if (!error)
         {
             self.summonerSpells = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil][@"data"];
-            NSLog(@"%@", self.summonerSpells);
         }
         else
         {

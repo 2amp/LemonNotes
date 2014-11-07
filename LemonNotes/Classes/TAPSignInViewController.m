@@ -2,6 +2,7 @@
 #import "TAPSignInViewController.h"
 #import "TAPStartGameViewController.h"
 #import "TAPRootViewController.h"
+#import "DataManager.h"
 #import "Constants.h"
 
 
@@ -23,7 +24,7 @@
 {
     [super viewDidLoad];
     
-    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
     self.urlSession = [NSURLSession sessionWithConfiguration:config];
 }
 
@@ -82,109 +83,29 @@
  */
 - (void)signIn
 {
-    // Completion handler for recentGamesDataTask
-    void (^recentGamesCompletionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
+    NSURLSessionDataTask *getSummonerInfo = [self.urlSession dataTaskWithURL:apiURL(kLoLSummonerByName, @"na", self.summonerName, @"")
+    completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
     {
-        if (!error)
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        if ( httpResponse.statusCode == 404 )
         {
-            NSError* jsonParsingError = nil;
-            NSDictionary* recentGames = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParsingError];
-            if (jsonParsingError)
-            {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.activityIndicator stopAnimating];
-                    [self showAlertWithTitle:@"JSON Error" message:[jsonParsingError localizedDescription]];
-                });
-            }
-            else
-            {
-                //MatchHistory API call replaced with RecentGames API Call
-                //now shows normal games too, and some of the
-                //JSON key values were changed accordingly
-                //also, no longer flips the array, because Riot returns recent first
-                self.recentGames = recentGames[@"games"];
-                NSLog(@"%@", self.recentGames);
-                // Currently we are storing recent games in the standard user defaults. This
-                // is a temporary measure until we finalize Core Data caching.
-                [[NSUserDefaults standardUserDefaults] setObject:self.recentGames forKey:@"recentGames"];
-                for (NSDictionary *match in self.recentGames)
-                {
-                    NSLog(@"%@", match[@"championId"]);
-                }
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.activityIndicator stopAnimating];
-                    [self performSegueWithIdentifier:@"showRoot" sender:self];
-                });
-            }
+            [self showAlertWithTitle:@"Login Error" message:@"Summoner not found"];
         }
         else
         {
-            NSLog(@"There was an error with the API call!");
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.activityIndicator stopAnimating];
-            });
+            NSDictionary *summonerInfo = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil][self.summonerName];
+            //[DataManager sharedManager].currentSummonerInfo = summonerInfo;
+            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setObject:summonerInfo[@"id"]   forKey:@"currentSummonerId"];
+            [defaults setObject:summonerInfo[@"name"] forKey:@"currentSummonerName"];
+            
+            NSLog(@"stop");
+            [self.activityIndicator stopAnimating];
+            //[self performSegueWithIdentifier:@"showRoot" sender:self];
         }
-    };
-
-    // Completion handler for summonerInfoDataTask
-    void (^summonerInfoCompletionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
-    {
-        if (!error)
-        {
-            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-            // Make sure to only do GUI updates on the main thread
-            if (httpResponse.statusCode != 404)
-            {
-                NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-                NSError* jsonParsingError = nil;
-                NSDictionary* summonerInfo = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParsingError];
-                if (jsonParsingError)
-                {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.activityIndicator stopAnimating];
-                        [self showAlertWithTitle:@"JSON Error" message:[jsonParsingError localizedDescription]];
-                    });
-                }
-                else
-                {
-                    // We need to set up recentGamesDataTask in the completion handler of summonerInfoDataTask because
-                    // it we need to fetch the summoner ID first. I'm not sure if this is the best way to do it, but
-                    // at least it works.
-                    // Once we have verified that the entered summoner name is valid, add it to
-                    // [NSUserDefaults standardUserDefaults].
-                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                    [defaults setObject:self.summonerName forKey:@"summonerName"];
-                    self.summonerId = summonerInfo[[summonerInfo allKeys][0]][@"id"];
-                    [defaults setObject:self.summonerId forKey:@"summonerId"];
-                    [defaults synchronize];
-                    
-                    
-                    NSURLSessionDataTask *recentGamesDataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLGameBySummoner, @"na", [self.summonerId stringValue], @"")
-                                                                               completionHandler:recentGamesCompletionHandler];
-                    [recentGamesDataTask resume];
-                }
-            }
-            else
-            {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.activityIndicator stopAnimating];
-                    [self showAlertWithTitle:@"Error" message:@"The summoner name you entered was not found."];
-                });
-            }
-
-        }
-        else
-        {
-            NSLog(@"There was an error with the API call!");
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.activityIndicator stopAnimating];
-            });
-        }
-    };
-
-    NSURLSessionDataTask *summonerInfoDataTask = [self.urlSession dataTaskWithURL:apiURL(kLoLSummonerByName, @"na", self.summonerName, @"")
-                                                                completionHandler:summonerInfoCompletionHandler];
-    [summonerInfoDataTask resume];
+    }];
+    [getSummonerInfo resume];
     [self.activityIndicator startAnimating];
 }
 

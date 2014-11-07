@@ -13,8 +13,7 @@
  * @author Chris Fu, Bohui Moon
  * @version 0.1
  */
-@interface TAPSignInViewController : UIViewController
-            <NSURLSessionTaskDelegate, UITextFieldDelegate>
+@interface TAPSignInViewController : UIViewController <UITextFieldDelegate>
 
 @property (nonatomic, strong) NSURLSession *urlSession;
 @property (nonatomic) NSString *summonerName;

@@ -1,7 +1,7 @@
 
 #import "TAPHomeViewController.h"
 #import "UIImage+UIImageAdditions.h"
-#import "RiotDataManager.h"
+#import "DataManager.h"
 #import "Constants.h"
 
 
@@ -10,7 +10,7 @@
 
 @property (nonatomic) NSDictionary *summonerInfo;
 @property (nonatomic, weak) IBOutlet UILabel* summonerNameLabel;
-@property (nonatomic, weak) IBOutlet UILabel* summonerRankLabel;
+@property (nonatomic, weak) IBOutlet UILabel* summonerLevelLabel;
 @property (nonatomic, weak) IBOutlet UIImageView* summonerIconView;
 
 - (IBAction)update:(id)sender;
@@ -31,10 +31,19 @@
 {
     [super viewDidLoad];
     
-    [self update:self];
     NSLog(@"TAPHomeViewController viewDidLoad %p", &self);
 }
 
+/**
+ * @method viewWillAppear
+ *
+ * Called when viewWillAppear
+ */
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    
+}
 
 
 #pragma mark - IBActions
@@ -45,7 +54,7 @@
  */
 - (IBAction)update:(id)sender
 {
-    NSNumber *summonerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerId"];
+    
 }
 
 /**
@@ -117,7 +126,7 @@
  */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    RiotDataManager *dataManager = [RiotDataManager sharedManager];
+    DataManager *dataManager = [DataManager sharedManager];
     NSDictionary *match = self.recentGames[indexPath.row];
     NSDictionary *stats = match[@"stats"];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"matchHistoryCell" forIndexPath:indexPath];

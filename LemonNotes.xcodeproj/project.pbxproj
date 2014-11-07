@@ -15,7 +15,6 @@
 		89591DD51A03130B00F00637 /* 2AM Productions Logo.idraw in Resources */ = {isa = PBXBuildFile; fileRef = 89591B5C1A03130B00F00637 /* 2AM Productions Logo.idraw */; };
 		89591DD61A03130B00F00637 /* Lemon Notes Logo.idraw in Resources */ = {isa = PBXBuildFile; fileRef = 89591B5D1A03130B00F00637 /* Lemon Notes Logo.idraw */; };
 		89591DE61A03131700F00637 /* LoLStaticData.sql in Resources */ = {isa = PBXBuildFile; fileRef = 89591DE51A03131700F00637 /* LoLStaticData.sql */; };
-		89591DE91A03136000F00637 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 89591DE81A03136000F00637 /* DBManager.m */; };
 		89591DED1A0313F100F00637 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 89591DEC1A0313F100F00637 /* libsqlite3.dylib */; };
 		895920651A0330F600F00637 /* Aatrox.png in Resources */ = {isa = PBXBuildFile; fileRef = 89591DEF1A0330F500F00637 /* Aatrox.png */; };
 		895920661A0330F600F00637 /* Ahri.png in Resources */ = {isa = PBXBuildFile; fileRef = 89591DF01A0330F500F00637 /* Ahri.png */; };
@@ -656,7 +655,7 @@
 		8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF5819F6341000C442FC /* TAPAppDelegate.m */; };
 		8984EF5C19F6341000C442FC /* TAPSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF5A19F6341000C442FC /* TAPSignInViewController.m */; };
 		89A86C0B19F8E60300477FC6 /* TAPStartGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */; };
-		950B2C421A00296A00DD8A23 /* RiotDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 950B2C411A00296A00DD8A23 /* RiotDataManager.m */; };
+		950B2C421A00296A00DD8A23 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 950B2C411A00296A00DD8A23 /* DataManager.m */; };
 		95F162E11A034C9B00DECF93 /* TAPHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F162E01A034C9B00DECF93 /* TAPHomeViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -680,8 +679,6 @@
 		89591B5C1A03130B00F00637 /* 2AM Productions Logo.idraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = "2AM Productions Logo.idraw"; sourceTree = "<group>"; };
 		89591B5D1A03130B00F00637 /* Lemon Notes Logo.idraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lemon Notes Logo.idraw"; sourceTree = "<group>"; };
 		89591DE51A03131700F00637 /* LoLStaticData.sql */ = {isa = PBXFileReference; lastKnownFileType = file; path = LoLStaticData.sql; sourceTree = "<group>"; };
-		89591DE71A03136000F00637 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
-		89591DE81A03136000F00637 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
 		89591DEC1A0313F100F00637 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		89591DEF1A0330F500F00637 /* Aatrox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Aatrox.png; sourceTree = "<group>"; };
 		89591DF01A0330F500F00637 /* Ahri.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ahri.png; sourceTree = "<group>"; };
@@ -1331,8 +1328,8 @@
 		8984EF5A19F6341000C442FC /* TAPSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPSignInViewController.m; sourceTree = "<group>"; };
 		89A86C0919F8E60300477FC6 /* TAPStartGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPStartGameViewController.h; sourceTree = "<group>"; };
 		89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPStartGameViewController.m; sourceTree = "<group>"; };
-		950B2C401A00296A00DD8A23 /* RiotDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RiotDataManager.h; sourceTree = "<group>"; };
-		950B2C411A00296A00DD8A23 /* RiotDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RiotDataManager.m; sourceTree = "<group>"; };
+		950B2C401A00296A00DD8A23 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		950B2C411A00296A00DD8A23 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		950FB68C19FE37B1005F870F /* apikeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = apikeys.h; sourceTree = "<group>"; };
 		950FB68D19FE37B1005F870F /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		95F162DF1A034C9B00DECF93 /* TAPHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPHomeViewController.h; sourceTree = "<group>"; };
@@ -2152,10 +2149,8 @@
 			children = (
 				950FB68C19FE37B1005F870F /* apikeys.h */,
 				950FB68D19FE37B1005F870F /* Constants.h */,
-				89591DE71A03136000F00637 /* DBManager.h */,
-				89591DE81A03136000F00637 /* DBManager.m */,
-				950B2C401A00296A00DD8A23 /* RiotDataManager.h */,
-				950B2C411A00296A00DD8A23 /* RiotDataManager.m */,
+				950B2C401A00296A00DD8A23 /* DataManager.h */,
+				950B2C411A00296A00DD8A23 /* DataManager.m */,
 				894BF6391A008858009A1F1F /* UIImage+UIImageAdditions.h */,
 				894BF63A1A008858009A1F1F /* UIImage+UIImageAdditions.m */,
 			);
@@ -2951,12 +2946,11 @@
 			files = (
 				8984EF2E19F61FC100C442FC /* main.m in Sources */,
 				894BF63B1A008858009A1F1F /* UIImage+UIImageAdditions.m in Sources */,
-				89591DE91A03136000F00637 /* DBManager.m in Sources */,
 				8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */,
 				95F162E11A034C9B00DECF93 /* TAPHomeViewController.m in Sources */,
 				895922DD1A075E9C00F00637 /* TAPRootViewController.m in Sources */,
 				8984EF5C19F6341000C442FC /* TAPSignInViewController.m in Sources */,
-				950B2C421A00296A00DD8A23 /* RiotDataManager.m in Sources */,
+				950B2C421A00296A00DD8A23 /* DataManager.m in Sources */,
 				89A86C0B19F8E60300477FC6 /* TAPStartGameViewController.m in Sources */,
 				8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */,
 				895922E01A07FD9000F00637 /* TAPSideMenuViewController.m in Sources */,
