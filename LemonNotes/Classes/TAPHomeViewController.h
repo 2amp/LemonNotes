@@ -17,8 +17,6 @@
  */
 @interface TAPHomeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic) NSArray *recentGames;
-
 - (IBAction)matchesTapped:(id)sender;
 
 @end

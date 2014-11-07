@@ -25,7 +25,7 @@
 /**
  * @method viewDidLoad
  *
- * Called when view
+ * Called when view is loaded to memory
  */
 - (void)viewDidLoad
 {
@@ -37,18 +37,18 @@
 /**
  * @method viewWillAppear
  *
- * Called when viewWillAppear
+ * Called when view will appear
  */
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     
-    //DOESNT WORK
-    NSDictionary *currentUserInfo = [DataManager sharedManager].currentSummonerInfo;
-    self.summonerNameLabel.text = currentUserInfo[@"name"];
-    self.summonerLevelLabel.text = [NSString stringWithFormat:@"Level: %@", currentUserInfo[@"summonerLevel"]];
-    self.summonerIconView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", currentUserInfo[@"profileIconId"]]];
+    NSDictionary *summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
+    self.summonerNameLabel.text = summonerInfo[@"name"];
+    self.summonerLevelLabel.text = [NSString stringWithFormat:@"Level: %@", summonerInfo[@"summonerLevel"]];
+    self.summonerIconView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", summonerInfo[@"profileIconId"]]];
 }
+
 
 
 #pragma mark - IBActions
@@ -108,7 +108,7 @@
  */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.recentGames.count;
+    return [DataManager sharedManager].recentMatches.count;
 }
 
 /**
@@ -131,20 +131,23 @@
  */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DataManager *dataManager = [DataManager sharedManager];
-    NSDictionary *match = self.recentGames[indexPath.row];
-    NSDictionary *stats = match[@"stats"];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"matchHistoryCell" forIndexPath:indexPath];
-
     // Configure the cell...
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"matchHistoryCell" forIndexPath:indexPath];
     UILabel     *outcome                = (UILabel *)    [cell viewWithTag:100];
     UIImageView *championImageView      = (UIImageView *)[cell viewWithTag:101];
     UILabel     *championName           = (UILabel *)    [cell viewWithTag:102];
     UIImageView *summonerIcon1ImageView = (UIImageView *)[cell viewWithTag:103];
     UIImageView *summonerIcon2ImageView = (UIImageView *)[cell viewWithTag:104];
     UILabel     *scoreLabel             = (UILabel *)    [cell viewWithTag:105];
+    
+    //pull data
+    DataManager *dataManager = [DataManager sharedManager];
+    NSDictionary *match = dataManager.recentMatches[indexPath.row];
+    int summonerIndex = [match[@"summonerIndex"] intValue];
+    NSDictionary *info  = match[@"participants"][summonerIndex];
+    NSDictionary *stats = info[@"stats"];
 
-    if ([stats[@"win"] boolValue])
+    if ([stats[@"winner"] boolValue])
     {
         outcome.text = @"Victory";
         outcome.textColor = [UIColor colorWithRed:0 green:0.4 blue:0 alpha:1];
@@ -155,23 +158,21 @@
         outcome.textColor = [UIColor redColor];
     }
 
-    NSString *imagePath = [NSString stringWithFormat:@"%@.png", dataManager.champions[ match[@"championId"] ][@"key"]];
-    UIImage *championImage = [UIImage imageNamed:imagePath scaledToWidth:60 height:60];
-    championImageView.image = championImage;
-
-    NSString *summonerIcon1ImagePath = [NSString stringWithFormat:@"%@.png", dataManager.summonerSpells[ match[@"spell1Id"] ][@"key"]];
-    UIImage *summonerIcon1Image = [UIImage imageNamed:summonerIcon1ImagePath];
-    NSString *summonerIcon2ImagePath = [NSString stringWithFormat:@"%@.png", dataManager.summonerSpells[ match[@"spell1Id"] ][@"key"]];
-    UIImage *summonerIcon2Image = [UIImage imageNamed:summonerIcon2ImagePath];
-    summonerIcon1ImageView.image = summonerIcon1Image;
-    summonerIcon2ImageView.image = summonerIcon2Image;
+    //set images
+    NSString *champion = dataManager.champions[ [info[@"championId"] stringValue] ][@"key"];
+    NSString *spell1   = dataManager.summonerSpells[ [info[@"spell1Id"] stringValue] ][@"key"];
+    NSString *spell2   = dataManager.summonerSpells[ [info[@"spell2Id"] stringValue] ][@"key"];
+    championImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", champion]];
+    summonerIcon1ImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", spell1]];
+    summonerIcon2ImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", spell2]];
     
-    NSNumber *kills = stats[@"championsKilled"] ? stats[@"championsKilled"] : @0;
-    NSNumber *deaths = stats[@"numDeaths"] ? stats[@"numDeaths"] : @0;
+    //set labels
+    NSNumber *kills   = stats[@"kills"]   ? stats[@"kills"]   : @0;
+    NSNumber *deaths  = stats[@"deaths"]  ? stats[@"deaths"]  : @0;
     NSNumber *assists = stats[@"assists"] ? stats[@"assists"] : @0;
     scoreLabel.text = [NSString stringWithFormat:@"%@/%@/%@", kills, deaths, assists];
 
-    championName.text = dataManager.champions[ match[@"championId"] ][@"name"];
+    championName.text = dataManager.champions[ [info[@"championId"] stringValue] ][@"name"];
     return cell;
 }
 

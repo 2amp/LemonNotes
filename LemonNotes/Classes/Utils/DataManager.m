@@ -1,7 +1,7 @@
 
 #import "DataManager.h"
 #import "Constants.h"
-
+#import "NSURLSession+SynchronousTask.h"
 
 
 @interface DataManager()
@@ -15,11 +15,12 @@
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator;
 - (void)saveContext;
 
+//session
+@property (nonatomic, strong) NSURLSession *urlSession;
+
 //Private util methods
 - (BOOL)version:(NSString *)newVersion isHigherThan:(NSString *)currentVersion;
-
-//Network Data
-@property (nonatomic) NSURLSession *urlSession;
+- (NSManagedObject *)currentSummonerEntity;
 
 @end
 
@@ -97,17 +98,164 @@
     return NO;
 }
 
+- (NSManagedObject *)currentSummonerEntity
+{
+    //get summonerId
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *summonerId = [defaults objectForKey:@"currentSummoner"][@"id"];
+    
+    //fetch for summoner entity with summonerId
+    NSFetchRequest *summonerFetch = [NSFetchRequest fetchRequestWithEntityName:@"Summoner"];
+    [summonerFetch setPredicate:[NSPredicate predicateWithFormat:@"id == %@", summonerId]];
+    
+    NSError *error = nil;
+    NSArray *result = [self.managedObjectContext executeFetchRequest:summonerFetch error:&error];
+    
+    //if no result, create and recursively return
+    if ([result count] == 0)
+    {
+        NSManagedObject *newSummoner = [NSEntityDescription
+                                        insertNewObjectForEntityForName:@"Summoner"
+                                        inManagedObjectContext:self.managedObjectContext];
+        return [self currentSummonerEntity];
+    }
+    
+    //ensured there is one & only 1 summoner entity with summonerId
+    return result[0];
+}
+
 
 
 #pragma mark -
+- (void)loadRecentMatches
+{
+    NSManagedObject *summoner = [self currentSummonerEntity];
+
+    NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"Match"];
+    NSPredicate *summonerPredicate     = [NSPredicate predicateWithFormat:@"summoner == %@", summoner];
+    NSSortDescriptor *matchIdSort      = [NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:NO];
+    [fetch setPredicate:summonerPredicate];
+    [fetch setSortDescriptors:@[matchIdSort]];
+    
+    NSError *error = nil;
+    NSArray *matchEntities = [self.managedObjectContext executeFetchRequest:fetch error:&error];
+    
+    NSMutableArray *matches = [[NSMutableArray alloc] init];
+    for (NSManagedObject *matchEntity in matchEntities)
+    {
+        NSMutableDictionary *match = [[NSMutableDictionary alloc] init];
+        for (NSPropertyDescription *property in [NSEntityDescription entityForName:@"Match" inManagedObjectContext:self.managedObjectContext])
+        {
+            if (![property.name isEqual:@"summoner"])
+            {
+                [match setObject:[matchEntity valueForKey:property.name] forKey:property.name];
+            }
+        }
+        [matches addObject:[match copy]];
+    }
+    self.recentMatches = [matches copy];
+}
+
+/**
+ * @method registerSummoner
+ *
+ * Enters the summoner as a new entity into core data.
+ * Saves all ranked games.
+ *
+ * @note currently only saves last 10 games,
+ *       but should save all games in the future.
+ */
+- (void)registerSummoner
+{
+    NSDictionary *summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
+    
+    NSManagedObject *summoner = [NSEntityDescription insertNewObjectForEntityForName:@"Summoner"
+                                                              inManagedObjectContext:self.managedObjectContext];
+    
+    NSNumber *lastMatchId = [self saveRecentMatchesForSummoner:summoner];
+    
+    [summoner setValue:lastMatchId             forKey:@"lastMatchId"];
+    [summoner setValue:summonerInfo[@"region"] forKey:@"region"];
+    [summoner setValue:summonerInfo[@"name"]   forKey:@"name"];
+    [summoner setValue:summonerInfo[@"id"]     forKey:@"id"];
+}
+
+/**
+ * @method saveMatchHistoryForSummoner:
+ * 
+ * Given an summoner coredata entity,
+ * fetches the recent 10 matches and adds them.
+ *
+ * @note in the future, this method should check and add matches
+ *       up until the stored lastMatchId for summoner (this could be all ranked games)
+ *
+ * @param summoner NSManagedObject of summoner to update match history
+ * @return NSNumber of last matchId
+ */
+- (NSNumber *)saveRecentMatchesForSummoner:(NSManagedObject *)summoner
+{
+    NSDictionary *summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
+    NSNumber *summonerId = summonerInfo[@"id"];
+    
+    //get match history
+    NSError *error;
+    NSHTTPURLResponse *response;
+    NSURL *url = apiURL(kLoLMatchHistory, @"na", [summonerId stringValue], @"beginIndex=0&endIndex=4&");
+    NSData *matchHistoryData = [NSURLSession sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
+    
+    //make array of match ids
+    NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:matchHistoryData options:kNilOptions error:nil];
+    NSArray *matches = [[dataDict[@"matches"] reverseObjectEnumerator] allObjects];
+    NSMutableArray *matchIds = [NSMutableArray arrayWithCapacity:0];
+    for (NSDictionary *match in matches)
+    {
+        [matchIds addObject:match[@"matchId"]];
+    }
+    
+    //array of match data for every id
+    for (NSNumber *matchId in matchIds)
+    {
+        //fetch match data
+        url = apiURL(kLoLMatch, @"na", [matchId stringValue], @"");
+        NSData *matchData = [NSURLSession sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
+        NSDictionary *matchDict = [NSJSONSerialization JSONObjectWithData:matchData options:kNilOptions error:nil];
+        
+        //add to new entity
+        NSManagedObject *newMatch = [NSEntityDescription insertNewObjectForEntityForName:@"Match"
+                                                                      inManagedObjectContext:self.managedObjectContext];
+        [newMatch setValue:summoner forKey:@"summoner"];
+        for (NSString *key in [matchDict allKeys])
+        {
+            [newMatch setValue:matchDict[key] forKey:key];
+        }
+        
+        //find and set which participantId summoner is
+        for (NSDictionary *participant in matchDict[@"participantIdentities"])
+        {
+            if (participant[@"player"][@"summonerId"] == summonerId)
+            {
+                int index = [participant[@"participantId"] intValue] - 1;
+                [newMatch setValue:[NSNumber numberWithInt:index] forKey:@"summonerIndex"];
+            }
+        }
+        
+        //add to summoner's matches
+        [[summoner valueForKey:@"matches"] addObject:newMatch];
+    }
+    
+    //return latest match id
+    return matchIds[0];
+}
 
 
 
 #pragma mark - Champion Static Data Methods
 /**
+ * @method updateChampionIds
+ *
  * Updates the championIds dictionary by calling Riot API.
- * @note Currently uses NSURLSession, but should call 
- *       some sort of NetworkManager to take care of networking.
+ *
+ * @note the keys are string values, not NSNumbers
  */
 - (void)updateChampionIds
 {

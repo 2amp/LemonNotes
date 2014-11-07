@@ -47,7 +47,6 @@
     [[DataManager sharedManager] updateChampionIds];
     [[DataManager sharedManager] updateSummonerSpells];
     NSString *summonerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerId"];
-    NSLog(@"summonerId: %@", summonerId);
     
     //programmatically setup initialVC
     NSString *initialVCID = summonerId ? @"rootVC" : @"signInVC";

@@ -15,16 +15,5 @@
  */
 @interface TAPSignInViewController : UIViewController <UITextFieldDelegate>
 
-@property (nonatomic, strong) NSURLSession *urlSession;
-@property (nonatomic) NSString *summonerName;
-@property (nonatomic) NSNumber *summonerId;
-@property (nonatomic) NSArray *recentGames;
-
-@property (weak, nonatomic) IBOutlet UITextField *signInField;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-
-- (void)signIn;
-- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message;
-
 @end
 

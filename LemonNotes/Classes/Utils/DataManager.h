@@ -21,8 +21,12 @@
 + (instancetype)sharedManager;
 
 //accounts and users
-@property (nonatomic) NSDictionary *currentSummonerInfo;
-@property (nonatomic) NSDictionary *currentSummonerSummary;
+- (void)registerSummoner;
+- (NSNumber *)saveRecentMatchesForSummoner:(NSManagedObject *)summoner;
+
+//recent games
+@property (nonatomic) NSArray *recentMatches;
+- (void)loadRecentMatches;
 
 //static data
 @property (nonatomic) NSDictionary *champions;

@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A389" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Match" syncable="YES">
-        <attribute name="mapId" optional="YES" attributeType="Integer 16" syncable="YES"/>
-        <attribute name="matchCreation" optional="YES" attributeType="Integer 32" syncable="YES"/>
-        <attribute name="matchDuration" optional="YES" attributeType="Integer 32" syncable="YES"/>
-        <attribute name="matchId" optional="YES" attributeType="Integer 32" indexed="YES" syncable="YES"/>
-        <attribute name="matchMode" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="matchType" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="matchVersion" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="participantIdentities" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="participantIndex" optional="YES" attributeType="Integer 16" syncable="YES"/>
-        <attribute name="participants" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="platformId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="queueType" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="region" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="season" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="teams" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <relationship name="summoner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Summoner" inverseName="games" inverseEntity="Summoner" syncable="YES"/>
+        <attribute name="mapId" attributeType="Integer 16" syncable="YES"/>
+        <attribute name="matchCreation" attributeType="Integer 32" syncable="YES"/>
+        <attribute name="matchDuration" attributeType="Integer 32" syncable="YES"/>
+        <attribute name="matchId" attributeType="Integer 32" indexed="YES" syncable="YES"/>
+        <attribute name="matchMode" attributeType="String" syncable="YES"/>
+        <attribute name="matchType" attributeType="String" syncable="YES"/>
+        <attribute name="matchVersion" attributeType="String" syncable="YES"/>
+        <attribute name="participantIdentities" attributeType="Transformable" syncable="YES"/>
+        <attribute name="participants" attributeType="Transformable" syncable="YES"/>
+        <attribute name="platformId" attributeType="String" syncable="YES"/>
+        <attribute name="queueType" attributeType="String" syncable="YES"/>
+        <attribute name="region" attributeType="String" syncable="YES"/>
+        <attribute name="season" attributeType="String" syncable="YES"/>
+        <attribute name="summonerIndex" attributeType="Integer 16" syncable="YES"/>
+        <attribute name="teams" attributeType="Transformable" syncable="YES"/>
+        <relationship name="summoner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Summoner" inverseName="matches" inverseEntity="Summoner" syncable="YES"/>
     </entity>
     <entity name="Summoner" syncable="YES">
-        <attribute name="lastMatchId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="region" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="summonerId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="games" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Match" inverseName="summoner" inverseEntity="Match" syncable="YES"/>
+        <attribute name="id" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="lastMatchId" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="region" attributeType="String" syncable="YES"/>
+        <relationship name="matches" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Match" inverseName="summoner" inverseEntity="Match" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Summoner" positionX="-5105" positionY="77" width="128" height="103"/>
         <element name="Match" positionX="-4889" positionY="81" width="128" height="283"/>
+        <element name="Summoner" positionX="-5105" positionY="77" width="128" height="118"/>
     </elements>
 </model>

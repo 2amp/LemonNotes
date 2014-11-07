@@ -56,7 +56,7 @@ static NSString* kLoLStatus              = pathStatus   "";
 static NSString* kLoLStatusRegion        = pathStatus   "/{path}";           //{region}
 
 //match
-#define pathMatch @"api/lol/{region}/v2.2"
+#define pathMatch @"api/lol/{region}/v2.2/match"
 static NSString* kLoLMatch               = pathMatch    "/{path}";           //{matchId}
 
 //match history

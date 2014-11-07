@@ -1,12 +1,20 @@
 
 #import "TAPSignInViewController.h"
-#import "TAPStartGameViewController.h"
 #import "TAPRootViewController.h"
+#import "NSURLSession+SynchronousTask.h"
 #import "DataManager.h"
 #import "Constants.h"
 
 
 @interface TAPSignInViewController ()
+
+@property (weak, nonatomic) IBOutlet UITextField *signInField;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+
+@property (nonatomic, strong) NSURLSession *urlSession;
+
+- (void)signInWithSummoner:(NSString *)summonerName;
+- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message;
 
 @end
 
@@ -65,11 +73,9 @@
  */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    self.summonerName = self.signInField.text;
     [textField resignFirstResponder];
-
-    [self signIn];
-
+    [self signInWithSummoner:self.signInField.text];
+    
     return YES;
 }
 
@@ -81,31 +87,36 @@
  * Otherwise, segue to the start game view controller with the provided summoner info.
  * In addition, add the summoner name and ID numbers to the standard user defaults.
  */
-- (void)signIn
+- (void)signInWithSummoner:(NSString *)summonerName
 {
-    NSURLSessionDataTask *getSummonerInfo = [self.urlSession dataTaskWithURL:apiURL(kLoLSummonerByName, @"na", self.summonerName, @"")
-    completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-    {
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        if ( httpResponse.statusCode == 404 )
-        {
-            [self showAlertWithTitle:@"Login Error" message:@"Summoner not found"];
-        }
-        else
-        {
-            NSDictionary *summonerInfo = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil][self.summonerName];
-            [DataManager sharedManager].currentSummonerInfo = summonerInfo;
-            
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setObject:summonerInfo[@"id"]   forKey:@"currentSummonerId"];
-            [defaults setObject:summonerInfo[@"name"] forKey:@"currentSummonerName"];
-            
-            [self.activityIndicator stopAnimating];
-            [self performSegueWithIdentifier:@"showRoot" sender:self];
-        }
-    }];
-    [getSummonerInfo resume];
     [self.activityIndicator startAnimating];
+    
+    NSError *error;
+    NSHTTPURLResponse *response;
+    NSURL *url = apiURL(kLoLSummonerByName, @"na", summonerName, @"");
+    NSData *data = [NSURLSession sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
+    
+    if (response.statusCode == 404)
+    {
+        [self.activityIndicator startAnimating];
+        [self showAlertWithTitle:@"Error" message:@"Summoner not found"];
+    }
+    else
+    {
+        NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSMutableDictionary *summonerInfo = [dataDictionary[summonerName] mutableCopy];
+        [summonerInfo setObject:@"na" forKey:@"region"];
+        [[NSUserDefaults standardUserDefaults] setObject:[summonerInfo copy] forKey:@"currentSummoner"];
+
+        //register this summoner
+        DataManager *manager = [DataManager sharedManager];
+        [manager registerSummoner];
+        [manager loadRecentMatches];
+
+        //stop loading spin & show root
+        [self.activityIndicator stopAnimating];
+        [self performSegueWithIdentifier:@"showRoot" sender:self];
+    }
 }
 
 
