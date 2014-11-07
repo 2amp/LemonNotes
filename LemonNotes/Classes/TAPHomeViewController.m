@@ -45,11 +45,9 @@
     
     //DOESNT WORK
     NSDictionary *currentUserInfo = [DataManager sharedManager].currentSummonerInfo;
-    //self.summonerNameLabel.text = currentUserInfo[@"name"];
-    //self.summonerLevelLabel.text = currentUserInfo[@"summonerLevel"];
-//    self.summonerIconView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", currentUserInfo[@"profileIconId"]]
-//                                        scaledToWidth:80
-//                                               height:80];
+    self.summonerNameLabel.text = currentUserInfo[@"name"];
+    self.summonerLevelLabel.text = [NSString stringWithFormat:@"Level: %@", currentUserInfo[@"summonerLevel"]];
+    self.summonerIconView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", currentUserInfo[@"profileIconId"]]];
 }
 
 
