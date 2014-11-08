@@ -291,7 +291,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="5uI-pS-GaZ" userLabel="Header">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="160"/>
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="237"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a1E-Lv-PgM">
@@ -346,6 +346,14 @@
                                         </mask>
                                     </variation>
                                 </label>
+                                <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xNH-Fi-ZwW">
+                                    <rect key="frame" x="0.0" y="188" width="600" height="49"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <items>
+                                        <tabBarItem systemItem="favorites" id="Fa8-du-veq"/>
+                                        <tabBarItem systemItem="more" id="LiP-t7-sTe"/>
+                                    </items>
+                                </tabBar>
                             </subviews>
                             <color key="backgroundColor" red="0.38450836630000002" green="0.64411621630000004" blue="0.82577730429999996" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -355,13 +363,16 @@
                                 <constraint firstItem="YMP-OR-NZU" firstAttribute="top" secondItem="KZs-ZV-Ut7" secondAttribute="bottom" constant="8" id="Ede-PN-0np"/>
                                 <constraint firstItem="4QW-CT-ggi" firstAttribute="leading" secondItem="KZs-ZV-Ut7" secondAttribute="trailing" constant="8" symbolic="YES" id="T6F-wr-9xL"/>
                                 <constraint firstItem="YMP-OR-NZU" firstAttribute="leading" secondItem="ugY-pq-47n" secondAttribute="trailing" constant="8" symbolic="YES" id="TfA-ff-NEe"/>
+                                <constraint firstAttribute="bottom" secondItem="xNH-Fi-ZwW" secondAttribute="bottom" id="Win-Ku-VYg"/>
                                 <constraint firstItem="YMP-OR-NZU" firstAttribute="trailing" secondItem="4QW-CT-ggi" secondAttribute="trailing" id="dDN-Kz-KfV"/>
                                 <constraint firstItem="YMP-OR-NZU" firstAttribute="trailing" secondItem="5uI-pS-GaZ" secondAttribute="trailingMargin" id="db0-rc-oF2"/>
                                 <constraint firstItem="ugY-pq-47n" firstAttribute="top" secondItem="5uI-pS-GaZ" secondAttribute="top" constant="60" id="hOy-ko-Hi5"/>
                                 <constraint firstItem="4QW-CT-ggi" firstAttribute="top" secondItem="ugY-pq-47n" secondAttribute="top" id="miD-lZ-ibf"/>
+                                <constraint firstAttribute="trailing" secondItem="xNH-Fi-ZwW" secondAttribute="trailing" id="oTB-zP-VE8"/>
                                 <constraint firstItem="a1E-Lv-PgM" firstAttribute="leading" secondItem="5uI-pS-GaZ" secondAttribute="leading" constant="8" id="ttX-00-SHN"/>
                                 <constraint firstItem="KZs-ZV-Ut7" firstAttribute="top" secondItem="5uI-pS-GaZ" secondAttribute="top" constant="64" id="tzg-Fa-gQh"/>
                                 <constraint firstItem="YMP-OR-NZU" firstAttribute="bottom" secondItem="ugY-pq-47n" secondAttribute="bottom" id="vaJ-4D-FKJ"/>
+                                <constraint firstItem="xNH-Fi-ZwW" firstAttribute="leading" secondItem="5uI-pS-GaZ" secondAttribute="leading" id="zV3-I0-5wd"/>
                             </constraints>
                         </view>
                         <prototypes>
