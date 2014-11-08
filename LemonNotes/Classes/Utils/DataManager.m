@@ -63,8 +63,9 @@
     if (self)
     {
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
-        _urlSession = [NSURLSession sessionWithConfiguration:config];
-        _regions = @[@"br", @"eune", @"euw", @"kr", @"lan", @"las", @"na", @"oce", @"ru", @"tr"];
+        self.urlSession = [NSURLSession sessionWithConfiguration:config];
+        
+        self.regions = @[@"br", @"eune", @"euw", @"kr", @"lan", @"las", @"na", @"oce", @"ru", @"tr"];
     }
     return self;
 }
@@ -138,6 +139,12 @@
     return result[0];
 }
 
+/**
+ * @method summonnerDump
+ *
+ * Dumps all the summoners in core data into NSLog
+ * @note method to be removed some time
+ */
 - (void)summonerDump
 {
     // fetch for summoner entity with summonerId
@@ -152,6 +159,11 @@
     }
 }
 
+/**
+ * @method deleteAllSummoners
+ *
+ * Deletes all summoners in core data
+ */
 - (void)deleteAllSummoners
 {
     NSFetchRequest *summonerFetch = [NSFetchRequest fetchRequestWithEntityName:@"Summoner"];
@@ -166,20 +178,31 @@
     NSLog(@"%lul", [self.managedObjectContext executeFetchRequest:summonerFetch error:&error].count);
 }
 
-#pragma mark -
+
+
+#pragma mark - Public Summoner Data Methods
+/**
+ * @loadRecentMatches
+ *
+ * Loads from core data the currently selected summoner's recent matches
+ * into a public array that can be accessed by any view controller.
+ */
 - (void)loadRecentMatches
 {
+    //get the current summoner's entity
     Summoner *summoner = [self currentSummonerEntity];
 
-    NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"Match"];
-    NSPredicate *summonerPredicate     = [NSPredicate predicateWithFormat:@"summoner == %@", summoner];
-    NSSortDescriptor *matchIdSort      = [NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:NO];
+    //make a fetch with the summoner, ordered latest match first
+    NSFetchRequest *fetch           = [NSFetchRequest fetchRequestWithEntityName:@"Match"];
+    NSPredicate *summonerPredicate  = [NSPredicate predicateWithFormat:@"summoner == %@", summoner];
+    NSSortDescriptor *matchIdSort   = [NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:NO];
     [fetch setPredicate:summonerPredicate];
     [fetch setSortDescriptors:@[matchIdSort]];
     
     NSError *error = nil;
     NSArray *matchEntities = [self.managedObjectContext executeFetchRequest:fetch error:&error];
     
+    //for every match from core data, convert to readable dictionary
     NSMutableArray *matches = [[NSMutableArray alloc] init];
     for (Match *matchEntity in matchEntities)
     {
@@ -228,18 +251,17 @@
 - (NSNumber *)saveRecentMatchesForSummoner:(Summoner *)summoner
 {
     NSDictionary *summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
-    NSNumber *summonerId = summonerInfo[@"id"];
     
     //get match history
     NSError *error;
     NSHTTPURLResponse *response;
-    NSURL *url = apiURL(kLoLMatchHistory, @"na", [summonerId stringValue], @[@"beginIndex=0", @"endIndex=5"]);
+    NSURL *url = apiURL(kLoLMatchHistory, summonerInfo[@"region"], [summonerInfo[@"id"] stringValue], @[@"beginIndex=0", @"endIndex=5"]);
     NSData *matchHistoryData = [NSURLSession sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
     
     //make array of match ids
     NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:matchHistoryData options:kNilOptions error:nil];
     NSArray *matches = [[dataDict[@"matches"] reverseObjectEnumerator] allObjects];
-    NSMutableArray *matchIds = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *matchIds = [[NSMutableArray alloc] init];
     for (NSDictionary *match in matches)
     {
         [matchIds addObject:match[@"matchId"]];
@@ -260,7 +282,7 @@
         if (![existingMatchIds containsObject:matchId])
         {
             //fetch match data
-            url = apiURL(kLoLMatch, @"na", [matchId stringValue], nil);
+            url = apiURL(kLoLMatch, summonerInfo[@"region"], [matchId stringValue], nil);
             NSData *matchData = [NSURLSession sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
             NSDictionary *matchDict = [NSJSONSerialization JSONObjectWithData:matchData options:kNilOptions error:nil];
 
@@ -276,7 +298,7 @@
             //find and set which participantId summoner is
             for (NSDictionary *participant in matchDict[@"participantIdentities"])
             {
-                if (participant[@"player"][@"summonerId"] == summonerId)
+                if (participant[@"player"][@"summonerId"] == summonerInfo[@"id"])
                 {
                     int index = [participant[@"participantId"] intValue] - 1;
                     newMatch.summonerIndex = [NSNumber numberWithInt:index];
