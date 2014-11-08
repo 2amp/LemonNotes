@@ -49,7 +49,7 @@
 
     // FIXME: Currently deleting all summoners at app start so I don't have to
     // keep on nuking the db file. Remove when matches are no longer duplicated.
-    [[DataManager sharedManager] deleteAllSummoners];
+//    [[DataManager sharedManager] deleteAllSummoners];
 
     NSString *summonerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"summonerId"];
     

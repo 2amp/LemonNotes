@@ -243,38 +243,49 @@
     {
         [matchIds addObject:match[@"matchId"]];
     }
+
+    // get existing match ids
+    NSMutableArray *existingMatchIds = [[NSMutableArray alloc] init];
+    for (Match *match in [[summoner matches] allObjects])
+    {
+        [existingMatchIds addObject:match.matchId];
+    }
+    NSLog(@"%@", existingMatchIds);
     
     //array of match data for every id
     for (NSNumber *matchId in matchIds)
     {
-        //fetch match data
-        url = apiURL(kLoLMatch, @"na", [matchId stringValue], nil);
-        NSData *matchData = [NSURLSession sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
-        NSDictionary *matchDict = [NSJSONSerialization JSONObjectWithData:matchData options:kNilOptions error:nil];
-        
-        //add to new entity
-        Match *newMatch = [NSEntityDescription insertNewObjectForEntityForName:@"Match"
-                                                        inManagedObjectContext:self.managedObjectContext];
-        newMatch.summoner = summoner;
-        for (NSString *key in [matchDict allKeys])
+        // only add match if it is not already in the db
+        if (![existingMatchIds containsObject:matchId])
         {
-            [newMatch setValue:matchDict[key] forKey:key];
-        }
-        
-        //find and set which participantId summoner is
-        for (NSDictionary *participant in matchDict[@"participantIdentities"])
-        {
-            if (participant[@"player"][@"summonerId"] == summonerId)
-            {
-                int index = [participant[@"participantId"] intValue] - 1;
-                newMatch.summonerIndex = [NSNumber numberWithInt:index];
-            }
-        }
-        
-        //add to summoner's matches
-//        [[summoner valueForKey:@"matches"] addObject:newMatch];
-        [summoner addMatchesObject:newMatch];
+            //fetch match data
+            url = apiURL(kLoLMatch, @"na", [matchId stringValue], nil);
+            NSData *matchData = [NSURLSession sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
+            NSDictionary *matchDict = [NSJSONSerialization JSONObjectWithData:matchData options:kNilOptions error:nil];
 
+            //add to new entity
+            Match *newMatch = [NSEntityDescription insertNewObjectForEntityForName:@"Match"
+                                                            inManagedObjectContext:self.managedObjectContext];
+            newMatch.summoner = summoner;
+            for (NSString *key in [matchDict allKeys])
+            {
+                [newMatch setValue:matchDict[key] forKey:key];
+            }
+
+            //find and set which participantId summoner is
+            for (NSDictionary *participant in matchDict[@"participantIdentities"])
+            {
+                if (participant[@"player"][@"summonerId"] == summonerId)
+                {
+                    int index = [participant[@"participantId"] intValue] - 1;
+                    newMatch.summonerIndex = [NSNumber numberWithInt:index];
+                }
+            }
+
+            //add to summoner's matches
+            //        [[summoner valueForKey:@"matches"] addObject:newMatch];
+            [summoner addMatchesObject:newMatch];
+        }
     }
     
     //return latest match id
