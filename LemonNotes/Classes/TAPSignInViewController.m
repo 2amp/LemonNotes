@@ -164,7 +164,7 @@
             });
         }
     };
-    NSURLSessionDataTask *getSummonerInfo = [self.urlSession dataTaskWithURL:apiURL(kLoLSummonerByName, @"na", self.summonerName, @"")
+    NSURLSessionDataTask *getSummonerInfo = [self.urlSession dataTaskWithURL:apiURL(kLoLSummonerByName, self.summonerRegion, self.summonerName, nil)
                                                            completionHandler:completionHandler];
     [getSummonerInfo resume];
     [self.activityIndicator startAnimating];

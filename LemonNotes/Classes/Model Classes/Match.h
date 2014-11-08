@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Summoner;
 
 @interface Match : NSManagedObject
 
@@ -27,6 +28,6 @@
 @property (nonatomic, retain) NSString * season;
 @property (nonatomic, retain) NSNumber * summonerIndex;
 @property (nonatomic, retain) id teams;
-@property (nonatomic, retain) NSManagedObject *summoner;
+@property (nonatomic, retain) Summoner *summoner;
 
 @end

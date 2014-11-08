@@ -7,6 +7,7 @@
 //
 
 #import "Match.h"
+#import "Summoner.h"
 
 
 @implementation Match
