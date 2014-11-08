@@ -27,12 +27,15 @@
 //recent games
 @property (nonatomic) NSArray *recentMatches;
 - (void)loadRecentMatches;
-- (void)summonerDump;
 
 //static data
 @property (nonatomic) NSDictionary *champions;
 @property (nonatomic) NSDictionary *summonerSpells;
 - (void)updateChampionIds;
 - (void)updateSummonerSpells;
+
+// util methods
+- (void)summonerDump;
+- (void)deleteAllSummoners;
 
 @end

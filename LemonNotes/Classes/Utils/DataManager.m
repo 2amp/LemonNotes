@@ -63,7 +63,7 @@
     if (self)
     {
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
-        self.urlSession = [NSURLSession sessionWithConfiguration:config];
+        _urlSession = [NSURLSession sessionWithConfiguration:config];
     }
     return self;
 }
@@ -89,7 +89,7 @@
     NSArray *newVersionParts = [newVersion componentsSeparatedByString:@"."];
     NSArray *oldVersionParts = [oldVersion componentsSeparatedByString:@"."];
     
-    for (int i=0; i<newVersionParts.count; i++)
+    for (int i = 0; i < newVersionParts.count; i++)
     {
         int newVal = [newVersionParts[i] intValue];
         int oldVal = [oldVersionParts[i] intValue];
@@ -151,7 +151,19 @@
     }
 }
 
+- (void)deleteAllSummoners
+{
+    NSFetchRequest *summonerFetch = [NSFetchRequest fetchRequestWithEntityName:@"Summoner"];
 
+    NSError *error = nil;
+    NSArray *result = [self.managedObjectContext executeFetchRequest:summonerFetch error:&error];
+    for (Summoner *summoner in result)
+    {
+        [self.managedObjectContext deleteObject:summoner];
+    }
+    [self saveContext];
+    NSLog(@"%lul", [self.managedObjectContext executeFetchRequest:summonerFetch error:&error].count);
+}
 
 #pragma mark -
 - (void)loadRecentMatches
