@@ -64,6 +64,7 @@
     {
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
         _urlSession = [NSURLSession sessionWithConfiguration:config];
+        _regions = @[@"br", @"eune", @"euw", @"kr", @"lan", @"las", @"na", @"oce", @"ru", @"tr"];
     }
     return self;
 }

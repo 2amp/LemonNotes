@@ -8,12 +8,19 @@
 
 @interface TAPSignInViewController ()
 
-@property (weak, nonatomic) IBOutlet UITextField *signInField;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+//UI
+@property (nonatomic, weak) IBOutlet UITextField *signInField;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, weak) IBOutlet UIButton* regionButton;
+@property (nonatomic, strong) UIPickerView* regionPicker;
+@property (nonatomic, strong) UITextField* pickerWrapper;
+- (IBAction)selectRegion:(id)sender;
 
+//Private
 @property (nonatomic, strong) NSURLSession *urlSession;
-
-- (void)signInWithSummoner:(NSString *)summonerName;
+@property (nonatomic, strong) NSString *summonerName;
+@property (nonatomic, strong) NSString *summonerRegion;
+- (void)signIn;
 - (void)showAlertWithTitle:(NSString *)title message:(NSString *)message;
 
 @end
@@ -34,6 +41,23 @@
     
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
     self.urlSession = [NSURLSession sessionWithConfiguration:config];
+    
+    //default region to NA
+    self.summonerRegion = @"na";
+    [self.regionButton setTitle:[self.summonerRegion uppercaseString] forState:UIControlStateNormal];
+    
+    //make an internal picker view
+    self.regionPicker = [[UIPickerView alloc] init];
+    self.regionPicker.delegate = self;
+    self.regionPicker.dataSource = self;
+    self.regionPicker.backgroundColor = [UIColor whiteColor];
+    [self.regionPicker selectRow:[[DataManager sharedManager].regions indexOfObject:self.summonerRegion] inComponent:0 animated:NO];
+    
+    //make a dummy text field that contains the picker view as a inputView
+    //showing picker view simplified to making this dummy first responder
+    self.pickerWrapper = [[UITextField alloc] initWithFrame:CGRectMake(0,0,0,0)];
+    self.pickerWrapper.inputView = self.regionPicker;
+    [self.view addSubview:self.pickerWrapper];
 }
 
 /**
@@ -62,6 +86,25 @@
 
 #pragma mark - Controller Event Callbacks
 /**
+ * @method selectRegion:
+ *
+ * Called when user taps region button.
+ * Makes picker view available if not already.
+ * Otherwise dismisses it.
+ */
+- (IBAction)selectRegion:(id)sender
+{
+    if ([self.pickerWrapper isFirstResponder])
+    {
+        [self.pickerWrapper resignFirstResponder];
+    }
+    else
+    {
+        [self.pickerWrapper becomeFirstResponder];
+    }
+}
+
+/**
  * @method textFieldShouldReturn
  *
  * Called when user taps "Done" on textField.
@@ -73,8 +116,9 @@
  */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    self.summonerName = textField.text;
     [textField resignFirstResponder];
-    [self signInWithSummoner:self.signInField.text];
+    [self signIn];
     
     return YES;
 }
@@ -87,7 +131,7 @@
  * Otherwise, segue to the start game view controller with the provided summoner info.
  * In addition, add the summoner name and ID numbers to the standard user defaults.
  */
-- (void)signInWithSummoner:(NSString *)summonerName
+- (void)signIn
 {
     [self.activityIndicator startAnimating];
     void (^completionHandler)(NSData *data, NSURLResponse *, NSError *error) = ^(NSData *data, NSURLResponse *response, NSError *error)
@@ -103,8 +147,8 @@
         else
         {
             NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-            NSMutableDictionary *summonerInfo = [dataDictionary[summonerName] mutableCopy];
-            [summonerInfo setObject:@"na" forKey:@"region"];
+            NSMutableDictionary *summonerInfo = [dataDictionary[self.summonerName] mutableCopy];
+            [summonerInfo setObject:self.summonerRegion forKey:@"region"];
             [[NSUserDefaults standardUserDefaults] setObject:[summonerInfo copy] forKey:@"currentSummoner"];
 
             //register this summoner
@@ -120,12 +164,58 @@
             });
         }
     };
-    NSURLSessionDataTask *getSummonerInfo = [self.urlSession dataTaskWithURL:apiURL(kLoLSummonerByName, @"na", summonerName, nil)
+    NSURLSessionDataTask *getSummonerInfo = [self.urlSession dataTaskWithURL:apiURL(kLoLSummonerByName, @"na", self.summonerName, nil)
                                                            completionHandler:completionHandler];
     [getSummonerInfo resume];
     [self.activityIndicator startAnimating];
 }
 
+
+
+#pragma mark - UIPicker Methods
+/**
+ * @method numberOfComponentsInPickerView
+ *
+ * Only 1 column of regions
+ */
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+/**
+ * @method pickerView:numberRowsInComponent
+ *
+ * Returns number of regions defined in DataManager
+ */
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return [[DataManager sharedManager].regions count];
+}
+
+/**
+ * @method pickerView:titleForRow:forComponent
+ *
+ * Sets title of the row as the region in caps
+ */
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return [[DataManager sharedManager].regions[row] uppercaseString];
+}
+
+/**
+ * @method pickerView:didSelectRow:inComponent
+ *
+ * When a certain row is selected,
+ * the region is set as summoner's region and button's title is updated
+ */
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    [self.pickerWrapper resignFirstResponder];
+
+    self.summonerRegion = [DataManager sharedManager].regions[row];
+    [self.regionButton setTitle:[self.summonerRegion uppercaseString] forState:UIControlStateNormal];
+}
 
 
 #pragma mark - Alert Methods

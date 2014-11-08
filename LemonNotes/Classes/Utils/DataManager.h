@@ -29,6 +29,7 @@
 - (void)loadRecentMatches;
 
 //static data
+@property (nonatomic) NSArray *regions;
 @property (nonatomic) NSDictionary *champions;
 @property (nonatomic) NSDictionary *summonerSpells;
 - (void)updateChampionIds;

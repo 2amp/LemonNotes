@@ -13,7 +13,8 @@
  * @author Chris Fu, Bohui Moon
  * @version 0.1
  */
-@interface TAPSignInViewController : UIViewController <UITextFieldDelegate>
+@interface TAPSignInViewController : UIViewController
+           <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 
 @end
 
