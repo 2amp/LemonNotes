@@ -95,24 +95,29 @@ static NSString* kLoLTeam                = pathTeam    "/{path}";             //
  *       but caller should pass param as nil when API call doesn't require one.
  *       Some API calls also allow for comma-separated IDs.
  *
- * @param call   - one of the predefined call formats
- * @param region - region of API call
- * @param pathParam  - any path parameters to pass in API call
- * @param queryParam - any query parameters to pass in API call, must end in & if any
+ * @param call one of the predefined call formats
+ * @param region region of API call
+ * @param pathParam any path parameters to pass in API call
+ * @param queryParams An NSArray of any query parameters to pass in API call, in the form of @"param=value"
  * @return NSURL object with correct API call with given params
  */
-static inline NSURL* apiURL(NSString *call, NSString *region, NSString *pathParam, NSString *queryParam)
+static inline NSURL *apiURL(NSString *call, NSString *region, NSString *pathParam, NSArray *queryParams)
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@?{query}api_key=%@", baseURL, call, API_KEY];
     
     BOOL global = [region  isEqual:@"euw"] || [region  isEqual:@"kr"] || [region isEqual:@"ru"] || [region isEqual:@"tr"];
     NSString *server = global ? @"global" : region;
     if (!pathParam) pathParam = @"";
-    if (!queryParam) queryParam = @"";
+
+    NSMutableString *queryParam = [NSMutableString stringWithString:@""];
+    for (NSString *param in queryParams)
+    {
+        [queryParam appendString:[NSString stringWithFormat:@"%@&", param]];
+    }
     
     url = [url stringByReplacingOccurrencesOfString:@"{server}" withString:server];
     url = [url stringByReplacingOccurrencesOfString:@"{region}" withString:region];
-    url = [url stringByReplacingOccurrencesOfString:@"{path}"  withString:pathParam];
+    url = [url stringByReplacingOccurrencesOfString:@"{path}" withString:pathParam];
     url = [url stringByReplacingOccurrencesOfString:@"{query}" withString:queryParam];
     
     return [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];

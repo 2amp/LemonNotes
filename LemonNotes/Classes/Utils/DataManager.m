@@ -220,7 +220,7 @@
     //get match history
     NSError *error;
     NSHTTPURLResponse *response;
-    NSURL *url = apiURL(kLoLMatchHistory, @"na", [summonerId stringValue], @"beginIndex=0&endIndex=4&");
+    NSURL *url = apiURL(kLoLMatchHistory, @"na", [summonerId stringValue], @[@"beginIndex=0", @"endIndex=5"]);
     NSData *matchHistoryData = [NSURLSession sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
     
     //make array of match ids
@@ -236,14 +236,14 @@
     for (NSNumber *matchId in matchIds)
     {
         //fetch match data
-        url = apiURL(kLoLMatch, @"na", [matchId stringValue], @"");
+        url = apiURL(kLoLMatch, @"na", [matchId stringValue], nil);
         NSData *matchData = [NSURLSession sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
         NSDictionary *matchDict = [NSJSONSerialization JSONObjectWithData:matchData options:kNilOptions error:nil];
         
         //add to new entity
-        NSManagedObject *newMatch = [NSEntityDescription insertNewObjectForEntityForName:@"Match"
-                                                                      inManagedObjectContext:self.managedObjectContext];
-        [newMatch setValue:summoner forKey:@"summoner"];
+        Match *newMatch = [NSEntityDescription insertNewObjectForEntityForName:@"Match"
+                                                        inManagedObjectContext:self.managedObjectContext];
+        newMatch.summoner = summoner;
         for (NSString *key in [matchDict allKeys])
         {
             [newMatch setValue:matchDict[key] forKey:key];
@@ -255,12 +255,14 @@
             if (participant[@"player"][@"summonerId"] == summonerId)
             {
                 int index = [participant[@"participantId"] intValue] - 1;
-                [newMatch setValue:[NSNumber numberWithInt:index] forKey:@"summonerIndex"];
+                newMatch.summonerIndex = [NSNumber numberWithInt:index];
             }
         }
         
         //add to summoner's matches
-        [[summoner valueForKey:@"matches"] addObject:newMatch];
+//        [[summoner valueForKey:@"matches"] addObject:newMatch];
+        [summoner addMatchesObject:newMatch];
+
     }
     
     //return latest match id
@@ -292,7 +294,7 @@
         }
     };
     
-    [[self.urlSession dataTaskWithURL:apiURL(kLoLStaticChampionList, @"na", @"", @"dataById=true&") completionHandler:completionHandler]
+    [[self.urlSession dataTaskWithURL:apiURL(kLoLStaticChampionList, @"na", @"", @[@"dataById=true"]) completionHandler:completionHandler]
      resume];
 }
 
@@ -314,7 +316,7 @@
         }
     };
     
-    [[self.urlSession dataTaskWithURL:apiURL(kLoLStaticSpellList, @"na", @"", @"dataById=true&") completionHandler:completionHandler]
+    [[self.urlSession dataTaskWithURL:apiURL(kLoLStaticSpellList, @"na", @"", @[@"dataById=true"]) completionHandler:completionHandler]
      resume];
 
 }
