@@ -39,4 +39,7 @@
 - (void)summonerDump;
 - (void)deleteAllSummoners;
 
+- (NSURL *)applicationDocumentsDirectory;
+- (void)saveContext;
+
 @end
