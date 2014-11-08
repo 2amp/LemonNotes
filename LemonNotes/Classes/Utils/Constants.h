@@ -105,21 +105,31 @@ static inline NSURL *apiURL(NSString *call, NSString *region, NSString *pathPara
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@?{query}api_key=%@", baseURL, call, API_KEY];
     
-    BOOL global = [region  isEqual:@"euw"] || [region  isEqual:@"kr"] || [region isEqual:@"ru"] || [region isEqual:@"tr"];
-    NSString *server = global ? @"global" : region;
+    //change server to "global" only for static-data api call
+    NSString *server = [NSString stringWithString:region];
+    if ([url containsString:@"static-data"])
+    {
+        BOOL global = [region isEqual:@"euw"] || [region isEqual:@"kr"] || [region isEqual:@"ru"] || [region isEqual:@"tr"];
+        server = global ? @"global" : region;
+    }
+    
+    //empty path param if nil
     if (!pathParam) pathParam = @"";
-
+    
+    //combine query params
     NSMutableString *queryParam = [NSMutableString stringWithString:@""];
     for (NSString *param in queryParams)
     {
         [queryParam appendString:[NSString stringWithFormat:@"%@&", param]];
     }
     
+    //format url
     url = [url stringByReplacingOccurrencesOfString:@"{server}" withString:server];
     url = [url stringByReplacingOccurrencesOfString:@"{region}" withString:region];
     url = [url stringByReplacingOccurrencesOfString:@"{path}" withString:pathParam];
     url = [url stringByReplacingOccurrencesOfString:@"{query}" withString:queryParam];
     
+    NSLog(@"url: %@", url);
     return [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 }
 
