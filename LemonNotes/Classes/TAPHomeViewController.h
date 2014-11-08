@@ -15,7 +15,7 @@
  * @author Bohui Moon
  * @version 0.1
  */
-@interface TAPHomeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface TAPHomeViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
 
 - (IBAction)matchesTapped:(id)sender;
 
