@@ -1,17 +1,18 @@
 
-#import "TAPHomeViewController.h"
+#import "TAPSummonerViewController.h"
 #import "UIImage+UIImageAdditions.h"
 #import "DataManager.h"
 #import "Constants.h"
 
 
 
-@interface TAPHomeViewController()
+@interface TAPSummonerViewController()
 
 @property (nonatomic) NSDictionary *summonerInfo;
 @property (nonatomic, weak) IBOutlet UILabel* summonerNameLabel;
 @property (nonatomic, weak) IBOutlet UILabel* summonerLevelLabel;
 @property (nonatomic, weak) IBOutlet UIImageView* summonerIconView;
+@property (nonatomic, weak) IBOutlet UIImageView* championSplashView;
 
 - (IBAction)update:(id)sender;
 
@@ -19,34 +20,47 @@
 
 
 
-@implementation TAPHomeViewController
+@implementation TAPSummonerViewController
 
 #pragma mark View Messages
 /**
  * @method viewDidLoad
  *
- * Called when view is loaded to memory
+ * Called once when view is loaded to memory
  */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    NSLog(@"TAPHomeViewController viewDidLoad %p", &self);
+    NSLog(@"TAPSummonerViewController viewDidLoad %p", &self);
+    
+    //summoner icon with white border
+    [self.summonerIconView.layer setBorderWidth:2.0];
+    [self.summonerIconView.layer setBorderColor:[[UIColor whiteColor] CGColor]];
 }
 
 /**
  * @method viewWillAppear
  *
- * Called when view will appear
+ * Called every time when view is about to appear on screen
  */
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     
-    NSDictionary *summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
-    self.summonerNameLabel.text = summonerInfo[@"name"];
-    self.summonerLevelLabel.text = [NSString stringWithFormat:@"Level: %@", summonerInfo[@"summonerLevel"]];
-    self.summonerIconView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", summonerInfo[@"profileIconId"]]];
+    NSDictionary *summonerInfo    = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
+    self.summonerNameLabel.text   = summonerInfo[@"name"];
+    self.summonerLevelLabel.text  = [NSString stringWithFormat:@"Level: %@", summonerInfo[@"summonerLevel"]];
+    self.summonerIconView.image   = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", summonerInfo[@"profileIconId"]]];
+    
+    //latest champ splash
+    DataManager *manager = [DataManager sharedManager];
+    NSDictionary *match = manager.recentMatches[0];
+    int summonerIndex = [match[@"summonerIndex"] intValue];
+    NSString *champId = [match[@"participants"][summonerIndex][@"championId"] stringValue];
+    NSString *champKey = manager.champions[champId][@"key"];
+    [[self.tableView tableHeaderView] sendSubviewToBack:self.championSplashView];
+    self.championSplashView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_0.jpg", champKey]];
 }
 
 
