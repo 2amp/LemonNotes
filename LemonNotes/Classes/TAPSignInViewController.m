@@ -147,7 +147,9 @@
         else
         {
             NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-            NSMutableDictionary *summonerInfo = [dataDictionary[self.summonerName] mutableCopy];
+
+            // it is not guaranteed that the key for the summoner info object is the summoner name
+            NSMutableDictionary *summonerInfo = [NSMutableDictionary dictionaryWithDictionary:dataDictionary[[dataDictionary allKeys][0]]];
             [summonerInfo setObject:self.summonerRegion forKey:@"region"];
             [[NSUserDefaults standardUserDefaults] setObject:[summonerInfo copy] forKey:@"currentSummoner"];
 

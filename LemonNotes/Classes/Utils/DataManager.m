@@ -155,7 +155,7 @@
 
     for (Summoner *summoner in result)
     {
-        NSLog(@"%@", summoner);
+        NSLog(@"%@ (region: %@)", summoner.name, summoner.region);
     }
 }
 

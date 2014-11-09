@@ -44,6 +44,7 @@
     //data updates
     [[DataManager sharedManager] updateChampionIds];
     [[DataManager sharedManager] updateSummonerSpells];
+    [[DataManager sharedManager] summonerDump];
 
     // FIXME: Currently deleting all summoners at app start so I don't have to
     // keep on nuking the db file. Remove when matches are no longer duplicated.
