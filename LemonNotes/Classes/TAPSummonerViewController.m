@@ -8,13 +8,23 @@
 
 @interface TAPSummonerViewController()
 
+//Nav bar
+@property (nonatomic, strong) UIPickerView* regionPicker;
+@property (nonatomic, strong) UITextField* pickerWrapper;
+- (IBAction)selectRegion:(id)sender;
+
+//Header
 @property (nonatomic) NSDictionary *summonerInfo;
 @property (nonatomic, weak) IBOutlet UILabel* summonerNameLabel;
 @property (nonatomic, weak) IBOutlet UILabel* summonerLevelLabel;
 @property (nonatomic, weak) IBOutlet UIImageView* summonerIconView;
 @property (nonatomic, weak) IBOutlet UIImageView* championSplashView;
 
-- (IBAction)update:(id)sender;
+//Content
+- (IBAction)matchesTapped:(id)sender;
+
+//Summoner Info
+
 
 @end
 
@@ -23,6 +33,17 @@
 @implementation TAPSummonerViewController
 
 #pragma mark View Messages
+/**
+ * @method setSummonerId
+ *
+ * Should be called to set summonerId when this VC is pushed.
+ *
+ */
+- (void)setSummonerId:(NSNumber *)summonerId
+{
+    
+}
+
 /**
  * @method viewDidLoad
  *
@@ -34,7 +55,13 @@
     
     NSLog(@"TAPSummonerViewController viewDidLoad %p", &self);
     
-    //summoner icon with white border
+    
+    
+    //Nav bar settings
+    
+    
+    //Header settings
+    [self.tableView sendSubviewToBack:[self.tableView tableHeaderView]];
     [self.summonerIconView.layer setBorderWidth:2.0];
     [self.summonerIconView.layer setBorderColor:[[UIColor whiteColor] CGColor]];
 }
@@ -67,11 +94,11 @@
 
 #pragma mark - IBActions
 /**
- * @method updateSummonerInfo
+ * @method selectRegion
  *
  *
  */
-- (IBAction)update:(id)sender
+- (IBAction)selectRegion:(id)sender
 {
     
 }

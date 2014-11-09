@@ -17,6 +17,6 @@
  */
 @interface TAPSummonerViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
 
-- (IBAction)matchesTapped:(id)sender;
+
 
 @end
