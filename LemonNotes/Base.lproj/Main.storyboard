@@ -435,9 +435,16 @@
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="wNn-Un-roV">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="qvU-wX-Pfp">
+                        <nil key="title"/>
+                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Search for a summoner" borderStyle="roundedRect" placeholder="Search for a Summoner" minimumFontSize="17" clearButtonMode="whileEditing" id="XIp-YF-J3m">
+                            <rect key="frame" x="166" y="7" width="268" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.22831455209300075" green="0.36569224844235221" blue="0.56820154671717171" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </barButtonItem>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
                         <barButtonItem key="rightBarButtonItem" title="Region" id="eEN-tz-5Fr">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -448,6 +455,7 @@
                     <connections>
                         <outlet property="championSplashView" destination="vcA-N5-rFj" id="r9u-qG-s7i"/>
                         <outlet property="searchDisplayController" destination="0AH-a4-OGX" id="DZ3-6e-l1C"/>
+                        <outlet property="searchField" destination="XIp-YF-J3m" id="yHf-Id-Dsa"/>
                         <outlet property="summonerIconView" destination="ugY-pq-47n" id="CeN-lR-qEx"/>
                         <outlet property="summonerLevelLabel" destination="KZs-ZV-Ut7" id="is8-Jc-iB6"/>
                         <outlet property="summonerNameLabel" destination="YMP-OR-NZU" id="Phd-iw-cE2"/>
@@ -463,7 +471,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="2393" y="-242"/>
+            <point key="canvasLocation" x="2410" y="-242"/>
         </scene>
     </scenes>
     <resources>

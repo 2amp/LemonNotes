@@ -9,6 +9,7 @@
 @interface TAPSummonerViewController()
 
 //Nav bar
+@property (nonatomic, weak) IBOutlet UITextField* searchField;
 @property (nonatomic, strong) UIBarButtonItem* regionButton;
 @property (nonatomic, strong) UIPickerView* regionPicker;
 @property (nonatomic, strong) UITextField* pickerWrapper;
@@ -70,6 +71,14 @@
 {
     //set ref. to right bar button
     self.regionButton = self.navigationItem.rightBarButtonItem;
+    
+    //search field
+    UIImageView *searchIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"magnifying_glass.png"]];
+    searchIcon.contentMode = UIViewContentModeScaleAspectFit;
+    searchIcon.tintColor = [UIColor whiteColor];
+    self.searchField.leftView = searchIcon;
+    self.searchField.leftView.frame = CGRectMake(10, 0, 15, 15);
+    self.searchField.leftViewMode = UITextFieldViewModeAlways;
     
     //default region to NA
     self.selectedRegion = self.summoner[@"region"];
