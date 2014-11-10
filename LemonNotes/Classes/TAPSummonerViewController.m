@@ -44,13 +44,18 @@
     
     //NSLog(@"TAPSummonerViewController viewDidLoad %p", &self);
     
-    if (!self.summonerName)
+    //if rootVC of nav
+    if (self == [self.navigationController.viewControllers firstObject])
     {
         self.summoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
         self.summonerName = self.summoner[@"name"];
         
         //
-        self.navigationItem.leftBarButtonItem = nil;
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"side_menu.png"]
+                                                                                 style:UIBarButtonItemStylePlain
+                                                                                target:self
+                                                                                action:nil];
+        self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     }
     [self setupNavBar];
     [self setupHeader];
