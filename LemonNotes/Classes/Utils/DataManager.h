@@ -16,17 +16,19 @@
  * @author Bohui Moon, Chris Fu
  * @version 0.1
  */
-@interface DataManager : NSObject
+@interface DataManager : NSObject <UIPickerViewDataSource>
 
 + (instancetype)sharedManager;
 
-//accounts and users
+//accounts
+- (void)summonerDump;
 - (void)registerSummoner;
-- (NSNumber *)saveRecentMatchesForSummoner:(NSManagedObject *)summoner;
+- (void)deleteAllSummoners;
 
 //recent games
 @property (nonatomic) NSArray *recentMatches;
 - (void)loadRecentMatches;
+- (NSNumber *)saveRecentMatchesForSummoner:(NSManagedObject *)summoner;
 
 //static data
 @property (nonatomic) NSArray *regions;
@@ -35,10 +37,7 @@
 - (void)updateChampionIds;
 - (void)updateSummonerSpells;
 
-// util methods
-- (void)summonerDump;
-- (void)deleteAllSummoners;
-
+//core data
 - (NSURL *)applicationDocumentsDirectory;
 - (void)saveContext;
 

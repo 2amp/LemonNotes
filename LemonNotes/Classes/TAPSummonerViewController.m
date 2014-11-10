@@ -9,8 +9,10 @@
 @interface TAPSummonerViewController()
 
 //Nav bar
+@property (nonatomic, strong) UIBarButtonItem* regionButton;
 @property (nonatomic, strong) UIPickerView* regionPicker;
 @property (nonatomic, strong) UITextField* pickerWrapper;
+@property (nonatomic, strong) NSString* selectedRegion;
 - (IBAction)selectRegion:(id)sender;
 
 //Header
@@ -20,11 +22,9 @@
 @property (nonatomic, weak) IBOutlet UIImageView* summonerIconView;
 @property (nonatomic, weak) IBOutlet UIImageView* championSplashView;
 
-//Content
-- (IBAction)matchesTapped:(id)sender;
-
-//Summoner Info
-
+//setup
+- (void)setupNavBar;
+- (void)setupHeader;
 
 @end
 
@@ -33,17 +33,6 @@
 @implementation TAPSummonerViewController
 
 #pragma mark View Messages
-/**
- * @method setSummonerId
- *
- * Should be called to set summonerId when this VC is pushed.
- *
- */
-- (void)setSummonerId:(NSNumber *)summonerId
-{
-    
-}
-
 /**
  * @method viewDidLoad
  *
@@ -55,30 +44,53 @@
     
     NSLog(@"TAPSummonerViewController viewDidLoad %p", &self);
     
-    
-    
-    //Nav bar settings
-    
-    
-    //Header settings
-    [self.tableView sendSubviewToBack:[self.tableView tableHeaderView]];
-    [self.summonerIconView.layer setBorderWidth:2.0];
-    [self.summonerIconView.layer setBorderColor:[[UIColor whiteColor] CGColor]];
+    [self setupNavBar];
+    [self setupHeader];
 }
 
 /**
- * @method viewWillAppear
+ * @method setupNavBar
  *
- * Called every time when view is about to appear on screen
+ * Setups the nav bar components
  */
-- (void)viewWillAppear:(BOOL)animated
+- (void)setupNavBar
 {
-    [super viewWillAppear:YES];
+    //set ref. to right bar button
+    self.regionButton = self.navigationItem.rightBarButtonItem;
     
-    NSDictionary *summonerInfo    = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
-    self.summonerNameLabel.text   = summonerInfo[@"name"];
-    self.summonerLevelLabel.text  = [NSString stringWithFormat:@"Level: %@", summonerInfo[@"summonerLevel"]];
-    self.summonerIconView.image   = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", summonerInfo[@"profileIconId"]]];
+    //default region to NA
+    self.selectedRegion = self.summoner[@"region"];
+    self.regionButton.title = [self.selectedRegion uppercaseString];
+    
+    //make an internal picker view
+    self.regionPicker = [[UIPickerView alloc] init];
+    self.regionPicker.delegate = self;
+    self.regionPicker.dataSource = [DataManager sharedManager];
+    self.regionPicker.backgroundColor = [UIColor whiteColor];
+    [self.regionPicker selectRow:[[DataManager sharedManager].regions indexOfObject:self.selectedRegion] inComponent:0 animated:NO];
+    
+    //make a dummy text field that contains the picker view as a inputView
+    //showing picker view simplified to making this dummy first responder
+    self.pickerWrapper = [[UITextField alloc] initWithFrame:CGRectMake(0,0,0,0)];
+    self.pickerWrapper.inputView = self.regionPicker;
+    [self.view addSubview:self.pickerWrapper];
+}
+
+/**
+ * @method setupHeader
+ *
+ * Setups the header components
+ */
+- (void)setupHeader
+{
+    //setup basic header elems
+    self.summonerNameLabel.text  = self.summoner[@"name"];
+    self.summonerLevelLabel.text = [NSString stringWithFormat:@"Level: %@", self.summoner[@"summonerLevel"]];
+    self.summonerIconView.image  = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", self.summoner[@"profileIconId"]]];
+    
+    //white border for summoner icon
+    [self.summonerIconView.layer setBorderWidth:2.0];
+    [self.summonerIconView.layer setBorderColor:[[UIColor whiteColor] CGColor]];
     
     //latest champ splash
     DataManager *manager = [DataManager sharedManager];
@@ -88,38 +100,57 @@
     NSString *champKey = manager.champions[champId][@"key"];
     [[self.tableView tableHeaderView] sendSubviewToBack:self.championSplashView];
     self.championSplashView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_0.jpg", champKey]];
+    
+    //landscape: put header behind table view
+    [self.tableView sendSubviewToBack:[self.tableView tableHeaderView]];
 }
-
 
 
 #pragma mark - IBActions
 /**
  * @method selectRegion
  *
- *
+ * Called when user taps region button.
+ * Makes picker view available if not already.
+ * Otherwise dismisses it.
  */
 - (IBAction)selectRegion:(id)sender
 {
+    if ([self.pickerWrapper isFirstResponder])
+    {
+        [self.pickerWrapper resignFirstResponder];
+    }
+    else
+    {
+        [self.pickerWrapper becomeFirstResponder];
+    }
+}
+
+
+
+#pragma mark - Region Picker Delegate
+/**
+ * @method pickerView:titleForRow:forComponent
+ *
+ * Sets title of the row as the region in caps
+ */
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return [[DataManager sharedManager].regions[row] uppercaseString];
+}
+
+/**
+ * @method pickerView:didSelectRow:inComponent
+ *
+ * When a certain row is selected,
+ * the region is set as summoner's region and button's title is updated
+ */
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    [self.pickerWrapper resignFirstResponder];
     
-}
-
-/**
- * When the matches button is tapped, segue to the tab bar vc.
- */
-- (IBAction)matchesTapped:(id)sender
-{
-    [self performSegueWithIdentifier:@"showTabBar" sender:self];
-}
-
-
-
-#pragma mark - Navigation Events
-/**
- * Currently no segue from the main vc occurs. Will soon change!
- */
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-
+    self.selectedRegion = [DataManager sharedManager].regions[row];
+    self.regionButton.title = [self.selectedRegion uppercaseString];
 }
 
 
@@ -215,6 +246,17 @@
 
     championName.text = dataManager.champions[ [info[@"championId"] stringValue] ][@"name"];
     return cell;
+}
+
+
+
+#pragma mark - Navigation Events
+/**
+ * Currently no segue from the main vc occurs. Will soon change!
+ */
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    
 }
 
 @end

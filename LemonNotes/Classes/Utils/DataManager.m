@@ -26,12 +26,12 @@
 - (Summoner *)currentSummonerEntity;
 
 @end
-
+#pragma mark -
 
 
 @implementation DataManager
 
-#pragma mark - Init Methods
+#pragma mark Init Methods
 /**
  * @method sharedManager
  *
@@ -139,6 +139,9 @@
     return result[0];
 }
 
+
+
+#pragma mark - Summoner Accounts
 /**
  * @method summonnerDump
  *
@@ -147,12 +150,12 @@
  */
 - (void)summonerDump
 {
-    // fetch for summoner entity with summonerId
+        // fetch for summoner entity with summonerId
     NSFetchRequest *summonerFetch = [NSFetchRequest fetchRequestWithEntityName:@"Summoner"];
     
     NSError *error = nil;
     NSArray *result = [self.managedObjectContext executeFetchRequest:summonerFetch error:&error];
-
+    
     for (Summoner *summoner in result)
     {
         NSLog(@"%@", summoner);
@@ -167,7 +170,7 @@
 - (void)deleteAllSummoners
 {
     NSFetchRequest *summonerFetch = [NSFetchRequest fetchRequestWithEntityName:@"Summoner"];
-
+    
     NSError *error = nil;
     NSArray *result = [self.managedObjectContext executeFetchRequest:summonerFetch error:&error];
     for (Summoner *summoner in result)
@@ -176,47 +179,6 @@
     }
     [self saveContext];
     NSLog(@"%lul", [self.managedObjectContext executeFetchRequest:summonerFetch error:&error].count);
-}
-
-
-
-#pragma mark - Public Summoner Data Methods
-/**
- * @loadRecentMatches
- *
- * Loads from core data the currently selected summoner's recent matches
- * into a public array that can be accessed by any view controller.
- */
-- (void)loadRecentMatches
-{
-    //get the current summoner's entity
-    Summoner *summoner = [self currentSummonerEntity];
-
-    //make a fetch with the summoner, ordered latest match first
-    NSFetchRequest *fetch           = [NSFetchRequest fetchRequestWithEntityName:@"Match"];
-    NSPredicate *summonerPredicate  = [NSPredicate predicateWithFormat:@"summoner == %@", summoner];
-    NSSortDescriptor *matchIdSort   = [NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:NO];
-    [fetch setPredicate:summonerPredicate];
-    [fetch setSortDescriptors:@[matchIdSort]];
-    
-    NSError *error = nil;
-    NSArray *matchEntities = [self.managedObjectContext executeFetchRequest:fetch error:&error];
-    
-    //for every match from core data, convert to readable dictionary
-    NSMutableArray *matches = [[NSMutableArray alloc] init];
-    for (Match *matchEntity in matchEntities)
-    {
-        NSMutableDictionary *match = [[NSMutableDictionary alloc] init];
-        for (NSPropertyDescription *property in [NSEntityDescription entityForName:@"Match" inManagedObjectContext:self.managedObjectContext])
-        {
-            if (![property.name isEqual:@"summoner"])
-            {
-                [match setObject:[matchEntity valueForKey:property.name] forKey:property.name];
-            }
-        }
-        [matches addObject:[match copy]];
-    }
-    self.recentMatches = [matches copy];
 }
 
 /**
@@ -234,6 +196,47 @@
     NSNumber *lastMatchId = [self saveRecentMatchesForSummoner:summoner];
     [summoner setValue:lastMatchId forKey:@"lastMatchId"];
     [self saveContext];
+}
+
+
+
+#pragma mark - Recent Matches
+/**
+ * @loadRecentMatches
+ *
+ * Loads from core data the currently selected summoner's recent matches
+ * into a public array that can be accessed by any view controller.
+ */
+- (void)loadRecentMatches
+{
+        //get the current summoner's entity
+    Summoner *summoner = [self currentSummonerEntity];
+    
+        //make a fetch with the summoner, ordered latest match first
+    NSFetchRequest *fetch           = [NSFetchRequest fetchRequestWithEntityName:@"Match"];
+    NSPredicate *summonerPredicate  = [NSPredicate predicateWithFormat:@"summoner == %@", summoner];
+    NSSortDescriptor *matchIdSort   = [NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:NO];
+    [fetch setPredicate:summonerPredicate];
+    [fetch setSortDescriptors:@[matchIdSort]];
+    
+    NSError *error = nil;
+    NSArray *matchEntities = [self.managedObjectContext executeFetchRequest:fetch error:&error];
+    
+        //for every match from core data, convert to readable dictionary
+    NSMutableArray *matches = [[NSMutableArray alloc] init];
+    for (Match *matchEntity in matchEntities)
+    {
+        NSMutableDictionary *match = [[NSMutableDictionary alloc] init];
+        for (NSPropertyDescription *property in [NSEntityDescription entityForName:@"Match" inManagedObjectContext:self.managedObjectContext])
+        {
+            if (![property.name isEqual:@"summoner"])
+            {
+                [match setObject:[matchEntity valueForKey:property.name] forKey:property.name];
+            }
+        }
+        [matches addObject:[match copy]];
+    }
+    self.recentMatches = [matches copy];
 }
 
 /**
@@ -365,6 +368,29 @@
     [[self.urlSession dataTaskWithURL:apiURL(kLoLStaticSpellList, @"na", @"", @[@"dataById=true"]) completionHandler:completionHandler]
      resume];
 
+}
+
+
+
+#pragma mark - Regions Picker Data Source
+/**
+ * @method numberOfComponentsInPickerView
+ *
+ * Only 1 column of regions
+ */
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+/**
+ * @method pickerView:numberRowsInComponent
+ *
+ * Returns number of regions defined in DataManager
+ */
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return [self.regions count];
 }
 
 

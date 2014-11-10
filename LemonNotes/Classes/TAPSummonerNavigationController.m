@@ -1,5 +1,6 @@
 
 #import "TAPSummonerNavigationController.h"
+#import "TAPSummonerViewController.h"
 
 
 
@@ -19,7 +20,9 @@
 {
     [super viewDidLoad];
     
-    self.hidesBarsOnSwipe = YES;
+    TAPSummonerViewController *rootSummonerVC = [self.storyboard instantiateViewControllerWithIdentifier:@"summonerVC"];
+    rootSummonerVC.summoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
+    [self pushViewController:rootSummonerVC animated:YES];
 }
 
 /**
