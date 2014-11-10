@@ -780,7 +780,6 @@
 		9591582F1A0EDFD00098A610 /* Ziggs_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 959157B61A0EDFD00098A610 /* Ziggs_0.jpg */; };
 		959158301A0EDFD00098A610 /* Zilean_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 959157B71A0EDFD00098A610 /* Zilean_0.jpg */; };
 		959158311A0EDFD00098A610 /* Zyra_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 959157B81A0EDFD00098A610 /* Zyra_0.jpg */; };
-		95E5986D1A0F12CF0036332E /* TAPSummonerNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95E5986C1A0F12CF0036332E /* TAPSummonerNavigationController.m */; };
 		95F162E11A034C9B00DECF93 /* TAPSummonerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F162E01A034C9B00DECF93 /* TAPSummonerViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -1584,8 +1583,6 @@
 		959157B61A0EDFD00098A610 /* Ziggs_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Ziggs_0.jpg; sourceTree = "<group>"; };
 		959157B71A0EDFD00098A610 /* Zilean_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Zilean_0.jpg; sourceTree = "<group>"; };
 		959157B81A0EDFD00098A610 /* Zyra_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Zyra_0.jpg; sourceTree = "<group>"; };
-		95E5986B1A0F12CF0036332E /* TAPSummonerNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSummonerNavigationController.h; sourceTree = "<group>"; };
-		95E5986C1A0F12CF0036332E /* TAPSummonerNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPSummonerNavigationController.m; sourceTree = "<group>"; };
 		95F162DF1A034C9B00DECF93 /* TAPSummonerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSummonerViewController.h; sourceTree = "<group>"; };
 		95F162E01A034C9B00DECF93 /* TAPSummonerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPSummonerViewController.m; sourceTree = "<group>"; };
 		B10A0C6918D0E25AC9C2085A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2428,8 +2425,6 @@
 		9532FA561A0F6643005E9000 /* SummonerNavigation */ = {
 			isa = PBXGroup;
 			children = (
-				95E5986B1A0F12CF0036332E /* TAPSummonerNavigationController.h */,
-				95E5986C1A0F12CF0036332E /* TAPSummonerNavigationController.m */,
 				95F162DF1A034C9B00DECF93 /* TAPSummonerViewController.h */,
 				95F162E01A034C9B00DECF93 /* TAPSummonerViewController.m */,
 			);
@@ -3485,7 +3480,6 @@
 				8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */,
 				895922E01A07FD9000F00637 /* TAPSideMenuViewController.m in Sources */,
 				89A3D21F1A0D6C8E001E6AE2 /* Summoner.m in Sources */,
-				95E5986D1A0F12CF0036332E /* TAPSummonerNavigationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

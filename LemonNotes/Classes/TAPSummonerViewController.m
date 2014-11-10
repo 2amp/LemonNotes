@@ -16,7 +16,7 @@
 - (IBAction)selectRegion:(id)sender;
 
 //Header
-@property (nonatomic) NSDictionary *summonerInfo;
+@property (nonatomic) NSDictionary *summoner;
 @property (nonatomic, weak) IBOutlet UILabel* summonerNameLabel;
 @property (nonatomic, weak) IBOutlet UILabel* summonerLevelLabel;
 @property (nonatomic, weak) IBOutlet UIImageView* summonerIconView;
@@ -44,6 +44,11 @@
     
     NSLog(@"TAPSummonerViewController viewDidLoad %p", &self);
     
+    if (!self.summonerName)
+    {
+        self.summoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
+        self.summonerName = self.summoner[@"name"];
+    }
     [self setupNavBar];
     [self setupHeader];
 }

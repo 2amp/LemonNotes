@@ -18,6 +18,6 @@
 @interface TAPSummonerViewController : UITableViewController
             <UIPickerViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) NSDictionary *summoner;
+@property (nonatomic, strong) NSString *summonerName;
 
 @end

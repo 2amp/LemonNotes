@@ -279,15 +279,18 @@
             </objects>
             <point key="canvasLocation" x="399" y="62"/>
         </scene>
-        <!--Summoner Navigation Controller-->
+        <!--Navigation Controller-->
         <scene sceneID="F0F-ft-sWa">
             <objects>
-                <navigationController storyboardIdentifier="summonerNC" id="4rk-9Z-Fax" customClass="TAPSummonerNavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="summonerNC" id="4rk-9Z-Fax" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="156-AY-TyM">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.38431372549999998" green="0.64313725489999995" blue="0.82745098039999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
+                    <connections>
+                        <segue destination="N2c-6D-0a3" kind="relationship" relationship="rootViewController" id="t1Q-vn-WN9"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l28-b5-WK4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -434,7 +437,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="championSplashView" destination="vcA-N5-rFj" id="r9u-qG-s7i"/>
                         <outlet property="searchDisplayController" destination="0AH-a4-OGX" id="DZ3-6e-l1C"/>
