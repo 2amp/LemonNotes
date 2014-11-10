@@ -155,7 +155,7 @@
             DataManager *manager = [DataManager sharedManager];
             [manager registerSummoner];
             [manager loadRecentMatches];
-            [manager summonerDump];
+            //[manager summonerDump];
 
             //stop loading spin & show root
             dispatch_async(dispatch_get_main_queue(), ^{

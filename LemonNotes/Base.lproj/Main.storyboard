@@ -356,8 +356,8 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IfE-bI-wTJ" id="Aug-Rm-FLS">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Victory" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WhV-fZ-jsY">
-                                            <rect key="frame" x="8" y="8" width="100" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Victory" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WhV-fZ-jsY">
+                                            <rect key="frame" x="8" y="9" width="100" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="100" id="fp1-dN-yDv"/>
                                             </constraints>
@@ -365,15 +365,15 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" tag="101" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DiG-dM-V0J">
-                                            <rect key="frame" x="26" y="37" width="64" height="64"/>
+                                        <imageView userInteractionEnabled="NO" tag="101" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DiG-dM-V0J">
+                                            <rect key="frame" x="26" y="38" width="64" height="64"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="64" id="VrJ-rV-ccf"/>
                                                 <constraint firstAttribute="height" constant="64" id="u4m-al-ibN"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="102" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BwD-Ig-tyJ">
-                                            <rect key="frame" x="8" y="109" width="100" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="102" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BwD-Ig-tyJ">
+                                            <rect key="frame" x="8" y="110" width="100" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="100" id="L92-hN-Yey"/>
                                             </constraints>
@@ -381,22 +381,22 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" tag="103" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JDO-gF-tZs">
-                                            <rect key="frame" x="98" y="37" width="32" height="32"/>
+                                        <imageView userInteractionEnabled="NO" tag="103" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JDO-gF-tZs">
+                                            <rect key="frame" x="98" y="38" width="32" height="32"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="32" id="Uz2-Wm-s3j"/>
                                                 <constraint firstAttribute="height" constant="32" id="nVp-as-f5V"/>
                                             </constraints>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" tag="104" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sBd-qy-JM6">
-                                            <rect key="frame" x="98" y="69" width="32" height="32"/>
+                                        <imageView userInteractionEnabled="NO" tag="104" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sBd-qy-JM6">
+                                            <rect key="frame" x="98" y="70" width="32" height="32"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="32" id="Xlg-br-hBc"/>
                                                 <constraint firstAttribute="width" constant="32" id="Z2h-N5-p5m"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="105" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IwJ-qo-m8Q">
-                                            <rect key="frame" x="138" y="58" width="110" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="105" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Score" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IwJ-qo-m8Q">
+                                            <rect key="frame" x="138" y="59" width="110" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="110" id="aQ2-UX-VHo"/>
                                             </constraints>
@@ -430,6 +430,9 @@
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="wNn-Un-roV">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="qvU-wX-Pfp">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Region" id="eEN-tz-5Fr">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -455,11 +458,11 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="2393" y="-241"/>
+            <point key="canvasLocation" x="2393" y="-242"/>
         </scene>
     </scenes>
     <resources>
         <image name="Lemon Notes Logo (Aligned).png" width="645" height="334"/>
-        <image name="side_menu.png" width="512" height="512"/>
+        <image name="side_menu.png" width="22" height="22"/>
     </resources>
 </document>

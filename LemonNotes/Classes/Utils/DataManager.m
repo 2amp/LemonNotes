@@ -150,7 +150,7 @@
  */
 - (void)summonerDump
 {
-        // fetch for summoner entity with summonerId
+    // fetch for summoner entity with summonerId
     NSFetchRequest *summonerFetch = [NSFetchRequest fetchRequestWithEntityName:@"Summoner"];
     
     NSError *error = nil;
@@ -209,10 +209,10 @@
  */
 - (void)loadRecentMatches
 {
-        //get the current summoner's entity
+    //get the current summoner's entity
     Summoner *summoner = [self currentSummonerEntity];
     
-        //make a fetch with the summoner, ordered latest match first
+    //make a fetch with the summoner, ordered latest match first
     NSFetchRequest *fetch           = [NSFetchRequest fetchRequestWithEntityName:@"Match"];
     NSPredicate *summonerPredicate  = [NSPredicate predicateWithFormat:@"summoner == %@", summoner];
     NSSortDescriptor *matchIdSort   = [NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:NO];
@@ -222,7 +222,7 @@
     NSError *error = nil;
     NSArray *matchEntities = [self.managedObjectContext executeFetchRequest:fetch error:&error];
     
-        //for every match from core data, convert to readable dictionary
+    //for every match from core data, convert to readable dictionary
     NSMutableArray *matches = [[NSMutableArray alloc] init];
     for (Match *matchEntity in matchEntities)
     {
@@ -276,7 +276,7 @@
     {
         [existingMatchIds addObject:match.matchId];
     }
-    NSLog(@"%@", existingMatchIds);
+    //NSLog(@"%@", existingMatchIds);
     
     //array of match data for every id
     for (NSNumber *matchId in matchIds)

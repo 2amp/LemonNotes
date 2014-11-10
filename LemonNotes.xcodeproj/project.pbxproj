@@ -14,8 +14,6 @@
 		89591CE41A03130B00F00637 /* Lemon Notes Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 89591A691A03130B00F00637 /* Lemon Notes Logo.png */; };
 		89591DD51A03130B00F00637 /* 2AM Productions Logo.idraw in Resources */ = {isa = PBXBuildFile; fileRef = 89591B5C1A03130B00F00637 /* 2AM Productions Logo.idraw */; };
 		89591DD61A03130B00F00637 /* Lemon Notes Logo.idraw in Resources */ = {isa = PBXBuildFile; fileRef = 89591B5D1A03130B00F00637 /* Lemon Notes Logo.idraw */; };
-		89591DE61A03131700F00637 /* LoLStaticData.sql in Resources */ = {isa = PBXBuildFile; fileRef = 89591DE51A03131700F00637 /* LoLStaticData.sql */; };
-		89591DED1A0313F100F00637 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 89591DEC1A0313F100F00637 /* libsqlite3.dylib */; };
 		895920651A0330F600F00637 /* Aatrox.png in Resources */ = {isa = PBXBuildFile; fileRef = 89591DEF1A0330F500F00637 /* Aatrox.png */; };
 		895920661A0330F600F00637 /* Ahri.png in Resources */ = {isa = PBXBuildFile; fileRef = 89591DF01A0330F500F00637 /* Ahri.png */; };
 		895920671A0330F600F00637 /* Akali.png in Resources */ = {isa = PBXBuildFile; fileRef = 89591DF11A0330F500F00637 /* Akali.png */; };
@@ -803,7 +801,6 @@
 		89591B5C1A03130B00F00637 /* 2AM Productions Logo.idraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = "2AM Productions Logo.idraw"; sourceTree = "<group>"; };
 		89591B5D1A03130B00F00637 /* Lemon Notes Logo.idraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lemon Notes Logo.idraw"; sourceTree = "<group>"; };
 		89591DE51A03131700F00637 /* LoLStaticData.sql */ = {isa = PBXFileReference; lastKnownFileType = file; path = LoLStaticData.sql; sourceTree = "<group>"; };
-		89591DEC1A0313F100F00637 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		89591DEF1A0330F500F00637 /* Aatrox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Aatrox.png; sourceTree = "<group>"; };
 		89591DF01A0330F500F00637 /* Ahri.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ahri.png; sourceTree = "<group>"; };
 		89591DF11A0330F500F00637 /* Akali.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Akali.png; sourceTree = "<group>"; };
@@ -1594,7 +1591,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89591DED1A0313F100F00637 /* libsqlite3.dylib in Frameworks */,
 				14DD64AD70E0D06AA18B09DF /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2309,7 +2305,6 @@
 		8984EF1F19F61FC100C442FC = {
 			isa = PBXGroup;
 			children = (
-				89591DEC1A0313F100F00637 /* libsqlite3.dylib */,
 				8984EF2A19F61FC100C442FC /* LemonNotes */,
 				8984EF4719F61FC100C442FC /* LemonNotesTests */,
 				8984EF2919F61FC100C442FC /* Products */,
@@ -2986,7 +2981,6 @@
 				895922AC1A0330F600F00637 /* 684.png in Resources */,
 				8959212C1A0330F600F00637 /* 3057.png in Resources */,
 				895922BB1A0330F600F00637 /* 699.png in Resources */,
-				89591DE61A03131700F00637 /* LoLStaticData.sql in Resources */,
 				8959215E1A0330F600F00637 /* 3136.png in Resources */,
 				895922B71A0330F600F00637 /* 695.png in Resources */,
 				895921AE1A0330F600F00637 /* 3280.png in Resources */,

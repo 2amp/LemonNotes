@@ -42,12 +42,15 @@
 {
     [super viewDidLoad];
     
-    NSLog(@"TAPSummonerViewController viewDidLoad %p", &self);
+    //NSLog(@"TAPSummonerViewController viewDidLoad %p", &self);
     
     if (!self.summonerName)
     {
         self.summoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
         self.summonerName = self.summoner[@"name"];
+        
+        //
+        self.navigationItem.leftBarButtonItem = nil;
     }
     [self setupNavBar];
     [self setupHeader];
