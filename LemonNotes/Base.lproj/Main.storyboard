@@ -314,6 +314,11 @@
                                         <constraint firstAttribute="width" secondItem="vcA-N5-rFj" secondAttribute="height" multiplier="30:11" id="9CI-r7-iti"/>
                                         <constraint firstAttribute="height" constant="220" id="mhj-nk-2kI"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="9CI-r7-iti"/>
+                                        </mask>
+                                    </variation>
                                 </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ugY-pq-47n">
                                     <rect key="frame" x="17" y="125" width="80" height="80"/>
