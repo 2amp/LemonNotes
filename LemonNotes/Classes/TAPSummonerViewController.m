@@ -50,13 +50,6 @@
     {
         self.summoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
         self.summonerName = self.summoner[@"name"];
-        
-        //
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"side_menu.png"]
-                                                                                 style:UIBarButtonItemStylePlain
-                                                                                target:self
-                                                                                action:nil];
-        self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     }
     [self setupNavBar];
     [self setupHeader];
@@ -271,6 +264,10 @@
 }
 
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"showNextViewController" sender:self];
+}
 
 #pragma mark - Navigation Events
 /**
