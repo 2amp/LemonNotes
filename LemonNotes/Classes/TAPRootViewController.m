@@ -26,7 +26,7 @@
 {
     [super awakeFromNib];
     
-    self.contentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"summonerVC"];
+    self.contentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"summonerNC"];
     self.leftMenuViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"sideMenuVC"];
     
     TAPSideMenuViewController *sideMenuViewController = (TAPSideMenuViewController *)self.leftMenuViewController;

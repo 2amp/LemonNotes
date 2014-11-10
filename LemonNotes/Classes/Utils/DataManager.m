@@ -26,12 +26,12 @@
 - (Summoner *)currentSummonerEntity;
 
 @end
-
+#pragma mark -
 
 
 @implementation DataManager
 
-#pragma mark - Init Methods
+#pragma mark Init Methods
 /**
  * @method sharedManager
  *
@@ -139,6 +139,9 @@
     return result[0];
 }
 
+
+
+#pragma mark - Summoner Accounts
 /**
  * @method summonnerDump
  *
@@ -152,7 +155,7 @@
     
     NSError *error = nil;
     NSArray *result = [self.managedObjectContext executeFetchRequest:summonerFetch error:&error];
-
+    
     for (Summoner *summoner in result)
     {
         NSLog(@"%@ (region: %@)", summoner.name, summoner.region);
@@ -167,7 +170,7 @@
 - (void)deleteAllSummoners
 {
     NSFetchRequest *summonerFetch = [NSFetchRequest fetchRequestWithEntityName:@"Summoner"];
-
+    
     NSError *error = nil;
     NSArray *result = [self.managedObjectContext executeFetchRequest:summonerFetch error:&error];
     for (Summoner *summoner in result)
@@ -178,9 +181,26 @@
     NSLog(@"%lul", [self.managedObjectContext executeFetchRequest:summonerFetch error:&error].count);
 }
 
+/**
+ * @method registerSummoner
+ *
+ * Enters the summoner as a new entity into core data.
+ * Saves all ranked games.
+ *
+ * @note currently only saves last 10 games,
+ *       but should save all games in the future.
+ */
+- (void)registerSummoner
+{
+    Summoner *summoner = [self currentSummonerEntity];
+    NSNumber *lastMatchId = [self saveRecentMatchesForSummoner:summoner];
+    [summoner setValue:lastMatchId forKey:@"lastMatchId"];
+    [self saveContext];
+}
 
 
-#pragma mark - Public Summoner Data Methods
+
+#pragma mark - Recent Matches
 /**
  * @loadRecentMatches
  *
@@ -191,7 +211,7 @@
 {
     //get the current summoner's entity
     Summoner *summoner = [self currentSummonerEntity];
-
+    
     //make a fetch with the summoner, ordered latest match first
     NSFetchRequest *fetch           = [NSFetchRequest fetchRequestWithEntityName:@"Match"];
     NSPredicate *summonerPredicate  = [NSPredicate predicateWithFormat:@"summoner == %@", summoner];
@@ -217,23 +237,6 @@
         [matches addObject:[match copy]];
     }
     self.recentMatches = [matches copy];
-}
-
-/**
- * @method registerSummoner
- *
- * Enters the summoner as a new entity into core data.
- * Saves all ranked games.
- *
- * @note currently only saves last 10 games,
- *       but should save all games in the future.
- */
-- (void)registerSummoner
-{
-    Summoner *summoner = [self currentSummonerEntity];
-    NSNumber *lastMatchId = [self saveRecentMatchesForSummoner:summoner];
-    [summoner setValue:lastMatchId forKey:@"lastMatchId"];
-    [self saveContext];
 }
 
 /**
@@ -273,7 +276,7 @@
     {
         [existingMatchIds addObject:match.matchId];
     }
-    NSLog(@"%@", existingMatchIds);
+    //NSLog(@"%@", existingMatchIds);
     
     //array of match data for every id
     for (NSNumber *matchId in matchIds)
@@ -365,6 +368,29 @@
     [[self.urlSession dataTaskWithURL:apiURL(kLoLStaticSpellList, @"na", @"", @[@"dataById=true"]) completionHandler:completionHandler]
      resume];
 
+}
+
+
+
+#pragma mark - Regions Picker Data Source
+/**
+ * @method numberOfComponentsInPickerView
+ *
+ * Only 1 column of regions
+ */
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+/**
+ * @method pickerView:numberRowsInComponent
+ *
+ * Returns number of regions defined in DataManager
+ */
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return [self.regions count];
 }
 
 

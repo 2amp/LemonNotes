@@ -15,8 +15,9 @@
  * @author Bohui Moon
  * @version 0.1
  */
-@interface TAPSummonerViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
+@interface TAPSummonerViewController : UITableViewController
+            <UIPickerViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
-- (IBAction)matchesTapped:(id)sender;
+@property (nonatomic, strong) NSString *summonerName;
 
 @end

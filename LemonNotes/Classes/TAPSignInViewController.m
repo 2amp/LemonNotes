@@ -49,7 +49,7 @@
     //make an internal picker view
     self.regionPicker = [[UIPickerView alloc] init];
     self.regionPicker.delegate = self;
-    self.regionPicker.dataSource = self;
+    self.regionPicker.dataSource = [DataManager sharedManager];
     self.regionPicker.backgroundColor = [UIColor whiteColor];
     [self.regionPicker selectRow:[[DataManager sharedManager].regions indexOfObject:self.summonerRegion] inComponent:0 animated:NO];
     
@@ -157,7 +157,7 @@
             DataManager *manager = [DataManager sharedManager];
             [manager registerSummoner];
             [manager loadRecentMatches];
-            [manager summonerDump];
+            //[manager summonerDump];
 
             //stop loading spin & show root
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -174,27 +174,7 @@
 
 
 
-#pragma mark - UIPicker Methods
-/**
- * @method numberOfComponentsInPickerView
- *
- * Only 1 column of regions
- */
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-/**
- * @method pickerView:numberRowsInComponent
- *
- * Returns number of regions defined in DataManager
- */
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    return [[DataManager sharedManager].regions count];
-}
-
+#pragma mark - Region Picker Delegate
 /**
  * @method pickerView:titleForRow:forComponent
  *
@@ -218,6 +198,7 @@
     self.summonerRegion = [DataManager sharedManager].regions[row];
     [self.regionButton setTitle:[self.summonerRegion uppercaseString] forState:UIControlStateNormal];
 }
+
 
 
 #pragma mark - Alert Methods
