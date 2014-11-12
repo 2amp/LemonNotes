@@ -2,6 +2,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import <UIKit/UIKit.h>
+#import "Summoner.h"
 
 /**
  * @class DataManager
@@ -28,7 +29,7 @@
 //recent games
 @property (nonatomic) NSArray *recentMatches;
 - (void)loadRecentMatches;
-- (NSNumber *)saveRecentMatchesForSummoner:(NSManagedObject *)summoner;
+- (NSNumber *)saveRecentMatchesForSummoner:(Summoner *)summoner;
 
 //static data
 @property (nonatomic) NSArray *regions;

@@ -187,7 +187,7 @@
  * Enters the summoner as a new entity into core data.
  * Saves all ranked games.
  *
- * @note currently only saves last 10 games,
+ * @note currently only saves last 15 games,
  *       but should save all games in the future.
  */
 - (void)registerSummoner
@@ -197,8 +197,6 @@
     [summoner setValue:lastMatchId forKey:@"lastMatchId"];
     [self saveContext];
 }
-
-
 
 #pragma mark - Recent Matches
 /**
@@ -243,7 +241,10 @@
  * @method saveMatchHistoryForSummoner:
  * 
  * Given an summoner coredata entity,
- * fetches the recent 10 matches and adds them.
+ * fetches the 15 most recent matches and adds them. Does not initialize all
+ * match fields since matchhistory doesn't provide some of them. We defer the
+ * initialization of those fields until when the actual match itself needs to be
+ * fetched (such as when the game in the summoner vc is tapped).
  *
  * @note in the future, this method should check and add matches
  *       up until the stored lastMatchId for summoner (this could be all ranked games)
@@ -254,13 +255,13 @@
 - (NSNumber *)saveRecentMatchesForSummoner:(Summoner *)summoner
 {
     NSDictionary *summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
-    
+
     //get match history
     NSError *error;
     NSHTTPURLResponse *response;
-    NSURL *url = apiURL(kLoLMatchHistory, summonerInfo[@"region"], [summonerInfo[@"id"] stringValue], @[@"beginIndex=0", @"endIndex=5"]);
+    NSURL *url = apiURL(kLoLMatchHistory, summonerInfo[@"region"], [summonerInfo[@"id"] stringValue], @[@"endIndex=15"]);
     NSData *matchHistoryData = [NSURLSession sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
-    
+
     //make array of match ids
     NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:matchHistoryData options:kNilOptions error:nil];
     NSArray *matches = [[dataDict[@"matches"] reverseObjectEnumerator] allObjects];
@@ -277,18 +278,13 @@
         [existingMatchIds addObject:match.matchId];
     }
     //NSLog(@"%@", existingMatchIds);
-    
+
     //array of match data for every id
-    for (NSNumber *matchId in matchIds)
+    for (NSDictionary *matchDict in matches)
     {
         // only add match if it is not already in the db
-        if (![existingMatchIds containsObject:matchId])
+        if (![existingMatchIds containsObject:matchDict[@"matchId"]])
         {
-            //fetch match data
-            url = apiURL(kLoLMatch, summonerInfo[@"region"], [matchId stringValue], nil);
-            NSData *matchData = [NSURLSession sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
-            NSDictionary *matchDict = [NSJSONSerialization JSONObjectWithData:matchData options:kNilOptions error:nil];
-
             //add to new entity
             Match *newMatch = [NSEntityDescription insertNewObjectForEntityForName:@"Match"
                                                             inManagedObjectContext:self.managedObjectContext];
@@ -297,28 +293,18 @@
             {
                 [newMatch setValue:matchDict[key] forKey:key];
             }
-
-            //find and set which participantId summoner is
-            for (NSDictionary *participant in matchDict[@"participantIdentities"])
-            {
-                if (participant[@"player"][@"summonerId"] == summonerInfo[@"id"])
-                {
-                    int index = [participant[@"participantId"] intValue] - 1;
-                    newMatch.summonerIndex = [NSNumber numberWithInt:index];
-                }
-            }
-
-            //add to summoner's matches
-            //        [[summoner valueForKey:@"matches"] addObject:newMatch];
+            // Set up placeholder values
+            // These will be set when the specific match is fetched
+            newMatch.summonerIndex = @0;
+            newMatch.matchCreation = @0;
+            newMatch.teams = @[];
             [summoner addMatchesObject:newMatch];
         }
     }
-    
+
     //return latest match id
     return matchIds[0];
 }
-
-
 
 #pragma mark - Champion Static Data Methods
 /**
