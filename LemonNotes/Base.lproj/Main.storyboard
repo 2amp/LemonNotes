@@ -417,15 +417,23 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T0M-JB-QLz">
+                                            <rect key="frame" x="550" y="58" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="JDO-gF-tZs" firstAttribute="leading" secondItem="DiG-dM-V0J" secondAttribute="trailing" constant="8" id="1VR-7p-HS9"/>
                                         <constraint firstItem="BwD-Ig-tyJ" firstAttribute="leading" secondItem="Aug-Rm-FLS" secondAttribute="leadingMargin" id="7V5-e4-NcX"/>
+                                        <constraint firstItem="T0M-JB-QLz" firstAttribute="top" secondItem="Aug-Rm-FLS" secondAttribute="topMargin" constant="50" id="Bsi-h9-yQu"/>
                                         <constraint firstItem="WhV-fZ-jsY" firstAttribute="top" secondItem="Aug-Rm-FLS" secondAttribute="topMargin" id="Mmj-8O-X6d"/>
                                         <constraint firstItem="DiG-dM-V0J" firstAttribute="top" secondItem="WhV-fZ-jsY" secondAttribute="bottom" constant="8" id="R4W-mb-dwJ"/>
                                         <constraint firstItem="BwD-Ig-tyJ" firstAttribute="top" secondItem="DiG-dM-V0J" secondAttribute="bottom" constant="8" id="RCO-Pg-3C8"/>
                                         <constraint firstItem="JDO-gF-tZs" firstAttribute="top" secondItem="Aug-Rm-FLS" secondAttribute="topMargin" constant="29" id="Tum-dr-QxO"/>
                                         <constraint firstItem="DiG-dM-V0J" firstAttribute="leading" secondItem="Aug-Rm-FLS" secondAttribute="leadingMargin" constant="18" id="VCc-qQ-ijB"/>
+                                        <constraint firstItem="T0M-JB-QLz" firstAttribute="trailing" secondItem="Aug-Rm-FLS" secondAttribute="trailingMargin" id="Wh9-um-QcU"/>
                                         <constraint firstItem="WhV-fZ-jsY" firstAttribute="leading" secondItem="Aug-Rm-FLS" secondAttribute="leadingMargin" id="YAW-KQ-djs"/>
                                         <constraint firstItem="IwJ-qo-m8Q" firstAttribute="top" secondItem="Aug-Rm-FLS" secondAttribute="topMargin" constant="50" id="k9h-hI-z8I"/>
                                         <constraint firstItem="IwJ-qo-m8Q" firstAttribute="leading" secondItem="JDO-gF-tZs" secondAttribute="trailing" constant="8" id="kSm-wb-MJn"/>
@@ -446,6 +454,9 @@
                         <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" image="side_menu.png" id="vP7-QR-fSq">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="presentLeftMenuViewController:" destination="N2c-6D-0a3" id="5kW-ax-Ceb"/>
+                            </connections>
                         </barButtonItem>
                         <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Search for a summoner" borderStyle="roundedRect" placeholder="Search for a Summoner" minimumFontSize="17" clearButtonMode="whileEditing" id="XIp-YF-J3m">
                             <rect key="frame" x="166" y="7" width="268" height="30"/>

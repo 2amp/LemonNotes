@@ -303,7 +303,14 @@
     }
 
     //return latest match id
-    return matchIds[0];
+    if (matchIds.count == 0)
+    {
+        return @0;
+    }
+    else
+    {
+        return matchIds[0];
+    }
 }
 
 #pragma mark - Champion Static Data Methods

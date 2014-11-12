@@ -226,6 +226,9 @@
     UIImageView *summonerIcon1ImageView = (UIImageView *)[cell viewWithTag:103];
     UIImageView *summonerIcon2ImageView = (UIImageView *)[cell viewWithTag:104];
     UILabel     *scoreLabel             = (UILabel *)    [cell viewWithTag:105];
+
+    // Debug
+    UILabel *matchNumberLabel = (UILabel *)[cell viewWithTag:200];
     
     //pull data
     DataManager *dataManager = [DataManager sharedManager];
@@ -254,12 +257,15 @@
     summonerIcon2ImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", spell2]];
     
     //set labels
-    NSNumber *kills   = stats[@"kills"]   ? stats[@"kills"]   : @0;
-    NSNumber *deaths  = stats[@"deaths"]  ? stats[@"deaths"]  : @0;
-    NSNumber *assists = stats[@"assists"] ? stats[@"assists"] : @0;
+    NSNumber *kills   = stats[@"kills"];
+    NSNumber *deaths  = stats[@"deaths"];
+    NSNumber *assists = stats[@"assists"];
     scoreLabel.text = [NSString stringWithFormat:@"%@/%@/%@", kills, deaths, assists];
 
     championName.text = dataManager.champions[ [info[@"championId"] stringValue] ][@"name"];
+
+    // debug
+    matchNumberLabel.text = [[NSNumber numberWithInteger:(indexPath.row + 1)] stringValue];
     return cell;
 }
 
