@@ -8,9 +8,11 @@
 
 @implementation TAPRootViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    NSLog(@"%@ %p", self.class, self);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -32,7 +34,8 @@
     TAPSideMenuViewController *sideMenuViewController = (TAPSideMenuViewController *)self.leftMenuViewController;
     sideMenuViewController.contentViewControllers = @[
         self.contentViewController,
-        [self.storyboard instantiateViewControllerWithIdentifier:@"startGameVC"]
+        [self.storyboard instantiateViewControllerWithIdentifier:@"startGameVC"],
+        self
     ];
 }
 

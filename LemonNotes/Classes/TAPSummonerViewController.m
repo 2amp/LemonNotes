@@ -53,6 +53,7 @@
     }
     [self setupNavBar];
     [self setupHeader];
+    NSLog(@"%@ %p", self.class, self);
 }
 
 /**

@@ -58,18 +58,8 @@
     self.pickerWrapper = [[UITextField alloc] initWithFrame:CGRectMake(0,0,0,0)];
     self.pickerWrapper.inputView = self.regionPicker;
     [self.view addSubview:self.pickerWrapper];
-}
 
-/**
- * @method viewWillAppear:
- *
- * If a successful summoner search was previously made, set the sign in field 
- * text to the last summoner name that was searched.
- * Initializes an NSURLSession instance for data requests.
- */
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
+    NSLog(@"%@ %p", self.class, self);
 }
 
 /**

@@ -1,15 +1,21 @@
 
 #import "TAPSideMenuViewController.h"
+#import "TAPRootViewController.h"
 
 @interface TAPSideMenuViewController ()
+
+@property (nonatomic) NSArray *menuItems;
 
 @end
 
 @implementation TAPSideMenuViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.menuItems = @[@"Home", @"Start Game", @"Log Out"];
+    NSLog(@"%@ %p", self.class, self);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,9 +43,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    // contentViewControllers is populated by awakeFromNib 
-    [self.sideMenuViewController setContentViewController:self.contentViewControllers[indexPath.row] animated:YES];
+    // contentViewControllers is populated by awakeFromNib
     [self.sideMenuViewController hideMenuViewController];
+    if (indexPath.row != self.menuItems.count - 1)
+    {
+        [self.sideMenuViewController setContentViewController:self.contentViewControllers[indexPath.row] animated:YES];
+    }
+    else
+    {
+        TAPRootViewController *rootVC = (TAPRootViewController *)(self.contentViewControllers.lastObject);
+        [rootVC dismissViewControllerAnimated:YES completion:nil];
+    }
+
 }
 
 #pragma mark - Table View Data Source Methods
@@ -63,7 +78,7 @@
  */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return self.menuItems.count;
 }
 
 /**
@@ -83,7 +98,7 @@
 
     // Configure the cell...
     UILabel *label = (UILabel *)[cell viewWithTag:100];
-    label.text = [NSString stringWithFormat:@"%@", @[@"Home", @"Start Game"][indexPath.row]];
+    label.text = [NSString stringWithFormat:@"%@", self.menuItems[indexPath.row]];
     return cell;
 }
 
