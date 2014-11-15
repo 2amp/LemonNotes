@@ -230,6 +230,17 @@
 
     // Debug
     UILabel *matchNumberLabel = (UILabel *)[cell viewWithTag:200];
+
+    // items
+    UIImageView *item0ImageView = (UIImageView *)[cell viewWithTag:300];
+    UIImageView *item1ImageView = (UIImageView *)[cell viewWithTag:301];
+    UIImageView *item2ImageView = (UIImageView *)[cell viewWithTag:302];
+    UIImageView *item3ImageView = (UIImageView *)[cell viewWithTag:303];
+    UIImageView *item4ImageView = (UIImageView *)[cell viewWithTag:304];
+    UIImageView *item5ImageView = (UIImageView *)[cell viewWithTag:305];
+    UIImageView *item6ImageView = (UIImageView *)[cell viewWithTag:306];
+
+    NSArray *itemImageViews = @[item0ImageView, item1ImageView, item2ImageView, item3ImageView, item4ImageView, item5ImageView, item6ImageView];
     
     //pull data
     DataManager *dataManager = [DataManager sharedManager];
@@ -256,7 +267,29 @@
     championImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", champion]];
     summonerIcon1ImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", spell1]];
     summonerIcon2ImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", spell2]];
-    
+
+    // items
+    NSArray *items = @[stats[@"item0"], stats[@"item1"], stats[@"item2"], stats[@"item3"], stats[@"item4"], stats[@"item5"], stats[@"item6"]];
+    for (int i = 0; i < itemImageViews.count; i++)
+    {
+        if (![((NSNumber *)items[i]) isEqualToNumber:@0])
+        {
+            ((UIImageView *)itemImageViews[i]).image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", items[i]]];
+        }
+        else
+        {
+            CGSize imageSize = CGSizeMake(30, 30);
+            UIColor *fillColor = [UIColor blackColor];
+            UIGraphicsBeginImageContextWithOptions(imageSize, YES, 0);
+            CGContextRef context = UIGraphicsGetCurrentContext();
+            [fillColor setFill];
+            CGContextFillRect(context, CGRectMake(0, 0, imageSize.width, imageSize.height));
+            UIImage *blackImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            ((UIImageView *)itemImageViews[i]).image = blackImage;
+        }
+    }
+
     //set labels
     NSNumber *kills   = stats[@"kills"];
     NSNumber *deaths  = stats[@"deaths"];
