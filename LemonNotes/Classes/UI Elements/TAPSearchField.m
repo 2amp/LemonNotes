@@ -80,6 +80,7 @@
     self.selectedRegion = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"][@"region"];
     if (!self.selectedRegion)
         self.selectedRegion = @"na";
+    self.tempRow = [self.regions indexOfObject:self.selectedRegion];
 
     //toolbar
     self.regionBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0,0, 320, 44)];
@@ -93,7 +94,7 @@
     self.regionPicker.delegate = self;
     self.regionPicker.dataSource = self;
     self.regionPicker.backgroundColor = [UIColor whiteColor];
-    [self.regionPicker selectRow:[self.regions indexOfObject:self.selectedRegion] inComponent:0 animated:NO];
+    [self.regionPicker selectRow:self.tempRow inComponent:0 animated:NO];
 }
 
 
