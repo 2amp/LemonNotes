@@ -780,6 +780,7 @@
 		959158301A0EDFD00098A610 /* Zilean_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 959157B71A0EDFD00098A610 /* Zilean_0.jpg */; };
 		959158311A0EDFD00098A610 /* Zyra_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 959157B81A0EDFD00098A610 /* Zyra_0.jpg */; };
 		95F162E11A034C9B00DECF93 /* TAPSummonerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F162E01A034C9B00DECF93 /* TAPSummonerViewController.m */; };
+		95F9F9181A1696E000CFEAF3 /* TAPSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F9F9171A1696E000CFEAF3 /* TAPSearchField.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1583,6 +1584,8 @@
 		959157B81A0EDFD00098A610 /* Zyra_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Zyra_0.jpg; sourceTree = "<group>"; };
 		95F162DF1A034C9B00DECF93 /* TAPSummonerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSummonerViewController.h; sourceTree = "<group>"; };
 		95F162E01A034C9B00DECF93 /* TAPSummonerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPSummonerViewController.m; sourceTree = "<group>"; };
+		95F9F9161A1696E000CFEAF3 /* TAPSearchField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSearchField.h; sourceTree = "<group>"; };
+		95F9F9171A1696E000CFEAF3 /* TAPSearchField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPSearchField.m; sourceTree = "<group>"; };
 		B10A0C6918D0E25AC9C2085A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE6AF07656DDE9FB35CC8BF1 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2368,6 +2371,7 @@
 			children = (
 				89A3D2191A0D6C80001E6AE2 /* Model Classes */,
 				950FB68B19FE37B1005F870F /* Utils */,
+				95F9F9151A1696A800CFEAF3 /* UI Elements */,
 				8984EF5719F6341000C442FC /* TAPAppDelegate.h */,
 				8984EF5819F6341000C442FC /* TAPAppDelegate.m */,
 				8984EF5919F6341000C442FC /* TAPSignInViewController.h */,
@@ -2553,6 +2557,15 @@
 				959157B81A0EDFD00098A610 /* Zyra_0.jpg */,
 			);
 			path = "Champion Splash";
+			sourceTree = "<group>";
+		};
+		95F9F9151A1696A800CFEAF3 /* UI Elements */ = {
+			isa = PBXGroup;
+			children = (
+				95F9F9161A1696E000CFEAF3 /* TAPSearchField.h */,
+				95F9F9171A1696E000CFEAF3 /* TAPSearchField.m */,
+			);
+			path = "UI Elements";
 			sourceTree = "<group>";
 		};
 		CE3212E4FBCE248404A7A52D /* Frameworks */ = {
@@ -3469,6 +3482,7 @@
 				89A3D21C1A0D6C8E001E6AE2 /* Match.m in Sources */,
 				95F162E11A034C9B00DECF93 /* TAPSummonerViewController.m in Sources */,
 				895922DD1A075E9C00F00637 /* TAPRootViewController.m in Sources */,
+				95F9F9181A1696E000CFEAF3 /* TAPSearchField.m in Sources */,
 				8984EF5C19F6341000C442FC /* TAPSignInViewController.m in Sources */,
 				950B2C421A00296A00DD8A23 /* DataManager.m in Sources */,
 				958136101A0C8B69000D8D43 /* NSURLSession+SynchronousTask.m in Sources */,

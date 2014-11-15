@@ -14,7 +14,7 @@
  * @version 0.1
  */
 @interface TAPSignInViewController : UIViewController
-           <UITextFieldDelegate, UIPickerViewDelegate>
+           <UITextFieldDelegate>
 
 @end
 

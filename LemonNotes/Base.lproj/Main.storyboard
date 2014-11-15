@@ -18,8 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Summoner Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fYm-Uw-5oD">
-                                <rect key="frame" x="56" y="302" width="433" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Summoner Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fYm-Uw-5oD" customClass="TAPSearchField">
+                                <rect key="frame" x="56" y="302" width="488" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                 <connections>
@@ -40,45 +40,22 @@
                                     <constraint firstAttribute="height" constant="20" id="UWN-7c-Ig7"/>
                                 </constraints>
                             </activityIndicatorView>
-                            <pickerView hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e7d-ER-mPb">
-                                <rect key="frame" x="0.0" y="438" width="600" height="162"/>
-                            </pickerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aw6-i9-1nM">
-                                <rect key="frame" x="489" y="302" width="55" height="30"/>
-                                <color key="backgroundColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="55" id="9bn-JV-ei3"/>
-                                    <constraint firstAttribute="height" constant="30" id="rwl-HE-c3I"/>
-                                </constraints>
-                                <state key="normal" title="NA">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="selectRegion:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="IJf-eU-4oK"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.52988997558486139" green="0.81274263015629644" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="fYm-Uw-5oD" firstAttribute="top" secondItem="aw6-i9-1nM" secondAttribute="top" id="9ee-22-y7s"/>
                             <constraint firstItem="fYm-Uw-5oD" firstAttribute="top" secondItem="icp-S1-coZ" secondAttribute="bottom" constant="-25" id="ARf-z9-iip"/>
                             <constraint firstItem="fYm-Uw-5oD" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="40" id="BBk-De-Ip2"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="fYm-Uw-5oD" secondAttribute="trailing" constant="95" id="Hmn-Qh-7E9"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="fYm-Uw-5oD" secondAttribute="trailing" constant="40" id="Hmn-Qh-7E9"/>
                             <constraint firstItem="fYm-Uw-5oD" firstAttribute="top" secondItem="Fs4-F2-OJ2" secondAttribute="bottom" constant="10" id="Lxl-xF-NUH"/>
                             <constraint firstAttribute="centerX" secondItem="Fs4-F2-OJ2" secondAttribute="centerX" id="Ncj-D2-wbv"/>
-                            <constraint firstItem="fYm-Uw-5oD" firstAttribute="bottom" secondItem="aw6-i9-1nM" secondAttribute="bottom" id="ULl-ey-hDx"/>
                             <constraint firstItem="Fs4-F2-OJ2" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="80" id="Yyx-Ly-gWq">
                                 <variation key="heightClass=compact" constant="40"/>
                             </constraint>
-                            <constraint firstItem="fYm-Uw-5oD" firstAttribute="trailing" secondItem="aw6-i9-1nM" secondAttribute="trailing" constant="-55" id="fHt-sr-p56"/>
                             <constraint firstItem="icp-S1-coZ" firstAttribute="leading" secondItem="fYm-Uw-5oD" secondAttribute="leading" constant="5" id="mYj-rO-2gl"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="icp-S1-coZ" id="Y5R-Lo-4xF"/>
-                        <outlet property="regionButton" destination="aw6-i9-1nM" id="ra1-85-dva"/>
-                        <outlet property="regionPicker" destination="e7d-ER-mPb" id="MEY-SD-ZjM"/>
                         <outlet property="signInField" destination="fYm-Uw-5oD" id="fPX-Sp-3M8"/>
                         <segue destination="cpj-rI-Fse" kind="show" identifier="showRoot" id="cXQ-CF-cJi"/>
                     </connections>
@@ -458,13 +435,10 @@
                                 <action selector="presentLeftMenuViewController:" destination="N2c-6D-0a3" id="5kW-ax-Ceb"/>
                             </connections>
                         </barButtonItem>
-                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Search for a summoner" borderStyle="roundedRect" placeholder="Search for a Summoner" minimumFontSize="17" clearButtonMode="whileEditing" id="XIp-YF-J3m">
-                            <rect key="frame" x="166" y="7" width="268" height="30"/>
+                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search for a Summoner" minimumFontSize="17" id="pgR-DK-LDk" customClass="TAPSearchField">
+                            <rect key="frame" x="180" y="7" width="240" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="0.22831455209300075" green="0.36569224844235221" blue="0.56820154671717171" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <barButtonItem key="rightBarButtonItem" title="Region" id="eEN-tz-5Fr">
@@ -477,7 +451,6 @@
                     <connections>
                         <outlet property="championSplashView" destination="vcA-N5-rFj" id="r9u-qG-s7i"/>
                         <outlet property="searchDisplayController" destination="0AH-a4-OGX" id="DZ3-6e-l1C"/>
-                        <outlet property="searchField" destination="XIp-YF-J3m" id="yHf-Id-Dsa"/>
                         <outlet property="summonerIconView" destination="ugY-pq-47n" id="CeN-lR-qEx"/>
                         <outlet property="summonerLevelLabel" destination="KZs-ZV-Ut7" id="is8-Jc-iB6"/>
                         <outlet property="summonerNameLabel" destination="YMP-OR-NZU" id="Phd-iw-cE2"/>
