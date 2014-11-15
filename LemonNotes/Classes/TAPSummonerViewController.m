@@ -139,6 +139,12 @@
     UIImageView *summonerIcon2ImageView = (UIImageView *)[cell viewWithTag:104];
     UILabel     *scoreLabel             = (UILabel *)    [cell viewWithTag:105];
 
+    //
+    championImageView.layer.cornerRadius = championImageView.frame.size.width / 2;
+    championImageView.layer.borderColor = [UIColor blackColor].CGColor;
+    championImageView.layer.borderWidth = 2.0f;
+    championImageView.clipsToBounds = YES;
+
     // Debug
     UILabel *matchNumberLabel = (UILabel *)[cell viewWithTag:200];
 
