@@ -441,12 +441,6 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <barButtonItem key="rightBarButtonItem" title="Region" id="eEN-tz-5Fr">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="selectRegion:" destination="N2c-6D-0a3" id="gM8-HR-2xq"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="championSplashView" destination="vcA-N5-rFj" id="r9u-qG-s7i"/>
