@@ -16,7 +16,7 @@
  * @version 0.1
  */
 @interface TAPSummonerViewController : UITableViewController
-            <UIPickerViewDelegate, UITableViewDelegate, UITableViewDataSource>
+            <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) NSString *summonerName;
 
