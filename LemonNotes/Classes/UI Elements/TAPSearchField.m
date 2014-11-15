@@ -14,21 +14,15 @@
 @property (nonatomic, strong) UIButton *regionButton;
 - (void)pressedRegion;
 
-//toolbar
-@property (nonatomic, strong) UIToolbar *regionBar;
-@property (nonatomic, strong) UIBarButtonItem *doneButton;
-@property (nonatomic, strong) UIBarButtonItem *searchButton;
-@property (nonatomic, strong) UIBarButtonItem *cancelButton;
-@property (nonatomic, strong) UIBarButtonItem *flexibleSpace;
-
 //picker
 @property (nonatomic) NSInteger tempRow;
 @property (nonatomic, strong) NSArray *regions;
+@property (nonatomic, strong) UIToolbar *regionToolBar;
+@property (nonatomic, strong) UITextField *pickerWrapper;
 @property (nonatomic, strong) UIPickerView *regionPicker;
 - (void)showPicker;
 - (void)cancelChoice;
 - (void)selectChoice;
-- (void)searchChoice;
 
 @end
 
@@ -81,13 +75,6 @@
     if (!self.selectedRegion)
         self.selectedRegion = @"na";
     self.tempRow = [self.regions indexOfObject:self.selectedRegion];
-
-    //toolbar
-    self.regionBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0,0, 320, 44)];
-    self.doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone   target:self action:@selector(selectChoice)];
-    self.searchButton = [[UIBarButtonItem alloc] initWithTitle:@"Search" style:UIBarButtonItemStyleDone target:self action:@selector(searchChoice)];
-    self.cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelChoice)];
-    self.flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
     //picker
     self.regionPicker = [[UIPickerView alloc] init];
@@ -95,6 +82,19 @@
     self.regionPicker.dataSource = self;
     self.regionPicker.backgroundColor = [UIColor whiteColor];
     [self.regionPicker selectRow:self.tempRow inComponent:0 animated:NO];
+    
+    //toolbar
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone   target:self action:@selector(selectChoice)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelChoice)];
+    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    self.regionToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0,0,320,44)];
+    self.regionToolBar.items = @[cancelButton, flexibleSpace, doneButton];
+    
+    //set picker to wrapper
+    self.pickerWrapper = [[UITextField alloc] init];
+    self.pickerWrapper.inputView = self.regionPicker;
+    self.pickerWrapper.inputAccessoryView = self.regionToolBar;
+    [self addSubview:self.pickerWrapper];
 }
 
 
@@ -153,15 +153,20 @@
  */
 - (void)pressedRegion
 {
-    if ( ![self isFirstResponder] )
+//    if ( ![self isFirstResponder] )
+//        [self showPicker];
+//    else
+//    {
+//        if ( !self.inputView )   //if keyboard
+//            [self showPicker];   //show picker
+//        else                     //already picker
+//            [self selectChoice]; //select choice
+//    }
+
+    if ( ![self.pickerWrapper isFirstResponder] )
         [self showPicker];
     else
-    {
-        if ( !self.inputView )   //if keyboard
-            [self showPicker];   //show picker
-        else                     //already picker
-            [self selectChoice]; //select choice
-    }
+        [self selectChoice];
 }
 
 /**
@@ -174,28 +179,8 @@
  */
 - (void)showPicker
 {
-    self.regionBar.items = @[self.cancelButton, self.flexibleSpace, ([self.text isEqualToString:@""] ? self.doneButton : self.searchButton)];
-    
-    self.inputView = self.regionPicker;
-    self.inputAccessoryView = self.regionBar;
     [self resignFirstResponder];
-    [self becomeFirstResponder];
-}
-
-/**
- * @method dismissPicker
- *
- * If already picker, revert back to keyboard.
- * Then resign first responder.
- */
-- (void)dismissPicker
-{
-    if (self.inputView) //already picker
-    {
-        self.inputView = nil;
-        self.inputAccessoryView = nil;
-    }
-    [self resignFirstResponder];
+    [self.pickerWrapper becomeFirstResponder];
 }
 
 /**
@@ -207,8 +192,13 @@
  */
 - (void)cancelChoice
 {
-    self.tempRow = [self.regions indexOfObject:self.selectedRegion];
-    [self dismissPicker];
+    if ([self.pickerWrapper isFirstResponder])
+    {
+        self.tempRow = [self.regions indexOfObject:self.selectedRegion];
+        [self.regionPicker selectRow:self.tempRow inComponent:0 animated:NO];
+        [self.pickerWrapper resignFirstResponder];
+    }
+    [self resignFirstResponder];
 }
 
 /**
@@ -225,19 +215,7 @@
     [self.regionPicker selectRow:self.tempRow inComponent:0 animated:NO];
     [self.regionButton setTitle:[self.selectedRegion uppercaseString] forState:UIControlStateNormal];
     
-    [self dismissPicker];
-}
-
-/**
- * @method searchChoice
- *
- * Select the currenlty selected row and send delegate to search.
- * @note delegate's implementation of textFieldShouldReturn should be a search
- */
-- (void)searchChoice
-{
-    [self selectChoice];
-    [self.delegate textFieldShouldReturn:self];
+    [self.pickerWrapper resignFirstResponder];
 }
 
 @end
