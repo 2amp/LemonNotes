@@ -39,7 +39,6 @@
     [super viewDidLoad];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    //self.tableView.separatorColor = [UIColor clearColor];
     
     //if rootVC of nav
     if (self == [self.navigationController.viewControllers firstObject])
@@ -189,22 +188,7 @@
     NSArray *items = @[stats[@"item0"], stats[@"item1"], stats[@"item2"], stats[@"item3"], stats[@"item4"], stats[@"item5"], stats[@"item6"]];
     for (int i = 0; i < itemImageViews.count; i++)
     {
-        if (![((NSNumber *)items[i]) isEqualToNumber:@0])
-        {
-            ((UIImageView *)itemImageViews[i]).image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", items[i]]];
-        }
-        else
-        {
-            CGSize imageSize = CGSizeMake(30, 30);
-            UIColor *fillColor = [UIColor blackColor];
-            UIGraphicsBeginImageContextWithOptions(imageSize, YES, 0);
-            CGContextRef context = UIGraphicsGetCurrentContext();
-            [fillColor setFill];
-            CGContextFillRect(context, CGRectMake(0, 0, imageSize.width, imageSize.height));
-            UIImage *blackImage = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            ((UIImageView *)itemImageViews[i]).image = blackImage;
-        }
+        ((UIImageView *)itemImageViews[i]).image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", items[i]]];
     }
 
     //set labels

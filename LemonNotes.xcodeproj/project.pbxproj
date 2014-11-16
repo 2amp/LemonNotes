@@ -842,6 +842,7 @@
 		9591582F1A0EDFD00098A610 /* Ziggs_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 959157B61A0EDFD00098A610 /* Ziggs_0.jpg */; };
 		959158301A0EDFD00098A610 /* Zilean_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 959157B71A0EDFD00098A610 /* Zilean_0.jpg */; };
 		959158311A0EDFD00098A610 /* Zyra_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 959157B81A0EDFD00098A610 /* Zyra_0.jpg */; };
+		95B298E01A187690000EC199 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = 95B298DF1A187690000EC199 /* 0.png */; };
 		95F162E11A034C9B00DECF93 /* TAPSummonerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F162E01A034C9B00DECF93 /* TAPSummonerViewController.m */; };
 		95F9F9181A1696E000CFEAF3 /* TAPSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F9F9171A1696E000CFEAF3 /* TAPSearchField.m */; };
 /* End PBXBuildFile section */
@@ -1708,6 +1709,7 @@
 		959157B61A0EDFD00098A610 /* Ziggs_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Ziggs_0.jpg; sourceTree = "<group>"; };
 		959157B71A0EDFD00098A610 /* Zilean_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Zilean_0.jpg; sourceTree = "<group>"; };
 		959157B81A0EDFD00098A610 /* Zyra_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Zyra_0.jpg; sourceTree = "<group>"; };
+		95B298DF1A187690000EC199 /* 0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0.png; sourceTree = "<group>"; };
 		95F162DF1A034C9B00DECF93 /* TAPSummonerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSummonerViewController.h; sourceTree = "<group>"; };
 		95F162E01A034C9B00DECF93 /* TAPSummonerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPSummonerViewController.m; sourceTree = "<group>"; };
 		95F9F9161A1696E000CFEAF3 /* TAPSearchField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSearchField.h; sourceTree = "<group>"; };
@@ -1905,6 +1907,7 @@
 		89591E681A0330F500F00637 /* Item Icons */ = {
 			isa = PBXGroup;
 			children = (
+				95B298DF1A187690000EC199 /* 0.png */,
 				89591E691A0330F500F00637 /* 1001.png */,
 				89591E6A1A0330F500F00637 /* 1004.png */,
 				89591E6B1A0330F500F00637 /* 1006.png */,
@@ -3203,6 +3206,7 @@
 				895920E01A0330F600F00637 /* 1006.png in Resources */,
 				8959209A1A0330F600F00637 /* Lulu.png in Resources */,
 				895920E31A0330F600F00637 /* 1026.png in Resources */,
+				95B298E01A187690000EC199 /* 0.png in Resources */,
 				895920681A0330F600F00637 /* Alistar.png in Resources */,
 				95153A711A1746D7003EA211 /* copy file (fill).png in Resources */,
 				959158261A0EDFD00098A610 /* Vladimir_0.jpg in Resources */,

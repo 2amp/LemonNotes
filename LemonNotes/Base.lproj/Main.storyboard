@@ -605,7 +605,7 @@
                             </connections>
                         </barButtonItem>
                         <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search for a Summoner" minimumFontSize="17" id="pgR-DK-LDk" customClass="TAPSearchField">
-                            <rect key="frame" x="100" y="7" width="400" height="30"/>
+                            <rect key="frame" x="55" y="7" width="529" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
