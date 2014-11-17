@@ -225,7 +225,10 @@
     NSArray *items = @[stats[@"item0"], stats[@"item1"], stats[@"item2"], stats[@"item3"], stats[@"item4"], stats[@"item5"], stats[@"item6"]];
     for (int i = 0; i < itemImageViews.count; i++)
     {
-        ((UIImageView *)itemImageViews[i]).image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", items[i]]];
+        NSString *itemKey = [items[i] stringValue];
+        if ([itemKey isEqualToString:@"0"])
+            itemKey = @"0000";
+        ((UIImageView *)itemImageViews[i]).image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", itemKey]];
     }
 
     //set labels
