@@ -1,7 +1,8 @@
 
 #import "TAPSummonerViewController.h"
-#import "UIImage+UIImageAdditions.h"
+#import "TAPLemonRefreshControl.h"
 #import "TAPSearchField.h"
+#import "SummonerManager.h"
 #import "DataManager.h"
 #import "Constants.h"
 
@@ -11,6 +12,7 @@
 
 //Nav bar
 @property (nonatomic, weak) IBOutlet TAPSearchField* searchField;
+@property (nonatomic, strong) TAPLemonRefreshControl* refreshControl;
 
 //Header
 @property (nonatomic) NSDictionary *summoner;
@@ -39,6 +41,9 @@
     [super viewDidLoad];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.refreshControl = [[TAPLemonRefreshControl alloc] init];
+    [self setRefreshControl:self.refreshControl];
+    //[self.refreshControl addTarget:self action:@selector() forControlEvents:UIControlEventValueChanged];
     
     //if rootVC of nav
     if (self == [self.navigationController.viewControllers firstObject])
