@@ -17,7 +17,7 @@
  * @author Bohui Moon, Chris Fu
  * @version 0.1
  */
-@interface DataManager : NSObject <UIPickerViewDataSource>
+@interface DataManager : NSObject
 
 + (instancetype)sharedManager;
 

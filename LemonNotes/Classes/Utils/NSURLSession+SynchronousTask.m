@@ -27,10 +27,10 @@
 
 #pragma mark - NSURLSessionDataTask
 
-+ (NSData *)sendSynchronousDataTaskWithRequest:(NSURLRequest *)request returningResponse:(NSURLResponse **)response error:(NSError **)error {
+- (NSData *)sendSynchronousDataTaskWithRequest:(NSURLRequest *)request returningResponse:(NSURLResponse **)response error:(NSError **)error {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     __block NSData *data = nil;
-    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *taskData, NSURLResponse *taskResponse, NSError *taskError) {
+    [[self dataTaskWithRequest:request completionHandler:^(NSData *taskData, NSURLResponse *taskResponse, NSError *taskError) {
         data = taskData;
         if (response) {
             *response = taskResponse;
@@ -45,10 +45,10 @@
     return data;
 }
 
-+ (NSData *)sendSynchronousDataTaskWithURL:(NSURL *)url returningResponse:(NSURLResponse **)response error:(NSError **)error {
+- (NSData *)sendSynchronousDataTaskWithURL:(NSURL *)url returningResponse:(NSURLResponse **)response error:(NSError **)error {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     __block NSData *data = nil;
-    [[[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData *taskData, NSURLResponse *taskResponse, NSError *taskError) {
+    [[self dataTaskWithURL:url completionHandler:^(NSData *taskData, NSURLResponse *taskResponse, NSError *taskError) {
         data = taskData;
         if (response) {
             *response = taskResponse;
@@ -65,10 +65,10 @@
 
 #pragma mark - NSURLSessionDownloadTask
 
-+ (NSURL *)sendSynchronousDownloadTaskWithURL:(NSURL *)url returningResponse:(NSURLResponse **)response error:(NSError **)error {
+- (NSURL *)sendSynchronousDownloadTaskWithURL:(NSURL *)url returningResponse:(NSURLResponse **)response error:(NSError **)error {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     __block NSURL *location = nil;
-    [[[NSURLSession sharedSession] downloadTaskWithURL:url completionHandler:^(NSURL *taskLocation, NSURLResponse *taskResponse, NSError *taskError) {
+    [[self downloadTaskWithURL:url completionHandler:^(NSURL *taskLocation, NSURLResponse *taskResponse, NSError *taskError) {
         location = taskLocation;
         if (response) {
             *response = taskResponse;
@@ -82,10 +82,10 @@
     return location;
 }
 
-+ (NSURL *)sendSynchronousDownloadTaskWithRequest:(NSURLRequest *)request returningResponse:(NSURLResponse **)response error:(NSError **)error {
+- (NSURL *)sendSynchronousDownloadTaskWithRequest:(NSURLRequest *)request returningResponse:(NSURLResponse **)response error:(NSError **)error {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     __block NSURL *location = nil;
-    [[[NSURLSession sharedSession] downloadTaskWithRequest:request completionHandler:^(NSURL *taskLocation, NSURLResponse *taskResponse, NSError *taskError) {
+    [[self downloadTaskWithRequest:request completionHandler:^(NSURL *taskLocation, NSURLResponse *taskResponse, NSError *taskError) {
         location = taskLocation;
         if (response) {
             *response = taskResponse;
@@ -101,10 +101,10 @@
 
 #pragma mark - NSURLSessionUploadTask
 
-+ (NSData *)sendSynchronousUploadTaskWithRequest:(NSURLRequest *)request fromData:(NSData *)bodyData returningResponse:(NSURLResponse **)response error:(NSError **)error {
+- (NSData *)sendSynchronousUploadTaskWithRequest:(NSURLRequest *)request fromData:(NSData *)bodyData returningResponse:(NSURLResponse **)response error:(NSError **)error {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     __block NSData *data = nil;
-    [[[NSURLSession sharedSession] uploadTaskWithRequest:request fromData:bodyData completionHandler:^(NSData *taskData, NSURLResponse *taskResponse, NSError *taskError) {
+    [[self uploadTaskWithRequest:request fromData:bodyData completionHandler:^(NSData *taskData, NSURLResponse *taskResponse, NSError *taskError) {
         data = taskData;
         if (response) {
             *response = taskResponse;
@@ -118,10 +118,10 @@
     return data;
 }
 
-+ (NSData *)sendSynchronousUploadTaskWithRequest:(NSURLRequest *)request fromFile:(NSURL *)fileURL returningResponse:(NSURLResponse **)response error:(NSError **)error {
+- (NSData *)sendSynchronousUploadTaskWithRequest:(NSURLRequest *)request fromFile:(NSURL *)fileURL returningResponse:(NSURLResponse **)response error:(NSError **)error {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     __block NSData *data = nil;
-    [[[NSURLSession sharedSession] uploadTaskWithRequest:request fromFile:fileURL completionHandler:^(NSData *taskData, NSURLResponse *taskResponse, NSError *taskError) {
+    [[self uploadTaskWithRequest:request fromFile:fileURL completionHandler:^(NSData *taskData, NSURLResponse *taskResponse, NSError *taskError) {
         data = taskData;
         if (response) {
             *response = taskResponse;

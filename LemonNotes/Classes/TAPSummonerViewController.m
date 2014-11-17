@@ -1,7 +1,8 @@
 
 #import "TAPSummonerViewController.h"
-#import "UIImage+UIImageAdditions.h"
+#import "TAPLemonRefreshControl.h"
 #import "TAPSearchField.h"
+#import "SummonerManager.h"
 #import "DataManager.h"
 #import "Constants.h"
 
@@ -11,6 +12,7 @@
 
 //Nav bar
 @property (nonatomic, weak) IBOutlet TAPSearchField* searchField;
+@property (nonatomic, strong) TAPLemonRefreshControl* refreshControl;
 
 //Header
 @property (nonatomic) NSDictionary *summoner;
@@ -39,7 +41,9 @@
     [super viewDidLoad];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    //self.tableView.separatorColor = [UIColor clearColor];
+    self.refreshControl = [[TAPLemonRefreshControl alloc] init];
+    [self setRefreshControl:self.refreshControl];
+    [self.refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     
     //if rootVC of nav
     if (self == [self.navigationController.viewControllers firstObject])
@@ -82,7 +86,39 @@
 
 
 
-#pragma mark - Table View Data Source Methods
+#pragma mark - Scroll View Methods
+/**
+ * @method scrollViewDidScroll:
+ *
+ * Called whenever view is scrolled (by dragging).
+ * Tells custom refresh control that scroll happened,
+ * and passes on how much it has been dragged
+ */
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat scrollY = self.tableView.contentOffset.y;
+    if (scrollY < 0)
+    {
+        [self.refreshControl pulledTo:self.tableView.contentOffset.y];
+    }
+}
+
+- (void)refresh:(id)sender{
+    
+        // -- DO SOMETHING AWESOME (... or just wait 3 seconds) --
+        // This is where you'll make requests to an API, reload data, or process information
+    double delayInSeconds = 3.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        NSLog(@"DONE");
+            // When done requesting/reloading/processing invoke endRefreshing, to close the control
+        [self.refreshControl endRefreshing];
+    });
+        // -- FINISHED SOMETHING AWESOME, WOO! --
+}
+
+
+#pragma mark - Table View Methods
 /**
  * @method numberOfSectionsInTableView:
  *
@@ -189,22 +225,10 @@
     NSArray *items = @[stats[@"item0"], stats[@"item1"], stats[@"item2"], stats[@"item3"], stats[@"item4"], stats[@"item5"], stats[@"item6"]];
     for (int i = 0; i < itemImageViews.count; i++)
     {
-        if (![((NSNumber *)items[i]) isEqualToNumber:@0])
-        {
-            ((UIImageView *)itemImageViews[i]).image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", items[i]]];
-        }
-        else
-        {
-            CGSize imageSize = CGSizeMake(30, 30);
-            UIColor *fillColor = [UIColor blackColor];
-            UIGraphicsBeginImageContextWithOptions(imageSize, YES, 0);
-            CGContextRef context = UIGraphicsGetCurrentContext();
-            [fillColor setFill];
-            CGContextFillRect(context, CGRectMake(0, 0, imageSize.width, imageSize.height));
-            UIImage *blackImage = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            ((UIImageView *)itemImageViews[i]).image = blackImage;
-        }
+        NSString *itemKey = [items[i] stringValue];
+        if ([itemKey isEqualToString:@"0"])
+            itemKey = @"0000";
+        ((UIImageView *)itemImageViews[i]).image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", itemKey]];
     }
 
     //set labels
