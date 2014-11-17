@@ -43,7 +43,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.refreshControl = [[TAPLemonRefreshControl alloc] init];
     [self setRefreshControl:self.refreshControl];
-    [self.refreshControl addTarget:self action:nil forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     
     //if rootVC of nav
     if (self == [self.navigationController.viewControllers firstObject])
@@ -96,7 +96,25 @@
  */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self.refreshControl pulledTo:self.tableView.contentOffset.y];
+    CGFloat scrollY = self.tableView.contentOffset.y;
+    if (scrollY < 0)
+    {
+        [self.refreshControl pulledTo:self.tableView.contentOffset.y];
+    }
+}
+
+- (void)refresh:(id)sender{
+    
+        // -- DO SOMETHING AWESOME (... or just wait 3 seconds) --
+        // This is where you'll make requests to an API, reload data, or process information
+    double delayInSeconds = 3.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        NSLog(@"DONE");
+            // When done requesting/reloading/processing invoke endRefreshing, to close the control
+        [self.refreshControl endRefreshing];
+    });
+        // -- FINISHED SOMETHING AWESOME, WOO! --
 }
 
 
