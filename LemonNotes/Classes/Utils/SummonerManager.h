@@ -16,21 +16,9 @@
  */
 @protocol SummonerManagerDelegate
 
-/**
- * @method didFinishRefreshingMatches
- *
- * Called when match history is refreshed,
- * checking for any new matches not show.
- * These should be prepended to the front.
- */
+//data from refresh should be added to the front
+//data from loading should be added to the back
 - (void)didFinishRefreshingMatches:(NSArray *)matches;
-
-/**
- * @method didFinishLoadingMatches
- *
- * Called when next set of matches are loaded.
- * These should always be appened to the back.
- */
 - (void)didFinishLoadingMatches:(NSArray *)matches;
 
 @end
