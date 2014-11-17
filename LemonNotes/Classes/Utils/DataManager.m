@@ -260,7 +260,7 @@
     NSError *error;
     NSHTTPURLResponse *response;
     NSURL *url = apiURL(kLoLMatchHistory, summonerInfo[@"region"], [summonerInfo[@"id"] stringValue], @[@"endIndex=15"]);
-    NSData *matchHistoryData = [NSURLSession sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
+    NSData *matchHistoryData = [self.urlSession sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
 
     //make array of match ids
     NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:matchHistoryData options:kNilOptions error:nil];
@@ -361,29 +361,6 @@
     [[self.urlSession dataTaskWithURL:apiURL(kLoLStaticSpellList, @"na", @"", @[@"dataById=true"]) completionHandler:completionHandler]
      resume];
 
-}
-
-
-
-#pragma mark - Regions Picker Data Source
-/**
- * @method numberOfComponentsInPickerView
- *
- * Only 1 column of regions
- */
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-/**
- * @method pickerView:numberRowsInComponent
- *
- * Returns number of regions defined in DataManager
- */
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    return [self.regions count];
 }
 
 
