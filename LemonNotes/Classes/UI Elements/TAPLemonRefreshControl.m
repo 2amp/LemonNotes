@@ -3,6 +3,7 @@
 
 @interface TAPLemonRefreshControl()
 
+@property (nonatomic) BOOL lemonLock;
 @property (nonatomic) BOOL isAnimating;
 @property (nonatomic, strong) UIView *customView;
 @property (nonatomic, strong) NSArray *lemonParts;
@@ -35,6 +36,7 @@
         self.imageView.frame = CGRectMake(162.5, 5, 50, 50);
         
         //
+        self.lemonLock = NO;
         self.isAnimating = NO;
         [self setClipsToBounds:YES];
         [self addSubview:self.customView];
@@ -54,7 +56,7 @@
     CGFloat pullRatio = MIN( MAX(pullDist, 0.0), 100.0) / 100.0;
     
     //set image accordingly
-    if (!self.isRefreshing && !self.isAnimating)
+    if (!self.lemonLock)
     {
         if (pullRatio < 0.25)
             self.imageView.image = self.lemonParts[0];
@@ -65,12 +67,14 @@
         else if (pullRatio < 1.00)
             self.imageView.image = self.lemonParts[3];
         else if (pullRatio >= 1.00)
+        {
+            self.lemonLock = YES;
             self.imageView.image = self.lemonParts[4];
+        }
     }
     
     if (self.isRefreshing && !self.isAnimating)
     {
-        self.imageView.image = self.lemonParts[4];
         [self animate];
     }
 }
@@ -89,7 +93,10 @@
         if (self.isAnimating)
             [self animate];
         else
+        {
+            self.lemonLock = NO;
             self.isAnimating = NO;
+        }
     };
     
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveLinear animations:spin completion:done];

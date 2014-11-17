@@ -43,7 +43,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.refreshControl = [[TAPLemonRefreshControl alloc] init];
     [self setRefreshControl:self.refreshControl];
-    //[self.refreshControl addTarget:self action:@selector() forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:nil forControlEvents:UIControlEventValueChanged];
     
     //if rootVC of nav
     if (self == [self.navigationController.viewControllers firstObject])
@@ -86,7 +86,21 @@
 
 
 
-#pragma mark - Table View Data Source Methods
+#pragma mark - Scroll View Methods
+/**
+ * @method scrollViewDidScroll:
+ *
+ * Called whenever view is scrolled (by dragging).
+ * Tells custom refresh control that scroll happened,
+ * and passes on how much it has been dragged
+ */
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.refreshControl pulledTo:self.tableView.contentOffset.y];
+}
+
+
+#pragma mark - Table View Methods
 /**
  * @method numberOfSectionsInTableView:
  *
