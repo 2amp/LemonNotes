@@ -1,8 +1,8 @@
 
 #import "TAPSummonerViewController.h"
+#import "NSURLSession+SynchronousTask.h"
 #import "TAPLemonRefreshControl.h"
 #import "TAPSearchField.h"
-#import "SummonerManager.h"
 #import "DataManager.h"
 #import "Constants.h"
 
@@ -10,19 +10,25 @@
 
 @interface TAPSummonerViewController()
 
+//summoner
+@property (nonatomic, strong) SummonerManager *manager;
+
 //Nav bar
 @property (nonatomic, weak) IBOutlet TAPSearchField* searchField;
-@property (nonatomic, strong) TAPLemonRefreshControl* refreshControl;
 
 //Header
-@property (nonatomic) NSDictionary *summoner;
 @property (nonatomic, weak) IBOutlet UILabel* summonerNameLabel;
 @property (nonatomic, weak) IBOutlet UILabel* summonerLevelLabel;
 @property (nonatomic, weak) IBOutlet UIImageView* summonerIconView;
 @property (nonatomic, weak) IBOutlet UIImageView* championSplashView;
 
+//table
+@property (nonatomic, strong) NSMutableArray* matches;
+@property (nonatomic, strong) TAPLemonRefreshControl* refreshControl;
+
 //setup
 - (void)setupHeader;
+- (void)setupTableView;
 
 @end
 
@@ -30,7 +36,19 @@
 
 @implementation TAPSummonerViewController
 
-#pragma mark View Messages
+#pragma mark Setup
+/**
+ * @method setSummoner:
+ *
+ * Setter for summoner. After setting summoner dictionary,
+ * creates a SummonerManager with same summoner info.
+ */
+- (void)setSummoner:(NSDictionary *)summoner
+{
+    _summoner = summoner;
+    self.manager = [[SummonerManager alloc] initWithSummoner:summoner];
+}
+
 /**
  * @method viewDidLoad
  *
@@ -40,25 +58,23 @@
 {
     [super viewDidLoad];
     
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.refreshControl = [[TAPLemonRefreshControl alloc] init];
-    [self setRefreshControl:self.refreshControl];
-    [self.refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    NSLog(@"%@ %p", self.class, self);
     
     //if rootVC of nav
     if (self == [self.navigationController.viewControllers firstObject])
     {
         self.summoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
-        self.summonerName = self.summoner[@"name"];
     }
+    
+    //setups
     [self setupHeader];
-    NSLog(@"%@ %p", self.class, self);
+    [self setupTableView];
 }
 
 /**
  * @method setupHeader
  *
- * Setups the header components
+ * Sets up the header components
  */
 - (void)setupHeader
 {
@@ -84,9 +100,55 @@
     [self.tableView sendSubviewToBack:[self.tableView tableHeaderView]];
 }
 
+/**
+ * @method setupTableView
+ *
+ * Sets up table view components
+ */
+- (void)setupTableView
+{
+    //styling
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    //data
+    self.matches = [[NSMutableArray alloc] init];
+    
+    //custom refresh control
+    self.refreshControl = [[TAPLemonRefreshControl alloc] init];
+    [self setRefreshControl:self.refreshControl];
+    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+}
 
 
-#pragma mark - Scroll View Methods
+
+#pragma mark - SummonerManager
+- (void)didFinishLoadingMatches:(NSArray *)moreMatches
+{
+    //append loaded matches to matches
+    [self.matches addObjectsFromArray:moreMatches];
+}
+
+- (void)didFinishRefreshingMatches:(NSArray *)matches
+{
+    [self.refreshControl endRefreshing];
+}
+
+
+
+#pragma mark - Table View
+- (void)refresh
+{
+    // -- DO SOMETHING AWESOME (... or just wait 3 seconds) --
+    // This is where you'll make requests to an API, reload data, or process information
+    double delayInSeconds = 3.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        NSLog(@"DONE");
+            // When done requesting/reloading/processing invoke endRefreshing, to close the control
+        [self.refreshControl endRefreshing];
+    });
+}
+
 /**
  * @method scrollViewDidScroll:
  *
@@ -103,22 +165,6 @@
     }
 }
 
-- (void)refresh:(id)sender{
-    
-        // -- DO SOMETHING AWESOME (... or just wait 3 seconds) --
-        // This is where you'll make requests to an API, reload data, or process information
-    double delayInSeconds = 3.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        NSLog(@"DONE");
-            // When done requesting/reloading/processing invoke endRefreshing, to close the control
-        [self.refreshControl endRefreshing];
-    });
-        // -- FINISHED SOMETHING AWESOME, WOO! --
-}
-
-
-#pragma mark - Table View Methods
 /**
  * @method numberOfSectionsInTableView:
  *
@@ -244,13 +290,72 @@
     return cell;
 }
 
-
+/**
+ * @method tableView:didSelectRowAtIndexPath:
+ *
+ * Called when user taps a match history cell.
+ * Performs segue to match detail VC (or should)
+ */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self performSegueWithIdentifier:@"showNextViewController" sender:self];
 }
 
+
+
 #pragma mark - Navigation Events
+/**
+ * @method textFieldShouldReturn:
+ *
+ * Called when user presses Go on searchField.
+ * Passes on name & region to searchSummonerWithName:Region:
+ */
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self searchSummonerWithName:self.searchField.text Region:self.searchField.selectedRegion];
+    
+    [textField resignFirstResponder];
+    return YES;
+}
+
+/**
+ * @method searchSummonerWithName:Region:
+ *
+ * Given a name & region, retreives summoner
+ * on a background thread through API call.
+ * Instantiates new summonerVC, passes on the summoner,
+ * and manually pushes to navigation stack on main queue.
+ *
+ * @param name   - summoner name
+ * @param region - summoner region
+ */
+- (void)searchSummonerWithName:(NSString *)name Region:(NSString *)region
+{
+    //start activity indicator
+    
+    dispatch_queue_t newQ = dispatch_queue_create("temp", DISPATCH_QUEUE_SERIAL);
+    dispatch_async(newQ,
+    ^{
+        NSError *error;
+        NSHTTPURLResponse *response;
+        NSURL *url = apiURL(kLoLSummonerByName, region, name, @[]);
+        NSData *data = [[NSURLSession sharedSession] sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
+        
+        //should include some check for not existing summoner
+        
+        NSDictionary *summoner = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil][name];
+        
+        dispatch_async(dispatch_get_main_queue(),
+        ^{
+            //stop activity indicator
+            
+            TAPSummonerViewController *nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"summonerVC"];
+            nextVC.summoner = summoner;
+            [self.navigationController pushViewController:nextVC animated:YES];
+        });
+    });
+}
+
 /**
  * Currently no segue from the main vc occurs. Will soon change!
  */

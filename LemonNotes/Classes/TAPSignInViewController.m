@@ -67,7 +67,6 @@
  */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    
     self.summonerName = self.signInField.text;
     self.summonerRegion = self.signInField.selectedRegion;
     [textField resignFirstResponder];
