@@ -105,6 +105,7 @@
             [summonerInfo setObject:self.summonerRegion forKey:@"region"];
             [[NSUserDefaults standardUserDefaults] setObject:[summonerInfo copy] forKey:@"currentSummoner"];
 
+            NSLog(@"%@", summonerInfo[@"profileIconId"]);
             //register this summoner
             DataManager *manager = [DataManager sharedManager];
             [manager registerSummoner];

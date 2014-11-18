@@ -82,6 +82,8 @@
     self.summonerNameLabel.text  = self.summoner[@"name"];
     self.summonerLevelLabel.text = [NSString stringWithFormat:@"Level: %@", self.summoner[@"summonerLevel"]];
     self.summonerIconView.image  = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", self.summoner[@"profileIconId"]]];
+    NSLog(@"name: %@, icon: %@", self.summoner[@"name"], self.summoner[@"profileIconId"]);
+    
     
     //white border for summoner icon
     [self.summonerIconView.layer setBorderWidth:2.0];
@@ -319,6 +321,23 @@
 }
 
 /**
+ * @method showAlertWithTitle:message:
+ *
+ * Creates an UIAlertView object with the given title & message
+ * along with self as delegate, "OK" as cancel button, and no other buttons.
+ * Immediately shows the window
+ */
+- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message
+{
+    [[[UIAlertView alloc] initWithTitle:title
+                                message:message
+                               delegate:nil
+                      cancelButtonTitle:@"OK"
+                      otherButtonTitles:nil]
+     show];
+}
+
+/**
  * @method searchSummonerWithName:Region:
  *
  * Given a name & region, retreives summoner
@@ -341,17 +360,22 @@
         NSURL *url = apiURL(kLoLSummonerByName, region, name, @[]);
         NSData *data = [[NSURLSession sharedSession] sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
         
-        //should include some check for not existing summoner
-        
-        NSDictionary *summoner = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil][name];
-        
         dispatch_async(dispatch_get_main_queue(),
         ^{
             //stop activity indicator
-            
-            TAPSummonerViewController *nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"summonerVC"];
-            nextVC.summoner = summoner;
-            [self.navigationController pushViewController:nextVC animated:YES];
+            if (response.statusCode == 404)
+            {
+                [self showAlertWithTitle:@"Error" message:@"Summoner not found"];
+            }
+            else
+            {
+                self.searchField.text = @"";
+                NSDictionary *summoner = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil][name];
+                
+                TAPSummonerViewController *nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"summonerVC"];
+                nextVC.summoner = summoner;
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }
         });
     });
 }
