@@ -104,12 +104,12 @@
             NSMutableDictionary *summonerInfo = [NSMutableDictionary dictionaryWithDictionary:dataDictionary[[dataDictionary allKeys][0]]];
             [summonerInfo setObject:self.summonerRegion forKey:@"region"];
             [[NSUserDefaults standardUserDefaults] setObject:[summonerInfo copy] forKey:@"currentSummoner"];
-
-            NSLog(@"%@", summonerInfo[@"profileIconId"]);
+            
             //register this summoner
             DataManager *manager = [DataManager sharedManager];
             [manager registerSummoner];
             [manager loadRecentMatches];
+            //[manager deleteAllSummoners];
             //[manager summonerDump];
 
             //stop loading spin & show root

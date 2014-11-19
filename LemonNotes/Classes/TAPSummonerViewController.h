@@ -19,6 +19,6 @@
 @interface TAPSummonerViewController : UITableViewController
 <SummonerManagerDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) NSDictionary *summoner;
+@property (nonatomic, strong) NSDictionary *summonerInfo;
 
 @end

@@ -273,7 +273,7 @@
             </objects>
             <point key="canvasLocation" x="1742" y="-241"/>
         </scene>
-        <!--Summoner View Controller-->
+        <!--Summoner-->
         <scene sceneID="Z13-1h-AMP">
             <objects>
                 <tableViewController storyboardIdentifier="summonerVC" id="N2c-6D-0a3" customClass="TAPSummonerViewController" sceneMemberID="viewController">
@@ -568,8 +568,8 @@
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="wNn-Un-roV">
-                        <nil key="title"/>
+                    <navigationItem key="navigationItem" title="Summoner" id="wNn-Un-roV">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="XZE-08-cHi"/>
                         <barButtonItem key="leftBarButtonItem" image="side_menu.png" id="vP7-QR-fSq">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>

@@ -44,6 +44,7 @@
     //data updates
     [[DataManager sharedManager] updateChampionIds];
     [[DataManager sharedManager] updateSummonerSpells];
+    [[DataManager sharedManager] deleteAllSummoners];
     [[DataManager sharedManager] summonerDump];
 
     // FIXME: Currently deleting all summoners at app start so I don't have to

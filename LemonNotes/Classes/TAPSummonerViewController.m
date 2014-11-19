@@ -17,6 +17,7 @@
 @property (nonatomic, weak) IBOutlet TAPSearchField* searchField;
 
 //Header
+@property (nonatomic) BOOL needsUpdate;
 @property (nonatomic, weak) IBOutlet UILabel* summonerNameLabel;
 @property (nonatomic, weak) IBOutlet UILabel* summonerLevelLabel;
 @property (nonatomic, weak) IBOutlet UIImageView* summonerIconView;
@@ -38,15 +39,21 @@
 
 #pragma mark Setup
 /**
- * @method setSummoner:
+ * @method setSummonerInfo:
  *
  * Setter for summoner. After setting summoner dictionary,
  * creates a SummonerManager with same summoner info.
+ * @note Should only be called once for every instance of SummonerVC
  */
-- (void)setSummoner:(NSDictionary *)summoner
+- (void)setSummonerInfo:(NSDictionary *)summonerInfo
 {
-    _summoner = summoner;
-    self.manager = [[SummonerManager alloc] initWithSummoner:summoner];
+    _summonerInfo = summonerInfo;
+    self.manager = [[SummonerManager alloc] initWithSummoner:summonerInfo];
+    self.manager.delegate = self;
+    
+    //other stuff
+    self.needsUpdate = YES;
+    [self.manager refreshMatches];
 }
 
 /**
@@ -58,43 +65,47 @@
 {
     [super viewDidLoad];
     
-    NSLog(@"%@ %p", self.class, self);
+    NSLog(@"%@ %p [viewDidLoad]", self.class, self);
+    [self setupTableView];
     
     //if rootVC of nav
     if (self == [self.navigationController.viewControllers firstObject])
     {
-        self.summoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
+        self.summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
+        [self.manager registerSummoner];
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
     
-    //setups
-    [self setupHeader];
-    [self setupTableView];
+    NSLog(@"%@ %p [viewWillAppear]", self.class, self);
 }
 
 /**
  * @method setupHeader
  *
- * Sets up the header components
+ * Sets up the header components.
+ * @note Assumes that summonerManager has been setup
+ *       and that matches array is not empty.
  */
 - (void)setupHeader
 {
     //setup basic header elems
-    self.summonerNameLabel.text  = self.summoner[@"name"];
-    self.summonerLevelLabel.text = [NSString stringWithFormat:@"Level: %@", self.summoner[@"summonerLevel"]];
-    self.summonerIconView.image  = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", self.summoner[@"profileIconId"]]];
-    NSLog(@"name: %@, icon: %@", self.summoner[@"name"], self.summoner[@"profileIconId"]);
-    
+    self.summonerNameLabel.text  = self.summonerInfo[@"name"];
+    self.summonerLevelLabel.text = [NSString stringWithFormat:@"Level: %@", self.summonerInfo[@"summonerLevel"]];
+    self.summonerIconView.image  = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", self.summonerInfo[@"profileIconId"]]];
     
     //white border for summoner icon
     [self.summonerIconView.layer setBorderWidth:2.0];
     [self.summonerIconView.layer setBorderColor:[[UIColor whiteColor] CGColor]];
     
     //latest champ splash
-    DataManager *manager = [DataManager sharedManager];
-    NSDictionary *match = manager.recentMatches[0];
+    NSDictionary *match = self.matches[0];
     int summonerIndex = [match[@"summonerIndex"] intValue];
     NSString *champId = [match[@"participants"][summonerIndex][@"championId"] stringValue];
-    NSString *champKey = manager.champions[champId][@"key"];
+    NSString *champKey = [DataManager sharedManager].champions[champId][@"key"];
     [[self.tableView tableHeaderView] sendSubviewToBack:self.championSplashView];
     self.championSplashView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_0.jpg", champKey]];
     
@@ -116,28 +127,54 @@
     self.matches = [[NSMutableArray alloc] init];
     
     //custom refresh control
-    self.refreshControl = [[TAPLemonRefreshControl alloc] init];
-    [self setRefreshControl:self.refreshControl];
-    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    //self.refreshControl = [[TAPLemonRefreshControl alloc] init];
+    //[self setRefreshControl:self.refreshControl];
+    //[self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
 }
 
 
 
 #pragma mark - SummonerManager
+/**
+ * @method didFinishLoadingMatches:
+ *
+ * Called by SummonerManager as delegate callback
+ *  when [loadMatches] has been completed.
+ */
 - (void)didFinishLoadingMatches:(NSArray *)moreMatches
 {
     //append loaded matches to matches
     [self.matches addObjectsFromArray:moreMatches];
 }
 
-- (void)didFinishRefreshingMatches:(NSArray *)matches
+/**
+ * @method didFinishRefreshingMatches:
+ *
+ * Called by SummonerManager as delegate callback
+ * when [refreshMatches] has been completed.
+ */
+- (void)didFinishRefreshingMatches:(NSArray *)newMatches
 {
+    [self.matches insertObjects:newMatches atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, newMatches.count)]];
     [self.refreshControl endRefreshing];
+    
+    if (self.needsUpdate)
+    {
+        [self setupHeader];
+        self.needsUpdate = NO;
+    }
+    [self.tableView reloadData];
 }
 
 
 
 #pragma mark - Table View
+/**
+ * @method refresh
+ *
+ * Called when pulled to refresh.
+ *
+ */
 - (void)refresh
 {
     // -- DO SOMETHING AWESOME (... or just wait 3 seconds) --
@@ -191,7 +228,7 @@
  */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [DataManager sharedManager].recentMatches.count;
+    return self.matches.count;
 }
 
 /**
@@ -244,8 +281,7 @@
     NSArray *itemImageViews = @[item0ImageView, item1ImageView, item2ImageView, item3ImageView, item4ImageView, item5ImageView, item6ImageView];
     
     //pull data
-    DataManager *dataManager = [DataManager sharedManager];
-    NSDictionary *match = dataManager.recentMatches[indexPath.row];
+    NSDictionary *match = self.matches[indexPath.row];
     int summonerIndex = [match[@"summonerIndex"] intValue];
     NSDictionary *info  = match[@"participants"][summonerIndex];
     NSDictionary *stats = info[@"stats"];
@@ -262,6 +298,7 @@
     }
 
     //set images
+    DataManager *dataManager = [DataManager sharedManager];
     NSString *champion = dataManager.champions[ [info[@"championId"] stringValue] ][@"key"];
     NSString *spell1   = dataManager.summonerSpells[ [info[@"spell1Id"] stringValue] ][@"key"];
     NSString *spell2   = dataManager.summonerSpells[ [info[@"spell2Id"] stringValue] ][@"key"];
@@ -370,10 +407,12 @@
             else
             {
                 self.searchField.text = @"";
-                NSDictionary *summoner = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil][name];
+                NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil][name];
+                NSMutableDictionary *summonerInfo = [NSMutableDictionary dictionaryWithDictionary:dataDictionary];
+                [summonerInfo setObject:region forKey:@"region"];
                 
                 TAPSummonerViewController *nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"summonerVC"];
-                nextVC.summoner = summoner;
+                nextVC.summonerInfo = summonerInfo;
                 [self.navigationController pushViewController:nextVC animated:YES];
             }
         });
