@@ -102,16 +102,19 @@
 {
     dispatch_async(self.queue,
     ^{
+        self.newestMatchId = 0; //temp while other things are set up
+        
         //mutable array from fetched match history
         NSMutableArray *newMatches = [NSMutableArray arrayWithArray:[self matchHistoryFrom:0 To:15]];
-//        for (NSDictionary *match in newMatches)
-//        {
-//            if ([match[@"matchId"] longValue] <= self.newestMatchId)
-//            {
-//                //remove any matches with a match id equal/lower than current
-//                [newMatches removeObject:match];
-//            }
-//        }
+        for (int i = (int)(newMatches.count-1); i >= 0; i--)
+        {
+            NSDictionary *match = [newMatches objectAtIndex:i];
+            if ([match[@"matchId"] longValue] <= self.newestMatchId)
+            {
+                //remove any overlap matches with a match id equal/lower than current
+                [newMatches removeObjectAtIndex:i];
+            }
+        }
         
         //increment endMatchId
         self.newestMatchId = [newMatches[0][@"matchId"] longValue];

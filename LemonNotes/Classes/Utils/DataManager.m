@@ -71,6 +71,53 @@
 }
 
 
+/**
+ * @method getSummonerForName:Region:successHandler:failureHandler
+ *
+ * Given a summoner's name and region, attempts to fetch the summoner from Riot API.
+ * If the statusCode is successful, the received data is assumed to be valid JSON and
+ * converted to NSDictionary with with region included.
+ * Otherwise a error message is created.
+ * The callbacks are called accordingly back on the main thread.
+ *
+ * @param name           - name of summoner to search
+ * @param region         - region to search summoner in
+ * @param successHandler - code block to be called upon successful fetch
+ * @param failureHandler - code block to be called upon failed fetch
+ */
++ (void)getSummonerForName:(NSString *)name Region:(NSString *)region
+            successHandler:(void (^)(NSDictionary *summoner))successHandler
+            failureHandler:(void (^)(NSString *errorMessage))failureHandler
+{
+    NSURL *url = apiURL(kLoLSummonerByName, region, name, @[]);
+    [[[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:
+    ^(NSData *data, NSURLResponse *response, NSError *error)
+    {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        if (httpResponse.statusCode == 200) //successful
+        {
+            //retrieve and set region
+            NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            NSMutableDictionary *summonerInfo = [NSMutableDictionary dictionaryWithDictionary:dataDict[name]];
+            [summonerInfo setObject:region forKey:@"region"];
+            
+            //callback on main thread
+            dispatch_async(dispatch_get_main_queue(), ^{ successHandler([summonerInfo copy]); });
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(),
+            ^{
+                //call failureHandler with error message
+                NSString *errorMessage = [NSString stringWithFormat:@"Error %d: %@",
+                                          (int)httpResponse.statusCode,
+                                          [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode]];
+                failureHandler(errorMessage);
+            });
+        }
+    }] resume];
+}
+
 
 #pragma mark - Private Util Mehtods
 /**

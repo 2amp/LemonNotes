@@ -85,44 +85,23 @@
  */
 - (void)signIn
 {
+    //start rolling
     [self.activityIndicator startAnimating];
-    void (^completionHandler)(NSData *data, NSURLResponse *, NSError *error) = ^(NSData *data, NSURLResponse *response, NSError *error)
+    
+    //async search/fetch summoner
+    [DataManager getSummonerForName:self.summonerName Region:self.summonerRegion
+    successHandler:^(NSDictionary *summoner)
     {
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        if (httpResponse.statusCode == 404)
-        {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.activityIndicator stopAnimating];
-                [self showAlertWithTitle:@"Error" message:@"Summoner not found"];
-            });
-        }
-        else
-        {
-            NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-
-            // it is not guaranteed that the key for the summoner info object is the summoner name
-            NSMutableDictionary *summonerInfo = [NSMutableDictionary dictionaryWithDictionary:dataDictionary[[dataDictionary allKeys][0]]];
-            [summonerInfo setObject:self.summonerRegion forKey:@"region"];
-            [[NSUserDefaults standardUserDefaults] setObject:[summonerInfo copy] forKey:@"currentSummoner"];
-            
-            //register this summoner
-            DataManager *manager = [DataManager sharedManager];
-            [manager registerSummoner];
-            [manager loadRecentMatches];
-            //[manager deleteAllSummoners];
-            //[manager summonerDump];
-
-            //stop loading spin & show root
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.activityIndicator stopAnimating];
-                [self performSegueWithIdentifier:@"showRoot" sender:self];
-            });
-        }
-    };
-    NSURLSessionDataTask *getSummonerInfo = [self.urlSession dataTaskWithURL:apiURL(kLoLSummonerByName, self.summonerRegion, self.summonerName, nil)
-                                                           completionHandler:completionHandler];
-    [getSummonerInfo resume];
-    [self.activityIndicator startAnimating];
+        [self.activityIndicator stopAnimating];
+    
+        [[NSUserDefaults standardUserDefaults] setObject:summoner forKey:@"currentSummoner"];
+        [self performSegueWithIdentifier:@"showRoot" sender:self];
+    }
+    failureHandler:^(NSString *errorMessage)
+    {
+        [self.activityIndicator stopAnimating];
+        [self showAlertWithTitle:@"Error" message:@"Summoner not found"];
+    }];
 }
 
 

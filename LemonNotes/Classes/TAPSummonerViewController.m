@@ -387,36 +387,22 @@
  */
 - (void)searchSummonerWithName:(NSString *)name Region:(NSString *)region
 {
-    //start activity indicator
+    //FILL: start activity indicator
     
-    dispatch_queue_t newQ = dispatch_queue_create("temp", DISPATCH_QUEUE_SERIAL);
-    dispatch_async(newQ,
-    ^{
-        NSError *error;
-        NSHTTPURLResponse *response;
-        NSURL *url = apiURL(kLoLSummonerByName, region, name, @[]);
-        NSData *data = [[NSURLSession sharedSession] sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
+    //async fetch/search summoner
+    [DataManager getSummonerForName:name Region:region
+    successHandler:^(NSDictionary *summoner)
+    {
+        self.searchField.text = @"";
         
-        dispatch_async(dispatch_get_main_queue(),
-        ^{
-            //stop activity indicator
-            if (response.statusCode == 404)
-            {
-                [self showAlertWithTitle:@"Error" message:@"Summoner not found"];
-            }
-            else
-            {
-                self.searchField.text = @"";
-                NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil][name];
-                NSMutableDictionary *summonerInfo = [NSMutableDictionary dictionaryWithDictionary:dataDictionary];
-                [summonerInfo setObject:region forKey:@"region"];
-                
-                TAPSummonerViewController *nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"summonerVC"];
-                nextVC.summonerInfo = summonerInfo;
-                [self.navigationController pushViewController:nextVC animated:YES];
-            }
-        });
-    });
+        TAPSummonerViewController *nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"summonerVC"];
+        nextVC.summonerInfo = summoner;
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }
+    failureHandler:^(NSString *errorMessage)
+    {
+        [self showAlertWithTitle:@"Error" message:errorMessage];
+    }];
 }
 
 /**
