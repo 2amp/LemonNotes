@@ -41,6 +41,8 @@
  */
 @interface SummonerManager : NSObject
 
+- (instancetype)initWithSummoner:(NSDictionary *)summoner;
+
 //delegate
 @property (nonatomic, weak) id<SummonerManagerDelegate> delegate;
 @property (nonatomic, strong) NSArray *loadedMatches;

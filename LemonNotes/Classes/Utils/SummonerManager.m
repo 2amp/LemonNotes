@@ -30,8 +30,10 @@
 @property (nonatomic) long newestMatchId;
 @property (nonatomic) long endMatchIndex;
 - (void)saveMatches:(NSArray *)matches;
+- (BOOL)hasSavedMatches;
 - (NSArray *)loadFromLocal;
 - (NSArray *)loadFromServer;
+- (NSArray *)matchHistoryFrom:(long)begin To:(long)end;
 
 @end
 
@@ -55,8 +57,8 @@
         
         //newestMatchId is id of last recorded game, or -1 if not registered
         //endMatchIndex is used for keeping track of index in API calls
-        self.newestMatchId = self.isRegistered ? [self.summoner.lastMatchId longValue] : -1;
-        self.endMatchIndex = -1;
+        self.newestMatchId = self.isRegistered ? [self.summoner.lastMatchId longValue] : 0;
+        self.endMatchIndex = 0;
         
         //make ephemeral session
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
@@ -72,7 +74,9 @@
 /**
  * @method checkRegistered
  *
- * Checks and returns whether stored summoner is registered.
+ * Fetches summoner entities with id.
+ * If registered, sets self.summoner to object or nil if not found.
+ * Sets self.isRegistered accordingly.
  * @note One time method to be called in init.
  *       Only other time isRegistered should change is when
  *       registerSummoner or deregisterSummoner
@@ -86,7 +90,8 @@
     NSError *error = nil;
     NSArray *result = [self.managedObjectContext executeFetchRequest:summonerFetch error:&error];
     
-    self.isRegistered = (result.count > 0);
+    self.summoner = (result.count > 0) ? result[0] : nil;
+    self.isRegistered = self.summoner != nil;
 }
 
 
@@ -97,26 +102,22 @@
 {
     dispatch_async(self.queue,
     ^{
-        //latest 15 matches doesnt need query params
-        NSURL *url = apiURL(kLoLMatchHistory, self.summonerInfo[@"region"], [self.summonerInfo[@"id"] stringValue], nil);
+        self.newestMatchId = 0; //temp while other things are set up
         
-        NSError *error;
-        NSHTTPURLResponse *response;
-        NSData *data = [self.urlSession sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
-        NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSArray *matches = [[dataDict[@"matches"] reverseObjectEnumerator] allObjects];
-        
-        //remove ones already shown
-        NSMutableArray *newMatches = [NSMutableArray arrayWithArray:matches];
-        for (NSDictionary *match in newMatches)
+        //mutable array from fetched match history
+        NSMutableArray *newMatches = [NSMutableArray arrayWithArray:[self matchHistoryFrom:0 To:15]];
+        for (int i = (int)(newMatches.count-1); i >= 0; i--)
         {
+            NSDictionary *match = [newMatches objectAtIndex:i];
             if ([match[@"matchId"] longValue] <= self.newestMatchId)
             {
-                [newMatches removeObject:match];
+                //remove any overlap matches with a match id equal/lower than current
+                [newMatches removeObjectAtIndex:i];
             }
         }
         
         //increment endMatchId
+        self.newestMatchId = [newMatches[0][@"matchId"] longValue];
         self.endMatchIndex += newMatches.count;
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -124,6 +125,8 @@
         });
         
         //if registered, save new matches
+        //if (self.isRegistered)
+        //    [self saveMatches:[newMatches copy]];
     });
 }
 
@@ -139,19 +142,28 @@
 {
     dispatch_async(self.queue,
     ^{
-        NSArray *matches = self.isRegistered ? [self loadFromLocal] : [self loadFromServer];
-        
-        BOOL firstLoad = (matches.count == 0);
-        if (firstLoad)
-            matches = [self loadFromServer];
+        NSArray *matches = (self.isRegistered && [self hasSavedMatches]) ? [self loadFromServer] : [self loadFromServer];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.delegate didFinishLoadingMatches:matches];
         });
         
-        if (self.isRegistered && firstLoad)
-            [self saveMatches:matches];
+        //if (self.isRegistered && firstLoad)
+        //    [self saveMatches:matches];
     });
+}
+
+/**
+ * @method hasSavedMatches
+ *
+ * Checks whether registered summoner has stored mathces.
+ * @note Assumed that summoner is registered and set.
+ *
+ * @return YES if summoner has stored matches.
+ */
+- (BOOL)hasSavedMatches
+{
+    return [self.summoner.matches count] > 0;
 }
 
 /**
@@ -160,7 +172,8 @@
  * Loads the next 15 matches from Core Data.
  * By default fetches latest 15 matches,
  * but if lastLoadedIndex exists, loads the next 15.
- * @note Implied that this method is called from background queue.
+ * @note Assumed that this method is called from background queue
+ *       and that summoner is registered and set.
  *
  * @return NSArray of matches in reverse chronological
  */
@@ -207,20 +220,30 @@
 /**
  * @method loadFromServer
  *
- * Loads the next 15 matches from API call.
- * If lastLoadedIndex is nil, index starts at 0.
- * End is simply start index + 15.
- * Returned data is flipped (Riot gives it chronologically)
- * and lastLoadedIndex is set to whatever end was.
- * @note Implied that this method is called from background queue.
+ * Calculates index range of the next 15 older matches.
+ * Increments endMatchIndex accordingly,
+ * and returns using - matchHistoryFrom:To:
  *
  * @return NSArray of matches in reverse chronological
  */
 - (NSArray *)loadFromServer
 {
-    //set begin as 0 if
-    long begin = (self.endMatchIndex < 0) ? 0 : self.endMatchIndex;
-    long end   = begin + 15;
+    long begin = self.endMatchIndex;
+    self.endMatchIndex += 15;
+
+    return [self matchHistoryFrom:begin To:self.endMatchIndex];
+}
+
+/**
+ * @method matchHistoryFrom:To:
+ *
+ * Given an begin & end index query params,
+ * fetchs that many matches from match history 
+ * @note This method does not fetch from match api,
+ *       which contains the specific data for all summoners
+ */
+- (NSArray *)matchHistoryFrom:(long)begin To:(long)end
+{
     NSString *beginIndex = [NSString stringWithFormat:@"beginIndex=%ld", begin];
     NSString *endIndex   = [NSString stringWithFormat:@"endIndex=%ld", end];
     NSURL *url = apiURL(kLoLMatchHistory, self.summonerInfo[@"region"], [self.summonerInfo[@"id"] stringValue], @[beginIndex, endIndex]);
@@ -229,10 +252,9 @@
     NSHTTPURLResponse *response;
     NSData *data = [self.urlSession sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
     NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSArray *matches = [[dataDict[@"matches"] reverseObjectEnumerator] allObjects];
-    
-    self.endMatchIndex = end;
-    return matches;
+    NSArray *matchHistory = [[dataDict[@"matches"] reverseObjectEnumerator] allObjects];
+
+    return matchHistory;
 }
 
 /**
@@ -281,16 +303,19 @@
  */
 - (void)registerSummoner
 {
-    self.summoner = [NSEntityDescription insertNewObjectForEntityForName:@"Summoner"
-                                                  inManagedObjectContext:self.managedObjectContext];
-    
-    [self.summoner setValue:self.summonerInfo[@"region"] forKey:@"region"];
-    [self.summoner setValue:self.summonerInfo[@"name"]   forKey:@"name"];
-    [self.summoner setValue:self.summonerInfo[@"id"]     forKey:@"id"];
-    [self.summoner setValue:@0 forKey:@"lastMatchId"];
-    
-    self.isRegistered = YES;
-    [self saveContext];
+    if (self.summoner == nil)
+    {
+        self.summoner = [NSEntityDescription insertNewObjectForEntityForName:@"Summoner"
+                                                      inManagedObjectContext:self.managedObjectContext];
+        
+        [self.summoner setValue:self.summonerInfo[@"region"] forKey:@"region"];
+        [self.summoner setValue:self.summonerInfo[@"name"]   forKey:@"name"];
+        [self.summoner setValue:self.summonerInfo[@"id"]     forKey:@"id"];
+        [self.summoner setValue:@0 forKey:@"lastMatchId"];
+        
+        self.isRegistered = YES;
+        //[self saveContext];
+    }
 }
 
 /**
@@ -304,7 +329,7 @@
     [self.managedObjectContext deleteObject:self.summoner];
     self.isRegistered = NO;
     self.summoner = nil;
-    [self saveContext];
+    //[self saveContext];
 }
 
 
@@ -317,7 +342,7 @@
 - (NSURL *)applicationDocumentsDirectory
 {
     // The directory the application uses to store the Core Data store file. This code uses a directory named "com.raywenderlich.FailedBankCD" in the application's documents directory.
-    NSLog(@"%@", [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]);
+    //NSLog(@"%@", [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]);
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 

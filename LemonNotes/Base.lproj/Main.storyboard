@@ -273,7 +273,7 @@
             </objects>
             <point key="canvasLocation" x="1742" y="-241"/>
         </scene>
-        <!--Summoner View Controller-->
+        <!--Summoner-->
         <scene sceneID="Z13-1h-AMP">
             <objects>
                 <tableViewController storyboardIdentifier="summonerVC" id="N2c-6D-0a3" customClass="TAPSummonerViewController" sceneMemberID="viewController">
@@ -569,8 +569,8 @@
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="wNn-Un-roV">
-                        <nil key="title"/>
+                    <navigationItem key="navigationItem" title="Summoner" id="wNn-Un-roV">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="XZE-08-cHi"/>
                         <barButtonItem key="leftBarButtonItem" image="side_menu.png" id="vP7-QR-fSq">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -581,12 +581,16 @@
                             <rect key="frame" x="55" y="7" width="529" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go"/>
+                            <connections>
+                                <outlet property="delegate" destination="N2c-6D-0a3" id="iJW-cf-cnT"/>
+                            </connections>
                         </textField>
                     </navigationItem>
                     <connections>
                         <outlet property="championSplashView" destination="vcA-N5-rFj" id="r9u-qG-s7i"/>
                         <outlet property="searchDisplayController" destination="0AH-a4-OGX" id="DZ3-6e-l1C"/>
+                        <outlet property="searchField" destination="pgR-DK-LDk" id="eOE-49-Mf0"/>
                         <outlet property="summonerIconView" destination="ugY-pq-47n" id="CeN-lR-qEx"/>
                         <outlet property="summonerLevelLabel" destination="KZs-ZV-Ut7" id="is8-Jc-iB6"/>
                         <outlet property="summonerNameLabel" destination="YMP-OR-NZU" id="Phd-iw-cE2"/>
@@ -596,7 +600,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qek-VC-lKC" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <searchDisplayController id="0AH-a4-OGX">
                     <connections>
-                        <outlet property="delegate" destination="N2c-6D-0a3" id="e5l-NQ-f4d"/>
                         <outlet property="searchContentsController" destination="N2c-6D-0a3" id="xpu-C9-jGS"/>
                         <outlet property="searchResultsDataSource" destination="N2c-6D-0a3" id="F3g-rK-oDQ"/>
                         <outlet property="searchResultsDelegate" destination="N2c-6D-0a3" id="pbZ-JQ-PPP"/>
