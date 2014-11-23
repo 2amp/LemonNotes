@@ -33,7 +33,7 @@
 - (BOOL)hasSavedMatches;
 - (NSArray *)loadFromLocal;
 - (NSArray *)loadFromServer;
-- (NSArray *)matchHistoryFrom:(long)begin To:(long)end;
+- (NSArray *)matchHistoryFrom:(long)begin to:(long)end;
 
 @end
 
@@ -100,30 +100,29 @@
 //check if the latest match is newer than
 - (void)refreshMatches
 {
-    dispatch_async(self.queue,
-    ^{
+    dispatch_async(self.queue, ^{
         self.newestMatchId = 0; //temp while other things are set up
-        
+
         //mutable array from fetched match history
-        NSMutableArray *newMatches = [NSMutableArray arrayWithArray:[self matchHistoryFrom:0 To:15]];
-        for (int i = (int)(newMatches.count-1); i >= 0; i--)
+        NSMutableArray *newMatches = [NSMutableArray arrayWithArray:[self matchHistoryFrom:0 to:15]];
+        for (int i = (int)(newMatches.count - 1); i >= 0; i--)
         {
             NSDictionary *match = [newMatches objectAtIndex:i];
             if ([match[@"matchId"] longValue] <= self.newestMatchId)
             {
-                //remove any overlap matches with a match id equal/lower than current
+                // remove any overlap matches with a match id equal/lower than current
                 [newMatches removeObjectAtIndex:i];
             }
         }
-        
-        //increment endMatchId
+
+        // increment endMatchId
         self.newestMatchId = [newMatches[0][@"matchId"] longValue];
         self.endMatchIndex += newMatches.count;
-        
+
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.delegate didFinishRefreshingMatches:[newMatches copy]];
         });
-        
+
         //if registered, save new matches
         //if (self.isRegistered)
         //    [self saveMatches:[newMatches copy]];
@@ -140,14 +139,13 @@
  */
 - (void)loadMatches
 {
-    dispatch_async(self.queue,
-    ^{
+    dispatch_async(self.queue, ^{
         NSArray *matches = (self.isRegistered && [self hasSavedMatches]) ? [self loadFromServer] : [self loadFromServer];
-        
+
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.delegate didFinishLoadingMatches:matches];
         });
-        
+
         //if (self.isRegistered && firstLoad)
         //    [self saveMatches:matches];
     });
@@ -231,7 +229,7 @@
     long begin = self.endMatchIndex;
     self.endMatchIndex += 15;
 
-    return [self matchHistoryFrom:begin To:self.endMatchIndex];
+    return [self matchHistoryFrom:begin to:self.endMatchIndex];
 }
 
 /**
@@ -242,7 +240,7 @@
  * @note This method does not fetch from match api,
  *       which contains the specific data for all summoners
  */
-- (NSArray *)matchHistoryFrom:(long)begin To:(long)end
+- (NSArray *)matchHistoryFrom:(long)begin to:(long)end
 {
     NSString *beginIndex = [NSString stringWithFormat:@"beginIndex=%ld", begin];
     NSString *endIndex   = [NSString stringWithFormat:@"endIndex=%ld", end];

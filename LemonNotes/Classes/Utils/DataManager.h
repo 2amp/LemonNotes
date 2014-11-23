@@ -20,7 +20,8 @@
 @interface DataManager : NSObject
 
 + (instancetype)sharedManager;
-+ (void)getSummonerForName:(NSString *)name Region:(NSString *)region
++ (void)getSummonerForName:(NSString *)name
+                    region:(NSString *)region
             successHandler:(void (^)(NSDictionary *summoner))successHandler
             failureHandler:(void (^)(NSString *errorMessage))failureHandler;
 

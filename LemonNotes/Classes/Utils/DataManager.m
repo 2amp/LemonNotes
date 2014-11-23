@@ -85,14 +85,13 @@
  * @param successHandler - code block to be called upon successful fetch
  * @param failureHandler - code block to be called upon failed fetch
  */
-+ (void)getSummonerForName:(NSString *)name Region:(NSString *)region
++ (void)getSummonerForName:(NSString *)name
+                    region:(NSString *)region
             successHandler:(void (^)(NSDictionary *summoner))successHandler
             failureHandler:(void (^)(NSString *errorMessage))failureHandler
 {
     NSURL *url = apiURL(kLoLSummonerByName, region, name, @[]);
-    [[[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:
-    ^(NSData *data, NSURLResponse *response, NSError *error)
-    {
+    [[[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         if (httpResponse.statusCode == 200) //successful
         {
@@ -100,14 +99,15 @@
             NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
             NSMutableDictionary *summonerInfo = [NSMutableDictionary dictionaryWithDictionary:dataDict[name]];
             [summonerInfo setObject:region forKey:@"region"];
-            
+
             //callback on main thread
-            dispatch_async(dispatch_get_main_queue(), ^{ successHandler([summonerInfo copy]); });
+            dispatch_async(dispatch_get_main_queue(), ^{
+                successHandler([summonerInfo copy]);
+            });
         }
         else
         {
-            dispatch_async(dispatch_get_main_queue(),
-            ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
                 //call failureHandler with error message
                 NSString *errorMessage = [NSString stringWithFormat:@"Error %d: %@",
                                           (int)httpResponse.statusCode,

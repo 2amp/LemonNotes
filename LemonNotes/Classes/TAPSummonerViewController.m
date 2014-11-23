@@ -312,7 +312,9 @@
     {
         NSString *itemKey = [items[i] stringValue];
         if ([itemKey isEqualToString:@"0"])
+        {
             itemKey = @"0000";
+        }
         ((UIImageView *)itemImageViews[i]).image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", itemKey]];
     }
 
@@ -351,7 +353,7 @@
  */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self searchSummonerWithName:self.searchField.text Region:self.searchField.selectedRegion];
+    [self searchSummonerWithName:self.searchField.text region:self.searchField.selectedRegion];
     
     [textField resignFirstResponder];
     return YES;
@@ -385,12 +387,12 @@
  * @param name   - summoner name
  * @param region - summoner region
  */
-- (void)searchSummonerWithName:(NSString *)name Region:(NSString *)region
+- (void)searchSummonerWithName:(NSString *)name region:(NSString *)region
 {
     //FILL: start activity indicator
     
     //async fetch/search summoner
-    [DataManager getSummonerForName:name Region:region
+    [DataManager getSummonerForName:name region:region
     successHandler:^(NSDictionary *summoner)
     {
         self.searchField.text = @"";

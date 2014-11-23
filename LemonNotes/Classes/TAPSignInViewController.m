@@ -87,21 +87,20 @@
 {
     //start rolling
     [self.activityIndicator startAnimating];
-    
+
     //async search/fetch summoner
-    [DataManager getSummonerForName:self.summonerName Region:self.summonerRegion
-    successHandler:^(NSDictionary *summoner)
-    {
-        [self.activityIndicator stopAnimating];
-    
-        [[NSUserDefaults standardUserDefaults] setObject:summoner forKey:@"currentSummoner"];
-        [self performSegueWithIdentifier:@"showRoot" sender:self];
-    }
-    failureHandler:^(NSString *errorMessage)
-    {
-        [self.activityIndicator stopAnimating];
-        [self showAlertWithTitle:@"Error" message:@"Summoner not found"];
-    }];
+    [DataManager getSummonerForName:self.summonerName
+                             region:self.summonerRegion
+                     successHandler:^(NSDictionary *summoner) {
+                         [self.activityIndicator stopAnimating];
+
+                         [[NSUserDefaults standardUserDefaults] setObject:summoner forKey:@"currentSummoner"];
+                         [self performSegueWithIdentifier:@"showRoot" sender:self];
+                     }
+                     failureHandler:^(NSString *errorMessage) {
+                         [self.activityIndicator stopAnimating];
+                         [self showAlertWithTitle:@"Error" message:@"Summoner not found"];
+                     }];
 }
 
 
