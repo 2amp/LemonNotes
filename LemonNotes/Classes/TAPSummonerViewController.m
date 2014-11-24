@@ -25,7 +25,7 @@
 
 //table
 @property (nonatomic, strong) NSMutableArray* matches;
-@property (nonatomic, strong) TAPLemonRefreshControl* refreshControl;
+@property (nonatomic, strong) UIRefreshControl* refreshControl;
 
 //setup
 - (void)setupHeader;
@@ -47,13 +47,10 @@
  */
 - (void)setSummonerInfo:(NSDictionary *)summonerInfo
 {
+    NSLog(@"[setSummonerInfo]");
     _summonerInfo = summonerInfo;
     self.manager = [[SummonerManager alloc] initWithSummoner:summonerInfo];
     self.manager.delegate = self;
-    
-    //other stuff
-    self.needsUpdate = YES;
-    [self.manager refreshMatches];
 }
 
 /**
@@ -65,9 +62,26 @@
 {
     [super viewDidLoad];
     
-    NSLog(@"%@ %p [viewDidLoad]", self.class, self);
-    [self setupTableView];
+    NSLog(@"[viewDidLoad]");
+    //NSLog(@"%@ %p", self.class, self);
     
+    [self setupTableView];
+}
+
+/**
+ * @method: viewWillAppear:
+ *
+ * Called when this view is about to appear.
+ * If this is the rootVC of SummonerNC, 
+ * set summonerInfo as stored current summoner.
+ * Whether or not above was true,
+ * this VC needs an update & call - loadMatches
+ */
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    
+    NSLog(@"[viewWillAppear]");
     //if rootVC of nav
     if (self == [self.navigationController.viewControllers firstObject])
     {
@@ -76,13 +90,9 @@
         self.summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
         [self.manager registerSummoner];
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
     
-    NSLog(@"%@ %p [viewWillAppear]", self.class, self);
+    self.needsUpdate = YES;
+    [self.manager loadMatches];
 }
 
 /**
@@ -129,9 +139,12 @@
     self.matches = [[NSMutableArray alloc] init];
     
     //custom refresh control
-    //self.refreshControl = [[TAPLemonRefreshControl alloc] init];
-    //[self setRefreshControl:self.refreshControl];
-    //[self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = [[TAPLemonRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [UIColor orangeColor];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    
+    [self setRefreshControl:self.refreshControl];
+    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
 }
 
 
@@ -147,6 +160,13 @@
 {
     //append loaded matches to matches
     [self.matches addObjectsFromArray:moreMatches];
+    
+    if (self.needsUpdate)
+    {
+        [self setupHeader];
+        self.needsUpdate = NO;
+    }
+    [self.tableView reloadData];
 }
 
 /**
@@ -158,14 +178,9 @@
 - (void)didFinishRefreshingMatches:(NSArray *)newMatches
 {
     [self.matches insertObjects:newMatches atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, newMatches.count)]];
-    [self.refreshControl endRefreshing];
-    
-    if (self.needsUpdate)
-    {
-        [self setupHeader];
-        self.needsUpdate = NO;
-    }
     [self.tableView reloadData];
+    
+    [self.refreshControl endRefreshing];
 }
 
 
@@ -174,20 +189,12 @@
 /**
  * @method refresh
  *
- * Called when pulled to refresh.
- *
+ * Called when user pulls to refresh.
+ * Relays message onto SummonerManager
  */
 - (void)refresh
 {
-    // -- DO SOMETHING AWESOME (... or just wait 3 seconds) --
-    // This is where you'll make requests to an API, reload data, or process information
-    double delayInSeconds = 3.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        NSLog(@"DONE");
-            // When done requesting/reloading/processing invoke endRefreshing, to close the control
-        [self.refreshControl endRefreshing];
-    });
+    [self.manager refreshMatches];
 }
 
 /**
@@ -200,10 +207,10 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat scrollY = self.tableView.contentOffset.y;
-    if (scrollY < 0)
-    {
-        [self.refreshControl pulledTo:self.tableView.contentOffset.y];
-    }
+//    if (scrollY < 0)
+//    {
+//        [self.refreshControl pulledTo:self.tableView.contentOffset.y];
+//    }
 }
 
 /**
@@ -343,6 +350,21 @@
 {
     [self performSegueWithIdentifier:@"showNextViewController" sender:self];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+/**
+ * @method tableView:willDisplayCell:forRowAtIndexPath:
+ *
+ * Called when user scrolls and a new cell is about to appear.
+ * If this cell is the last cell, load more.
+ */
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"cell will appear: %i", (int)indexPath.row);
+    if (indexPath.row == self.matches.count - 1)
+    {
+        [self.manager loadMatches];
+    }
 }
 
 
