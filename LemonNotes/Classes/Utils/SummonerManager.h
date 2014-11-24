@@ -45,14 +45,13 @@
 
 //delegate
 @property (nonatomic, weak) id<SummonerManagerDelegate> delegate;
-@property (nonatomic, strong) NSArray *loadedMatches;
-
-//recent matches
-- (void)refreshMatches;
-- (void)loadMatches;
 
 //account
 - (void)registerSummoner;
 - (void)deregisterSummoner;
+
+//recent matches
+- (void)refreshMatches;
+- (void)loadMatches;
 
 @end

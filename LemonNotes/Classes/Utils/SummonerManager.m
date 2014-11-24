@@ -1,6 +1,7 @@
 
 #import "NSURLSession+SynchronousTask.h"
 #import "SummonerManager.h"
+#import "DataManager.h"
 #import "Constants.h"
 #import "Summoner.h"
 #import "Match.h"
@@ -26,14 +27,16 @@
 
 //matches
 @property (nonatomic, strong) NSURLSession *urlSession;
-@property (nonatomic, strong) dispatch_queue_t queue;
-@property (nonatomic) long newestMatchId;
-@property (nonatomic) long endMatchIndex;
+@property (nonatomic, strong) dispatch_queue_t loadQueue;
+@property (nonatomic, strong) dispatch_queue_t fetchQueue;
+@property (nonatomic) long newestStoredMatchId;
+@property (nonatomic) long oldestLoadedMatchId;
+@property (nonatomic) int lastFetchIndex;
 - (void)saveMatches:(NSArray *)matches;
 - (BOOL)hasSavedMatches;
 - (NSArray *)loadFromLocal;
 - (NSArray *)loadFromServer;
-- (NSArray *)matchHistoryFrom:(long)begin To:(long)end;
+- (NSArray *)matchHistoryFrom:(int)begin To:(int)end;
 
 @end
 
@@ -57,16 +60,19 @@
         
         //newestMatchId is id of last recorded game, or -1 if not registered
         //endMatchIndex is used for keeping track of index in API calls
-        self.newestMatchId = self.isRegistered ? [self.summoner.lastMatchId longValue] : 0;
-        self.endMatchIndex = 0;
+        self.newestStoredMatchId = self.isRegistered ? [self.summoner.lastMatchId longValue] : 0;
+        self.oldestLoadedMatchId = self.newestStoredMatchId;
+        self.lastFetchIndex = 0;
         
         //make ephemeral session
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
         self.urlSession = [NSURLSession sessionWithConfiguration:config];
         
         //create queue name "<summonerName> queue" for API calls
-        const char *label = [[NSString stringWithFormat:@"%@ queue", summonerInfo[@"name"]] UTF8String];
-        self.queue = dispatch_queue_create(label, DISPATCH_QUEUE_CONCURRENT);
+        const char *loadLabel  = [[NSString stringWithFormat:@"%@ load queue", summonerInfo[@"name"]] UTF8String];
+        const char *fetchLabel = [[NSString stringWithFormat:@"%@ fetch queue", summonerInfo[@"name"]] UTF8String];
+        self.loadQueue  = dispatch_queue_create(loadLabel, DISPATCH_QUEUE_CONCURRENT);
+        self.fetchQueue = dispatch_queue_create(fetchLabel, DISPATCH_QUEUE_CONCURRENT);
     }
     return self;
 }
@@ -94,39 +100,95 @@
     self.isRegistered = self.summoner != nil;
 }
 
+#pragma mark - Account
+/**
+ * @method registerSummoner
+ *
+ * Adds new summoner entity to core data
+ * with the given data & 0 as lastMatchId.
+ * Sets self.summoner & isRegistered to true.
+ */
+- (void)registerSummoner
+{
+    //if not registered
+    if (!self.isRegistered)
+    {
+        self.summoner = [NSEntityDescription insertNewObjectForEntityForName:@"Summoner"
+                                                      inManagedObjectContext:self.managedObjectContext];
+        
+        [self.summoner setValue:self.summonerInfo[@"region"] forKey:@"region"];
+        [self.summoner setValue:self.summonerInfo[@"name"]   forKey:@"name"];
+        [self.summoner setValue:self.summonerInfo[@"id"]     forKey:@"id"];
+        [self.summoner setValue:@0 forKey:@"lastMatchId"];
+        
+        self.isRegistered = YES;
+        [self saveContext];
+    }
+    [[DataManager sharedManager] summonerDump];
+}
+
+/**
+ * @method deregisterSummoner
+ *
+ * Deletes the current summoner object from core data.
+ * Sets isRegistered to false & summoner to nil.
+ */
+- (void)deregisterSummoner
+{
+    [self.managedObjectContext deleteObject:self.summoner];
+    [self saveContext];
+    
+    self.summoner = nil;
+    self.isRegistered = NO;
+}
+
+
 
 #pragma mark - Recent Matches
+/**
+ * @method hasSavedMatches
+ *
+ * Checks whether registered summoner has stored mathces,
+ * which implies that summoner is reigstered.
+ *
+ * @return YES if summoner has stored matches.
+ */
+- (BOOL)hasSavedMatches
+{
+    return self.isRegistered && ([self.summoner.matches count] > 0);
+}
+
 //get 15 of the latest matches from riot
 //check if the latest match is newer than
 - (void)refreshMatches
 {
-    dispatch_async(self.queue,
+    dispatch_async(self.loadQueue,
     ^{
-        self.newestMatchId = 0; //temp while other things are set up
+        self.newestStoredMatchId = 0; //temp while other things are set up
         
         //mutable array from fetched match history
         NSMutableArray *newMatches = [NSMutableArray arrayWithArray:[self matchHistoryFrom:0 To:15]];
+        NSLog(@"count: %lu", (unsigned long)newMatches.count);
         for (int i = (int)(newMatches.count-1); i >= 0; i--)
         {
             NSDictionary *match = [newMatches objectAtIndex:i];
-            if ([match[@"matchId"] longValue] <= self.newestMatchId)
+            if ([match[@"matchId"] longValue] <= self.newestStoredMatchId)
             {
                 //remove any overlap matches with a match id equal/lower than current
                 [newMatches removeObjectAtIndex:i];
             }
         }
         
-        //increment endMatchId
-        self.newestMatchId = [newMatches[0][@"matchId"] longValue];
-        self.endMatchIndex += newMatches.count;
+        self.lastFetchIndex += (int)newMatches.count;
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.delegate didFinishRefreshingMatches:[newMatches copy]];
         });
         
-        //if registered, save new matches
-        //if (self.isRegistered)
-        //    [self saveMatches:[newMatches copy]];
+        if (self.isRegistered)
+        {
+            [self saveMatches:[newMatches copy]];
+        }
     });
 }
 
@@ -140,30 +202,41 @@
  */
 - (void)loadMatches
 {
-    dispatch_async(self.queue,
+    NSLog(@"[loadMatches]");
+    dispatch_async(self.loadQueue,
     ^{
-        NSArray *matches = (self.isRegistered && [self hasSavedMatches]) ? [self loadFromServer] : [self loadFromServer];
+        //get matches according record in core data
+        NSArray *matches = [self hasSavedMatches] ? [self loadFromLocal] : [self loadFromServer];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.delegate didFinishLoadingMatches:matches];
-        });
+        //set oldest loaded match id, for next fetch
+        self.oldestLoadedMatchId = [[matches lastObject][@"matchId"] longValue];
         
-        //if (self.isRegistered && firstLoad)
-        //    [self saveMatches:matches];
+        //immediately give back to delegate
+        dispatch_async(dispatch_get_main_queue(), ^{ [self.delegate didFinishLoadingMatches:matches]; });
+        
+        //if registered but not saved matches, fetch all matches ever
+        if (self.isRegistered && ![self hasSavedMatches])
+        {
+            //15 because already loaded 0-14
+            [self fetchAllMatches:matches Index:15];
+        }
     });
 }
 
-/**
- * @method hasSavedMatches
- *
- * Checks whether registered summoner has stored mathces.
- * @note Assumed that summoner is registered and set.
- *
- * @return YES if summoner has stored matches.
- */
-- (BOOL)hasSavedMatches
+- (void)fetchAllMatches:(NSArray *)matches Index:(int)index
 {
-    return [self.summoner.matches count] > 0;
+    NSLog(@"fetch index: %d", index);
+    if (matches.class != 0)
+    {
+        [self saveMatches:matches];
+        
+        dispatch_time_t secondDelay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
+        dispatch_after(secondDelay, self.fetchQueue,
+        ^{
+            NSArray *matches = [self matchHistoryFrom:index To:index+15];
+            [self fetchAllMatches:matches Index:index+15];
+        });
+    }
 }
 
 /**
@@ -179,11 +252,15 @@
  */
 - (NSArray *)loadFromLocal
 {
+    NSLog(@"[loadFromLocal]");
+    
     //first fetch defaults to latest
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"summoner == %@", self.summoner];
-    if (self.newestMatchId > 0) //if not first fetch
+    if (self.oldestLoadedMatchId != 0) //if not first fetch
     {
-        predicate = [NSPredicate predicateWithFormat:@"summoner == %@ AND matchId < %@", self.summoner, [NSNumber numberWithLong:self.newestMatchId]];
+        predicate = [NSPredicate predicateWithFormat:@"summoner == %@ AND matchId < %@",
+                                                        self.summoner,
+                                                        [NSNumber numberWithLong:self.oldestLoadedMatchId]];
     }
 
     //set fetch
@@ -211,9 +288,6 @@
         [matches addObject:[match copy]];
     }
     
-    //matches were loaded desc, so first is latest
-    self.newestMatchId = [[matches lastObject][@"matchId"] longValue];
-    
     return [matches copy];
 }
 
@@ -228,10 +302,11 @@
  */
 - (NSArray *)loadFromServer
 {
-    long begin = self.endMatchIndex;
-    self.endMatchIndex += 15;
-
-    return [self matchHistoryFrom:begin To:self.endMatchIndex];
+    NSLog(@"[loadFromServer]");
+    
+    int begin = self.lastFetchIndex;
+    self.lastFetchIndex += 15;
+    return [self matchHistoryFrom:begin To:self.lastFetchIndex];
 }
 
 /**
@@ -242,10 +317,10 @@
  * @note This method does not fetch from match api,
  *       which contains the specific data for all summoners
  */
-- (NSArray *)matchHistoryFrom:(long)begin To:(long)end
+- (NSArray *)matchHistoryFrom:(int)begin To:(int)end
 {
-    NSString *beginIndex = [NSString stringWithFormat:@"beginIndex=%ld", begin];
-    NSString *endIndex   = [NSString stringWithFormat:@"endIndex=%ld", end];
+    NSString *beginIndex = [NSString stringWithFormat:@"beginIndex=%d", begin];
+    NSString *endIndex   = [NSString stringWithFormat:@"endIndex=%d", end];
     NSURL *url = apiURL(kLoLMatchHistory, self.summonerInfo[@"region"], [self.summonerInfo[@"id"] stringValue], @[beginIndex, endIndex]);
     
     NSError *error;
@@ -253,6 +328,9 @@
     NSData *data = [self.urlSession sendSynchronousDataTaskWithURL:url returningResponse:&response error:&error];
     NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSArray *matchHistory = [[dataDict[@"matches"] reverseObjectEnumerator] allObjects];
+    
+    long firstMatchId = [[matchHistory firstObject][@"matchId"] longValue];
+    self.newestStoredMatchId = MAX(firstMatchId, self.newestStoredMatchId);
 
     return matchHistory;
 }
@@ -268,69 +346,40 @@
  */
 - (void)saveMatches:(NSArray *)matches
 {
+    NSMutableArray *existingMatchIds = [[NSMutableArray alloc] init];
+    for (Match *match in [[self.summoner matches] allObjects])
+    {
+        [existingMatchIds addObject:match.matchId];
+    }
+
     //array of match data for every id
     for (NSDictionary *matchDict in matches)
     {
-        //add to new entity
-        Match *newMatch = [NSEntityDescription insertNewObjectForEntityForName:@"Match"
-                                                        inManagedObjectContext:self.managedObjectContext];
-        newMatch.summoner = self.summoner;
-        for (NSString *key in [matchDict allKeys])
+        // only add match if it is not already in the db
+        if (![existingMatchIds containsObject:matchDict[@"matchId"]])
         {
-            [newMatch setValue:matchDict[key] forKey:key];
+            NSLog(@"new match id: %@", matchDict[@"matchId"]);
+            //add to new entity
+            Match *newMatch = [NSEntityDescription insertNewObjectForEntityForName:@"Match"
+                                                            inManagedObjectContext:self.managedObjectContext];
+            newMatch.summoner = self.summoner;
+            for (NSString *key in [matchDict allKeys])
+            {
+                [newMatch setValue:matchDict[key] forKey:key];
+            }
+            // Set up placeholder values
+            // These will be set when the specific match is fetched
+            newMatch.summonerIndex = @0;
+            newMatch.matchCreation = @0;
+            newMatch.teams = @[];
+            [self.summoner addMatchesObject:newMatch];
         }
-        // Set up placeholder values
-        // These will be set when the specific match is fetched
-        newMatch.summonerIndex = @0;
-        newMatch.matchCreation = @0;
-        newMatch.teams = @[];
-        [self.summoner addMatchesObject:newMatch];
     }
     
     self.summoner.lastMatchId = matches[0][@"matchId"];
-    self.newestMatchId = [self.summoner.lastMatchId longValue];
+    [self saveContext];
 }
 
-
-
-#pragma mark - Account
-/**
- * @method registerSummoner
- *
- * Adds new summoner entity to core data 
- * with the given data & 0 as lastMatchId.
- * Sets self.summoner & isRegistered to true.
- */
-- (void)registerSummoner
-{
-    if (self.summoner == nil)
-    {
-        self.summoner = [NSEntityDescription insertNewObjectForEntityForName:@"Summoner"
-                                                      inManagedObjectContext:self.managedObjectContext];
-        
-        [self.summoner setValue:self.summonerInfo[@"region"] forKey:@"region"];
-        [self.summoner setValue:self.summonerInfo[@"name"]   forKey:@"name"];
-        [self.summoner setValue:self.summonerInfo[@"id"]     forKey:@"id"];
-        [self.summoner setValue:@0 forKey:@"lastMatchId"];
-        
-        self.isRegistered = YES;
-        //[self saveContext];
-    }
-}
-
-/**
- * @method deregisterSummoner
- *
- * Deletes the current summoner object from core data.
- * Sets isRegistered to false & summoner to nil.
- */
-- (void)deregisterSummoner
-{
-    [self.managedObjectContext deleteObject:self.summoner];
-    self.isRegistered = NO;
-    self.summoner = nil;
-    //[self saveContext];
-}
 
 
 #pragma mark - Core Data

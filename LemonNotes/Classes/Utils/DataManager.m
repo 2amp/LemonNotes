@@ -203,6 +203,7 @@
     NSError *error = nil;
     NSArray *result = [self.managedObjectContext executeFetchRequest:summonerFetch error:&error];
     
+    NSLog(@"Summoners in CoreData:");
     for (Summoner *summoner in result)
     {
         NSLog(@"%@ (region: %@)", summoner.name, summoner.region);

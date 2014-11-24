@@ -100,7 +100,7 @@
     failureHandler:^(NSString *errorMessage)
     {
         [self.activityIndicator stopAnimating];
-        [self showAlertWithTitle:@"Error" message:@"Summoner not found"];
+        [self showAlertWithTitle:@"Error" message:errorMessage];
     }];
 }
 
