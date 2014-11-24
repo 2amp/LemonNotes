@@ -97,7 +97,7 @@
         {
             //retrieve and set region
             NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-            NSMutableDictionary *summonerInfo = [NSMutableDictionary dictionaryWithDictionary:dataDict[name]];
+            NSMutableDictionary *summonerInfo = [NSMutableDictionary dictionaryWithDictionary:dataDict[[dataDict allKeys][0]]];
             [summonerInfo setObject:region forKey:@"region"];
 
             //callback on main thread

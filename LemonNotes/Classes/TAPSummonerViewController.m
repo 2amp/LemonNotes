@@ -71,6 +71,8 @@
     //if rootVC of nav
     if (self == [self.navigationController.viewControllers firstObject])
     {
+        NSString *summonerName = [[[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"] objectForKey:@"name"];
+        self.summonerNameLabel.text  = summonerName;
         self.summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
         [self.manager registerSummoner];
     }
@@ -340,6 +342,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self performSegueWithIdentifier:@"showNextViewController" sender:self];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 

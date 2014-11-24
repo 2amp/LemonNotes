@@ -80,21 +80,33 @@
                                 <rect key="frame" x="16" y="203" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="atR-Qs-Cne" id="BAW-gR-JMb"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E2V-ga-P9e">
                                 <rect key="frame" x="16" y="241" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="atR-Qs-Cne" id="ByX-8C-mse"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pZK-bX-dbw">
                                 <rect key="frame" x="16" y="279" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="atR-Qs-Cne" id="j5w-SU-HEi"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QyO-rF-koI">
                                 <rect key="frame" x="16" y="317" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="atR-Qs-Cne" id="W9x-i9-lEB"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G4B-gt-653">
                                 <rect key="frame" x="8" y="20" width="32" height="32"/>
@@ -169,7 +181,13 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Game" id="NwJ-Cz-IZR"/>
                     <connections>
+                        <outlet property="captainSwitch" destination="E5c-cA-ZLC" id="NaL-Qo-hr1"/>
+                        <outlet property="sideControl" destination="vHB-Wc-v9b" id="imc-tz-TIX"/>
                         <outlet property="summonerNameLabel" destination="6X6-pb-YSP" id="ntX-be-am6"/>
+                        <outlet property="teammate0Field" destination="Sac-BG-8aN" id="0Js-gs-p9J"/>
+                        <outlet property="teammate1Field" destination="E2V-ga-P9e" id="y0g-tz-bQV"/>
+                        <outlet property="teammate2Field" destination="pZK-bX-dbw" id="Fb6-lu-J67"/>
+                        <outlet property="teammate3Field" destination="QyO-rF-koI" id="sA6-T2-AFq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2wM-AV-eHl" userLabel="First Responder" sceneMemberID="firstResponder"/>

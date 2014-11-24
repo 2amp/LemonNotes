@@ -5,6 +5,9 @@
 
 @interface TAPStartGameViewController ()
 
+@property NSArray *teammateFields;
+@property NSMutableArray *teammateNames;
+
 @end
 
 
@@ -21,6 +24,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.teammateFields = @[self.teammate0Field, self.teammate1Field, self.teammate2Field, self.teammate3Field];
+    self.teammateNames = [[NSMutableArray alloc] init];
     self.summonerNameLabel.text = self.summonerName;
     NSLog(@"%@ %p", self.class, self);
 }
@@ -33,6 +39,14 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSInteger index = [self.teammateFields indexOfObject:textField];
+    NSLog(@"%lu", index);
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end

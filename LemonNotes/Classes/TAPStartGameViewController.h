@@ -15,11 +15,18 @@
  * @author Chris Fu
  * @version 0.1
  */
-@interface TAPStartGameViewController : UIViewController
+@interface TAPStartGameViewController : UIViewController <UITextFieldDelegate>
 
 @property (nonatomic) NSString *summonerName;
 @property (nonatomic) NSNumber *idNumber;
 
 @property (weak, nonatomic) IBOutlet UILabel *summonerNameLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *sideControl;
+@property (weak, nonatomic) IBOutlet UISwitch *captainSwitch;
+
+@property (weak, nonatomic) IBOutlet UITextField *teammate0Field;
+@property (weak, nonatomic) IBOutlet UITextField *teammate1Field;
+@property (weak, nonatomic) IBOutlet UITextField *teammate2Field;
+@property (weak, nonatomic) IBOutlet UITextField *teammate3Field;
 
 @end
