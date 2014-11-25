@@ -130,9 +130,6 @@
  */
 - (void)setupTableView
 {
-    //styling
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
     //data
     self.matches = [[NSMutableArray alloc] init];
     
@@ -356,10 +353,10 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"cell will appear: %i", (int)indexPath.row);
-    if (indexPath.row == self.matches.count - 1)
-    {
-        [self.manager loadMatches];
-    }
+//    if (indexPath.row == self.matches.count - 1)
+//    {
+//        [self.manager loadMatches];
+//    }
 }
 
 
