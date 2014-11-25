@@ -18,6 +18,7 @@
 
 //Header
 @property (nonatomic) BOOL needsUpdate;
+@property (nonatomic, weak) IBOutlet UIView*  header;
 @property (nonatomic, weak) IBOutlet UILabel* summonerNameLabel;
 @property (nonatomic, weak) IBOutlet UILabel* summonerLevelLabel;
 @property (nonatomic, weak) IBOutlet UIImageView* summonerIconView;
@@ -27,8 +28,12 @@
 @property (nonatomic, strong) NSMutableArray* matches;
 @property (nonatomic, strong) UIRefreshControl* refreshControl;
 
+//footer
+@property (nonatomic, weak) IBOutlet UIView* footer;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView* footerIndicator;
+
 //setup
-- (void)setupHeader;
+- (void)setupHeaderFooter;
 - (void)setupTableView;
 
 @end
@@ -96,13 +101,13 @@
 }
 
 /**
- * @method setupHeader
+ * @method setupHeaderFooter
  *
  * Sets up the header components.
  * @note Assumes that summonerManager has been setup
  *       and that matches array is not empty.
  */
-- (void)setupHeader
+- (void)setupHeaderFooter
 {
     //setup basic header elems
     self.summonerNameLabel.text  = self.summonerInfo[@"name"];
@@ -123,6 +128,10 @@
     
     //landscape: put header behind table view
     [self.tableView sendSubviewToBack:[self.tableView tableHeaderView]];
+    
+    
+    //footer
+    self.footer.hidden = YES;
 }
 
 /**
@@ -132,9 +141,6 @@
  */
 - (void)setupTableView
 {
-    //styling
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
     //data
     self.matches = [[NSMutableArray alloc] init];
     
@@ -163,7 +169,7 @@
     
     if (self.needsUpdate)
     {
-        [self setupHeader];
+        [self setupHeaderFooter];
         self.needsUpdate = NO;
     }
     [self.tableView reloadData];
@@ -363,10 +369,10 @@
     NSLog(@"cell will appear: %i", (int)indexPath.row);
     if (indexPath.row == self.matches.count - 1)
     {
-        [self.manager loadMatches];
+        [self.tableView tableFooterView].hidden = NO;
+        [self.footerIndicator startAnimating];
     }
 }
-
 
 
 #pragma mark - Navigation Events

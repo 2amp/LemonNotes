@@ -295,11 +295,13 @@
         <scene sceneID="Z13-1h-AMP">
             <objects>
                 <tableViewController storyboardIdentifier="summonerVC" id="N2c-6D-0a3" customClass="TAPSummonerViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="150" sectionHeaderHeight="22" sectionFooterHeight="22" id="pqs-sh-zJF">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="150" sectionHeaderHeight="22" sectionFooterHeight="22" id="pqs-sh-zJF">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.80392156859999997" green="0.80392156859999997" blue="0.80392156859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <inset key="scrollIndicatorInsets" minX="0.0" minY="30" maxX="0.0" maxY="0.0"/>
+                        <color key="sectionIndexBackgroundColor" red="0.80392156862745101" green="0.80392156862745101" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="sectionIndexTrackingBackgroundColor" red="0.80392156859999997" green="0.80392156859999997" blue="0.80392156859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="5uI-pS-GaZ" userLabel="Header">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="220"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -357,6 +359,24 @@
                                 <constraint firstItem="YMP-OR-NZU" firstAttribute="top" secondItem="KZs-ZV-Ut7" secondAttribute="bottom" constant="8" id="r4E-5q-Ekm"/>
                                 <constraint firstItem="KZs-ZV-Ut7" firstAttribute="trailing" secondItem="YMP-OR-NZU" secondAttribute="trailing" id="vML-fG-4OB"/>
                                 <constraint firstItem="vcA-N5-rFj" firstAttribute="top" secondItem="5uI-pS-GaZ" secondAttribute="top" id="xPb-9r-zTr"/>
+                            </constraints>
+                        </view>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="Qqj-YY-vVD">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="xga-74-QU6">
+                                    <rect key="frame" x="290" y="12" width="20" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="51o-yb-Lsx"/>
+                                        <constraint firstAttribute="width" constant="20" id="c8o-6S-BFy"/>
+                                    </constraints>
+                                </activityIndicatorView>
+                            </subviews>
+                            <color key="backgroundColor" red="0.80392156862745101" green="0.80392156862745101" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="centerX" secondItem="xga-74-QU6" secondAttribute="centerX" id="cqw-0U-cpZ"/>
+                                <constraint firstAttribute="centerY" secondItem="xga-74-QU6" secondAttribute="centerY" id="nuD-H7-4ZJ"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -571,7 +591,7 @@
                                             </variation>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.80557528409090906" green="0.80557528409090906" blue="0.80557528409090906" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.80392156862745101" green="0.80392156862745101" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstItem="aeQ-VX-9Fc" firstAttribute="leading" secondItem="Aug-Rm-FLS" secondAttribute="leadingMargin" id="Z3w-po-2xR"/>
                                         <constraint firstItem="aeQ-VX-9Fc" firstAttribute="top" secondItem="Aug-Rm-FLS" secondAttribute="topMargin" id="vZA-F6-89I"/>
@@ -607,6 +627,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="championSplashView" destination="vcA-N5-rFj" id="r9u-qG-s7i"/>
+                        <outlet property="footer" destination="Qqj-YY-vVD" id="SBg-rR-cnY"/>
+                        <outlet property="footerIndicator" destination="xga-74-QU6" id="3Jc-lL-xwP"/>
+                        <outlet property="header" destination="5uI-pS-GaZ" id="dB0-Bq-IEu"/>
                         <outlet property="searchDisplayController" destination="0AH-a4-OGX" id="DZ3-6e-l1C"/>
                         <outlet property="searchField" destination="pgR-DK-LDk" id="eOE-49-Mf0"/>
                         <outlet property="summonerIconView" destination="ugY-pq-47n" id="CeN-lR-qEx"/>
