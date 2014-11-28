@@ -129,9 +129,7 @@
     //landscape: put header behind table view
     [self.tableView sendSubviewToBack:[self.tableView tableHeaderView]];
     
-    
-    //footer
-    self.footer.hidden = YES;
+    [self showFooter:YES];
 }
 
 /**
@@ -155,40 +153,46 @@
 
 
 
-#pragma mark - SummonerManager
+#pragma mark - UI Control
 /**
- * @method didFinishLoadingMatches:
+ * @method showAlertWithTitle:message:
  *
- * Called by SummonerManager as delegate callback
- *  when [loadMatches] has been completed.
+ * Creates an UIAlertView object with the given title & message
+ * along with self as delegate, "OK" as cancel button, and no other buttons.
+ * Immediately shows the window
  */
-- (void)didFinishLoadingMatches:(NSArray *)moreMatches
+- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message
 {
-    //append loaded matches to matches
-    [self.matches addObjectsFromArray:moreMatches];
-    
-    if (self.needsUpdate)
+    [[[UIAlertView alloc] initWithTitle:title
+                                message:message
+                               delegate:nil
+                      cancelButtonTitle:@"OK"
+                      otherButtonTitles:nil]
+     show];
+}
+
+/**
+ * @method showFooter:
+ *
+ * Given a bool, either shows footer or hides it.
+ * @param show - whether to show or hide footer
+ */
+- (void)showFooter:(BOOL)show
+{
+    CGSize size = self.footer.frame.size;
+    if (show) //show
     {
-        [self setupHeaderFooter];
-        self.needsUpdate = NO;
+        self.footer.hidden = NO;
+        self.footer.frame = CGRectMake(0,0,size.width,44);
+        self.tableView.tableFooterView = self.footer;
     }
-    [self.tableView reloadData];
+    else //dont show
+    {
+        self.footer.hidden = YES;
+        self.footer.frame = CGRectMake(0,0,size.width,10);
+        self.tableView.tableFooterView = self.footer;
+    }
 }
-
-/**
- * @method didFinishRefreshingMatches:
- *
- * Called by SummonerManager as delegate callback
- * when [refreshMatches] has been completed.
- */
-- (void)didFinishRefreshingMatches:(NSArray *)newMatches
-{
-    [self.matches insertObjects:newMatches atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, newMatches.count)]];
-    [self.tableView reloadData];
-    
-    [self.refreshControl endRefreshing];
-}
-
 
 
 #pragma mark - Table View
@@ -366,13 +370,63 @@
  */
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"cell will appear: %i", (int)indexPath.row);
-    if (indexPath.row == self.matches.count - 1)
+    if (indexPath.row == self.matches.count - 1 && !self.footer.hidden)
     {
         [self.tableView tableFooterView].hidden = NO;
         [self.footerIndicator startAnimating];
+        
+        dispatch_time_t secondDelay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
+        dispatch_after(secondDelay, dispatch_queue_create("delayed load queue", DISPATCH_QUEUE_CONCURRENT),
+        ^{
+            [self.manager loadMatches];
+        });
     }
 }
+
+
+
+#pragma mark - SummonerManager
+/**
+ * @method didFinishLoadingMatches:
+ *
+ * Called by SummonerManager as delegate callback
+ *  when [loadMatches] has been completed.
+ */
+- (void)didFinishLoadingMatches:(NSArray *)moreMatches
+{
+    if (moreMatches != nil)
+    {
+        //append loaded matches to matches
+        [self.matches addObjectsFromArray:moreMatches];
+        [self.tableView reloadData];
+        
+        if (self.needsUpdate)
+        {
+            [self setupHeaderFooter];
+            self.needsUpdate = NO;
+        }
+    }
+    else
+    {
+        [self showFooter:NO];
+        [self.footerIndicator stopAnimating];
+    }
+}
+
+/**
+ * @method didFinishRefreshingMatches:
+ *
+ * Called by SummonerManager as delegate callback
+ * when [refreshMatches] has been completed.
+ */
+- (void)didFinishRefreshingMatches:(NSArray *)newMatches
+{
+    [self.matches insertObjects:newMatches atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, newMatches.count)]];
+    [self.tableView reloadData];
+    
+    [self.refreshControl endRefreshing];
+}
+
 
 
 #pragma mark - Navigation Events
@@ -388,23 +442,6 @@
     
     [textField resignFirstResponder];
     return YES;
-}
-
-/**
- * @method showAlertWithTitle:message:
- *
- * Creates an UIAlertView object with the given title & message
- * along with self as delegate, "OK" as cancel button, and no other buttons.
- * Immediately shows the window
- */
-- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message
-{
-    [[[UIAlertView alloc] initWithTitle:title
-                                message:message
-                               delegate:nil
-                      cancelButtonTitle:@"OK"
-                      otherButtonTitles:nil]
-     show];
 }
 
 /**
