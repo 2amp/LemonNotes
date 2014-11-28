@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) NSNumber * id;
 @property (nonatomic, retain) NSNumber * lastMatchId;
+@property (nonatomic, retain) NSNumber * firstMatchId;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * region;
 @property (nonatomic, retain) NSSet *matches;

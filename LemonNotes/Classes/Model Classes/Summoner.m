@@ -14,6 +14,7 @@
 
 @dynamic id;
 @dynamic lastMatchId;
+@dynamic firstMatchId;
 @dynamic name;
 @dynamic region;
 @dynamic matches;
