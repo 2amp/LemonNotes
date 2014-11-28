@@ -37,7 +37,7 @@
 - (BOOL)hasSavedMatches;
 - (NSArray *)loadFromLocal;
 - (NSArray *)loadFromServer;
-- (NSArray *)matchHistoryFrom:(long)begin To:(long)end;
+- (NSArray *)matchHistoryFrom:(long)begin to:(long)end;
 
 @end
 
@@ -215,7 +215,7 @@
         //if registered but not saved matches, fetch all matches ever
         if (self.isRegistered && ![self hasSavedMatches])
         {
-            [self fetchAllMatches:matches Index:0];
+            [self fetchAllMatches:matches index:0];
         }
     });
 }
@@ -231,7 +231,7 @@
  * @note 1 second delay is necessary because riot limits 
  *       10 calls per 10 seconds for unregistered apps.
  */
-- (void)fetchAllMatches:(NSArray *)matches Index:(int)index
+- (void)fetchAllMatches:(NSArray *)matches index:(int)index
 {
     [self saveMatches:matches];
     
@@ -242,8 +242,8 @@
         dispatch_time_t secondDelay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
         dispatch_after(secondDelay, self.fetchQueue,
         ^{
-            NSArray *matches = [self matchHistoryFrom:index+15 To:index+30];
-            [self fetchAllMatches:matches Index:index+15];
+            NSArray *matches = [self matchHistoryFrom:index+15 to:index+30];
+            [self fetchAllMatches:matches index:index+15];
         });
     }
 }
@@ -332,7 +332,7 @@
  * @note This method does not fetch from match api,
  *       which contains the specific data for all summoners
  */
-- (NSArray *)matchHistoryFrom:(long)begin To:(long)end
+- (NSArray *)matchHistoryFrom:(long)begin to:(long)end
 {
     NSString *beginIndex = [NSString stringWithFormat:@"beginIndex=%ld", begin];
     NSString *endIndex   = [NSString stringWithFormat:@"endIndex=%ld", end];
