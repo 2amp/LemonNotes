@@ -26,7 +26,7 @@
 
 //table
 @property (nonatomic, strong) NSMutableArray* matches;
-@property (nonatomic, strong) UIRefreshControl* refreshControl;
+@property (nonatomic, strong) TAPLemonRefreshControl* refreshControl;
 
 //footer
 @property (nonatomic, weak) IBOutlet UIView* footer;
@@ -394,9 +394,10 @@
         //append loaded matches to matches
         [self.matches addObjectsFromArray:moreMatches];
         [self.tableView reloadData];
-        
+        NSLog(@"");
         if (self.needsUpdate)
         {
+            NSLog(@"%@", moreMatches);
             [self setupHeaderFooter];
             self.needsUpdate = NO;
         }

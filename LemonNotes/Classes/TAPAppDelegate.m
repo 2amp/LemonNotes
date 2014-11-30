@@ -22,8 +22,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //for now clear defaults
-    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    //NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    //[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 
     //register values for defaults that have never been set before
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{
@@ -44,8 +44,8 @@
     //data updates
     [[DataManager sharedManager] updateChampionIds];
     [[DataManager sharedManager] updateSummonerSpells];
-    [[DataManager sharedManager] deleteAllSummoners];
-    [[DataManager sharedManager] summonerDump];
+    //[[DataManager sharedManager] deleteAllSummoners];
+    //[[DataManager sharedManager] summonerDump];
 
     NSDictionary *currentSummoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
     
