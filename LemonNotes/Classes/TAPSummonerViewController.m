@@ -402,7 +402,7 @@
         NSLog(@"");
         if (self.needsUpdate)
         {
-            NSLog(@"%@", moreMatches);
+//            NSLog(@"%@", moreMatches);
             [self setupHeaderFooter];
             self.needsUpdate = NO;
         }

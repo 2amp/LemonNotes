@@ -182,7 +182,7 @@
             [self.delegate didFinishRefreshingMatches:[newMatches copy]];
         });
 
-        if (self.isRegistered)
+        if (self.isRegistered && newMatches.count > 0)
         {
             [self saveMatches:[newMatches copy]];
         }
@@ -209,7 +209,9 @@
         NSLog(@"total: %ld, loaded: %ld", self.summoner.matches.count, self.numLoadedMatches);
         
         //immediately give back to delegate
-        dispatch_async(dispatch_get_main_queue(), ^{ [self.delegate didFinishLoadingMatches:matches]; });
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate didFinishLoadingMatches:matches];
+        });
 
         //if registered but not saved matches, fetch all matches ever
         if (self.isRegistered && ![self hasSavedMatches])
@@ -390,14 +392,13 @@
             
         }
     }
-    
+
+    // FIXME: Crashes when matches is an empty array because firstMatchId is set to nil
+
     //set matchId end points
     if (self.summoner.matches.count == 0)
     {
         self.summoner.lastMatchId = [matches firstObject][@"matchId"];
-    }
-    if (self.summoner.matches.count == 0)
-    {
         self.summoner.firstMatchId = [matches lastObject][@"matchId"];
     }
     self.summoner.lastMatchId =  MAX(self.summoner.lastMatchId, [matches firstObject][@"matchId"]);
