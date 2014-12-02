@@ -206,7 +206,6 @@
         //increment number of loaded matches
         self.numLoadedMatches += matches.count;
         self.oldestLoadedMatchId = [[matches lastObject][@"matchId"] longValue];
-        NSLog(@"oldest loaded match id: %ld", self.oldestLoadedMatchId);
         NSLog(@"total: %ld, loaded: %ld", self.summoner.matches.count, self.numLoadedMatches);
         
         //immediately give back to delegate
@@ -269,24 +268,26 @@
     }
     
     //if -1, then set to basically infinity
-    if (self.oldestLoadedMatchId < 0)
-    {
-        self.oldestLoadedMatchId = ULLONG_MAX;
-    }
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"summoner == %@ AND %@ <= matchId AND matchId < %@",
-                                                self.summoner,
-                                                self.summoner.firstMatchId,
-                                                [NSNumber numberWithLong:self.oldestLoadedMatchId]];
+    self.oldestLoadedMatchId = (self.oldestLoadedMatchId > 0) ? self.oldestLoadedMatchId : LONG_MAX;
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"summoner == %@ AND %@ <= matchId AND matchId < %@",
+//                                                              self.summoner,
+//                                                              self.summoner.firstMatchId,
+//                                                              [NSNumber numberWithLong:self.oldestLoadedMatchId]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"summoner == %@ AND %@ <= matchId",
+                              self.summoner,
+                              self.summoner.firstMatchId];
     
     //set fetch
     NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"Match"];
-    [fetch setPredicate:predicate];
+    //[fetch setPredicate:predicate];
     [fetch setFetchLimit:fetchLimit];
     [fetch setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:NO]]];
     
     //make fetch
     NSError *error = nil;
     NSArray *matchEntities = [self.managedObjectContext executeFetchRequest:fetch error:&error];
+    
+    NSLog(@"matches: %@", ((Match*)[self.summoner.matches anyObject]).matchId);
     
     //for every match from core data, convert to readable dictionary
     NSMutableArray *matches = [[NSMutableArray alloc] init];
