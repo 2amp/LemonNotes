@@ -13,8 +13,11 @@
  * VC implementing this class needs to call - pulledTo:
  * when the user scrolls and pass this the offset.
  */
-@interface TAPLemonRefreshControl : UIRefreshControl
+@interface TAPLemonRefreshControl : UIControl
 
-- (void)pulledTo:(CGFloat)y;
+- (void)endRefreshing;
+- (void)beginRefreshing;
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView;
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView;
 
 @end

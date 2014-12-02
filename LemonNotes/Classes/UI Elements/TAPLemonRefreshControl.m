@@ -5,8 +5,7 @@
 
 @interface TAPLemonRefreshControl()
 
-@property (nonatomic) BOOL isAnimating;
-@property (nonatomic, strong) UIView *customView;
+@property (nonatomic) BOOL isRefreshing;
 @property (nonatomic, strong) NSArray *lemonParts;
 @property (nonatomic, strong) UIImageView *imageView;
 
@@ -27,75 +26,34 @@
  * @note currently frame of imageview is setup manually
  *       should be changed soon for good coding practice.
  */
-- (instancetype)init
+- (instancetype)initWithFrame:(CGRect)frame
 {
-    if (self = [super init])
+    if (self = [super initWithFrame:frame])
     {
-        //hide original
-        self.tintColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor clearColor];
         
-        //custom view for refreshing
-        self.customView = [[UIView alloc] init];
-        self.customView.backgroundColor = [UIColor whiteColor];
-        
-        //lemon parts
+        //lemon image
+        CGFloat imageLength = 30;
+        CGFloat frameCenter = (frame.size.width / 2.0)- imageLength/2.0;
+        self.imageView.frame = CGRectMake(frameCenter, 5, imageLength, imageLength);
         self.lemonParts = @[
-            [UIImage imageNamed:@"Lemon Indicator 0.jpg"],
-            [UIImage imageNamed:@"Lemon Indicator 1.jpg"],
-            [UIImage imageNamed:@"Lemon Indicator 2.jpg"],
-            [UIImage imageNamed:@"Lemon Indicator 3.jpg"],
-            [UIImage imageNamed:@"Lemon Indicator 4.jpg"]
+            [UIImage imageNamed:@"Lemon Indicator 0.png"],
+            [UIImage imageNamed:@"Lemon Indicator 1.png"],
+            [UIImage imageNamed:@"Lemon Indicator 2.png"],
+            [UIImage imageNamed:@"Lemon Indicator 3.png"],
+            [UIImage imageNamed:@"Lemon Indicator 4.png"],
+            [UIImage imageNamed:@"Lemon Indicator 5.png"],
+            [UIImage imageNamed:@"Lemon Indicator 6.png"],
+            [UIImage imageNamed:@"Lemon Indicator 7.png"],
+            [UIImage imageNamed:@"Lemon Indicator 8.png"],
         ];
-        self.imageView = [[UIImageView alloc] initWithImage:self.lemonParts[4]];
-        self.imageView.frame = CGRectMake(162.5, 5, 50, 50);
+        self.imageView = [[UIImageView alloc] initWithImage:self.lemonParts[8]];
         
         //other
-        self.isAnimating = NO;
+        self.isRefreshing = NO;
         [self setClipsToBounds:YES];
-        [self addSubview:self.customView];
-        [self.customView setClipsToBounds:YES];
-        [self.customView addSubview:self.imageView];
     }
     return self;
-}
-
-/**
- * @method pulledTo:
- *
- * Given the y pulled distance,
- * resets the customView's height and calculates pullDist.
- * Lemon is completed 1/4 at a time depending on pullDist.
- * When lemon starts animating, shrinking the scrollView
- * does not reduce the size of the lemon back (cuz that's werid).
- *
- * @note currently pullDist is not 100 based, but is coded like so,
- *       therefore should be changed in the near future
- * 
- * @param y - float value of the pulled distance (should be given negative)
- */
-- (void)pulledTo:(CGFloat)y
-{
-    //set custom view size
-    self.customView.frame = CGRectMake(0,0, self.bounds.size.width, -y);
-
-    //pull positions
-    CGFloat pullDist = -y;
-    
-    //set image accordingly
-    if (!self.isAnimating)
-    {
-        if (pullDist >= 100)    self.imageView.image = self.lemonParts[4];
-        else if (pullDist > 75) self.imageView.image = self.lemonParts[3];
-        else if (pullDist > 50) self.imageView.image = self.lemonParts[2];
-        else if (pullDist > 25) self.imageView.image = self.lemonParts[1];
-        else if (pullDist > 0 ) self.imageView.image = self.lemonParts[0];
-    }
-    
-    if (self.isRefreshing && !self.isAnimating)
-    {
-        self.imageView.image = self.lemonParts[4];
-        [self animate];
-    }
 }
 
 /**
@@ -107,7 +65,7 @@
  */
 - (void)animate
 {
-    self.isAnimating = YES;
+    self.isRefreshing = YES;
     
     void (^spin)() = ^()
     {
@@ -116,7 +74,7 @@
     
     void (^done)(BOOL finished) = ^(BOOL finished)
     {
-        if (self.isAnimating)
+        if (self.isRefreshing)
         {
             [self animate];
         }
@@ -136,11 +94,51 @@
  */
 - (void)endRefreshing
 {
-    [super endRefreshing];
-    
-    self.isAnimating = NO;
+    self.isRefreshing = NO;
     self.imageView.image = self.lemonParts[0];
     self.imageView.transform = CGAffineTransformMakeRotation(0);
+}
+
+/**
+ * @method beginRefreshing
+ *
+ * Called when something needs loading, and UI need to indicate it.
+ *
+ */
+- (void)beginRefreshing
+{
+    self.isRefreshing = YES;
+    [self animate];
+}
+
+/**
+ * @method didScroll
+ *
+ *
+ */
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offset = scrollView.contentOffset.y;
+    if (offset < 0)
+    {
+        
+    }
+}
+
+/**
+ * @method didEndDragging:
+ *
+ *
+ *
+ * @param scrollView to which this RefreshControl is attached to
+ */
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
+{
+    CGFloat triggerHeight = 50.0f;
+    if (scrollView.contentOffset.y <= -triggerHeight)
+    {
+        [self sendActionsForControlEvents:UIControlEventValueChanged];
+    }
 }
 
 @end
