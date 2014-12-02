@@ -391,12 +391,18 @@
     }
     
     //set matchId end points
-    if (self.summoner.matches.count == 0)  self.summoner.lastMatchId = [matches firstObject][@"matchId"];
-    if (self.summoner.matches.count == 0) self.summoner.firstMatchId = [matches lastObject][@"matchId"];
+    if (self.summoner.matches.count == 0)
+    {
+        self.summoner.lastMatchId = [matches firstObject][@"matchId"];
+    }
+    if (self.summoner.matches.count == 0)
+    {
+        self.summoner.firstMatchId = [matches lastObject][@"matchId"];
+    }
     self.summoner.lastMatchId =  MAX(self.summoner.lastMatchId, [matches firstObject][@"matchId"]);
     self.summoner.firstMatchId = MIN(self.summoner.firstMatchId, [matches lastObject][@"matchId"]);
-    //NSLog(@"last: %@, first: %@", self.summoner.lastMatchId, self.summoner.firstMatchId);
-    
+    NSLog(@"last: %@, first: %@", self.summoner.lastMatchId, self.summoner.firstMatchId);
+
     [self saveContext];
 }
 
