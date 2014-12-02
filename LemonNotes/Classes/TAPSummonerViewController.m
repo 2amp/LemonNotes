@@ -146,7 +146,7 @@
     self.refreshControl.tintColor = [UIColor whiteColor];
     
     [self setRefreshControl:self.refreshControl];
-    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    //[self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
 }
 
 
@@ -214,11 +214,13 @@
  */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat scrollY = self.tableView.contentOffset.y;
-//    if (scrollY < 0)
-//    {
-//        [self.refreshControl pulledTo:self.tableView.contentOffset.y];
-//    }
+    [self.refreshControl scrollViewDidScroll:scrollView];
+}
+
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [self.refreshControl scrollViewDidEndDragging:scrollView];
 }
 
 /**

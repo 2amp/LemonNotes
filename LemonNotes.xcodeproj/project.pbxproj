@@ -749,14 +749,18 @@
 		95153AA21A1746D7003EA211 /* 2AM Productions Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 95153A5E1A1746D7003EA211 /* 2AM Productions Logo.png */; };
 		95153AA31A1746D7003EA211 /* Lemon Notes Logo (Aligned).png in Resources */ = {isa = PBXBuildFile; fileRef = 95153A5F1A1746D7003EA211 /* Lemon Notes Logo (Aligned).png */; };
 		95153AA41A1746D7003EA211 /* Lemon Notes Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 95153A601A1746D7003EA211 /* Lemon Notes Logo.png */; };
+		9522BCA31A2E71830037F84C /* Lemon Indicator 0.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BC981A2E71830037F84C /* Lemon Indicator 0.png */; };
+		9522BCA41A2E71830037F84C /* Lemon Indicator 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BC991A2E71830037F84C /* Lemon Indicator 1.png */; };
+		9522BCA51A2E71830037F84C /* Lemon Indicator 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BC9A1A2E71830037F84C /* Lemon Indicator 2.png */; };
+		9522BCA61A2E71830037F84C /* Lemon Indicator 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BC9B1A2E71830037F84C /* Lemon Indicator 3.png */; };
+		9522BCA71A2E71830037F84C /* Lemon Indicator 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BC9C1A2E71830037F84C /* Lemon Indicator 4.png */; };
+		9522BCA81A2E71830037F84C /* Lemon Indicator 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BC9D1A2E71830037F84C /* Lemon Indicator 5.png */; };
+		9522BCA91A2E71830037F84C /* Lemon Indicator 6.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BC9E1A2E71830037F84C /* Lemon Indicator 6.png */; };
+		9522BCAA1A2E71830037F84C /* Lemon Indicator 7.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BC9F1A2E71830037F84C /* Lemon Indicator 7.png */; };
+		9522BCAB1A2E71830037F84C /* Lemon Indicator 8.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BCA01A2E71830037F84C /* Lemon Indicator 8.png */; };
+		9522BCAC1A2E71830037F84C /* Lemon Indicator.idraw in Resources */ = {isa = PBXBuildFile; fileRef = 9522BCA11A2E71830037F84C /* Lemon Indicator.idraw */; };
+		9522BCAD1A2E71830037F84C /* Lemon Indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BCA21A2E71830037F84C /* Lemon Indicator.png */; };
 		953C75151A19E75000832A55 /* TAPLemonRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 953C75141A19E75000832A55 /* TAPLemonRefreshControl.m */; };
-		953C751E1A19E79800832A55 /* Lemon Indicator 0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 953C75171A19E79800832A55 /* Lemon Indicator 0.jpg */; };
-		953C751F1A19E79800832A55 /* Lemon Indicator 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 953C75181A19E79800832A55 /* Lemon Indicator 1.jpg */; };
-		953C75201A19E79800832A55 /* Lemon Indicator 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 953C75191A19E79800832A55 /* Lemon Indicator 2.jpg */; };
-		953C75211A19E79800832A55 /* Lemon Indicator 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 953C751A1A19E79800832A55 /* Lemon Indicator 3.jpg */; };
-		953C75221A19E79800832A55 /* Lemon Indicator 4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 953C751B1A19E79800832A55 /* Lemon Indicator 4.jpg */; };
-		953C75231A19E79800832A55 /* Lemon Indicator.idraw in Resources */ = {isa = PBXBuildFile; fileRef = 953C751C1A19E79800832A55 /* Lemon Indicator.idraw */; };
-		953C75241A19E79800832A55 /* Lemon Indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 953C751D1A19E79800832A55 /* Lemon Indicator.png */; };
 		953C75261A1A749200832A55 /* 0000.png in Resources */ = {isa = PBXBuildFile; fileRef = 953C75251A1A749200832A55 /* 0000.png */; };
 		958136101A0C8B69000D8D43 /* NSURLSession+SynchronousTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581360F1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.m */; };
 		959157B91A0EDFD00098A610 /* Aatrox_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 959157401A0EDFCF0098A610 /* Aatrox_0.jpg */; };
@@ -1653,15 +1657,19 @@
 		95153A5E1A1746D7003EA211 /* 2AM Productions Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2AM Productions Logo.png"; sourceTree = "<group>"; };
 		95153A5F1A1746D7003EA211 /* Lemon Notes Logo (Aligned).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Notes Logo (Aligned).png"; sourceTree = "<group>"; };
 		95153A601A1746D7003EA211 /* Lemon Notes Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Notes Logo.png"; sourceTree = "<group>"; };
+		9522BC981A2E71830037F84C /* Lemon Indicator 0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator 0.png"; sourceTree = "<group>"; };
+		9522BC991A2E71830037F84C /* Lemon Indicator 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator 1.png"; sourceTree = "<group>"; };
+		9522BC9A1A2E71830037F84C /* Lemon Indicator 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator 2.png"; sourceTree = "<group>"; };
+		9522BC9B1A2E71830037F84C /* Lemon Indicator 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator 3.png"; sourceTree = "<group>"; };
+		9522BC9C1A2E71830037F84C /* Lemon Indicator 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator 4.png"; sourceTree = "<group>"; };
+		9522BC9D1A2E71830037F84C /* Lemon Indicator 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator 5.png"; sourceTree = "<group>"; };
+		9522BC9E1A2E71830037F84C /* Lemon Indicator 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator 6.png"; sourceTree = "<group>"; };
+		9522BC9F1A2E71830037F84C /* Lemon Indicator 7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator 7.png"; sourceTree = "<group>"; };
+		9522BCA01A2E71830037F84C /* Lemon Indicator 8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator 8.png"; sourceTree = "<group>"; };
+		9522BCA11A2E71830037F84C /* Lemon Indicator.idraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lemon Indicator.idraw"; sourceTree = "<group>"; };
+		9522BCA21A2E71830037F84C /* Lemon Indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator.png"; sourceTree = "<group>"; };
 		953C75131A19E75000832A55 /* TAPLemonRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPLemonRefreshControl.h; sourceTree = "<group>"; };
 		953C75141A19E75000832A55 /* TAPLemonRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPLemonRefreshControl.m; sourceTree = "<group>"; };
-		953C75171A19E79800832A55 /* Lemon Indicator 0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Lemon Indicator 0.jpg"; sourceTree = "<group>"; };
-		953C75181A19E79800832A55 /* Lemon Indicator 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Lemon Indicator 1.jpg"; sourceTree = "<group>"; };
-		953C75191A19E79800832A55 /* Lemon Indicator 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Lemon Indicator 2.jpg"; sourceTree = "<group>"; };
-		953C751A1A19E79800832A55 /* Lemon Indicator 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Lemon Indicator 3.jpg"; sourceTree = "<group>"; };
-		953C751B1A19E79800832A55 /* Lemon Indicator 4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Lemon Indicator 4.jpg"; sourceTree = "<group>"; };
-		953C751C1A19E79800832A55 /* Lemon Indicator.idraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lemon Indicator.idraw"; sourceTree = "<group>"; };
-		953C751D1A19E79800832A55 /* Lemon Indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator.png"; sourceTree = "<group>"; };
 		953C75251A1A749200832A55 /* 0000.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0000.png; sourceTree = "<group>"; };
 		9581360E1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSession+SynchronousTask.h"; sourceTree = "<group>"; };
 		9581360F1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSession+SynchronousTask.m"; sourceTree = "<group>"; };
@@ -2336,7 +2344,8 @@
 				8984EF5A19F6341000C442FC /* TAPSignInViewController.m */,
 				895922DB1A075E9C00F00637 /* TAPRootViewController.h */,
 				895922DC1A075E9C00F00637 /* TAPRootViewController.m */,
-				9532FA561A0F6643005E9000 /* SummonerNavigation */,
+				95F162DF1A034C9B00DECF93 /* TAPSummonerViewController.h */,
+				95F162E01A034C9B00DECF93 /* TAPSummonerViewController.m */,
 				89A86C0919F8E60300477FC6 /* TAPStartGameViewController.h */,
 				89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */,
 				895922DE1A07FD9000F00637 /* TAPSideMenuViewController.h */,
@@ -2740,25 +2749,20 @@
 			path = Logos;
 			sourceTree = "<group>";
 		};
-		9532FA561A0F6643005E9000 /* SummonerNavigation */ = {
-			isa = PBXGroup;
-			children = (
-				95F162DF1A034C9B00DECF93 /* TAPSummonerViewController.h */,
-				95F162E01A034C9B00DECF93 /* TAPSummonerViewController.m */,
-			);
-			name = SummonerNavigation;
-			sourceTree = "<group>";
-		};
 		953C75161A19E79800832A55 /* Refresh */ = {
 			isa = PBXGroup;
 			children = (
-				953C75171A19E79800832A55 /* Lemon Indicator 0.jpg */,
-				953C75181A19E79800832A55 /* Lemon Indicator 1.jpg */,
-				953C75191A19E79800832A55 /* Lemon Indicator 2.jpg */,
-				953C751A1A19E79800832A55 /* Lemon Indicator 3.jpg */,
-				953C751B1A19E79800832A55 /* Lemon Indicator 4.jpg */,
-				953C751C1A19E79800832A55 /* Lemon Indicator.idraw */,
-				953C751D1A19E79800832A55 /* Lemon Indicator.png */,
+				9522BC981A2E71830037F84C /* Lemon Indicator 0.png */,
+				9522BC991A2E71830037F84C /* Lemon Indicator 1.png */,
+				9522BC9A1A2E71830037F84C /* Lemon Indicator 2.png */,
+				9522BC9B1A2E71830037F84C /* Lemon Indicator 3.png */,
+				9522BC9C1A2E71830037F84C /* Lemon Indicator 4.png */,
+				9522BC9D1A2E71830037F84C /* Lemon Indicator 5.png */,
+				9522BC9E1A2E71830037F84C /* Lemon Indicator 6.png */,
+				9522BC9F1A2E71830037F84C /* Lemon Indicator 7.png */,
+				9522BCA01A2E71830037F84C /* Lemon Indicator 8.png */,
+				9522BCA11A2E71830037F84C /* Lemon Indicator.idraw */,
+				9522BCA21A2E71830037F84C /* Lemon Indicator.png */,
 			);
 			path = Refresh;
 			sourceTree = "<group>";
@@ -3107,7 +3111,6 @@
 				95084B131A1B37AD0052F40F /* 17.png in Resources */,
 				95084B241A1B37AD0052F40F /* 502.png in Resources */,
 				8959216B1A0330F600F00637 /* 3154.png in Resources */,
-				953C75241A19E79800832A55 /* Lemon Indicator.png in Resources */,
 				9591581A1A0EDFD00098A610 /* Trundle_0.jpg in Resources */,
 				95084BD21A1B37AD0052F40F /* 675.png in Resources */,
 				95084B8E1A1B37AD0052F40F /* 607.png in Resources */,
@@ -3127,6 +3130,7 @@
 				95084BF81A1B37AD0052F40F /* 712.png in Resources */,
 				95153A9C1A1746D7003EA211 /* trash (full).png in Resources */,
 				895920741A0330F600F00637 /* Corki.png in Resources */,
+				9522BCA71A2E71830037F84C /* Lemon Indicator 4.png in Resources */,
 				95084BD71A1B37AD0052F40F /* 680.png in Resources */,
 				8959214D1A0330F600F00637 /* 3106.png in Resources */,
 				895920A61A0330F600F00637 /* Nautilus.png in Resources */,
@@ -3162,6 +3166,7 @@
 				895920F51A0330F600F00637 /* 1057.png in Resources */,
 				895920D31A0330F600F00637 /* Volibear.png in Resources */,
 				95153A9B1A1746D7003EA211 /* timer (line).png in Resources */,
+				9522BCAB1A2E71830037F84C /* Lemon Indicator 8.png in Resources */,
 				895921C41A0330F600F00637 /* 3409.png in Resources */,
 				8959213B1A0330F600F00637 /* 3083.png in Resources */,
 				959157F41A0EDFD00098A610 /* MissFortune_0.jpg in Resources */,
@@ -3251,6 +3256,7 @@
 				95084B871A1B37AD0052F40F /* 600.png in Resources */,
 				95084B971A1B37AD0052F40F /* 616.png in Resources */,
 				95153AA31A1746D7003EA211 /* Lemon Notes Logo (Aligned).png in Resources */,
+				9522BCA51A2E71830037F84C /* Lemon Indicator 2.png in Resources */,
 				895922D71A0330F600F00637 /* SummonerTeleport.png in Resources */,
 				95153A641A1746D7003EA211 /* back (line).png in Resources */,
 				895921321A0330F600F00637 /* 3070.png in Resources */,
@@ -3312,6 +3318,7 @@
 				959157D41A0EDFD00098A610 /* Gangplank_0.jpg in Resources */,
 				959157F71A0EDFD00098A610 /* Morgana_0.jpg in Resources */,
 				95084B6F1A1B37AD0052F40F /* 577.png in Resources */,
+				9522BCAD1A2E71830037F84C /* Lemon Indicator.png in Resources */,
 				895920C41A0330F600F00637 /* Thresh.png in Resources */,
 				959157F61A0EDFD00098A610 /* Mordekaiser_0.jpg in Resources */,
 				895921CA1A0330F600F00637 /* 3415.png in Resources */,
@@ -3327,6 +3334,7 @@
 				895920BE1A0330F600F00637 /* Soraka.png in Resources */,
 				895921761A0330F600F00637 /* 3169.png in Resources */,
 				95084BEA1A1B37AD0052F40F /* 699.png in Resources */,
+				9522BCA61A2E71830037F84C /* Lemon Indicator 3.png in Resources */,
 				95084C0B1A1B37AD0052F40F /* 731.png in Resources */,
 				895921801A0330F600F00637 /* 3187.png in Resources */,
 				895921981A0330F600F00637 /* 3258.png in Resources */,
@@ -3334,6 +3342,7 @@
 				8959207D1A0330F600F00637 /* Fiora.png in Resources */,
 				959157D31A0EDFD00098A610 /* Galio_0.jpg in Resources */,
 				895920841A0330F600F00637 /* Graves.png in Resources */,
+				9522BCA91A2E71830037F84C /* Lemon Indicator 6.png in Resources */,
 				959157C81A0EDFD00098A610 /* Corki_0.jpg in Resources */,
 				895921191A0330F600F00637 /* 3023.png in Resources */,
 				8959211B1A0330F600F00637 /* 3025.png in Resources */,
@@ -3411,6 +3420,7 @@
 				959157CE1A0EDFD00098A610 /* Evelynn_0.jpg in Resources */,
 				8959216E1A0330F600F00637 /* 3157.png in Resources */,
 				959158091A0EDFD00098A610 /* Sejuani_0.jpg in Resources */,
+				9522BCA81A2E71830037F84C /* Lemon Indicator 5.png in Resources */,
 				95153A631A1746D7003EA211 /* back (fill).png in Resources */,
 				959157C41A0EDFD00098A610 /* Braum_0.jpg in Resources */,
 				895920C61A0330F600F00637 /* Trundle.png in Resources */,
@@ -3421,9 +3431,7 @@
 				95084BA91A1B37AD0052F40F /* 634.png in Resources */,
 				895920B21A0330F600F00637 /* Riven.png in Resources */,
 				895920C91A0330F600F00637 /* Twitch.png in Resources */,
-				953C75201A19E79800832A55 /* Lemon Indicator 2.jpg in Resources */,
 				959158291A0EDFD00098A610 /* Xerath_0.jpg in Resources */,
-				953C75211A19E79800832A55 /* Lemon Indicator 3.jpg in Resources */,
 				895920EA1A0330F600F00637 /* 1037.png in Resources */,
 				95084B0A1A1B37AD0052F40F /* 0.png in Resources */,
 				95084B561A1B37AD0052F40F /* 552.png in Resources */,
@@ -3431,7 +3439,6 @@
 				95153A731A1746D7003EA211 /* download (fill).png in Resources */,
 				895920AC1A0330F600F00637 /* Pantheon.png in Resources */,
 				959157CC1A0EDFD00098A610 /* DrMundo_0.jpg in Resources */,
-				953C751F1A19E79800832A55 /* Lemon Indicator 1.jpg in Resources */,
 				959157FE1A0EDFD00098A610 /* Olaf_0.jpg in Resources */,
 				95153A6D1A1746D7003EA211 /* clock (fill).png in Resources */,
 				95084BF91A1B37AD0052F40F /* 713.png in Resources */,
@@ -3466,6 +3473,7 @@
 				895921AC1A0330F600F00637 /* 3278.png in Resources */,
 				95084B2A1A1B37AD0052F40F /* 508.png in Resources */,
 				95153A991A1746D7003EA211 /* stopwatch (line).png in Resources */,
+				9522BCA31A2E71830037F84C /* Lemon Indicator 0.png in Resources */,
 				95084BF71A1B37AD0052F40F /* 711.png in Resources */,
 				895921421A0330F600F00637 /* 3091.png in Resources */,
 				8959207E1A0330F600F00637 /* Fizz.png in Resources */,
@@ -3522,6 +3530,7 @@
 				95084B8B1A1B37AD0052F40F /* 604.png in Resources */,
 				8959217F1A0330F600F00637 /* 3185.png in Resources */,
 				959157CB1A0EDFD00098A610 /* Draven_0.jpg in Resources */,
+				9522BCAC1A2E71830037F84C /* Lemon Indicator.idraw in Resources */,
 				95084B6B1A1B37AD0052F40F /* 573.png in Resources */,
 				895920B61A0330F600F00637 /* Shaco.png in Resources */,
 				8959217B1A0330F600F00637 /* 3175.png in Resources */,
@@ -3596,7 +3605,6 @@
 				895921571A0330F600F00637 /* 3122.png in Resources */,
 				959157D11A0EDFD00098A610 /* Fiora_0.jpg in Resources */,
 				95084C151A1B37AD0052F40F /* 8.png in Resources */,
-				953C75221A19E79800832A55 /* Lemon Indicator 4.jpg in Resources */,
 				9591582E1A0EDFD00098A610 /* Zed_0.jpg in Resources */,
 				8959219C1A0330F600F00637 /* 3262.png in Resources */,
 				895921591A0330F600F00637 /* 3124.png in Resources */,
@@ -3721,7 +3729,6 @@
 				95084B3C1A1B37AD0052F40F /* 526.png in Resources */,
 				95084B761A1B37AD0052F40F /* 584.png in Resources */,
 				95153A871A1746D7003EA211 /* mail (fill).png in Resources */,
-				953C75231A19E79800832A55 /* Lemon Indicator.idraw in Resources */,
 				895922CE1A0330F600F00637 /* SummonerDot.png in Resources */,
 				959158141A0EDFD00098A610 /* Syndra_0.jpg in Resources */,
 				959157BC1A0EDFD00098A610 /* Alistar_0.jpg in Resources */,
@@ -3759,6 +3766,7 @@
 				895920831A0330F600F00637 /* Gragas.png in Resources */,
 				9591581D1A0EDFD00098A610 /* Twitch_0.jpg in Resources */,
 				95084B181A1B37AD0052F40F /* 21.png in Resources */,
+				9522BCA41A2E71830037F84C /* Lemon Indicator 1.png in Resources */,
 				9591581B1A0EDFD00098A610 /* Tryndamere_0.jpg in Resources */,
 				95084BC51A1B37AD0052F40F /* 662.png in Resources */,
 				95084C061A1B37AD0052F40F /* 726.png in Resources */,
@@ -3825,10 +3833,10 @@
 				95084BCA1A1B37AD0052F40F /* 667.png in Resources */,
 				895921D21A0330F600F00637 /* 3450.png in Resources */,
 				895921601A0330F600F00637 /* 3139.png in Resources */,
-				953C751E1A19E79800832A55 /* Lemon Indicator 0.jpg in Resources */,
 				95084B8F1A1B37AD0052F40F /* 608.png in Resources */,
 				895921721A0330F600F00637 /* 3165.png in Resources */,
 				95084BB81A1B37AD0052F40F /* 649.png in Resources */,
+				9522BCAA1A2E71830037F84C /* Lemon Indicator 7.png in Resources */,
 				95084B831A1B37AD0052F40F /* 597.png in Resources */,
 				895920AF1A0330F600F00637 /* Rammus.png in Resources */,
 				959158281A0EDFD00098A610 /* Warwick_0.jpg in Resources */,
