@@ -757,9 +757,9 @@
 		9522BCA81A2E71830037F84C /* Lemon Indicator 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BC9D1A2E71830037F84C /* Lemon Indicator 5.png */; };
 		9522BCA91A2E71830037F84C /* Lemon Indicator 6.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BC9E1A2E71830037F84C /* Lemon Indicator 6.png */; };
 		9522BCAA1A2E71830037F84C /* Lemon Indicator 7.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BC9F1A2E71830037F84C /* Lemon Indicator 7.png */; };
-		9522BCAB1A2E71830037F84C /* Lemon Indicator 8.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BCA01A2E71830037F84C /* Lemon Indicator 8.png */; };
 		9522BCAC1A2E71830037F84C /* Lemon Indicator.idraw in Resources */ = {isa = PBXBuildFile; fileRef = 9522BCA11A2E71830037F84C /* Lemon Indicator.idraw */; };
 		9522BCAD1A2E71830037F84C /* Lemon Indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BCA21A2E71830037F84C /* Lemon Indicator.png */; };
+		9522BCAF1A2E93DA0037F84C /* Lemon Indicator 8.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BCAE1A2E93DA0037F84C /* Lemon Indicator 8.png */; };
 		953C75151A19E75000832A55 /* TAPLemonRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 953C75141A19E75000832A55 /* TAPLemonRefreshControl.m */; };
 		953C75261A1A749200832A55 /* 0000.png in Resources */ = {isa = PBXBuildFile; fileRef = 953C75251A1A749200832A55 /* 0000.png */; };
 		958136101A0C8B69000D8D43 /* NSURLSession+SynchronousTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581360F1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.m */; };
@@ -1665,9 +1665,9 @@
 		9522BC9D1A2E71830037F84C /* Lemon Indicator 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator 5.png"; sourceTree = "<group>"; };
 		9522BC9E1A2E71830037F84C /* Lemon Indicator 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator 6.png"; sourceTree = "<group>"; };
 		9522BC9F1A2E71830037F84C /* Lemon Indicator 7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator 7.png"; sourceTree = "<group>"; };
-		9522BCA01A2E71830037F84C /* Lemon Indicator 8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator 8.png"; sourceTree = "<group>"; };
 		9522BCA11A2E71830037F84C /* Lemon Indicator.idraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lemon Indicator.idraw"; sourceTree = "<group>"; };
 		9522BCA21A2E71830037F84C /* Lemon Indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator.png"; sourceTree = "<group>"; };
+		9522BCAE1A2E93DA0037F84C /* Lemon Indicator 8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator 8.png"; sourceTree = "<group>"; };
 		953C75131A19E75000832A55 /* TAPLemonRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPLemonRefreshControl.h; sourceTree = "<group>"; };
 		953C75141A19E75000832A55 /* TAPLemonRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPLemonRefreshControl.m; sourceTree = "<group>"; };
 		953C75251A1A749200832A55 /* 0000.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0000.png; sourceTree = "<group>"; };
@@ -2760,7 +2760,7 @@
 				9522BC9D1A2E71830037F84C /* Lemon Indicator 5.png */,
 				9522BC9E1A2E71830037F84C /* Lemon Indicator 6.png */,
 				9522BC9F1A2E71830037F84C /* Lemon Indicator 7.png */,
-				9522BCA01A2E71830037F84C /* Lemon Indicator 8.png */,
+				9522BCAE1A2E93DA0037F84C /* Lemon Indicator 8.png */,
 				9522BCA11A2E71830037F84C /* Lemon Indicator.idraw */,
 				9522BCA21A2E71830037F84C /* Lemon Indicator.png */,
 			);
@@ -3166,7 +3166,6 @@
 				895920F51A0330F600F00637 /* 1057.png in Resources */,
 				895920D31A0330F600F00637 /* Volibear.png in Resources */,
 				95153A9B1A1746D7003EA211 /* timer (line).png in Resources */,
-				9522BCAB1A2E71830037F84C /* Lemon Indicator 8.png in Resources */,
 				895921C41A0330F600F00637 /* 3409.png in Resources */,
 				8959213B1A0330F600F00637 /* 3083.png in Resources */,
 				959157F41A0EDFD00098A610 /* MissFortune_0.jpg in Resources */,
@@ -3731,6 +3730,7 @@
 				95153A871A1746D7003EA211 /* mail (fill).png in Resources */,
 				895922CE1A0330F600F00637 /* SummonerDot.png in Resources */,
 				959158141A0EDFD00098A610 /* Syndra_0.jpg in Resources */,
+				9522BCAF1A2E93DA0037F84C /* Lemon Indicator 8.png in Resources */,
 				959157BC1A0EDFD00098A610 /* Alistar_0.jpg in Resources */,
 				895921871A0330F600F00637 /* 3200.png in Resources */,
 				895920B51A0330F600F00637 /* Sejuani.png in Resources */,

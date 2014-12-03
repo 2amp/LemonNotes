@@ -15,6 +15,8 @@
  */
 @interface TAPLemonRefreshControl : UIControl
 
+@property (nonatomic) BOOL isRefreshing;
+
 - (void)endRefreshing;
 - (void)beginRefreshing;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView;

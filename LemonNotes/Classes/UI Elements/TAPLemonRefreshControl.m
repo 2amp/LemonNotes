@@ -5,7 +5,8 @@
 
 @interface TAPLemonRefreshControl()
 
-@property (nonatomic) BOOL isRefreshing;
+@property (nonatomic) CGFloat triggerHeight;
+
 @property (nonatomic, strong) NSArray *lemonParts;
 @property (nonatomic, strong) UIImageView *imageView;
 
@@ -26,16 +27,17 @@
  * @note currently frame of imageview is setup manually
  *       should be changed soon for good coding practice.
  */
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)init
 {
-    if (self = [super initWithFrame:frame])
+    if (self = [super init])
     {
+        //UI setup
+        CGSize size = [UIScreen mainScreen].bounds.size;
+        self.frame = CGRectMake(0, 0, size.width, 0);
         self.backgroundColor = [UIColor clearColor];
+        self.clipsToBounds = YES;
         
-        //lemon image
-        CGFloat imageLength = 30;
-        CGFloat frameCenter = (frame.size.width / 2.0)- imageLength/2.0;
-        self.imageView.frame = CGRectMake(frameCenter, 5, imageLength, imageLength);
+        //setup images
         self.lemonParts = @[
             [UIImage imageNamed:@"Lemon Indicator 0.png"],
             [UIImage imageNamed:@"Lemon Indicator 1.png"],
@@ -45,13 +47,20 @@
             [UIImage imageNamed:@"Lemon Indicator 5.png"],
             [UIImage imageNamed:@"Lemon Indicator 6.png"],
             [UIImage imageNamed:@"Lemon Indicator 7.png"],
-            [UIImage imageNamed:@"Lemon Indicator 8.png"],
+            [UIImage imageNamed:@"Lemon Indicator 8.png"]
         ];
-        self.imageView = [[UIImageView alloc] initWithImage:self.lemonParts[8]];
         
-        //other
+        //setu imageview
+        CGFloat imageLength = 40;
+        CGFloat frameCenter = (size.width / 2.0) - (imageLength / 2.0);
+        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(frameCenter, 10, imageLength, imageLength)];
+        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        self.imageView.image = [self.lemonParts firstObject];
+        [self addSubview:self.imageView];
+        
+        //refresh variables
         self.isRefreshing = NO;
-        [self setClipsToBounds:YES];
+        self.triggerHeight = 150.0f;
     }
     return self;
 }
@@ -80,7 +89,7 @@
         }
     };
     
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveLinear animations:spin completion:done];
+    [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveLinear animations:spin completion:done];
 }
 
 /**
@@ -118,10 +127,22 @@
  */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat offset = scrollView.contentOffset.y;
-    if (offset < 0)
+    CGFloat offsetY = -scrollView.contentOffset.y;
+    if (offsetY > 0)
     {
+        CGSize size = self.frame.size;
+        self.frame = CGRectMake(0, -offsetY, size.width, offsetY);
         
+        if (offsetY >= self.triggerHeight)
+        {
+            [self beginRefreshing];
+        }
+        else if (!self.isRefreshing)
+        {
+            int part = offsetY / (self.triggerHeight / self.lemonParts.count);
+            part = (int)MIN(part, self.lemonParts.count-1);
+            self.imageView.image = self.lemonParts[part];
+        }
     }
 }
 

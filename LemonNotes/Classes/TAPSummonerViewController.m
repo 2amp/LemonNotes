@@ -26,7 +26,7 @@
 
 //table
 @property (nonatomic, strong) NSMutableArray* matches;
-@property (nonatomic, strong) TAPLemonRefreshControl* refreshControl;
+@property (nonatomic, strong) TAPLemonRefreshControl* lemonRefresh;
 
 //footer
 @property (nonatomic, weak) IBOutlet UIView* footer;
@@ -141,11 +141,9 @@
     self.matches = [[NSMutableArray alloc] init];
     
     //custom refresh control
-    self.refreshControl = [[TAPLemonRefreshControl alloc] init];
-    self.refreshControl.backgroundColor = [UIColor orangeColor];
-    self.refreshControl.tintColor = [UIColor whiteColor];
-    
-    [self setRefreshControl:self.refreshControl];
+    self.lemonRefresh = [[TAPLemonRefreshControl alloc] init];
+    [self.tableView addSubview:self.lemonRefresh];
+    //[self.tableView sendSubviewToBack:self.refreshControl];
     //[self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
 }
 
@@ -214,13 +212,21 @@
  */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self.refreshControl scrollViewDidScroll:scrollView];
+    [self.lemonRefresh scrollViewDidScroll:scrollView];
 }
 
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    [self.refreshControl scrollViewDidEndDragging:scrollView];
+    NSLog(@"ended");
+    [self.lemonRefresh scrollViewDidEndDragging:scrollView];
+    
+    if (self.lemonRefresh.isRefreshing)
+    {
+        CGPoint origin = self.tableView.frame.origin;
+        origin.y = -60.0f;
+        [self.tableView setContentOffset:origin animated:YES];
+    }
 }
 
 /**
@@ -396,10 +402,9 @@
         //append loaded matches to matches
         [self.matches addObjectsFromArray:moreMatches];
         [self.tableView reloadData];
-        NSLog(@"");
+        
         if (self.needsUpdate)
         {
-            NSLog(@"%@", moreMatches);
             [self setupHeaderFooter];
             self.needsUpdate = NO;
         }
