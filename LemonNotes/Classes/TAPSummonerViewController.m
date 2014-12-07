@@ -87,6 +87,7 @@
     [super viewWillAppear:YES];
     
     NSLog(@"[viewWillAppear]");
+    
     //if rootVC of nav
     if (self == [self.navigationController.viewControllers firstObject])
     {
@@ -143,10 +144,8 @@
     self.matches = [[NSMutableArray alloc] init];
     
     //custom refresh control
-    self.lemonRefresh = [[TAPLemonRefreshControl alloc] init];
-    [self.tableView addSubview:self.lemonRefresh];
-    //[self.tableView sendSubviewToBack:self.refreshControl];
-    //[self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    self.lemonRefresh = [[TAPLemonRefreshControl alloc] initWithTableView:self.tableView];
+    [self.lemonRefresh addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
 }
 
 
@@ -202,7 +201,13 @@
  */
 - (void)refresh
 {
-    [self.manager refreshMatches];
+    NSLog(@"-[TAPSummonerVC refresh]");
+    
+    double delayInSeconds = 3.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.lemonRefresh endRefreshing];
+    });
 }
 
 /**
@@ -214,21 +219,13 @@
  */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self.lemonRefresh scrollViewDidScroll:scrollView];
+    [self.lemonRefresh didScroll];
 }
 
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    NSLog(@"ended");
-    [self.lemonRefresh scrollViewDidEndDragging:scrollView];
-    
-    if (self.lemonRefresh.isRefreshing)
-    {
-        CGPoint origin = self.tableView.frame.origin;
-        origin.y = -60.0f;
-        [self.tableView setContentOffset:origin animated:YES];
-    }
+    [self.lemonRefresh didEndDragging];
 }
 
 /**

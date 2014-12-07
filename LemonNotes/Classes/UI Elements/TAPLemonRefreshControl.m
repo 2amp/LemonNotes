@@ -2,16 +2,29 @@
 #import "TAPLemonRefreshControl.h"
 
 
+#define IMAGE_SIDE 40.0f
+#define IMAGE_MARGIN 10.0f
+#define REFRESH_CONTROL_HEIGHT 50.0f
+#define REFRESH_TRIGGER_HEIGHT 150.0f
+
+typedef enum {
+    RefreshControlStateIdle = 0,
+    RefreshControlStateRefreshing = 1,
+    RefreshControlStateResetting = 2
+} TAPLemonRefreshControlState;
+
 
 @interface TAPLemonRefreshControl()
+{
+    BOOL pullEnded;
+    CGFloat storedTopInset;
+}
 
-@property (nonatomic) CGFloat triggerHeight;
-
+@property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, strong) NSArray *lemonParts;
 @property (nonatomic, strong) UIImageView *imageView;
 
 @end
-
 
 
 
@@ -27,14 +40,19 @@
  * @note currently frame of imageview is setup manually
  *       should be changed soon for good coding practice.
  */
-- (instancetype)init
+- (instancetype)initWithTableView:(UITableView *)tableView
 {
     if (self = [super init])
     {
+        //Add tableView
+        self.tableView = tableView;
+        [self.tableView addSubview:self];
+        [self.tableView sendSubviewToBack:self];
+        
         //UI setup
-        CGSize size = [UIScreen mainScreen].bounds.size;
+        CGSize size = self.tableView.frame.size;
         self.frame = CGRectMake(0, 0, size.width, 0);
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor whiteColor];
         self.clipsToBounds = YES;
         
         //setup images
@@ -50,46 +68,85 @@
             [UIImage imageNamed:@"Lemon Indicator 8.png"]
         ];
         
-        //setu imageview
-        CGFloat imageLength = 40;
-        CGFloat frameCenter = (size.width / 2.0) - (imageLength / 2.0);
-        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(frameCenter, 10, imageLength, imageLength)];
+        //setup imageview
+        CGFloat frameCenterX = (size.width / 2.0) - (IMAGE_SIDE / 2.0);
+        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(frameCenterX, IMAGE_MARGIN, IMAGE_SIDE, IMAGE_SIDE)];
         self.imageView.contentMode = UIViewContentModeScaleAspectFit;
         self.imageView.image = [self.lemonParts firstObject];
         [self addSubview:self.imageView];
         
         //refresh variables
         self.isRefreshing = NO;
-        self.triggerHeight = 150.0f;
+        pullEnded = NO;
+        storedTopInset = 0;
     }
     return self;
 }
 
+
+#pragma mark - Scroll Control
 /**
- * @method animate
+ * @method didScroll
  *
- * Recursively animates (spins) lemon while refreshing.
- * After a 0.3 animtation, if refreshing is not over,
- * - animate calls itself to for another 0.3 animation.
+ * Called by tableView when it is scrolled.
+ * Resize refresh control according to scroll.
+ * If user is pulling the tableview (scrollDist is pos.)
+ * and lemon refresh controls is not already spinning,
+ * calculate the n'th lemon piece to add.
+ * Immediate begin refreshing when lemon is completed
  */
-- (void)animate
+- (void)didScroll
+{
+    CGFloat scrollDist = -self.tableView.contentOffset.y;
+    
+    if (scrollDist > 0)
+    {
+        //set the frame
+        self.frame = CGRectMake(0, -scrollDist, self.frame.size.width, scrollDist);
+        
+        //if not already completed lemon
+        if (self.imageView.image != [self.lemonParts lastObject])
+        {
+            //get lemon part
+            int part = scrollDist / (REFRESH_TRIGGER_HEIGHT / self.lemonParts.count);
+            part = (int)MIN(part, self.lemonParts.count-1);
+            self.imageView.image = self.lemonParts[part];
+            
+            //immediately start on complete lemon
+            if (part == self.lemonParts.count-1) [self beginRefreshing];
+        }
+    }
+}
+
+/**
+ * @method didEndDragging
+ *
+ * Called by tableView when user lets go of dragging.
+ *
+ */
+- (void)didEndDragging
+{
+    pullEnded = YES;
+    [self setTopInset:storedTopInset now:YES];
+}
+
+
+#pragma mark - Refresh Begin & End
+/**
+ * @method beginRefreshing
+ *
+ * Called when something needs loading, and UI need to indicate it.
+ *
+ */
+- (void)beginRefreshing
 {
     self.isRefreshing = YES;
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
     
-    void (^spin)() = ^()
-    {
-        self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, M_PI_4);
-    };
+    CGFloat topInset = REFRESH_CONTROL_HEIGHT + (IMAGE_MARGIN * 2) - 8;
+    [self setTopInset:topInset now:pullEnded];
     
-    void (^done)(BOOL finished) = ^(BOOL finished)
-    {
-        if (self.isRefreshing)
-        {
-            [self animate];
-        }
-    };
-    
-    [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveLinear animations:spin completion:done];
+    [self animate];
 }
 
 /**
@@ -104,61 +161,63 @@
 - (void)endRefreshing
 {
     self.isRefreshing = NO;
-    self.imageView.image = self.lemonParts[0];
+    
+    CGFloat topInset = 0;
+    [self setTopInset:topInset now:pullEnded];
+    
+    pullEnded = NO;
+    self.imageView.image = [self.lemonParts firstObject];
     self.imageView.transform = CGAffineTransformMakeRotation(0);
 }
 
+
+#pragma mark - Animation & Transitions
 /**
- * @method beginRefreshing
+ * @method animate
  *
- * Called when something needs loading, and UI need to indicate it.
- *
+ * Recursively animates (spins) lemon while refreshing.
+ * After a 0.3 animtation, if refreshing is not over,
+ * - animate calls itself to for another 0.3 animation.
  */
-- (void)beginRefreshing
+- (void)animate
 {
-    self.isRefreshing = YES;
-    [self animate];
+    void (^spin)() = ^()
+    {
+        self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, M_PI_4);
+    };
+    
+    void (^done)(BOOL finished) = ^(BOOL finished)
+    {
+        if (self.isRefreshing)
+        {
+            [self animate];
+        }
+    };
+    
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:spin completion:done];
 }
 
 /**
- * @method didScroll
+ * @scrollTo:animated:
  *
- *
+ * Given a topInset, and flag for animation,
+ * scrolls the table view to the topInset.
+ * Upon finish, if the given topInset was 0,
+ * resets state to Idle
  */
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)setTopInset:(CGFloat)topInset now:(BOOL)now
 {
-    CGFloat offsetY = -scrollView.contentOffset.y;
-    if (offsetY > 0)
-    {
-        CGSize size = self.frame.size;
-        self.frame = CGRectMake(0, -offsetY, size.width, offsetY);
-        
-        if (offsetY >= self.triggerHeight)
-        {
-            [self beginRefreshing];
-        }
-        else if (!self.isRefreshing)
-        {
-            int part = offsetY / (self.triggerHeight / self.lemonParts.count);
-            part = (int)MIN(part, self.lemonParts.count-1);
-            self.imageView.image = self.lemonParts[part];
-        }
-    }
-}
+    storedTopInset = topInset;
 
-/**
- * @method didEndDragging:
- *
- *
- *
- * @param scrollView to which this RefreshControl is attached to
- */
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
-{
-    CGFloat triggerHeight = 50.0f;
-    if (scrollView.contentOffset.y <= -triggerHeight)
+    UIEdgeInsets inset = self.tableView.contentInset;
+    inset.top = topInset;
+    
+    if (now)
     {
-        [self sendActionsForControlEvents:UIControlEventValueChanged];
+        [UIView animateWithDuration:0.5f animations:^
+        {
+            self.tableView.contentInset = inset;
+        }];
     }
 }
 
