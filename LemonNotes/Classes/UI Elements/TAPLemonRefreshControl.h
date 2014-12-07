@@ -17,9 +17,11 @@
 
 @property (nonatomic) BOOL isRefreshing;
 
-- (void)endRefreshing;
+- (instancetype)initWithTableView:(UITableView *)tableView;
+
+- (void)didScroll;
+- (void)didEndDragging;
 - (void)beginRefreshing;
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView;
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView;
+- (void)endRefreshing;
 
 @end
