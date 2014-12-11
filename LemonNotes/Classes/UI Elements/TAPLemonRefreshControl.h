@@ -15,10 +15,9 @@
  */
 @interface TAPLemonRefreshControl : UIControl
 
-@property (nonatomic) BOOL isRefreshing;
-
 - (instancetype)initWithTableView:(UITableView *)tableView;
 
+@property (nonatomic, readonly) BOOL isRefreshing;
 - (void)didScroll;
 - (void)didEndDragging;
 - (void)beginRefreshing;

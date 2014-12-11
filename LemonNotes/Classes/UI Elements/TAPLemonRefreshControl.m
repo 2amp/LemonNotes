@@ -4,20 +4,23 @@
 
 #define IMAGE_SIDE 40.0f
 #define IMAGE_MARGIN 10.0f
-#define REFRESH_CONTROL_HEIGHT 50.0f
+#define TRANSITION_DURATION 0.5f
 #define REFRESH_TRIGGER_HEIGHT 150.0f
+#define REFRESH_CONTROL_HEIGHT 50 + (IMAGE_MARGIN * 2) - 8
 
 typedef enum {
-    RefreshControlStateIdle = 0,
-    RefreshControlStateRefreshing = 1,
-    RefreshControlStateResetting = 2
-} TAPLemonRefreshControlState;
+    kStateIdle = 0,
+    kStateRefreshing = 1,
+    kStateResetting = 2
+} RefreshControlState;
 
 
 @interface TAPLemonRefreshControl()
 {
     BOOL pullEnded;
+    BOOL canRefresh;
     CGFloat storedTopInset;
+    RefreshControlState state;
 }
 
 @property (nonatomic, weak) UITableView *tableView;
@@ -25,11 +28,10 @@ typedef enum {
 @property (nonatomic, strong) UIImageView *imageView;
 
 @end
-
+#pragma mark -
 
 
 @implementation TAPLemonRefreshControl
-
 #pragma mark Init
 /**
  * @method init
@@ -76,11 +78,20 @@ typedef enum {
         [self addSubview:self.imageView];
         
         //refresh variables
-        self.isRefreshing = NO;
         pullEnded = NO;
+        canRefresh = YES;
         storedTopInset = 0;
+        state = kStateIdle;
     }
     return self;
+}
+
+
+#pragma mark - Accessors
+@synthesize isRefreshing;
+- (BOOL)isRefreshing
+{
+    return state == kStateRefreshing;
 }
 
 
@@ -98,22 +109,20 @@ typedef enum {
 - (void)didScroll
 {
     CGFloat scrollDist = -self.tableView.contentOffset.y;
+    self.frame = CGRectMake(0, -scrollDist, self.frame.size.width, scrollDist);
     
-    if (scrollDist > 0)
+    //if not already completed lemon
+    if (state == kStateIdle && canRefresh && !pullEnded)
     {
-        //set the frame
-        self.frame = CGRectMake(0, -scrollDist, self.frame.size.width, scrollDist);
+        //calcuate lemon part
+        int part = scrollDist / (REFRESH_TRIGGER_HEIGHT / self.lemonParts.count);
+        part = (int)MIN(part, self.lemonParts.count-1);
+        self.imageView.image = self.lemonParts[part];
         
-        //if not already completed lemon
-        if (self.imageView.image != [self.lemonParts lastObject])
+        //immediate refresh on completing lemon
+        if (self.imageView.image == [self.lemonParts lastObject])
         {
-            //get lemon part
-            int part = scrollDist / (REFRESH_TRIGGER_HEIGHT / self.lemonParts.count);
-            part = (int)MIN(part, self.lemonParts.count-1);
-            self.imageView.image = self.lemonParts[part];
-            
-            //immediately start on complete lemon
-            if (part == self.lemonParts.count-1) [self beginRefreshing];
+            [self beginRefreshing];
         }
     }
 }
@@ -122,7 +131,6 @@ typedef enum {
  * @method didEndDragging
  *
  * Called by tableView when user lets go of dragging.
- *
  */
 - (void)didEndDragging
 {
@@ -136,14 +144,14 @@ typedef enum {
  * @method beginRefreshing
  *
  * Called when something needs loading, and UI need to indicate it.
- *
  */
 - (void)beginRefreshing
 {
-    self.isRefreshing = YES;
+    canRefresh = NO;
+    state = kStateRefreshing;
     [self sendActionsForControlEvents:UIControlEventValueChanged];
     
-    CGFloat topInset = REFRESH_CONTROL_HEIGHT + (IMAGE_MARGIN * 2) - 8;
+    CGFloat topInset = REFRESH_CONTROL_HEIGHT;
     [self setTopInset:topInset now:pullEnded];
     
     [self animate];
@@ -160,43 +168,14 @@ typedef enum {
  */
 - (void)endRefreshing
 {
-    self.isRefreshing = NO;
+    state = kStateResetting;
     
     CGFloat topInset = 0;
     [self setTopInset:topInset now:pullEnded];
-    
-    pullEnded = NO;
-    self.imageView.image = [self.lemonParts firstObject];
-    self.imageView.transform = CGAffineTransformMakeRotation(0);
 }
 
 
 #pragma mark - Animation & Transitions
-/**
- * @method animate
- *
- * Recursively animates (spins) lemon while refreshing.
- * After a 0.3 animtation, if refreshing is not over,
- * - animate calls itself to for another 0.3 animation.
- */
-- (void)animate
-{
-    void (^spin)() = ^()
-    {
-        self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, M_PI_4);
-    };
-    
-    void (^done)(BOOL finished) = ^(BOOL finished)
-    {
-        if (self.isRefreshing)
-        {
-            [self animate];
-        }
-    };
-    
-    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:spin completion:done];
-}
-
 /**
  * @scrollTo:animated:
  *
@@ -214,11 +193,51 @@ typedef enum {
     
     if (now)
     {
-        [UIView animateWithDuration:0.5f animations:^
+        [UIView animateWithDuration:1 animations:^(void)
         {
             self.tableView.contentInset = inset;
+        }
+        completion:^(BOOL finished)
+        {
+            if (topInset == 0)
+            {
+                pullEnded = NO;
+                canRefresh = YES;
+                state = kStateIdle;
+            }
         }];
     }
+}
+
+/**
+ * @method animate
+ *
+ * Recursively animates (spins) lemon while refreshing.
+ * After a 0.3 animtation, if refreshing is not over,
+ * - animate calls itself to for another 0.3 animation.
+ */
+- (void)animate
+{
+    //spin lemon image view
+    void (^spin)() = ^()
+    {
+        self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, M_PI_4);
+    };
+    
+    //when finished
+    void (^done)(BOOL finished) = ^(BOOL finished)
+    {
+        if (self.isRefreshing)
+        {
+            [self animate];
+        }
+        else
+        {
+            self.imageView.transform = CGAffineTransformMakeRotation(0);
+        }
+    };
+    
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:spin completion:done];
 }
 
 @end
