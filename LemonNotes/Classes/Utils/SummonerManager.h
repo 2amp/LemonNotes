@@ -1,7 +1,5 @@
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
-
+#import "Manager.h"
 
 /**
  * @protocol SummonerManagerDelegate
@@ -39,7 +37,7 @@
  * and will call appropriate delegate upon completion.
  * It will be up to delegate to implement UI on main queue.
  */
-@interface SummonerManager : NSObject
+@interface SummonerManager : Manager
 
 - (instancetype)initWithSummoner:(NSDictionary *)summoner;
 

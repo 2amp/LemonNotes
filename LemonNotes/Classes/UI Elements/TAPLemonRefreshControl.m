@@ -193,7 +193,7 @@ typedef enum {
     
     if (now)
     {
-        [UIView animateWithDuration:1 animations:^(void)
+        [UIView animateWithDuration:0.4 animations:^(void)
         {
             self.tableView.contentInset = inset;
         }
