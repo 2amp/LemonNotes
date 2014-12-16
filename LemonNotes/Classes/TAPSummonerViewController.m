@@ -259,16 +259,13 @@
  */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (scrollView.contentOffset.y <= 0)
-    {
-        [self.lemonRefresh didScroll];
-    }
+    
 }
 
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    [self.lemonRefresh didEndDragging];
+    
 }
 
 
