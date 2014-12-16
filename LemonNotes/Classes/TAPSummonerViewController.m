@@ -38,27 +38,12 @@
 - (void)setupHeaderFooter;
 
 @end
-
+#pragma mark -
 
 
 @implementation TAPSummonerViewController
 
-#pragma mark Setup
-/**
- * @method setSummonerInfo:
- *
- * Setter for summoner. After setting summoner dictionary,
- * creates a SummonerManager with same summoner info.
- * @note Should only be called once for every instance of SummonerVC
- */
-- (void)setSummonerInfo:(NSDictionary *)summonerInfo
-{
-    NSLog(@"SummonerVC [setSummonerInfo]");
-    _summonerInfo = summonerInfo;
-    self.manager = [[SummonerManager alloc] initWithSummoner:summonerInfo];
-    self.manager.delegate = self;
-}
-
+#pragma mark View Load Cycle
 /**
  * @method viewDidLoad
  *
@@ -98,6 +83,23 @@
     
     self.needsUpdate = YES;
     [self.manager loadMatches];
+}
+
+
+#pragma mark - Setup
+/**
+ * @method setSummonerInfo:
+ *
+ * Setter for summoner. After setting summoner dictionary,
+ * creates a SummonerManager with same summoner info.
+ * @note Should only be called once for every instance of SummonerVC
+ */
+- (void)setSummonerInfo:(NSDictionary *)summonerInfo
+{
+    NSLog(@"SummonerVC [setSummonerInfo]");
+    _summonerInfo = summonerInfo;
+    self.manager = [[SummonerManager alloc] initWithSummoner:summonerInfo];
+    self.manager.delegate = self;
 }
 
 /**
@@ -162,7 +164,6 @@
 }
 
 
-
 #pragma mark - UI Control
 /**
  * @method showAlertWithTitle:message:
@@ -205,24 +206,50 @@
 }
 
 
-#pragma mark - Table View
+#pragma mark - Summoner Manager
 /**
- * @method refresh
+ * @method didFinishLoadingMatches:
  *
- * Called when user pulls to refresh.
- * Relays message onto SummonerManager
+ * Called by SummonerManager as delegate callback
+ *  when [loadMatches] has been completed.
  */
-- (void)refresh
+- (void)didFinishLoadingMatches:(NSArray *)moreMatches
 {
-    NSLog(@"-[TAPSummonerVC refresh]");
-    
-    double delayInSeconds = 2.2;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self.lemonRefresh endRefreshing];
-    });
+    if (moreMatches != nil)
+    {
+            //append loaded matches to matches
+        [self.matches addObjectsFromArray:moreMatches];
+        [self.tableView reloadData];
+        
+        if (self.needsUpdate)
+        {
+            [self setupHeaderFooter];
+            self.needsUpdate = NO;
+        }
+    }
+    else
+    {
+        [self showFooter:NO];
+        [self.footerIndicator stopAnimating];
+    }
 }
 
+/**
+ * @method didFinishRefreshingMatches:
+ *
+ * Called by SummonerManager as delegate callback
+ * when [refreshMatches] has been completed.
+ */
+- (void)didFinishRefreshingMatches:(NSArray *)newMatches
+{
+    [self.matches insertObjects:newMatches atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, newMatches.count)]];
+    [self.tableView reloadData];
+    
+    [self.lemonRefresh endRefreshing];
+}
+
+
+#pragma mark - Scroll View
 /**
  * @method scrollViewDidScroll:
  *
@@ -242,6 +269,25 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     [self.lemonRefresh didEndDragging];
+}
+
+
+#pragma mark - Table View
+/**
+ * @method refresh
+ *
+ * Called when user pulls to refresh.
+ * Relays message onto SummonerManager
+ */
+- (void)refresh
+{
+    NSLog(@"-[TAPSummonerVC refresh]");
+    
+    double delayInSeconds = 2.2;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.lemonRefresh endRefreshing];
+    });
 }
 
 /**
@@ -400,51 +446,6 @@
         });
     }
 }
-
-
-
-#pragma mark - SummonerManager
-/**
- * @method didFinishLoadingMatches:
- *
- * Called by SummonerManager as delegate callback
- *  when [loadMatches] has been completed.
- */
-- (void)didFinishLoadingMatches:(NSArray *)moreMatches
-{
-    if (moreMatches != nil)
-    {
-        //append loaded matches to matches
-        [self.matches addObjectsFromArray:moreMatches];
-        [self.tableView reloadData];
-        
-        if (self.needsUpdate)
-        {
-            [self setupHeaderFooter];
-            self.needsUpdate = NO;
-        }
-    }
-    else
-    {
-        [self showFooter:NO];
-        [self.footerIndicator stopAnimating];
-    }
-}
-
-/**
- * @method didFinishRefreshingMatches:
- *
- * Called by SummonerManager as delegate callback
- * when [refreshMatches] has been completed.
- */
-- (void)didFinishRefreshingMatches:(NSArray *)newMatches
-{
-    [self.matches insertObjects:newMatches atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, newMatches.count)]];
-    [self.tableView reloadData];
-    
-    [self.lemonRefresh endRefreshing];
-}
-
 
 
 #pragma mark - Navigation Events
