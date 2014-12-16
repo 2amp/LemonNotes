@@ -113,7 +113,7 @@
         self.isRegistered = YES;
         [self saveContext];
     }
-    [[DataManager sharedManager] summonerDump];
+    //[[DataManager sharedManager] summonerDump];
 }
 
 /**

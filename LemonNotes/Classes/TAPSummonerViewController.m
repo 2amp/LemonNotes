@@ -16,6 +16,11 @@
 //Nav bar
 //@property (nonatomic, weak) IBOutlet TAPSearchField* searchField;
 
+//table
+@property (nonatomic, weak) IBOutlet UITableView* tableView;
+@property (nonatomic, strong) NSMutableArray* matches;
+@property (nonatomic, strong) TAPLemonRefreshControl* lemonRefresh;
+
 //Header
 @property (nonatomic) BOOL needsUpdate;
 @property (nonatomic, weak) IBOutlet UIView*  header;
@@ -24,18 +29,13 @@
 @property (nonatomic, weak) IBOutlet UIImageView* summonerIconView;
 @property (nonatomic, weak) IBOutlet UIImageView* championSplashView;
 
-//table
-@property (nonatomic, weak) IBOutlet UITableView* tableView;
-@property (nonatomic, strong) NSMutableArray* matches;
-@property (nonatomic, strong) TAPLemonRefreshControl* lemonRefresh;
-
 //footer
 @property (nonatomic, weak) IBOutlet UIView* footer;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView* footerIndicator;
 
 //setup
-- (void)setupHeaderFooter;
 - (void)setupTableView;
+- (void)setupHeaderFooter;
 
 @end
 
@@ -53,7 +53,7 @@
  */
 - (void)setSummonerInfo:(NSDictionary *)summonerInfo
 {
-    NSLog(@"[setSummonerInfo]");
+    NSLog(@"SummonerVC [setSummonerInfo]");
     _summonerInfo = summonerInfo;
     self.manager = [[SummonerManager alloc] initWithSummoner:summonerInfo];
     self.manager.delegate = self;
@@ -68,8 +68,8 @@
 {
     [super viewDidLoad];
     
-    NSLog(@"[viewDidLoad]");
     //NSLog(@"%@ %p", self.class, self);
+    NSLog(@"SummonerVC [viewDidLoad]");
     
     [self setupTableView];
 }
@@ -87,7 +87,7 @@
 {
     [super viewWillAppear:YES];
     
-    NSLog(@"[viewWillAppear]");
+    NSLog(@"SummonerVC [viewWillAppear]");
     
     //if rootVC of nav
     if (self == [self.navigationController.viewControllers firstObject])
@@ -98,6 +98,34 @@
     
     self.needsUpdate = YES;
     [self.manager loadMatches];
+}
+
+/**
+ * @method setupTableView
+ *
+ * Setup for table view.
+ * Sets delegate & datasource to this.
+ * Initialize matches array for data pool.
+ * Position table according to nav bar.
+ * Append refresh control.
+ */
+- (void)setupTableView
+{
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.matches = [[NSMutableArray alloc] init];
+    
+    //Position
+    CGRect navbarFrame = self.navigationController.navigationBar.frame;
+    UIEdgeInsets inset = self.tableView.contentInset;
+    inset.top = CGRectGetMaxY(navbarFrame);
+    self.tableView.contentInset = inset;
+    self.tableView.scrollIndicatorInsets = inset;
+    [self.view sendSubviewToBack:self.tableView];
+    
+    //refresh
+    //self.lemonRefresh = [[TAPLemonRefreshControl alloc] initWithTableView:self.tableView];
+    //[self.lemonRefresh addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
 }
 
 /**
@@ -131,26 +159,6 @@
     
     [self showFooter:YES];
     [self.footerIndicator startAnimating];
-}
-
-/**
- * @method setupTableView
- *
- * Sets up table view components
- */
-- (void)setupTableView
-{
-    //data
-    self.matches = [[NSMutableArray alloc] init];
-    
-    //table view
-    [self.view sendSubviewToBack:self.tableView];
-    NSLog(@"scroll inset: %f", self.tableView.scrollIndicatorInsets.top);
-    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-    
-    //custom refresh control
-    //self.lemonRefresh = [[TAPLemonRefreshControl alloc] initWithTableView:self.tableView];
-    //[self.lemonRefresh addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
 }
 
 

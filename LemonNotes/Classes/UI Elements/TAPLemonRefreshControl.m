@@ -81,6 +81,7 @@ typedef enum {
         pullEnded = NO;
         canRefresh = YES;
         storedTopInset = self.tableView.contentInset.top;
+        NSLog(@"inset: %f", self.tableView.contentOffset.y);
         state = kStateIdle;
     }
     return self;
@@ -118,6 +119,7 @@ typedef enum {
         int part = scrollDist / (REFRESH_TRIGGER_HEIGHT / self.lemonParts.count);
         part = (int)MIN(part, self.lemonParts.count-1);
         self.imageView.image = self.lemonParts[part];
+        NSLog(@"image? %@", self.imageView.image);
         
         //immediate refresh on completing lemon
         if (self.imageView.image == [self.lemonParts lastObject])
@@ -135,7 +137,7 @@ typedef enum {
 - (void)didEndDragging
 {
     pullEnded = YES;
-    [self setTopInset:storedTopInset now:YES];
+    //[self setTopInset:storedTopInset now:YES];
 }
 
 
@@ -151,7 +153,7 @@ typedef enum {
     state = kStateRefreshing;
     [self sendActionsForControlEvents:UIControlEventValueChanged];
     
-    CGFloat topInset = REFRESH_CONTROL_HEIGHT;
+    CGFloat topInset = 64 + REFRESH_CONTROL_HEIGHT;
     [self setTopInset:topInset now:pullEnded];
     
     [self animate];
@@ -170,7 +172,7 @@ typedef enum {
 {
     state = kStateResetting;
     
-    CGFloat topInset = 0;
+    CGFloat topInset = 64;
     [self setTopInset:topInset now:pullEnded];
 }
 
