@@ -80,7 +80,7 @@ typedef enum {
         //refresh variables
         pullEnded = NO;
         canRefresh = YES;
-        storedTopInset = 0;
+        storedTopInset = self.tableView.contentInset.top;
         state = kStateIdle;
     }
     return self;

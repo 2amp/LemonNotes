@@ -14,7 +14,7 @@
 @property (nonatomic, strong) SummonerManager *manager;
 
 //Nav bar
-@property (nonatomic, weak) IBOutlet TAPSearchField* searchField;
+//@property (nonatomic, weak) IBOutlet TAPSearchField* searchField;
 
 //Header
 @property (nonatomic) BOOL needsUpdate;
@@ -130,6 +130,7 @@
     [self.tableView sendSubviewToBack:[self.tableView tableHeaderView]];
     
     [self showFooter:YES];
+    [self.footerIndicator startAnimating];
 }
 
 /**
@@ -144,6 +145,8 @@
     
     //table view
     [self.view sendSubviewToBack:self.tableView];
+    NSLog(@"scroll inset: %f", self.tableView.scrollIndicatorInsets.top);
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     
     //custom refresh control
     //self.lemonRefresh = [[TAPLemonRefreshControl alloc] initWithTableView:self.tableView];
@@ -445,7 +448,7 @@
  */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self searchSummonerWithName:self.searchField.text Region:self.searchField.selectedRegion];
+    //[self searchSummonerWithName:self.searchField.text Region:self.searchField.selectedRegion];
     
     [textField resignFirstResponder];
     return YES;
@@ -470,7 +473,7 @@
     [DataManager getSummonerForName:name Region:region
     successHandler:^(NSDictionary *summoner)
     {
-        self.searchField.text = @"";
+        //self.searchField.text = @"";
         
         TAPSummonerViewController *nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"summonerVC"];
         nextVC.summonerInfo = summoner;
