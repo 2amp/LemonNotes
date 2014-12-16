@@ -24,22 +24,6 @@
     //for now clear defaults
     //NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     //[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-
-    //register values for defaults that have never been set before
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{
-        @"realm":@{
-            @"v"          : @"4.18.1",
-            @"dd"         : @"4.17.1",
-            @"cdn"        : @"http://ddragon.leagueoflegends.com/cdn",
-            @"champion"   : @"4.18.1",
-            @"profileicon": @"4.18.1",
-            @"item"       : @"4.18.1",
-            @"mastery"    : @"4.17.1",
-            @"language"   : @"4.17.1",
-            @"summoner"   : @"4.18.1",
-            @"rune"       : @"4.17.1"
-        }
-    }];
     
     //data updates
     [[DataManager sharedManager] updateChampionIds];

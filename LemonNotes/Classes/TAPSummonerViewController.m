@@ -25,6 +25,7 @@
 @property (nonatomic, weak) IBOutlet UIImageView* championSplashView;
 
 //table
+@property (nonatomic, weak) IBOutlet UITableView* tableView;
 @property (nonatomic, strong) NSMutableArray* matches;
 @property (nonatomic, strong) TAPLemonRefreshControl* lemonRefresh;
 
@@ -141,9 +142,12 @@
     //data
     self.matches = [[NSMutableArray alloc] init];
     
+    //table view
+    [self.view sendSubviewToBack:self.tableView];
+    
     //custom refresh control
-    self.lemonRefresh = [[TAPLemonRefreshControl alloc] initWithTableView:self.tableView];
-    [self.lemonRefresh addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    //self.lemonRefresh = [[TAPLemonRefreshControl alloc] initWithTableView:self.tableView];
+    //[self.lemonRefresh addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
 }
 
 
@@ -277,7 +281,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Configure the cell...
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"matchHistoryCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"matchHistoryCell" forIndexPath:indexPath];
     UILabel     *outcome                = (UILabel *)    [cell viewWithTag:100];
     UIImageView *championImageView      = (UIImageView *)[cell viewWithTag:101];
     UILabel     *championName           = (UILabel *)    [cell viewWithTag:102];
@@ -427,7 +431,7 @@
     [self.matches insertObjects:newMatches atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, newMatches.count)]];
     [self.tableView reloadData];
     
-    [self.refreshControl endRefreshing];
+    [self.lemonRefresh endRefreshing];
 }
 
 
