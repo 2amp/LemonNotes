@@ -1,7 +1,6 @@
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 #import <UIKit/UIKit.h>
+#import "Manager.h"
 #import "Summoner.h"
 
 /**
@@ -17,7 +16,7 @@
  * @author Bohui Moon, Chris Fu
  * @version 0.1
  */
-@interface DataManager : NSObject
+@interface DataManager : Manager
 
 + (instancetype)sharedManager;
 + (void)getSummonerForName:(NSString *)name

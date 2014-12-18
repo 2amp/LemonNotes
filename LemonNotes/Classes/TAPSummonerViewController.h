@@ -16,7 +16,7 @@
  * @author Bohui Moon
  * @version 0.1
  */
-@interface TAPSummonerViewController : UITableViewController
+@interface TAPSummonerViewController : UIViewController
 <SummonerManagerDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) NSDictionary *summonerInfo;

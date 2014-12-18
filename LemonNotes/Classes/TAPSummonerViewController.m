@@ -14,7 +14,12 @@
 @property (nonatomic, strong) SummonerManager *manager;
 
 //Nav bar
-@property (nonatomic, weak) IBOutlet TAPSearchField* searchField;
+//@property (nonatomic, weak) IBOutlet TAPSearchField* searchField;
+
+//table
+@property (nonatomic, weak) IBOutlet UITableView* tableView;
+@property (nonatomic, strong) NSMutableArray* matches;
+@property (nonatomic, strong) TAPLemonRefreshControl* lemonRefresh;
 
 //Header
 @property (nonatomic) BOOL needsUpdate;
@@ -24,40 +29,21 @@
 @property (nonatomic, weak) IBOutlet UIImageView* summonerIconView;
 @property (nonatomic, weak) IBOutlet UIImageView* championSplashView;
 
-//table
-@property (nonatomic, strong) NSMutableArray* matches;
-@property (nonatomic, strong) TAPLemonRefreshControl* lemonRefresh;
-
 //footer
 @property (nonatomic, weak) IBOutlet UIView* footer;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView* footerIndicator;
 
 //setup
-- (void)setupHeaderFooter;
 - (void)setupTableView;
+- (void)setupHeaderFooter;
 
 @end
-
+#pragma mark -
 
 
 @implementation TAPSummonerViewController
 
-#pragma mark Setup
-/**
- * @method setSummonerInfo:
- *
- * Setter for summoner. After setting summoner dictionary,
- * creates a SummonerManager with same summoner info.
- * @note Should only be called once for every instance of SummonerVC
- */
-- (void)setSummonerInfo:(NSDictionary *)summonerInfo
-{
-    NSLog(@"[setSummonerInfo]");
-    _summonerInfo = summonerInfo;
-    self.manager = [[SummonerManager alloc] initWithSummoner:summonerInfo];
-    self.manager.delegate = self;
-}
-
+#pragma mark View Load Cycle
 /**
  * @method viewDidLoad
  *
@@ -67,8 +53,8 @@
 {
     [super viewDidLoad];
     
-    NSLog(@"[viewDidLoad]");
     //NSLog(@"%@ %p", self.class, self);
+    NSLog(@"SummonerVC [viewDidLoad]");
     
     [self setupTableView];
 }
@@ -86,7 +72,7 @@
 {
     [super viewWillAppear:YES];
     
-    NSLog(@"[viewWillAppear]");
+    NSLog(@"SummonerVC [viewWillAppear]");
     
     //if rootVC of nav
     if (self == [self.navigationController.viewControllers firstObject])
@@ -99,6 +85,51 @@
     
     self.needsUpdate = YES;
     [self.manager loadMatches];
+}
+
+
+#pragma mark - Setup
+/**
+ * @method setSummonerInfo:
+ *
+ * Setter for summoner. After setting summoner dictionary,
+ * creates a SummonerManager with same summoner info.
+ * @note Should only be called once for every instance of SummonerVC
+ */
+- (void)setSummonerInfo:(NSDictionary *)summonerInfo
+{
+    NSLog(@"SummonerVC [setSummonerInfo]");
+    _summonerInfo = summonerInfo;
+    self.manager = [[SummonerManager alloc] initWithSummoner:summonerInfo];
+    self.manager.delegate = self;
+}
+
+/**
+ * @method setupTableView
+ *
+ * Setup for table view.
+ * Sets delegate & datasource to this.
+ * Initialize matches array for data pool.
+ * Position table according to nav bar.
+ * Append refresh control.
+ */
+- (void)setupTableView
+{
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.matches = [[NSMutableArray alloc] init];
+    
+    //Position
+    CGRect navbarFrame = self.navigationController.navigationBar.frame;
+    UIEdgeInsets inset = self.tableView.contentInset;
+    inset.top = CGRectGetMaxY(navbarFrame);
+    self.tableView.contentInset = inset;
+    self.tableView.scrollIndicatorInsets = inset;
+    [self.view sendSubviewToBack:self.tableView];
+    
+    //refresh
+    //self.lemonRefresh = [[TAPLemonRefreshControl alloc] initWithTableView:self.tableView];
+    //[self.lemonRefresh addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
 }
 
 /**
@@ -131,23 +162,8 @@
     [self.tableView sendSubviewToBack:[self.tableView tableHeaderView]];
     
     [self showFooter:YES];
+    [self.footerIndicator startAnimating];
 }
-
-/**
- * @method setupTableView
- *
- * Sets up table view components
- */
-- (void)setupTableView
-{
-    //data
-    self.matches = [[NSMutableArray alloc] init];
-    
-    //custom refresh control
-    self.lemonRefresh = [[TAPLemonRefreshControl alloc] initWithTableView:self.tableView];
-    [self.lemonRefresh addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
-}
-
 
 
 #pragma mark - UI Control
@@ -192,6 +208,69 @@
 }
 
 
+#pragma mark - Summoner Manager
+/**
+ * @method didFinishLoadingMatches:
+ *
+ * Called by SummonerManager as delegate callback
+ *  when [loadMatches] has been completed.
+ */
+- (void)didFinishLoadingMatches:(NSArray *)moreMatches
+{
+    if (moreMatches != nil)
+    {
+            //append loaded matches to matches
+        [self.matches addObjectsFromArray:moreMatches];
+        [self.tableView reloadData];
+        
+        if (self.needsUpdate)
+        {
+            [self setupHeaderFooter];
+            self.needsUpdate = NO;
+        }
+    }
+    else
+    {
+        [self showFooter:NO];
+        [self.footerIndicator stopAnimating];
+    }
+}
+
+/**
+ * @method didFinishRefreshingMatches:
+ *
+ * Called by SummonerManager as delegate callback
+ * when [refreshMatches] has been completed.
+ */
+- (void)didFinishRefreshingMatches:(NSArray *)newMatches
+{
+    [self.matches insertObjects:newMatches atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, newMatches.count)]];
+    [self.tableView reloadData];
+    
+    [self.lemonRefresh endRefreshing];
+}
+
+
+#pragma mark - Scroll View
+/**
+ * @method scrollViewDidScroll:
+ *
+ * Called whenever view is scrolled (by dragging).
+ * Tells custom refresh control that scroll happened,
+ * and passes on how much it has been dragged
+ */
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+}
+
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    
+}
+
+
 #pragma mark - Table View
 /**
  * @method refresh
@@ -208,27 +287,6 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self.lemonRefresh endRefreshing];
     });
-}
-
-/**
- * @method scrollViewDidScroll:
- *
- * Called whenever view is scrolled (by dragging).
- * Tells custom refresh control that scroll happened,
- * and passes on how much it has been dragged
- */
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (scrollView.contentOffset.y <= 0)
-    {
-        [self.lemonRefresh didScroll];
-    }
-}
-
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    [self.lemonRefresh didEndDragging];
 }
 
 /**
@@ -279,7 +337,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Configure the cell...
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"matchHistoryCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"matchHistoryCell" forIndexPath:indexPath];
     UILabel     *outcome                = (UILabel *)    [cell viewWithTag:100];
     UIImageView *championImageView      = (UIImageView *)[cell viewWithTag:101];
     UILabel     *championName           = (UILabel *)    [cell viewWithTag:102];
@@ -392,52 +450,6 @@
 }
 
 
-
-#pragma mark - SummonerManager
-/**
- * @method didFinishLoadingMatches:
- *
- * Called by SummonerManager as delegate callback
- *  when [loadMatches] has been completed.
- */
-- (void)didFinishLoadingMatches:(NSArray *)moreMatches
-{
-    if (moreMatches != nil)
-    {
-        //append loaded matches to matches
-        [self.matches addObjectsFromArray:moreMatches];
-        [self.tableView reloadData];
-        
-        if (self.needsUpdate)
-        {
-//            NSLog(@"%@", moreMatches);
-            [self setupHeaderFooter];
-            self.needsUpdate = NO;
-        }
-    }
-    else
-    {
-        [self showFooter:NO];
-        [self.footerIndicator stopAnimating];
-    }
-}
-
-/**
- * @method didFinishRefreshingMatches:
- *
- * Called by SummonerManager as delegate callback
- * when [refreshMatches] has been completed.
- */
-- (void)didFinishRefreshingMatches:(NSArray *)newMatches
-{
-    [self.matches insertObjects:newMatches atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, newMatches.count)]];
-    [self.tableView reloadData];
-    
-    [self.refreshControl endRefreshing];
-}
-
-
-
 #pragma mark - Navigation Events
 /**
  * @method textFieldShouldReturn:
@@ -447,7 +459,7 @@
  */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self searchSummonerWithName:self.searchField.text region:self.searchField.selectedRegion];
+    //[self searchSummonerWithName:self.searchField.text Region:self.searchField.selectedRegion];
     
     [textField resignFirstResponder];
     return YES;
@@ -472,7 +484,7 @@
     [DataManager getSummonerForName:name region:region
     successHandler:^(NSDictionary *summoner)
     {
-        self.searchField.text = @"";
+        //self.searchField.text = @"";
         
         TAPSummonerViewController *nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"summonerVC"];
         nextVC.summonerInfo = summoner;
