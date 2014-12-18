@@ -265,10 +265,10 @@
 //                                                              self.summoner,
 //                                                              self.summoner.firstMatchId,
 //                                                              [NSNumber numberWithLong:self.oldestLoadedMatchId]];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"summoner == %@ AND %@ <= matchId",
-                              self.summoner,
-                              self.summoner.firstMatchId];
-    
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"summoner == %@ AND %@ <= matchId",
+//                              self.summoner,
+//                              self.summoner.firstMatchId];
+
     //set fetch
     NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"Match"];
     //[fetch setPredicate:predicate];

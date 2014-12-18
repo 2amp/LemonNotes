@@ -41,8 +41,4 @@
 - (void)updateChampionIds;
 - (void)updateSummonerSpells;
 
-//core data
-- (NSURL *)applicationDocumentsDirectory;
-- (void)saveContext;
-
 @end
