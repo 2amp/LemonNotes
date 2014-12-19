@@ -136,18 +136,64 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yQ3-jd-6bd">
+                                <rect key="frame" x="559" y="246" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="Htj-y2-Hj7"/>
+                                    <constraint firstAttribute="height" constant="20" id="Qno-nK-GYX"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cTr-c4-GVL">
+                                <rect key="frame" x="559" y="284" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="eka-Yx-vWg"/>
+                                    <constraint firstAttribute="width" constant="20" id="fwz-Xk-QJi"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dxK-eY-5Zm">
+                                <rect key="frame" x="559" y="322" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="1iM-MQ-LWM"/>
+                                    <constraint firstAttribute="height" constant="20" id="6Vd-b1-wLE"/>
+                                </constraints>
+                            </imageView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="yzC-rf-9cM">
+                                <rect key="frame" x="559" y="208" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Tpb-j4-FyV">
+                                <rect key="frame" x="559" y="246" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="P8H-Wu-dS6">
+                                <rect key="frame" x="559" y="284" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="QUd-os-2Em">
+                                <rect key="frame" x="559" y="322" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q7A-VX-Fcq">
+                                <rect key="frame" x="559" y="208" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="2Rc-zd-9Cs"/>
+                                    <constraint firstAttribute="height" constant="20" id="mmG-tS-3dE"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="QyO-rF-koI" firstAttribute="trailing" secondItem="gHI-uM-spk" secondAttribute="trailingMargin" id="8WL-x2-hB4"/>
                             <constraint firstItem="vHB-Wc-v9b" firstAttribute="top" secondItem="5OC-FK-Hyi" secondAttribute="bottom" constant="108" id="A5Z-zt-DER"/>
                             <constraint firstItem="E5c-cA-ZLC" firstAttribute="top" secondItem="vHB-Wc-v9b" secondAttribute="bottom" constant="8" id="ADq-o9-WSy"/>
+                            <constraint firstItem="yQ3-jd-6bd" firstAttribute="top" secondItem="E2V-ga-P9e" secondAttribute="bottom" constant="-25" id="Avy-sf-Fd2"/>
                             <constraint firstItem="Sac-BG-8aN" firstAttribute="leading" secondItem="gHI-uM-spk" secondAttribute="leadingMargin" id="D0C-db-h6p"/>
                             <constraint firstItem="vHB-Wc-v9b" firstAttribute="trailing" secondItem="gHI-uM-spk" secondAttribute="trailingMargin" id="DXz-ZK-HGl"/>
                             <constraint firstItem="QyO-rF-koI" firstAttribute="top" secondItem="pZK-bX-dbw" secondAttribute="bottom" constant="8" id="E1D-o3-zzQ"/>
+                            <constraint firstItem="P8H-Wu-dS6" firstAttribute="leading" secondItem="pZK-bX-dbw" secondAttribute="trailing" constant="-25" id="EeP-hX-jSE"/>
                             <constraint firstItem="6X6-pb-YSP" firstAttribute="top" secondItem="5OC-FK-Hyi" secondAttribute="bottom" constant="79" id="FdV-mi-BJT"/>
                             <constraint firstItem="E2V-ga-P9e" firstAttribute="leading" secondItem="gHI-uM-spk" secondAttribute="leadingMargin" id="HYu-7o-peB"/>
+                            <constraint firstItem="QyO-rF-koI" firstAttribute="top" secondItem="QUd-os-2Em" secondAttribute="bottom" constant="-25" id="IJn-Ow-ZXh"/>
                             <constraint firstItem="GBx-8J-7xk" firstAttribute="leading" secondItem="gHI-uM-spk" secondAttribute="leadingMargin" id="O0z-Hn-dKq"/>
+                            <constraint firstItem="yzC-rf-9cM" firstAttribute="leading" secondItem="Sac-BG-8aN" secondAttribute="trailing" constant="-25" id="OQP-I4-c5u"/>
+                            <constraint firstItem="dxK-eY-5Zm" firstAttribute="top" secondItem="QyO-rF-koI" secondAttribute="bottom" constant="-25" id="RZL-8c-wZX"/>
+                            <constraint firstItem="pZK-bX-dbw" firstAttribute="top" secondItem="cTr-c4-GVL" secondAttribute="bottom" constant="-25" id="U23-hB-WBT"/>
                             <constraint firstItem="pZK-bX-dbw" firstAttribute="leading" secondItem="gHI-uM-spk" secondAttribute="leadingMargin" id="U6I-JF-cDP"/>
                             <constraint firstItem="k7K-EJ-HYK" firstAttribute="top" secondItem="5OC-FK-Hyi" secondAttribute="bottom" constant="111" id="UZN-l9-VMW"/>
                             <constraint firstItem="E2V-ga-P9e" firstAttribute="top" secondItem="Sac-BG-8aN" secondAttribute="bottom" constant="8" id="Vn6-fc-oHY"/>
@@ -155,11 +201,21 @@
                             <constraint firstItem="QyO-rF-koI" firstAttribute="leading" secondItem="gHI-uM-spk" secondAttribute="leadingMargin" id="kgj-Wf-g5R"/>
                             <constraint firstItem="GBx-8J-7xk" firstAttribute="top" secondItem="k7K-EJ-HYK" secondAttribute="bottom" constant="17" id="kkU-h2-eKH"/>
                             <constraint firstItem="E5c-cA-ZLC" firstAttribute="trailing" secondItem="gHI-uM-spk" secondAttribute="trailingMargin" id="mC1-eH-7Tt"/>
+                            <constraint firstItem="dxK-eY-5Zm" firstAttribute="leading" secondItem="QyO-rF-koI" secondAttribute="trailing" constant="-25" id="mOC-7i-kjk"/>
                             <constraint firstItem="6X6-pb-YSP" firstAttribute="trailing" secondItem="gHI-uM-spk" secondAttribute="trailingMargin" id="oQY-KV-Ocb"/>
+                            <constraint firstItem="cTr-c4-GVL" firstAttribute="leading" secondItem="pZK-bX-dbw" secondAttribute="trailing" constant="-25" id="ori-Di-zCM"/>
+                            <constraint firstItem="yzC-rf-9cM" firstAttribute="top" secondItem="Sac-BG-8aN" secondAttribute="bottom" constant="-25" id="pEH-Ox-VpV"/>
+                            <constraint firstItem="QUd-os-2Em" firstAttribute="leading" secondItem="QyO-rF-koI" secondAttribute="trailing" constant="-25" id="qNe-xd-eEv"/>
+                            <constraint firstItem="P8H-Wu-dS6" firstAttribute="top" secondItem="pZK-bX-dbw" secondAttribute="bottom" constant="-25" id="qoE-ha-E4H"/>
+                            <constraint firstItem="yQ3-jd-6bd" firstAttribute="leading" secondItem="E2V-ga-P9e" secondAttribute="trailing" constant="-25" id="qsA-Wb-CFn"/>
                             <constraint firstItem="Sac-BG-8aN" firstAttribute="top" secondItem="5OC-FK-Hyi" secondAttribute="bottom" constant="183" id="sNu-9e-7MT"/>
                             <constraint firstItem="Sac-BG-8aN" firstAttribute="trailing" secondItem="gHI-uM-spk" secondAttribute="trailingMargin" id="tUJ-l3-yY7"/>
+                            <constraint firstItem="Tpb-j4-FyV" firstAttribute="leading" secondItem="E2V-ga-P9e" secondAttribute="trailing" constant="-25" id="taV-7l-tLd"/>
+                            <constraint firstItem="Q7A-VX-Fcq" firstAttribute="leading" secondItem="Sac-BG-8aN" secondAttribute="trailing" constant="-25" id="tp5-Hy-XhG"/>
+                            <constraint firstItem="Q7A-VX-Fcq" firstAttribute="top" secondItem="Sac-BG-8aN" secondAttribute="bottom" constant="-25" id="uG4-cZ-tG2"/>
                             <constraint firstItem="k7K-EJ-HYK" firstAttribute="leading" secondItem="gHI-uM-spk" secondAttribute="leadingMargin" id="ual-Ha-MYl"/>
                             <constraint firstItem="pZK-bX-dbw" firstAttribute="top" secondItem="E2V-ga-P9e" secondAttribute="bottom" constant="8" id="ySk-Mk-AxB"/>
+                            <constraint firstItem="E2V-ga-P9e" firstAttribute="top" secondItem="Tpb-j4-FyV" secondAttribute="bottom" constant="-25" id="yaZ-10-jg4"/>
                             <constraint firstItem="E2V-ga-P9e" firstAttribute="trailing" secondItem="gHI-uM-spk" secondAttribute="trailingMargin" id="zuk-hs-tLY"/>
                             <constraint firstItem="pZK-bX-dbw" firstAttribute="trailing" secondItem="gHI-uM-spk" secondAttribute="trailingMargin" id="zz3-7v-5kD"/>
                         </constraints>
@@ -169,10 +225,18 @@
                         <outlet property="captainSwitch" destination="E5c-cA-ZLC" id="NaL-Qo-hr1"/>
                         <outlet property="sideControl" destination="vHB-Wc-v9b" id="imc-tz-TIX"/>
                         <outlet property="summonerNameLabel" destination="6X6-pb-YSP" id="ntX-be-am6"/>
+                        <outlet property="teammate0Check" destination="Q7A-VX-Fcq" id="4HJ-ud-Mei"/>
                         <outlet property="teammate0Field" destination="Sac-BG-8aN" id="0Js-gs-p9J"/>
+                        <outlet property="teammate0Indicator" destination="yzC-rf-9cM" id="R8M-Yx-1Ai"/>
+                        <outlet property="teammate1Check" destination="yQ3-jd-6bd" id="2II-XY-d4t"/>
                         <outlet property="teammate1Field" destination="E2V-ga-P9e" id="y0g-tz-bQV"/>
+                        <outlet property="teammate1Indicator" destination="Tpb-j4-FyV" id="GdN-qy-WG5"/>
+                        <outlet property="teammate2Check" destination="cTr-c4-GVL" id="O4F-gI-FX8"/>
                         <outlet property="teammate2Field" destination="pZK-bX-dbw" id="Fb6-lu-J67"/>
+                        <outlet property="teammate2Indicator" destination="P8H-Wu-dS6" id="3ty-ed-1hF"/>
+                        <outlet property="teammate3Check" destination="dxK-eY-5Zm" id="CUJ-RY-Zqz"/>
                         <outlet property="teammate3Field" destination="QyO-rF-koI" id="sA6-T2-AFq"/>
+                        <outlet property="teammate3Indicator" destination="QUd-os-2Em" id="MP4-Sm-kpy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2wM-AV-eHl" userLabel="First Responder" sceneMemberID="firstResponder"/>

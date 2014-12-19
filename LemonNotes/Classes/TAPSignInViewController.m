@@ -92,7 +92,10 @@
                              region:self.summonerRegion
                      successHandler:^(NSDictionary *summoner) {
                          [self.activityIndicator stopAnimating];
-                         NSLog(@"summoner %@", summoner);
+                         if (summoner == nil)
+                         {
+                             NSLog(@"summoner %@", summoner);
+                         }
                          [[NSUserDefaults standardUserDefaults] setObject:summoner forKey:@"currentSummoner"];
                          [self performSegueWithIdentifier:@"showTabBarController" sender:self];
                      }

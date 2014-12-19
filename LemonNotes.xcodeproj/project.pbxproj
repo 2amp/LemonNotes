@@ -398,6 +398,8 @@
 		895922D51A0330F600F00637 /* SummonerRevive.png in Resources */ = {isa = PBXBuildFile; fileRef = 895920621A0330F600F00637 /* SummonerRevive.png */; };
 		895922D61A0330F600F00637 /* SummonerSmite.png in Resources */ = {isa = PBXBuildFile; fileRef = 895920631A0330F600F00637 /* SummonerSmite.png */; };
 		895922D71A0330F600F00637 /* SummonerTeleport.png in Resources */ = {isa = PBXBuildFile; fileRef = 895920641A0330F600F00637 /* SummonerTeleport.png */; };
+		8960B9DC1A43FCB700CC3D87 /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 8960B9DA1A43FCB700CC3D87 /* checkmark.png */; };
+		8960B9DD1A43FCB700CC3D87 /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 8960B9DB1A43FCB700CC3D87 /* cross.png */; };
 		8984EF2E19F61FC100C442FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF2D19F61FC100C442FC /* main.m */; };
 		8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF3219F61FC100C442FC /* LemonNotes.xcdatamodeld */; };
 		8984EF3A19F61FC100C442FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8984EF3819F61FC100C442FC /* Main.storyboard */; };
@@ -1293,6 +1295,8 @@
 		895920621A0330F600F00637 /* SummonerRevive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SummonerRevive.png; sourceTree = "<group>"; };
 		895920631A0330F600F00637 /* SummonerSmite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SummonerSmite.png; sourceTree = "<group>"; };
 		895920641A0330F600F00637 /* SummonerTeleport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SummonerTeleport.png; sourceTree = "<group>"; };
+		8960B9DA1A43FCB700CC3D87 /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
+		8960B9DB1A43FCB700CC3D87 /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
 		8984EF2819F61FC100C442FC /* LemonNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LemonNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8984EF2C19F61FC100C442FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8984EF2D19F61FC100C442FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -2669,6 +2673,8 @@
 		95153A1B1A1746D7003EA211 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				8960B9DA1A43FCB700CC3D87 /* checkmark.png */,
+				8960B9DB1A43FCB700CC3D87 /* cross.png */,
 				95153A1C1A1746D7003EA211 /* alarm (fill).png */,
 				95153A1D1A1746D7003EA211 /* alarm (line).png */,
 				95153A1E1A1746D7003EA211 /* back (fill).png */,
@@ -3177,6 +3183,7 @@
 				9591580D1A0EDFD00098A610 /* Singed_0.jpg in Resources */,
 				895920E21A0330F600F00637 /* 1018.png in Resources */,
 				959158231A0EDFD00098A610 /* Velkoz_0.jpg in Resources */,
+				8960B9DD1A43FCB700CC3D87 /* cross.png in Resources */,
 				95084B7B1A1B37AD0052F40F /* 589.png in Resources */,
 				95084BC81A1B37AD0052F40F /* 665.png in Resources */,
 				959158241A0EDFD00098A610 /* Vi_0.jpg in Resources */,
@@ -3528,6 +3535,7 @@
 				895921A91A0330F600F00637 /* 3275.png in Resources */,
 				95153A651A1746D7003EA211 /* bookmark (fill).png in Resources */,
 				8959206B1A0330F600F00637 /* Annie.png in Resources */,
+				8960B9DC1A43FCB700CC3D87 /* checkmark.png in Resources */,
 				95084B8B1A1B37AD0052F40F /* 604.png in Resources */,
 				8959217F1A0330F600F00637 /* 3185.png in Resources */,
 				959157CB1A0EDFD00098A610 /* Draven_0.jpg in Resources */,

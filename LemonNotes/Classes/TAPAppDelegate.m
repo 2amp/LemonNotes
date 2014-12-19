@@ -30,9 +30,10 @@
     [[DataManager sharedManager] updateSummonerSpells];
     [[DataManager sharedManager] deleteAllSummoners];
     [[DataManager sharedManager] summonerDump];
-
-    NSDictionary *currentSummoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
+    
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"currentSummoner"];
+    NSDictionary *currentSummoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
+
     
     //programmatically setup initialVC
     NSString *initialVCID = currentSummoner ? @"summonerTBC" : @"signInVC";

@@ -29,4 +29,14 @@
 @property (weak, nonatomic) IBOutlet UITextField *teammate2Field;
 @property (weak, nonatomic) IBOutlet UITextField *teammate3Field;
 
+@property (weak, nonatomic) IBOutlet UIImageView *teammate0Check;
+@property (weak, nonatomic) IBOutlet UIImageView *teammate1Check;
+@property (weak, nonatomic) IBOutlet UIImageView *teammate2Check;
+@property (weak, nonatomic) IBOutlet UIImageView *teammate3Check;
+
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *teammate0Indicator;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *teammate1Indicator;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *teammate2Indicator;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *teammate3Indicator;
+
 @end
