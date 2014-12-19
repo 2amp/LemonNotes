@@ -69,6 +69,8 @@
         self.summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
         [self.manager registerSummoner];
     }
+    
+    NSLog(@"")
 }
 
 /**
