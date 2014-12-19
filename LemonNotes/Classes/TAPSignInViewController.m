@@ -1,6 +1,5 @@
 
 #import "TAPSignInViewController.h"
-#import "TAPRootViewController.h"
 #import "NSURLSession+SynchronousTask.h"
 #import "TAPSearchField.h"
 #import "DataManager.h"
@@ -95,7 +94,7 @@
                          [self.activityIndicator stopAnimating];
                          NSLog(@"summoner %@", summoner);
                          [[NSUserDefaults standardUserDefaults] setObject:summoner forKey:@"currentSummoner"];
-                         [self performSegueWithIdentifier:@"showRoot" sender:self];
+                         [self performSegueWithIdentifier:@"showTabBarController" sender:self];
                      }
                      failureHandler:^(NSString *errorMessage) {
                          [self.activityIndicator stopAnimating];

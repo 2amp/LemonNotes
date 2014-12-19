@@ -55,7 +55,14 @@
     
     //NSLog(@"%@ %p", self.class, self);
     NSLog(@"SummonerVC [viewDidLoad]");
-    
+
+    NSString *summonerName = [[[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"] objectForKey:@"name"];
+    self.summonerNameLabel.text  = summonerName;
+    self.summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
+    [self.manager registerSummoner];
+
+    self.needsUpdate = YES;
+    [self.manager loadMatches];
     [self setupTableView];
 }
 
@@ -73,19 +80,8 @@
     [super viewWillAppear:YES];
     
     NSLog(@"SummonerVC [viewWillAppear]");
-    
-    //if rootVC of nav
-    if (self == [self.navigationController.viewControllers firstObject])
-    {
-        NSString *summonerName = [[[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"] objectForKey:@"name"];
-        self.summonerNameLabel.text  = summonerName;
-        self.summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
-        [self.manager registerSummoner];
-    }
-    
-    self.needsUpdate = YES;
-    [self.manager loadMatches];
 }
+
 
 
 #pragma mark - Setup
