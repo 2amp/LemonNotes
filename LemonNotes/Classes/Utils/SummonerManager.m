@@ -62,6 +62,8 @@
         const char *fetchLabel = [[NSString stringWithFormat:@"%@ fetch queue", summonerInfo[@"name"]] UTF8String];
         self.loadQueue  = dispatch_queue_create(loadLabel, DISPATCH_QUEUE_CONCURRENT);
         self.fetchQueue = dispatch_queue_create(fetchLabel, DISPATCH_QUEUE_CONCURRENT);
+        
+        NSLog(@"data location: %@", [self applicationDocumentsDirectory]);
     }
     return self;
 }
@@ -194,10 +196,20 @@
     ^{
         NSArray *matches = [self hasSavedMatches] ? [self loadFromLocal] : [self loadFromServer];
         
-        //increment number of loaded matches
-        self.numLoadedMatches += matches.count;
-        self.oldestLoadedMatchId = [[matches lastObject][@"matchId"] longValue];
-        NSLog(@"total: %ld, loaded: %ld", self.summoner.matches.count, self.numLoadedMatches);
+        if (matches.count > 0)
+        {
+            //increment number of loaded matches
+            self.numLoadedMatches += matches.count;
+            self.oldestLoadedMatchId = [[matches lastObject][@"matchId"] longValue];
+            
+            //debug
+//            NSLog(@"[SummonerManager loadMatches]");
+//            NSLog(@"    total: %ld, loaded: %ld", self.summoner.matches.count, self.numLoadedMatches);
+//            NSLog(@"    oldest loaded: %@", [matches lastObject][@"matchId"]);
+//            NSLog(@"    very first game: %@", self.summoner.firstMatchId);
+//            for (NSDictionary *match in matches)
+//                NSLog(@"        id:%@", match[@"matchId"]);
+        }
         
         //immediately give back to delegate
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -253,34 +265,29 @@
  */
 - (NSArray *)loadFromLocal
 {
+    NSLog(@"[SummonerMangaer loadFromLocal]");
+    
     //fetch limit
     long fetchLimit = MIN(15, self.summoner.matches.count - self.numLoadedMatches);
     if (fetchLimit == 0)
     {
-        return nil;
+        return [[NSArray alloc] init];
     }
     
-    //if -1, then set to basically infinity
-    self.oldestLoadedMatchId = (self.oldestLoadedMatchId > 0) ? self.oldestLoadedMatchId : LONG_MAX;
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"summoner == %@ AND %@ <= matchId AND matchId < %@",
-//                                                              self.summoner,
-//                                                              self.summoner.firstMatchId,
-//                                                              [NSNumber numberWithLong:self.oldestLoadedMatchId]];
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"summoner == %@ AND %@ <= matchId",
-//                              self.summoner,
-//                              self.summoner.firstMatchId];
+    //NOTE: literally unkown magic number, no other changing the 5 to a 0 will not work. ??????????
+    self.oldestLoadedMatchId = (self.oldestLoadedMatchId > 0) ? self.oldestLoadedMatchId : 10500000000;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"summoner == %@ && %@ <= matchId && matchId < %@",
+                                                              self.summoner, self.summoner.firstMatchId, [NSNumber numberWithLong:self.oldestLoadedMatchId]];
 
     //set fetch
     NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"Match"];
-    //[fetch setPredicate:predicate];
+    [fetch setPredicate:predicate];
     [fetch setFetchLimit:fetchLimit];
     [fetch setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:NO]]];
     
     //make fetch
     NSError *error = nil;
     NSArray *matchEntities = [self.managedObjectContext executeFetchRequest:fetch error:&error];
-    
-    NSLog(@"matches: %@", ((Match*)[self.summoner.matches anyObject]).matchId);
     
     //for every match from core data, convert to readable dictionary
     NSMutableArray *matches = [[NSMutableArray alloc] init];
@@ -364,7 +371,7 @@
         // only add match if it is not already in the db
         if (![existingMatchIds containsObject:matchDict[@"matchId"]])
         {
-            //NSLog(@"new match id: %@", matchDict[@"matchId"]);
+            //NSLog(@"saving id: %@", matchDict[@"matchId"]);
             
             //add to new entity
             Match *newMatch = [NSEntityDescription insertNewObjectForEntityForName:@"Match"
@@ -393,10 +400,55 @@
         self.summoner.firstMatchId = [matches lastObject][@"matchId"];
     }
     self.summoner.lastMatchId =  MAX(self.summoner.lastMatchId, [matches firstObject][@"matchId"]);
-    self.summoner.firstMatchId = MIN(self.summoner.firstMatchId, [matches lastObject][@"matchId"]);
-    NSLog(@"last: %@, first: %@", self.summoner.lastMatchId, self.summoner.firstMatchId);
 
     [self saveContext];
+}
+
+/**
+ * @method maxBetween:and:
+ *
+ * Given two NSNumbers, return the one with bigger contained value.
+ * Returns prioritizes first when values are equal.
+ * 
+ * @param A - first NSNumber given
+ * @param B - second NSNumber given
+ */
+- (NSNumber *)maxBetween:(NSNumber*)A and:(NSNumber*)B
+{
+    long ALong = [A longValue];
+    long BLong = [B longValue];
+    
+    return (ALong >= BLong) ? A : B;
+}
+
+/**
+ * @method setFirstMatchId
+ *
+ * Sets summoner's first matchId to the oldest from core data.
+ */
+- (void)setFirstMatchId
+{
+    NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"Match"];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"summoner == %@"];
+    [fetch setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:YES]]];
+    
+    NSError *error = nil;
+    NSArray *matchEntities = [self.managedObjectContext executeFetchRequest:fetch error:&error];
+    
+    NSMutableDictionary *match = [[NSMutableDictionary alloc] init];
+    for (NSPropertyDescription *property in [NSEntityDescription entityForName:@"Match" inManagedObjectContext:self.managedObjectContext])
+    {
+        if (![property.name isEqual:@"summoner"])
+        {
+            [match setObject:[[matchEntities firstObject] valueForKey:property.name] forKey:property.name];
+        }
+    }
+    self.summoner.firstMatchId = match[@"matchId"];
+    [self saveContext];
+    
+    NSLog(@"[SummonerManager setFirstMatchId]");
+    NSLog(@"    first match id: %@", self.summoner.firstMatchId);
 }
 
 @end
