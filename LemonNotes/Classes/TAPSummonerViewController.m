@@ -33,9 +33,14 @@
 @property (nonatomic, weak) IBOutlet UIView* footer;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView* footerIndicator;
 
+//scroll
+@property (nonatomic) CGFloat previousOffset;
+@property (nonatomic) BOOL loadLock;
+
 //setup
 - (void)setupTableView;
 - (void)setupHeaderFooter;
+- (void)setupScrollEvents;
 
 @end
 #pragma mark -
@@ -56,25 +61,6 @@
     //NSLog(@"%@ %p", self.class, self);
     NSLog(@"SummonerVC [viewDidLoad]");
     
-    [self setupTableView];
-}
-
-/**
- * @method: viewWillAppear:
- *
- * Called when this view is about to appear.
- * If this is the rootVC of SummonerNC, 
- * set summonerInfo as stored current summoner.
- * Whether or not above was true,
- * this VC needs an update & call - loadMatches
- */
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
-    
-    NSLog(@"SummonerVC [viewWillAppear]");
-    
-    //if rootVC of nav
     if (self == [self.navigationController.viewControllers firstObject])
     {
         NSString *summonerName = [[[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"] objectForKey:@"name"];
@@ -82,6 +68,24 @@
         self.summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
         [self.manager registerSummoner];
     }
+}
+
+/**
+ * @method: viewWillAppear:
+ *
+ * Called when this view is about to appear.
+ * Setup all necessary components, 
+ * then tell manager to load matches.
+ */
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    
+    NSLog(@"SummonerVC [viewWillAppear]");
+    
+    [self setupTableView];
+    [self setupHeaderFooter];
+    [self setupScrollEvents];
     
     self.needsUpdate = YES;
     [self.manager loadMatches];
@@ -135,7 +139,9 @@
 /**
  * @method setupHeaderFooter
  *
- * Sets up the header components.
+ * Sets up the header components, excluding splash art.
+ * Makes footer visible with indicator spinning.
+ *
  * @note Assumes that summonerManager has been setup
  *       and that matches array is not empty.
  */
@@ -150,19 +156,21 @@
     [self.summonerIconView.layer setBorderWidth:2.0];
     [self.summonerIconView.layer setBorderColor:[[UIColor whiteColor] CGColor]];
     
-    //latest champ splash
-    NSDictionary *match = self.matches[0];
-    int summonerIndex = [match[@"summonerIndex"] intValue];
-    NSString *champId = [match[@"participants"][summonerIndex][@"championId"] stringValue];
-    NSString *champKey = [DataManager sharedManager].champions[champId][@"key"];
-    [[self.tableView tableHeaderView] sendSubviewToBack:self.championSplashView];
-    self.championSplashView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_0.jpg", champKey]];
-    
     //landscape: put header behind table view
     [self.tableView sendSubviewToBack:[self.tableView tableHeaderView]];
     
+    //footer
     [self showFooter:YES];
-    [self.footerIndicator startAnimating];
+}
+
+/**
+ * @method setupScrollEvents
+ *
+ * Sets several constants needed for handling scroll events.
+ */
+- (void)setupScrollEvents
+{
+    
 }
 
 
@@ -185,6 +193,22 @@
 }
 
 /**
+ * @updateHeaderSplash
+ *
+ * Sets champion splash background to one
+ * of the most recently played match.
+ */
+- (void)updateHeaderSplash
+{
+    NSDictionary *match = self.matches[0];
+    int summonerIndex = [match[@"summonerIndex"] intValue];
+    NSString *champId = [match[@"participants"][summonerIndex][@"championId"] stringValue];
+    NSString *champKey = [DataManager sharedManager].champions[champId][@"key"];
+    [[self.tableView tableHeaderView] sendSubviewToBack:self.championSplashView];
+    self.championSplashView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_0.jpg", champKey]];
+}
+
+/**
  * @method showFooter:
  *
  * Given a bool, either shows footer or hides it.
@@ -198,12 +222,16 @@
         self.footer.hidden = NO;
         self.footer.frame = CGRectMake(0,0,size.width,44);
         self.tableView.tableFooterView = self.footer;
+        
+        [self.footerIndicator startAnimating];
     }
     else //dont show
     {
         self.footer.hidden = YES;
         self.footer.frame = CGRectMake(0,0,size.width,10);
         self.tableView.tableFooterView = self.footer;
+        
+        [self.footerIndicator stopAnimating];
     }
 }
 
@@ -217,22 +245,21 @@
  */
 - (void)didFinishLoadingMatches:(NSArray *)moreMatches
 {
-    if (moreMatches != nil)
+    if (moreMatches.count > 0)
     {
-            //append loaded matches to matches
+        self.loadLock = NO;
+    
+        //append loaded matches to matches
         [self.matches addObjectsFromArray:moreMatches];
         [self.tableView reloadData];
+        [self updateHeaderSplash];
         
-        if (self.needsUpdate)
+        //no more loading necessary
+        if (moreMatches.count < 15)
         {
-            [self setupHeaderFooter];
-            self.needsUpdate = NO;
+            self.loadLock = YES;
+            [self showFooter:NO];
         }
-    }
-    else
-    {
-        [self showFooter:NO];
-        [self.footerIndicator stopAnimating];
     }
 }
 
@@ -253,6 +280,16 @@
 
 #pragma mark - Scroll View
 /**
+ * @method scrollViewBeginDragging:
+ *
+ *
+ */
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    self.previousOffset = scrollView.contentOffset.y;
+}
+
+/**
  * @method scrollViewDidScroll:
  *
  * Called whenever view is scrolled (by dragging).
@@ -261,7 +298,41 @@
  */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    CGFloat scrolledOffset = scrollView.contentOffset.y;
+    CGFloat delta = scrolledOffset - self.previousOffset;
+    self.previousOffset = scrolledOffset;
     
+    if (!self.loadLock)
+        [self checkForLoad];
+}
+
+/**
+ * @checkForLoad
+ *
+ * If tableView has been scrolled enough so that
+ * y-offset + screen height >= content height,
+ * then after a 1 second delay, manger is called to load more matches.
+ */
+- (void)checkForLoad
+{
+    CGFloat footerHeight = self.footer.bounds.size.height;
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    CGFloat scrollOffset = self.tableView.contentOffset.y;
+    CGFloat contentHeight = self.tableView.contentSize.height;
+    
+    BOOL loadZone = (screenHeight + scrollOffset <= contentHeight) &&
+                    (screenHeight + scrollOffset >= contentHeight - footerHeight);
+    
+    if (loadZone)
+    {
+        self.loadLock = YES;
+        
+        dispatch_time_t secondDelay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
+        dispatch_after(secondDelay, dispatch_get_main_queue(),
+        ^{
+            [self.manager loadMatches];
+        });
+    }
 }
 
 
@@ -428,29 +499,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-/**
- * @method tableView:willDisplayCell:forRowAtIndexPath:
- *
- * Called when user scrolls and a new cell is about to appear.
- * If this cell is the last cell, load more.
- */
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == self.matches.count - 1 && !self.footer.hidden)
-    {
-        [self.tableView tableFooterView].hidden = NO;
-        [self.footerIndicator startAnimating];
-        
-        dispatch_time_t secondDelay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
-        dispatch_after(secondDelay, dispatch_queue_create("delayed load queue", DISPATCH_QUEUE_CONCURRENT),
-        ^{
-            [self.manager loadMatches];
-        });
-    }
-}
 
-
-#pragma mark - Navigation Events
+#pragma mark - Summoner Search
 /**
  * @method textFieldShouldReturn:
  *
@@ -496,6 +546,7 @@
     }];
 }
 
+#pragma mark - Navigation Events
 /**
  * Currently no segue from the main vc occurs. Will soon change!
  */

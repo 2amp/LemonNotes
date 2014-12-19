@@ -195,17 +195,20 @@
     ^{
         NSArray *matches = [self hasSavedMatches] ? [self loadFromLocal] : [self loadFromServer];
         
-        //increment number of loaded matches
-        self.numLoadedMatches += matches.count;
-        self.oldestLoadedMatchId = [[matches lastObject][@"matchId"] longValue];
-        
-        //debug
-        NSLog(@"[SummonerManager loadMatches]");
-        NSLog(@"    total: %ld, loaded: %ld", self.summoner.matches.count, self.numLoadedMatches);
-        NSLog(@"    oldest loaded: %@", [matches lastObject][@"matchId"]);
-        NSLog(@"    very first game: %@", self.summoner.firstMatchId);
-        for (NSDictionary *match in matches)
-            NSLog(@"        id:%@", match[@"matchId"]);
+        if (matches.count > 0)
+        {
+            //increment number of loaded matches
+            self.numLoadedMatches += matches.count;
+            self.oldestLoadedMatchId = [[matches lastObject][@"matchId"] longValue];
+            
+            //debug
+            NSLog(@"[SummonerManager loadMatches]");
+            NSLog(@"    total: %ld, loaded: %ld", self.summoner.matches.count, self.numLoadedMatches);
+            NSLog(@"    oldest loaded: %@", [matches lastObject][@"matchId"]);
+            NSLog(@"    very first game: %@", self.summoner.firstMatchId);
+            for (NSDictionary *match in matches)
+                NSLog(@"        id:%@", match[@"matchId"]);
+        }
         
         //immediately give back to delegate
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -267,12 +270,11 @@
     long fetchLimit = MIN(15, self.summoner.matches.count - self.numLoadedMatches);
     if (fetchLimit == 0)
     {
-        return nil;
+        return [[NSArray alloc] init];
     }
     
-    //if -1, then set to basically infinity
-    self.oldestLoadedMatchId = (self.oldestLoadedMatchId > 0) ? self.oldestLoadedMatchId : 10500000000; //NOTE: literally unkown magic number, no other changing the 5 to a 0 will not work. ??????????
-    NSLog(@"    oldest loaded:%@", [NSNumber numberWithLong:self.oldestLoadedMatchId]);
+    //NOTE: literally unkown magic number, no other changing the 5 to a 0 will not work. ??????????
+    self.oldestLoadedMatchId = (self.oldestLoadedMatchId > 0) ? self.oldestLoadedMatchId : 10500000000;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"summoner == %@ && %@ <= matchId && matchId < %@",
                                                               self.summoner, self.summoner.firstMatchId, [NSNumber numberWithLong:self.oldestLoadedMatchId]];
 
