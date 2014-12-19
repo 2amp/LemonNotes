@@ -4,65 +4,20 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-RESideMenu.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
-		</dict>
 		<key>Pods-TRVSURLSessionOperation.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1540E97FE5C566731E5D23F4</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>1E612C82DF68E0883919E898</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>351C9089D3FF8E1B1B91C2CC</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>6638946906E10FD25771CA9F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>8119449E9E609C136045669B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>91B9A4235AE81B1E9537BA36</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>A1A6527872991EA166A092C4</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>A87AA9E321B69F90008D2C97</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>A9B6EF854862B75BC69F1194</key>
 		<dict>
 			<key>primary</key>
 			<true/>

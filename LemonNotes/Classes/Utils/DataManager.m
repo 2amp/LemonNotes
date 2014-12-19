@@ -163,6 +163,7 @@
     // if no result, create and recursively return
     if ([result count] == 0)
     {
+        NSLog(@"currentSummonerEntity %@", summonerInfo);
         Summoner *newSummoner = [NSEntityDescription insertNewObjectForEntityForName:@"Summoner"
                                                               inManagedObjectContext:self.managedObjectContext];
         

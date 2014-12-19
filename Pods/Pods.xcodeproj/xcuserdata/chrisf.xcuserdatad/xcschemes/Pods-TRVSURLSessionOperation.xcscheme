@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6638946906E10FD25771CA9F"
+               BlueprintIdentifier = "E348DB9DB4BCAEF89FEA195A"
                BuildableName = "libPods-TRVSURLSessionOperation.a"
                BlueprintName = "Pods-TRVSURLSessionOperation"
                ReferencedContainer = "container:Pods.xcodeproj">

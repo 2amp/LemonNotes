@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "351C9089D3FF8E1B1B91C2CC"
+               BlueprintIdentifier = "E348DB9DB4BCAEF89FEA195A"
                BuildableName = "libPods-TRVSURLSessionOperation.a"
                BlueprintName = "Pods-TRVSURLSessionOperation"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -42,7 +42,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "351C9089D3FF8E1B1B91C2CC"
+            BlueprintIdentifier = "E348DB9DB4BCAEF89FEA195A"
             BuildableName = "libPods-TRVSURLSessionOperation.a"
             BlueprintName = "Pods-TRVSURLSessionOperation"
             ReferencedContainer = "container:Pods.xcodeproj">
@@ -60,7 +60,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "351C9089D3FF8E1B1B91C2CC"
+            BlueprintIdentifier = "E348DB9DB4BCAEF89FEA195A"
             BuildableName = "libPods-TRVSURLSessionOperation.a"
             BlueprintName = "Pods-TRVSURLSessionOperation"
             ReferencedContainer = "container:Pods.xcodeproj">

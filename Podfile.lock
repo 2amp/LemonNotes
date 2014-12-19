@@ -1,13 +1,10 @@
 PODS:
-  - RESideMenu (4.0.7)
   - TRVSURLSessionOperation (0.0.1)
 
 DEPENDENCIES:
-  - RESideMenu (~> 4.0.7)
   - TRVSURLSessionOperation (~> 0.0.1)
 
 SPEC CHECKSUMS:
-  RESideMenu: a9c1cd2e64e60e1d3166ddac01a83e215a0e4d30
   TRVSURLSessionOperation: ae875db17f1414bf39cf781b59beaf4f5b4802c5
 
 COCOAPODS: 0.34.4

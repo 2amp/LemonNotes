@@ -398,8 +398,8 @@
 		895922D51A0330F600F00637 /* SummonerRevive.png in Resources */ = {isa = PBXBuildFile; fileRef = 895920621A0330F600F00637 /* SummonerRevive.png */; };
 		895922D61A0330F600F00637 /* SummonerSmite.png in Resources */ = {isa = PBXBuildFile; fileRef = 895920631A0330F600F00637 /* SummonerSmite.png */; };
 		895922D71A0330F600F00637 /* SummonerTeleport.png in Resources */ = {isa = PBXBuildFile; fileRef = 895920641A0330F600F00637 /* SummonerTeleport.png */; };
-		895922DD1A075E9C00F00637 /* TAPRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 895922DC1A075E9C00F00637 /* TAPRootViewController.m */; };
-		895922E01A07FD9000F00637 /* TAPSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 895922DF1A07FD9000F00637 /* TAPSideMenuViewController.m */; };
+		8960B9DC1A43FCB700CC3D87 /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 8960B9DA1A43FCB700CC3D87 /* checkmark.png */; };
+		8960B9DD1A43FCB700CC3D87 /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 8960B9DB1A43FCB700CC3D87 /* cross.png */; };
 		8984EF2E19F61FC100C442FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF2D19F61FC100C442FC /* main.m */; };
 		8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF3219F61FC100C442FC /* LemonNotes.xcdatamodeld */; };
 		8984EF3A19F61FC100C442FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8984EF3819F61FC100C442FC /* Main.storyboard */; };
@@ -1295,10 +1295,8 @@
 		895920621A0330F600F00637 /* SummonerRevive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SummonerRevive.png; sourceTree = "<group>"; };
 		895920631A0330F600F00637 /* SummonerSmite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SummonerSmite.png; sourceTree = "<group>"; };
 		895920641A0330F600F00637 /* SummonerTeleport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SummonerTeleport.png; sourceTree = "<group>"; };
-		895922DB1A075E9C00F00637 /* TAPRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPRootViewController.h; sourceTree = "<group>"; };
-		895922DC1A075E9C00F00637 /* TAPRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPRootViewController.m; sourceTree = "<group>"; };
-		895922DE1A07FD9000F00637 /* TAPSideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSideMenuViewController.h; sourceTree = "<group>"; };
-		895922DF1A07FD9000F00637 /* TAPSideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPSideMenuViewController.m; sourceTree = "<group>"; };
+		8960B9DA1A43FCB700CC3D87 /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
+		8960B9DB1A43FCB700CC3D87 /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
 		8984EF2819F61FC100C442FC /* LemonNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LemonNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8984EF2C19F61FC100C442FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8984EF2D19F61FC100C442FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -2349,14 +2347,10 @@
 				8984EF5819F6341000C442FC /* TAPAppDelegate.m */,
 				8984EF5919F6341000C442FC /* TAPSignInViewController.h */,
 				8984EF5A19F6341000C442FC /* TAPSignInViewController.m */,
-				895922DB1A075E9C00F00637 /* TAPRootViewController.h */,
-				895922DC1A075E9C00F00637 /* TAPRootViewController.m */,
 				95F162DF1A034C9B00DECF93 /* TAPSummonerViewController.h */,
 				95F162E01A034C9B00DECF93 /* TAPSummonerViewController.m */,
 				89A86C0919F8E60300477FC6 /* TAPStartGameViewController.h */,
 				89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */,
-				895922DE1A07FD9000F00637 /* TAPSideMenuViewController.h */,
-				895922DF1A07FD9000F00637 /* TAPSideMenuViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -2679,6 +2673,8 @@
 		95153A1B1A1746D7003EA211 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				8960B9DA1A43FCB700CC3D87 /* checkmark.png */,
+				8960B9DB1A43FCB700CC3D87 /* cross.png */,
 				95153A1C1A1746D7003EA211 /* alarm (fill).png */,
 				95153A1D1A1746D7003EA211 /* alarm (line).png */,
 				95153A1E1A1746D7003EA211 /* back (fill).png */,
@@ -3187,6 +3183,7 @@
 				9591580D1A0EDFD00098A610 /* Singed_0.jpg in Resources */,
 				895920E21A0330F600F00637 /* 1018.png in Resources */,
 				959158231A0EDFD00098A610 /* Velkoz_0.jpg in Resources */,
+				8960B9DD1A43FCB700CC3D87 /* cross.png in Resources */,
 				95084B7B1A1B37AD0052F40F /* 589.png in Resources */,
 				95084BC81A1B37AD0052F40F /* 665.png in Resources */,
 				959158241A0EDFD00098A610 /* Vi_0.jpg in Resources */,
@@ -3538,6 +3535,7 @@
 				895921A91A0330F600F00637 /* 3275.png in Resources */,
 				95153A651A1746D7003EA211 /* bookmark (fill).png in Resources */,
 				8959206B1A0330F600F00637 /* Annie.png in Resources */,
+				8960B9DC1A43FCB700CC3D87 /* checkmark.png in Resources */,
 				95084B8B1A1B37AD0052F40F /* 604.png in Resources */,
 				8959217F1A0330F600F00637 /* 3185.png in Resources */,
 				959157CB1A0EDFD00098A610 /* Draven_0.jpg in Resources */,
@@ -3938,7 +3936,6 @@
 				953C75151A19E75000832A55 /* TAPLemonRefreshControl.m in Sources */,
 				89A3D21C1A0D6C8E001E6AE2 /* Match.m in Sources */,
 				95F162E11A034C9B00DECF93 /* TAPSummonerViewController.m in Sources */,
-				895922DD1A075E9C00F00637 /* TAPRootViewController.m in Sources */,
 				95F9F9181A1696E000CFEAF3 /* TAPSearchField.m in Sources */,
 				8984EF5C19F6341000C442FC /* TAPSignInViewController.m in Sources */,
 				950B2C421A00296A00DD8A23 /* DataManager.m in Sources */,
@@ -3946,7 +3943,6 @@
 				95B298E31A189045000EC199 /* SummonerManager.m in Sources */,
 				89A86C0B19F8E60300477FC6 /* TAPStartGameViewController.m in Sources */,
 				8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */,
-				895922E01A07FD9000F00637 /* TAPSideMenuViewController.m in Sources */,
 				89A3D21F1A0D6C8E001E6AE2 /* Summoner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
