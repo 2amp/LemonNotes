@@ -16,6 +16,7 @@
 
 //data from refresh should be added to the front
 //data from loading should be added to the back
+@optional
 - (void)didFinishRefreshingMatches:(NSArray *)matches;
 - (void)didFinishLoadingMatches:(NSArray *)matches;
 
@@ -51,5 +52,6 @@
 //recent matches
 - (void)refreshMatches;
 - (void)loadMatches;
+- (NSArray *)loadFromServer;
 
 @end

@@ -11,8 +11,7 @@
 @property NSMutableArray *teammateChecks;
 @property NSMutableArray *teammateManagers;
 @property NSMutableArray *teammateIndicators;
-
-@property NSMutableArray *teammateNames;
+@property NSMutableArray *teammateRecentMatches;
 
 @end
 
@@ -35,7 +34,7 @@
     self.teammateChecks = [NSMutableArray arrayWithArray:@[self.teammate0Check, self.teammate1Check, self.teammate2Check, self.teammate3Check]];
     self.teammateIndicators = [NSMutableArray arrayWithArray:@[self.teammate0Indicator, self.teammate1Indicator, self.teammate2Indicator, self.teammate3Indicator]];
     self.teammateManagers = [NSMutableArray arrayWithCapacity:5];
-    self.teammateNames = [[NSMutableArray alloc] init];
+    self.teammateRecentMatches = [NSMutableArray arrayWithCapacity:5];
     self.summonerNameLabel.text = self.summonerName;
     NSLog(@"%@ %p", self.class, self);
 }
@@ -67,7 +66,10 @@
                                  region:@"na"
                          successHandler:^(NSDictionary *summoner) {
                              ((UIImageView *)self.teammateChecks[index]).image = [UIImage imageNamed:@"checkmark.png"];
-                             self.teammateManagers[index] = [[SummonerManager alloc] initWithSummoner:summoner];
+                             SummonerManager *manager = [[SummonerManager alloc] initWithSummoner:summoner];
+                             manager.delegate = self;
+                             self.teammateRecentMatches[index] = [manager loadFromServer];
+                             self.teammateManagers[index] = manager;
                              dispatch_async(dispatch_get_main_queue(), ^{
                                  [self.teammateIndicators[index] stopAnimating];
                              });
