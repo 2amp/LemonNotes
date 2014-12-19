@@ -88,21 +88,21 @@
     [self.activityIndicator startAnimating];
 
     //async search/fetch summoner
-    [DataManager getSummonerForName:self.summonerName
-                             region:self.summonerRegion
-                     successHandler:^(NSDictionary *summoner) {
-                         [self.activityIndicator stopAnimating];
-                         if (summoner == nil)
-                         {
-                             NSLog(@"summoner %@", summoner);
-                         }
-                         [[NSUserDefaults standardUserDefaults] setObject:summoner forKey:@"currentSummoner"];
-                         [self performSegueWithIdentifier:@"showTabBarController" sender:self];
-                     }
-                     failureHandler:^(NSString *errorMessage) {
-                         [self.activityIndicator stopAnimating];
-                         [self showAlertWithTitle:@"Error" message:errorMessage];
-                     }];
+    [DataManager getSummonerForName:self.summonerName region:self.summonerRegion
+     successHandler:^(NSDictionary *summoner)
+     {
+         [self.activityIndicator stopAnimating];
+         if (summoner == nil)
+         {
+             NSLog(@"summoner %@", summoner);
+         }
+         [[NSUserDefaults standardUserDefaults] setObject:summoner forKey:@"currentSummoner"];
+         [self performSegueWithIdentifier:@"showTabBarController" sender:self];
+     }
+     failureHandler:^(NSString *errorMessage) {
+         [self.activityIndicator stopAnimating];
+         [self showAlertWithTitle:@"Error" message:errorMessage];
+     }];
 }
 
 

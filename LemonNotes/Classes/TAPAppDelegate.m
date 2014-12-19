@@ -28,8 +28,8 @@
     //data updates
     [[DataManager sharedManager] updateChampionIds];
     [[DataManager sharedManager] updateSummonerSpells];
-    [[DataManager sharedManager] deleteAllSummoners];
-    [[DataManager sharedManager] summonerDump];
+    //[[DataManager sharedManager] deleteAllSummoners];
+    //[[DataManager sharedManager] summonerDump];
     
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"currentSummoner"];
     NSDictionary *currentSummoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
