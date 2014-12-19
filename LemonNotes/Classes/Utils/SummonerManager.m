@@ -430,7 +430,7 @@
 {
     NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"Match"];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"summoner == %@"];
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"summoner == %@"];
     [fetch setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"matchId" ascending:YES]]];
     
     NSError *error = nil;

@@ -303,7 +303,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat scrolledOffset = scrollView.contentOffset.y;
-    CGFloat delta = scrolledOffset - self.previousOffset;
+//    CGFloat delta = scrolledOffset - self.previousOffset;
     self.previousOffset = scrolledOffset;
     
 //    if (scrolledOffset > self.startingOffset)
