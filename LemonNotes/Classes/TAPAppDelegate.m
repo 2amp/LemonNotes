@@ -28,10 +28,11 @@
     //data updates
     [[DataManager sharedManager] updateChampionIds];
     [[DataManager sharedManager] updateSummonerSpells];
-    //[[DataManager sharedManager] deleteAllSummoners];
-    //[[DataManager sharedManager] summonerDump];
+    [[DataManager sharedManager] deleteAllSummoners];
+    [[DataManager sharedManager] summonerDump];
 
     NSDictionary *currentSummoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"currentSummoner"];
     
     //programmatically setup initialVC
     NSString *initialVCID = currentSummoner ? @"rootVC" : @"signInVC";

@@ -93,7 +93,7 @@
                              region:self.summonerRegion
                      successHandler:^(NSDictionary *summoner) {
                          [self.activityIndicator stopAnimating];
-
+                         NSLog(@"summoner %@", summoner);
                          [[NSUserDefaults standardUserDefaults] setObject:summoner forKey:@"currentSummoner"];
                          [self performSegueWithIdentifier:@"showRoot" sender:self];
                      }

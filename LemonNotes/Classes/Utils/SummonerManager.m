@@ -102,6 +102,7 @@
     //if not registered
     if (!self.isRegistered)
     {
+        NSLog(@"registerSummoner %@", self.summonerInfo);
         self.summoner = [NSEntityDescription insertNewObjectForEntityForName:@"Summoner"
                                                       inManagedObjectContext:self.managedObjectContext];
         

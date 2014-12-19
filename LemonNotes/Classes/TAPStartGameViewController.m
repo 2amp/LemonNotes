@@ -41,12 +41,10 @@
     [super didReceiveMemoryWarning];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+- (void)textFieldDidEndEditing:(UITextField *)textField
 {
     NSInteger index = [self.teammateFields indexOfObject:textField];
     NSLog(@"%lu", index);
-    [textField resignFirstResponder];
-    return YES;
 }
 
 @end
