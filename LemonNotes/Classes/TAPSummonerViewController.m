@@ -35,6 +35,7 @@
 
 //scroll
 @property (nonatomic) CGFloat previousOffset;
+@property (nonatomic) CGFloat startingOffset;
 @property (nonatomic) BOOL loadLock;
 
 //setup
@@ -200,7 +201,7 @@
  */
 - (void)updateHeaderSplash
 {
-    NSDictionary *match = self.matches[0];
+    NSDictionary *match = [self.matches firstObject];
     int summonerIndex = [match[@"summonerIndex"] intValue];
     NSString *champId = [match[@"participants"][summonerIndex][@"championId"] stringValue];
     NSString *champKey = [DataManager sharedManager].champions[champId][@"key"];
@@ -286,7 +287,8 @@
  */
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    self.previousOffset = scrollView.contentOffset.y;
+    self.startingOffset = scrollView.contentOffset.y;
+    self.previousOffset = self.startingOffset;
 }
 
 /**
@@ -301,6 +303,13 @@
     CGFloat scrolledOffset = scrollView.contentOffset.y;
     CGFloat delta = scrolledOffset - self.previousOffset;
     self.previousOffset = scrolledOffset;
+    
+    if (scrolledOffset > self.startingOffset)
+    {
+        CGRect frame = self.navigationController.navigationBar.frame;
+        frame.size.height -= delta;
+        self.navigationController.navigationBar.frame = frame;
+    }
     
     if (!self.loadLock)
         [self checkForLoad];
@@ -340,6 +349,10 @@
 {
     
 }
+
+
+#pragma mark - NavBar Scroll
+
 
 
 #pragma mark - Table View

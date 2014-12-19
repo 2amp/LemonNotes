@@ -202,12 +202,12 @@
             self.oldestLoadedMatchId = [[matches lastObject][@"matchId"] longValue];
             
             //debug
-            NSLog(@"[SummonerManager loadMatches]");
-            NSLog(@"    total: %ld, loaded: %ld", self.summoner.matches.count, self.numLoadedMatches);
-            NSLog(@"    oldest loaded: %@", [matches lastObject][@"matchId"]);
-            NSLog(@"    very first game: %@", self.summoner.firstMatchId);
-            for (NSDictionary *match in matches)
-                NSLog(@"        id:%@", match[@"matchId"]);
+//            NSLog(@"[SummonerManager loadMatches]");
+//            NSLog(@"    total: %ld, loaded: %ld", self.summoner.matches.count, self.numLoadedMatches);
+//            NSLog(@"    oldest loaded: %@", [matches lastObject][@"matchId"]);
+//            NSLog(@"    very first game: %@", self.summoner.firstMatchId);
+//            for (NSDictionary *match in matches)
+//                NSLog(@"        id:%@", match[@"matchId"]);
         }
         
         //immediately give back to delegate
