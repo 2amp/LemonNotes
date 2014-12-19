@@ -31,7 +31,7 @@
     //[[DataManager sharedManager] deleteAllSummoners];
     //[[DataManager sharedManager] summonerDump];
     
-    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"currentSummoner"];
+    //[[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"currentSummoner"];
     NSDictionary *currentSummoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
 
     

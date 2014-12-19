@@ -70,7 +70,12 @@
         [self.manager registerSummoner];
     }
     
-    NSLog(@"")
+    [self setupTableView];
+    [self setupHeaderFooter];
+    [self setupScrollEvents];
+    
+    self.needsUpdate = YES;
+    [self.manager loadMatches];
 }
 
 /**
@@ -85,13 +90,6 @@
     [super viewWillAppear:YES];
     
     NSLog(@"SummonerVC [viewWillAppear]");
-    
-    [self setupTableView];
-    [self setupHeaderFooter];
-    [self setupScrollEvents];
-    
-    self.needsUpdate = YES;
-    [self.manager loadMatches];
 }
 
 
@@ -133,6 +131,7 @@
     inset.top = CGRectGetMaxY(navbarFrame);
     self.tableView.contentInset = inset;
     self.tableView.scrollIndicatorInsets = inset;
+    NSLog(@"inset: %f, offset: %f, wanted inset: %f", self.tableView.contentInset.top, self.tableView.contentOffset.y, inset.top);
     [self.view sendSubviewToBack:self.tableView];
     
     //refresh
@@ -307,12 +306,12 @@
     CGFloat delta = scrolledOffset - self.previousOffset;
     self.previousOffset = scrolledOffset;
     
-    if (scrolledOffset > self.startingOffset)
-    {
-        CGRect frame = self.navigationController.navigationBar.frame;
-        frame.size.height -= delta;
-        self.navigationController.navigationBar.frame = frame;
-    }
+//    if (scrolledOffset > self.startingOffset)
+//    {
+//        CGRect frame = self.navigationController.navigationBar.frame;
+//        frame.size.height -= delta;
+//        self.navigationController.navigationBar.frame = frame;
+//    }
     
     if (!self.loadLock)
         [self checkForLoad];
