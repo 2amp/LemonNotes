@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		14DD64AD70E0D06AA18B09DF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B10A0C6918D0E25AC9C2085A /* libPods.a */; };
+		8948D6581A46031800CAEA4D /* TAPStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8948D6571A46031800CAEA4D /* TAPStatsViewController.m */; };
 		894BF63B1A008858009A1F1F /* UIImage+UIImageAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 894BF63A1A008858009A1F1F /* UIImage+UIImageAdditions.m */; };
 		89591DD51A03130B00F00637 /* 2AM Productions Logo.idraw in Resources */ = {isa = PBXBuildFile; fileRef = 89591B5C1A03130B00F00637 /* 2AM Productions Logo.idraw */; };
 		89591DD61A03130B00F00637 /* Lemon Notes Logo.idraw in Resources */ = {isa = PBXBuildFile; fileRef = 89591B5D1A03130B00F00637 /* Lemon Notes Logo.idraw */; };
@@ -904,6 +905,8 @@
 
 /* Begin PBXFileReference section */
 		829C8D00974AAC1EF5A20DB7 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		8948D6561A46031800CAEA4D /* TAPStatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPStatsViewController.h; sourceTree = "<group>"; };
+		8948D6571A46031800CAEA4D /* TAPStatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPStatsViewController.m; sourceTree = "<group>"; };
 		894BF6391A008858009A1F1F /* UIImage+UIImageAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UIImageAdditions.h"; sourceTree = "<group>"; };
 		894BF63A1A008858009A1F1F /* UIImage+UIImageAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UIImageAdditions.m"; sourceTree = "<group>"; };
 		89591B5C1A03130B00F00637 /* 2AM Productions Logo.idraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = "2AM Productions Logo.idraw"; sourceTree = "<group>"; };
@@ -2351,6 +2354,8 @@
 				95F162E01A034C9B00DECF93 /* TAPSummonerViewController.m */,
 				89A86C0919F8E60300477FC6 /* TAPStartGameViewController.h */,
 				89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */,
+				8948D6561A46031800CAEA4D /* TAPStatsViewController.h */,
+				8948D6571A46031800CAEA4D /* TAPStatsViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -3935,6 +3940,7 @@
 				8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */,
 				953C75151A19E75000832A55 /* TAPLemonRefreshControl.m in Sources */,
 				89A3D21C1A0D6C8E001E6AE2 /* Match.m in Sources */,
+				8948D6581A46031800CAEA4D /* TAPStatsViewController.m in Sources */,
 				95F162E11A034C9B00DECF93 /* TAPSummonerViewController.m in Sources */,
 				95F9F9181A1696E000CFEAF3 /* TAPSearchField.m in Sources */,
 				8984EF5C19F6341000C442FC /* TAPSignInViewController.m in Sources */,

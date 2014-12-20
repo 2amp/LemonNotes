@@ -109,7 +109,7 @@
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6X6-pb-YSP">
-                                <rect key="frame" x="16" y="99" width="568" height="21"/>
+                                <rect key="frame" x="16" y="99" width="568" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -122,7 +122,7 @@
                                 </segments>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your side" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k7K-EJ-HYK">
-                                <rect key="frame" x="16" y="131" width="71" height="21"/>
+                                <rect key="frame" x="16" y="131" width="71" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -131,7 +131,7 @@
                                 <rect key="frame" x="535" y="164" width="51" height="31"/>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Captain?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GBx-8J-7xk">
-                                <rect key="frame" x="16" y="169" width="70" height="21"/>
+                                <rect key="frame" x="16" y="168" width="69.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -176,18 +176,28 @@
                                     <constraint firstAttribute="height" constant="20" id="mmG-tS-3dE"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P0J-oQ-VCR">
+                                <rect key="frame" x="284" y="355" width="33" height="30"/>
+                                <state key="normal" title="Start">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Ixc-oc-g8J" kind="show" identifier="showStats" id="WjW-f3-N8H"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="P0J-oQ-VCR" secondAttribute="centerX" constant="-0.5" id="2j6-AL-IQg"/>
                             <constraint firstItem="QyO-rF-koI" firstAttribute="trailing" secondItem="gHI-uM-spk" secondAttribute="trailingMargin" id="8WL-x2-hB4"/>
-                            <constraint firstItem="vHB-Wc-v9b" firstAttribute="top" secondItem="5OC-FK-Hyi" secondAttribute="bottom" constant="108" id="A5Z-zt-DER"/>
+                            <constraint firstItem="vHB-Wc-v9b" firstAttribute="top" secondItem="5OC-FK-Hyi" secondAttribute="bottom" constant="64" id="A5Z-zt-DER"/>
                             <constraint firstItem="E5c-cA-ZLC" firstAttribute="top" secondItem="vHB-Wc-v9b" secondAttribute="bottom" constant="8" id="ADq-o9-WSy"/>
                             <constraint firstItem="yQ3-jd-6bd" firstAttribute="top" secondItem="E2V-ga-P9e" secondAttribute="bottom" constant="-25" id="Avy-sf-Fd2"/>
                             <constraint firstItem="Sac-BG-8aN" firstAttribute="leading" secondItem="gHI-uM-spk" secondAttribute="leadingMargin" id="D0C-db-h6p"/>
                             <constraint firstItem="vHB-Wc-v9b" firstAttribute="trailing" secondItem="gHI-uM-spk" secondAttribute="trailingMargin" id="DXz-ZK-HGl"/>
                             <constraint firstItem="QyO-rF-koI" firstAttribute="top" secondItem="pZK-bX-dbw" secondAttribute="bottom" constant="8" id="E1D-o3-zzQ"/>
                             <constraint firstItem="P8H-Wu-dS6" firstAttribute="leading" secondItem="pZK-bX-dbw" secondAttribute="trailing" constant="-25" id="EeP-hX-jSE"/>
-                            <constraint firstItem="6X6-pb-YSP" firstAttribute="top" secondItem="5OC-FK-Hyi" secondAttribute="bottom" constant="79" id="FdV-mi-BJT"/>
+                            <constraint firstItem="6X6-pb-YSP" firstAttribute="top" secondItem="5OC-FK-Hyi" secondAttribute="bottom" constant="35" id="FdV-mi-BJT"/>
                             <constraint firstItem="E2V-ga-P9e" firstAttribute="leading" secondItem="gHI-uM-spk" secondAttribute="leadingMargin" id="HYu-7o-peB"/>
                             <constraint firstItem="QyO-rF-koI" firstAttribute="top" secondItem="QUd-os-2Em" secondAttribute="bottom" constant="-25" id="IJn-Ow-ZXh"/>
                             <constraint firstItem="GBx-8J-7xk" firstAttribute="leading" secondItem="gHI-uM-spk" secondAttribute="leadingMargin" id="O0z-Hn-dKq"/>
@@ -195,9 +205,10 @@
                             <constraint firstItem="dxK-eY-5Zm" firstAttribute="top" secondItem="QyO-rF-koI" secondAttribute="bottom" constant="-25" id="RZL-8c-wZX"/>
                             <constraint firstItem="pZK-bX-dbw" firstAttribute="top" secondItem="cTr-c4-GVL" secondAttribute="bottom" constant="-25" id="U23-hB-WBT"/>
                             <constraint firstItem="pZK-bX-dbw" firstAttribute="leading" secondItem="gHI-uM-spk" secondAttribute="leadingMargin" id="U6I-JF-cDP"/>
-                            <constraint firstItem="k7K-EJ-HYK" firstAttribute="top" secondItem="5OC-FK-Hyi" secondAttribute="bottom" constant="111" id="UZN-l9-VMW"/>
+                            <constraint firstItem="k7K-EJ-HYK" firstAttribute="top" secondItem="5OC-FK-Hyi" secondAttribute="bottom" constant="67" id="UZN-l9-VMW"/>
                             <constraint firstItem="E2V-ga-P9e" firstAttribute="top" secondItem="Sac-BG-8aN" secondAttribute="bottom" constant="8" id="Vn6-fc-oHY"/>
                             <constraint firstItem="6X6-pb-YSP" firstAttribute="leading" secondItem="gHI-uM-spk" secondAttribute="leadingMargin" id="Ws0-SC-peE"/>
+                            <constraint firstItem="P0J-oQ-VCR" firstAttribute="top" secondItem="QyO-rF-koI" secondAttribute="bottom" constant="8" id="kEi-Yr-p3M"/>
                             <constraint firstItem="QyO-rF-koI" firstAttribute="leading" secondItem="gHI-uM-spk" secondAttribute="leadingMargin" id="kgj-Wf-g5R"/>
                             <constraint firstItem="GBx-8J-7xk" firstAttribute="top" secondItem="k7K-EJ-HYK" secondAttribute="bottom" constant="17" id="kkU-h2-eKH"/>
                             <constraint firstItem="E5c-cA-ZLC" firstAttribute="trailing" secondItem="gHI-uM-spk" secondAttribute="trailingMargin" id="mC1-eH-7Tt"/>
@@ -208,7 +219,7 @@
                             <constraint firstItem="QUd-os-2Em" firstAttribute="leading" secondItem="QyO-rF-koI" secondAttribute="trailing" constant="-25" id="qNe-xd-eEv"/>
                             <constraint firstItem="P8H-Wu-dS6" firstAttribute="top" secondItem="pZK-bX-dbw" secondAttribute="bottom" constant="-25" id="qoE-ha-E4H"/>
                             <constraint firstItem="yQ3-jd-6bd" firstAttribute="leading" secondItem="E2V-ga-P9e" secondAttribute="trailing" constant="-25" id="qsA-Wb-CFn"/>
-                            <constraint firstItem="Sac-BG-8aN" firstAttribute="top" secondItem="5OC-FK-Hyi" secondAttribute="bottom" constant="183" id="sNu-9e-7MT"/>
+                            <constraint firstItem="Sac-BG-8aN" firstAttribute="top" secondItem="5OC-FK-Hyi" secondAttribute="bottom" constant="139" id="sNu-9e-7MT"/>
                             <constraint firstItem="Sac-BG-8aN" firstAttribute="trailing" secondItem="gHI-uM-spk" secondAttribute="trailingMargin" id="tUJ-l3-yY7"/>
                             <constraint firstItem="Tpb-j4-FyV" firstAttribute="leading" secondItem="E2V-ga-P9e" secondAttribute="trailing" constant="-25" id="taV-7l-tLd"/>
                             <constraint firstItem="Q7A-VX-Fcq" firstAttribute="leading" secondItem="Sac-BG-8aN" secondAttribute="trailing" constant="-25" id="tp5-Hy-XhG"/>
@@ -220,7 +231,7 @@
                             <constraint firstItem="pZK-bX-dbw" firstAttribute="trailing" secondItem="gHI-uM-spk" secondAttribute="trailingMargin" id="zz3-7v-5kD"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Game" id="NwJ-Cz-IZR"/>
+                    <navigationItem key="navigationItem" id="BDf-8z-edX"/>
                     <connections>
                         <outlet property="captainSwitch" destination="E5c-cA-ZLC" id="NaL-Qo-hr1"/>
                         <outlet property="sideControl" destination="vHB-Wc-v9b" id="imc-tz-TIX"/>
@@ -241,17 +252,17 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2wM-AV-eHl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2554" y="450"/>
+            <point key="canvasLocation" x="3366" y="450"/>
         </scene>
         <!--Summoner Navigation-->
         <scene sceneID="1qx-tH-TiT">
             <objects>
                 <navigationController title="Summoner Navigation" automaticallyAdjustsScrollViewInsets="NO" id="h1N-vs-vES" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="80W-Bk-cwK"/>
+                    <tabBarItem key="tabBarItem" title="Match History" id="80W-Bk-cwK"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ora-zo-84j">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.38431372549999998" green="0.64313725489999995" blue="0.82745098039999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.32156862745098042" green="0.5725490196078431" blue="0.78823529411764703" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="Z9i-El-hGK" kind="relationship" relationship="rootViewController" id="PUX-oZ-0DU"/>
@@ -585,21 +596,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="4XL-Az-1lU" firstAttribute="leading" secondItem="pje-c8-Cp7" secondAttribute="leadingMargin" constant="-16" id="0TG-MF-nGq"/>
-                            <constraint firstItem="V5K-as-CzT" firstAttribute="top" secondItem="4XL-Az-1lU" secondAttribute="bottom" id="RcK-DI-F6m"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="4XL-Az-1lU" secondAttribute="trailing" constant="-16" id="jUk-OR-71r"/>
-                            <constraint firstItem="4XL-Az-1lU" firstAttribute="top" secondItem="iuR-Ea-VJr" secondAttribute="bottom" constant="-64" id="pDu-bR-mCf"/>
+                            <constraint firstItem="4XL-Az-1lU" firstAttribute="top" secondItem="pje-c8-Cp7" secondAttribute="top" id="72v-JB-zXE"/>
+                            <constraint firstItem="4XL-Az-1lU" firstAttribute="leading" secondItem="pje-c8-Cp7" secondAttribute="leading" id="KQN-4k-w8L"/>
+                            <constraint firstAttribute="trailing" secondItem="4XL-Az-1lU" secondAttribute="trailing" id="ia8-6R-JEa"/>
+                            <constraint firstItem="4XL-Az-1lU" firstAttribute="bottom" secondItem="V5K-as-CzT" secondAttribute="top" id="pwc-g1-XHx"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="Dt4-0Z-z61"/>
-                    <navigationItem key="navigationItem" id="OUw-0s-tTN">
-                        <barButtonItem key="leftBarButtonItem" image="side_menu.png" id="IBD-nU-yT6">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="presentLeftMenuViewController:" destination="Z9i-El-hGK" id="inv-p8-C4Z"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="OUw-0s-tTN"/>
                     <connections>
                         <outlet property="championSplashView" destination="3io-ee-6Gl" id="kS8-Lb-1sa"/>
                         <outlet property="footer" destination="aqS-jh-TRe" id="1Sn-6u-6tU"/>
@@ -615,6 +619,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xnC-w2-2e9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3220" y="-241"/>
+        </scene>
+        <!--Stats View Controller-->
+        <scene sceneID="FzX-Kh-AuE">
+            <objects>
+                <viewController id="Ixc-oc-g8J" customClass="TAPStatsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="CQA-AG-dhO"/>
+                        <viewControllerLayoutGuide type="bottom" id="3P9-0A-NBe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nHL-uh-3z8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qUE-0u-PHQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4032" y="450"/>
         </scene>
         <!--Match View Controller-->
         <scene sceneID="qfQ-0H-Ba8">
@@ -646,16 +668,35 @@
                     </tabBar>
                     <connections>
                         <segue destination="h1N-vs-vES" kind="relationship" relationship="viewControllers" id="tSL-IB-dWL"/>
-                        <segue destination="atR-Qs-Cne" kind="relationship" relationship="viewControllers" id="Tvh-PI-hRF"/>
+                        <segue destination="Wac-bT-8TI" kind="relationship" relationship="viewControllers" id="Tvh-PI-hRF"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yiO-dh-aoO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1742" y="104"/>
         </scene>
+        <!--Game-->
+        <scene sceneID="ngW-pk-pjB">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Wac-bT-8TI" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Game" id="NwJ-Cz-IZR"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0qh-dx-IXY">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.32156862749999998" green="0.57254901960000004" blue="0.78823529410000004" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="atR-Qs-Cne" kind="relationship" relationship="rootViewController" id="U8E-2T-ZPY"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zfT-lv-JR3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2554" y="450"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Lemon Notes Logo (Aligned).png" width="645" height="334"/>
-        <image name="side_menu.png" width="22" height="22"/>
     </resources>
 </document>

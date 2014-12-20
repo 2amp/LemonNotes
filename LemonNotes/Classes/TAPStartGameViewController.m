@@ -2,6 +2,7 @@
 #import "TAPStartGameViewController.h"
 #import "DataManager.h"
 #import "SummonerManager.h"
+#import "TAPStatsViewController.h"
 
 
 
@@ -68,18 +69,16 @@
                              ((UIImageView *)self.teammateChecks[index]).image = [UIImage imageNamed:@"checkmark.png"];
                              SummonerManager *manager = [[SummonerManager alloc] initWithSummoner:summoner];
                              manager.delegate = self;
-                             self.teammateRecentMatches[index] = [manager loadFromServer];
-                             self.teammateManagers[index] = manager;
-                             dispatch_async(dispatch_get_main_queue(), ^{
-                                 [self.teammateIndicators[index] stopAnimating];
+                             // [manager loadServer] is synchronous, so place in async block
+                             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                                 self.teammateRecentMatches[index] = [manager loadFromServer];
                              });
-
+                             self.teammateManagers[index] = manager;
+                             [self.teammateIndicators[index] stopAnimating];
                          }
                          failureHandler:^(NSString *errorMessage) {
                              ((UIImageView *)self.teammateChecks[index]).image = [UIImage imageNamed:@"cross.png"];
-                             dispatch_async(dispatch_get_main_queue(), ^{
-                                 [self.teammateIndicators[index] stopAnimating];
-                             });
+                             [self.teammateIndicators[index] stopAnimating];
                          }];
     }
     NSLog(@"%lu", index);
@@ -89,6 +88,15 @@
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"showStats"])
+    {
+        TAPStatsViewController *statsVC = (TAPStatsViewController *)segue.destinationViewController;
+        statsVC.teammateRecentMatches = self.teammateRecentMatches;
+    }
 }
 
 @end

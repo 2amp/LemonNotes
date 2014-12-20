@@ -1,5 +1,6 @@
 
 #import <UIKit/UIKit.h>
+#import "DataManager.h"
 
 /**
  * @class TAPSignInViewController
