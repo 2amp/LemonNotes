@@ -510,7 +510,7 @@
  */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"showNextViewController" sender:self];
+    [self performSegueWithIdentifier:@"showGameDetail" sender:self];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
