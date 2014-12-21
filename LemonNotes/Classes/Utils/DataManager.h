@@ -5,6 +5,13 @@
 
 
 
+@protocol DataManagerDelegate
+
+@optional
+- (void)didFinishLoadingData;
+
+@end
+
 /**
  * @class DataManager
  * @brief DataManager
@@ -36,11 +43,15 @@
 - (void)loadRecentMatches;
 - (NSNumber *)saveRecentMatchesForSummoner:(Summoner *)summoner;
 
+// delegate
+@property (nonatomic, weak) id<DataManagerDelegate> delegate;
+
 //static data
 @property (nonatomic) NSArray *regions;
 @property (nonatomic) NSDictionary *champions;
 @property (nonatomic) NSDictionary *summonerSpells;
 - (void)updateChampionIds;
 - (void)updateSummonerSpells;
+- (void)updateAllData;
 
 @end

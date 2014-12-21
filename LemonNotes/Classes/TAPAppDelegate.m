@@ -26,20 +26,21 @@
     //[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
     
     //data updates
-    [[DataManager sharedManager] updateChampionIds];
-    [[DataManager sharedManager] updateSummonerSpells];
-    //[[DataManager sharedManager] deleteAllSummoners];
-    //[[DataManager sharedManager] summonerDump];
-    
-    //[[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"currentSummoner"];
-    NSDictionary *currentSummoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
+//    [[DataManager sharedManager] updateChampionIds];
+//    [[DataManager sharedManager] updateSummonerSpells];
+    [[DataManager sharedManager] updateAllData];
+//    [[DataManager sharedManager] deleteAllSummoners];
+//    [[DataManager sharedManager] summonerDump];
+
+//    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"currentSummoner"];
+//    NSDictionary *currentSummoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
 
     
     //programmatically setup initialVC
-    NSString *initialVCID = currentSummoner ? @"summonerTBC" : @"signInVC";
-    self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]
-                                      instantiateViewControllerWithIdentifier:initialVCID];
-    
+//    NSString *initialVCID = currentSummoner ? @"summonerTBC" : @"signInVC";
+//    self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]
+//                                      instantiateViewControllerWithIdentifier:initialVCID];
+
     [self.window makeKeyAndVisible];
     return YES;
 }

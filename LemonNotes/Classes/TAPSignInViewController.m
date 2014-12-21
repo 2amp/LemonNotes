@@ -11,6 +11,7 @@
 //UI
 @property (nonatomic, weak) IBOutlet TAPSearchField *signInField;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 
 //Private
 @property (nonatomic, strong) NSURLSession *urlSession;
@@ -37,6 +38,13 @@
     
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
     self.urlSession = [NSURLSession sessionWithConfiguration:config];
+    [DataManager sharedManager].delegate = self;
+
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"] != nil)
+    {
+        [self.loadingIndicator startAnimating];
+        [self.view setUserInteractionEnabled:NO];
+    }
 
     NSLog(@"%@ %p", self.class, self);
 }
@@ -136,6 +144,14 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 
+}
+
+- (void)didFinishLoadingData
+{
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"] != nil)
+    {
+        [self performSegueWithIdentifier:@"showTabBarController" sender:self];
+    }
 }
 
 @end

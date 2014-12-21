@@ -40,14 +40,19 @@
                                     <constraint firstAttribute="height" constant="20" id="UWN-7c-Ig7"/>
                                 </constraints>
                             </activityIndicatorView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="lnv-Nf-Uno">
+                                <rect key="frame" x="282" y="340" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.52988997558486139" green="0.81274263015629644" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="fYm-Uw-5oD" firstAttribute="top" secondItem="icp-S1-coZ" secondAttribute="bottom" constant="-25" id="ARf-z9-iip"/>
                             <constraint firstItem="fYm-Uw-5oD" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="40" id="BBk-De-Ip2"/>
+                            <constraint firstAttribute="centerX" secondItem="lnv-Nf-Uno" secondAttribute="centerX" constant="-0.5" id="DfO-aO-o3O"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fYm-Uw-5oD" secondAttribute="trailing" constant="40" id="Hmn-Qh-7E9"/>
                             <constraint firstItem="fYm-Uw-5oD" firstAttribute="top" secondItem="Fs4-F2-OJ2" secondAttribute="bottom" constant="10" id="Lxl-xF-NUH"/>
                             <constraint firstAttribute="centerX" secondItem="Fs4-F2-OJ2" secondAttribute="centerX" id="Ncj-D2-wbv"/>
+                            <constraint firstItem="lnv-Nf-Uno" firstAttribute="top" secondItem="fYm-Uw-5oD" secondAttribute="bottom" constant="8" id="QV1-Rz-4cy"/>
                             <constraint firstItem="Fs4-F2-OJ2" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="80" id="Yyx-Ly-gWq">
                                 <variation key="heightClass=compact" constant="40"/>
                             </constraint>
@@ -56,6 +61,7 @@
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="icp-S1-coZ" id="Y5R-Lo-4xF"/>
+                        <outlet property="loadingIndicator" destination="lnv-Nf-Uno" id="mkd-wE-1Iz"/>
                         <outlet property="signInField" destination="fYm-Uw-5oD" id="fPX-Sp-3M8"/>
                         <segue destination="691-7f-eQn" kind="show" identifier="showTabBarController" id="IWW-rR-aQA"/>
                     </connections>

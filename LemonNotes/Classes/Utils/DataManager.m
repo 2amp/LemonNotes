@@ -399,7 +399,42 @@
     
     [[self.urlSession dataTaskWithURL:apiURL(kLoLStaticSpellList, @"na", @"", @[@"dataById=true"]) completionHandler:completionHandler]
      resume];
+}
 
+- (void)updateAllData
+{
+    void (^summonerSpellCompletionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
+    {
+        if (!error)
+        {
+            self.summonerSpells = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil][@"data"];
+        }
+        else
+        {
+            NSLog(@"There was an error with the champion API call!");
+        }
+        [self.delegate didFinishLoadingData];
+    };
+
+    void (^championIdCompletionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)
+    {
+        if (!error)
+        {
+            self.champions = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil][@"data"];
+            [[self.urlSession dataTaskWithURL:apiURL(kLoLStaticSpellList, @"na", @"", @[@"dataById=true"])
+                            completionHandler:summonerSpellCompletionHandler]
+             resume];
+        }
+        else
+        {
+            NSLog(@"Champion list API call error: %@", error);
+        }
+
+    };
+
+    [[self.urlSession dataTaskWithURL:apiURL(kLoLStaticChampionList, @"na", @"", @[@"dataById=true"])
+                    completionHandler:championIdCompletionHandler]
+     resume];
 }
 
 @end
