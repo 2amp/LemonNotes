@@ -22,10 +22,14 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.mostPlayedChampions = [[NSMutableArray alloc] initWithCapacity:5];
+    self.mostPlayedChampions = [NSMutableArray arrayWithObjects:[NSNumber numberWithInt:-1],
+                                [NSNumber numberWithInt:-1], [NSNumber numberWithInt:-1], [NSNumber numberWithInt:-1], nil];
     for (int i = 0; i < self.teammateRecentMatches.count; i++)
     {
-        self.mostPlayedChampions[i] = [self mostPlayedChampionForTeammate:i];
+        if (((NSArray *)(self.teammateRecentMatches[i])).count > 0)
+        {
+            self.mostPlayedChampions[i] = [self mostPlayedChampionForTeammate:i];
+        }
     }
 }
 
@@ -82,7 +86,10 @@
     UIImageView *mostPlayedImageView = (UIImageView *)([cell viewWithTag:101]);
     UILabel *mostPlayedLabel = (UILabel *)([cell viewWithTag:102]);
 
-    name.text = ((SummonerManager *)self.teammateManagers[indexPath.row]).summonerInfo[@"name"];
+    if (![self.teammateManagers[indexPath.row] isEqual:[NSNull null]])
+    {
+        name.text = ((SummonerManager *)self.teammateManagers[indexPath.row]).summonerInfo[@"name"];
+    }
     mostPlayedImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", dataManager.champions[self.mostPlayedChampions[indexPath.row]][@"key"]]];
     mostPlayedLabel.text = dataManager.champions[self.mostPlayedChampions[indexPath.row]][@"name"];
 
