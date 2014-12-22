@@ -49,6 +49,9 @@
 - (void)registerSummoner;
 - (void)deregisterSummoner;
 
+// summoner
+@property (nonatomic, strong) NSDictionary *summonerInfo;
+
 //recent matches
 - (void)refreshMatches;
 - (void)loadMatches;

@@ -2,7 +2,7 @@
 #import "TAPStartGameViewController.h"
 #import "DataManager.h"
 #import "SummonerManager.h"
-#import "TAPStatsViewController.h"
+#import "TAPTeammateInfoViewController.h"
 
 
 
@@ -71,7 +71,10 @@
                              manager.delegate = self;
                              // [manager loadServer] is synchronous, so place in async block
                              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                                 self.teammateRecentMatches[index] = [manager loadFromServer];
+                                 NSMutableArray *matches = [[NSMutableArray alloc] init];
+                                 [matches addObjectsFromArray:[manager loadFromServer]];
+                                 [matches addObjectsFromArray:[manager loadFromServer]];
+                                 self.teammateRecentMatches[index] = matches;
                              });
                              self.teammateManagers[index] = manager;
                              [self.teammateIndicators[index] stopAnimating];
@@ -94,8 +97,9 @@
 {
     if ([segue.identifier isEqualToString:@"showStats"])
     {
-        TAPStatsViewController *statsVC = (TAPStatsViewController *)segue.destinationViewController;
-        statsVC.teammateRecentMatches = self.teammateRecentMatches;
+        TAPTeammateInfoViewController *teammateInfoVC = (TAPTeammateInfoViewController *)segue.destinationViewController;
+        teammateInfoVC.teammateManagers = self.teammateManagers;
+        teammateInfoVC.teammateRecentMatches = self.teammateRecentMatches;
     }
 }
 

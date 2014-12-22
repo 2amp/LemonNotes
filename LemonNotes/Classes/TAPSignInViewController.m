@@ -42,6 +42,7 @@
 
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"] != nil)
     {
+        self.signInField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"][@"name"];
         [self.loadingIndicator startAnimating];
         [self.view setUserInteractionEnabled:NO];
     }
