@@ -13,6 +13,7 @@
 @property NSMutableArray *teammateManagers;
 @property NSMutableArray *teammateIndicators;
 @property NSMutableArray *teammateRecentMatches;
+@property NSString *currentlyEditedName;
 
 @end
 
@@ -50,6 +51,11 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    self.currentlyEditedName = textField.text;
+}
+
 /**
  * When the user presses return or moves focus off of the text field, initializes
  * a SummonerManager for the entered summoner name if it is valid and displays
@@ -58,9 +64,10 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     NSInteger index = [self.teammateFields indexOfObject:textField];
-    if (![textField.text isEqualToString:@""])
+    if (![textField.text isEqualToString:@""] && ![textField.text isEqualToString:self.currentlyEditedName])
     {
         dispatch_async(dispatch_get_main_queue(), ^{
+            ((UIImageView *)self.teammateChecks[index]).image = nil;
             [self.teammateIndicators[index] startAnimating];
         });
         [DataManager getSummonerForName:textField.text

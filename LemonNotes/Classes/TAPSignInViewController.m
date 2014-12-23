@@ -154,6 +154,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.loadingIndicator stopAnimating];
         });
+        self.view.userInteractionEnabled = YES;
         [self performSegueWithIdentifier:@"showTabBarController" sender:self];
     }
 }
