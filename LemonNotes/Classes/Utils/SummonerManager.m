@@ -10,7 +10,6 @@
 @interface SummonerManager()
 
 //summoner
-@property (nonatomic, strong) NSDictionary *summonerInfo;
 @property (nonatomic, strong) NSDictionary *rankedSummary;
 @property (nonatomic, strong) Summoner *summoner;
 @property (nonatomic) BOOL isRegistered;

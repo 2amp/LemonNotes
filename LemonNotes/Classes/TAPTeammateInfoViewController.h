@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TAPStatsViewController : UIViewController
+@interface TAPTeammateInfoViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
+@property NSMutableArray *teammateManagers;
 @property NSMutableArray *teammateRecentMatches;
 
 @end

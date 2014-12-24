@@ -2,7 +2,7 @@
 #import "TAPStartGameViewController.h"
 #import "DataManager.h"
 #import "SummonerManager.h"
-#import "TAPStatsViewController.h"
+#import "TAPTeammateInfoViewController.h"
 
 
 
@@ -13,6 +13,7 @@
 @property NSMutableArray *teammateManagers;
 @property NSMutableArray *teammateIndicators;
 @property NSMutableArray *teammateRecentMatches;
+@property NSString *currentlyEditedName;
 
 @end
 
@@ -34,8 +35,8 @@
     self.teammateFields = [NSMutableArray arrayWithArray:@[self.teammate0Field, self.teammate1Field, self.teammate2Field, self.teammate3Field]];
     self.teammateChecks = [NSMutableArray arrayWithArray:@[self.teammate0Check, self.teammate1Check, self.teammate2Check, self.teammate3Check]];
     self.teammateIndicators = [NSMutableArray arrayWithArray:@[self.teammate0Indicator, self.teammate1Indicator, self.teammate2Indicator, self.teammate3Indicator]];
-    self.teammateManagers = [NSMutableArray arrayWithCapacity:5];
-    self.teammateRecentMatches = [NSMutableArray arrayWithCapacity:5];
+    self.teammateManagers = [NSMutableArray arrayWithObjects:[NSNull null], [NSNull null], [NSNull null], [NSNull null], nil];
+    self.teammateRecentMatches = [NSMutableArray arrayWithObjects:@[], @[], @[], @[], nil];
     self.summonerNameLabel.text = self.summonerName;
     NSLog(@"%@ %p", self.class, self);
 }
@@ -50,6 +51,11 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    self.currentlyEditedName = textField.text;
+}
+
 /**
  * When the user presses return or moves focus off of the text field, initializes
  * a SummonerManager for the entered summoner name if it is valid and displays
@@ -58,23 +64,30 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     NSInteger index = [self.teammateFields indexOfObject:textField];
-    if (![textField.text isEqualToString:@""])
+    if (![textField.text isEqualToString:@""] && ![textField.text isEqualToString:self.currentlyEditedName])
     {
         dispatch_async(dispatch_get_main_queue(), ^{
+            ((UIImageView *)self.teammateChecks[index]).image = nil;
             [self.teammateIndicators[index] startAnimating];
         });
         [DataManager getSummonerForName:textField.text
                                  region:@"na"
                          successHandler:^(NSDictionary *summoner) {
-                             ((UIImageView *)self.teammateChecks[index]).image = [UIImage imageNamed:@"checkmark.png"];
                              SummonerManager *manager = [[SummonerManager alloc] initWithSummoner:summoner];
                              manager.delegate = self;
                              // [manager loadServer] is synchronous, so place in async block
                              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                                 self.teammateRecentMatches[index] = [manager loadFromServer];
+                                 NSMutableArray *matches = [[NSMutableArray alloc] init];
+                                 [matches addObjectsFromArray:[manager loadFromServer]];
+                                 [matches addObjectsFromArray:[manager loadFromServer]];
+                                 self.teammateRecentMatches[index] = matches;
+                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                     ((UIImageView *)self.teammateChecks[index]).image = [UIImage imageNamed:@"checkmark.png"];
+                                     [self.teammateIndicators[index] stopAnimating];
+                                     NSLog(@"%lu", [self.teammateRecentMatches[index] count]);
+                                 });
                              });
                              self.teammateManagers[index] = manager;
-                             [self.teammateIndicators[index] stopAnimating];
                          }
                          failureHandler:^(NSString *errorMessage) {
                              ((UIImageView *)self.teammateChecks[index]).image = [UIImage imageNamed:@"cross.png"];
@@ -94,8 +107,13 @@
 {
     if ([segue.identifier isEqualToString:@"showStats"])
     {
-        TAPStatsViewController *statsVC = (TAPStatsViewController *)segue.destinationViewController;
-        statsVC.teammateRecentMatches = self.teammateRecentMatches;
+        TAPTeammateInfoViewController *teammateInfoVC = (TAPTeammateInfoViewController *)segue.destinationViewController;
+        teammateInfoVC.teammateManagers = self.teammateManagers;
+        teammateInfoVC.teammateRecentMatches = self.teammateRecentMatches;
+        for (NSArray *array in self.teammateRecentMatches)
+        {
+            NSLog(@"%lu", array.count);
+        }
     }
 }
 
