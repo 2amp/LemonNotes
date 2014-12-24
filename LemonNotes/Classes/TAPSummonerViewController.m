@@ -1,6 +1,7 @@
 
 #import "TAPSummonerViewController.h"
 #import "NSURLSession+SynchronousTask.h"
+#import "TAPScrollNavBarController.h"
 #import "TAPLemonRefreshControl.h"
 #import "TAPSearchField.h"
 #import "DataManager.h"
@@ -34,6 +35,7 @@
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView* footerIndicator;
 
 //scroll
+@property (nonatomic, strong) TAPScrollNavBarController *navbarController;
 @property (nonatomic) CGFloat previousOffset;
 @property (nonatomic) CGFloat startingOffset;
 @property (nonatomic) BOOL loadLock;
@@ -173,7 +175,7 @@
  */
 - (void)setupScrollEvents
 {
-    
+    self.navbarController = [[TAPScrollNavBarController alloc] initWithNavBar:self.navigationController.navigationBar];
 }
 
 
@@ -289,6 +291,8 @@
  */
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
+    [self.navbarController scrollViewWillBeginDragging:scrollView];
+    
     self.startingOffset = scrollView.contentOffset.y;
     self.previousOffset = self.startingOffset;
 }
@@ -302,16 +306,11 @@
  */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    [self.navbarController scrollViewDidScroll:scrollView];
+
     CGFloat scrolledOffset = scrollView.contentOffset.y;
 //    CGFloat delta = scrolledOffset - self.previousOffset;
     self.previousOffset = scrolledOffset;
-    
-//    if (scrolledOffset > self.startingOffset)
-//    {
-//        CGRect frame = self.navigationController.navigationBar.frame;
-//        frame.size.height -= delta;
-//        self.navigationController.navigationBar.frame = frame;
-//    }
     
     if (!self.loadLock)
         [self checkForLoad];
@@ -346,10 +345,14 @@
     }
 }
 
-
+/**
+ * @method scrollViewDidEndDragging:willDecelerate:
+ *
+ *
+ */
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    
+    [self.navbarController scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
 }
 
 
