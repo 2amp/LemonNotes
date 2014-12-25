@@ -46,6 +46,7 @@
  */
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
+    startingY = self.navbar.frame.origin.y;
     previousOffset = scrollView.contentOffset.y;
     
     NSLog(@"y: %f, height: %f", self.navbar.frame.origin.y, self.navbar.frame.size.height);
