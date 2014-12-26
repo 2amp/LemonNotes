@@ -13,6 +13,7 @@
 @interface TAPTeammateInfoViewController ()
 
 @property NSMutableArray *mostPlayedChampions;
+@property NSMutableArray *mostPlayedChampionsKda;
 
 @end
 
@@ -22,13 +23,36 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.mostPlayedChampions = [NSMutableArray arrayWithObjects:[NSNumber numberWithInt:-1],
-                                [NSNumber numberWithInt:-1], [NSNumber numberWithInt:-1], [NSNumber numberWithInt:-1], nil];
+
+    // Array setup with magic numbers D:<
+    self.mostPlayedChampions = [[NSMutableArray alloc] init];
+    self.mostPlayedChampionsKda = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 4; i++)
+    {
+        [self.mostPlayedChampions addObject:[NSNumber numberWithInt:-1]];
+        [self.mostPlayedChampionsKda addObject:[NSMutableArray arrayWithArray:@[[NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0]]]];
+    }
+
     for (int i = 0; i < self.teammateRecentMatches.count; i++)
     {
         if (((NSArray *)(self.teammateRecentMatches[i])).count > 0)
         {
             self.mostPlayedChampions[i] = [self mostPlayedChampionForTeammate:i];
+            for (NSDictionary *match in self.teammateRecentMatches[i])
+            {
+                int summonerIndex = [match[@"summonerIndex"] intValue];
+                NSDictionary *info = match[@"participants"][summonerIndex];
+                if ([[info[@"championId"] stringValue] isEqualToString:self.mostPlayedChampions[i]])
+                {
+                    NSDictionary *stats = info[@"stats"];
+                    int kills   = ((NSNumber *)stats[@"kills"]).intValue;
+                    int deaths  = ((NSNumber *)stats[@"deaths"]).intValue;
+                    int assists = ((NSNumber *)stats[@"assists"]).intValue;
+                    self.mostPlayedChampionsKda[i][0] = [NSNumber numberWithInt:(((NSNumber *)self.mostPlayedChampionsKda[i][0]).intValue + kills)];
+                    self.mostPlayedChampionsKda[i][1] = [NSNumber numberWithInt:(((NSNumber *)self.mostPlayedChampionsKda[i][1]).intValue + deaths)];
+                    self.mostPlayedChampionsKda[i][2] = [NSNumber numberWithInt:(((NSNumber *)self.mostPlayedChampionsKda[i][2]).intValue + assists)];
+                }
+            }
         }
     }
 }
@@ -77,6 +101,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"tableView:cellForRowAtIndexPath:");
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"teammateInfoCell" forIndexPath:indexPath];
 
     DataManager *dataManager = [DataManager sharedManager];
@@ -85,6 +110,7 @@
     UILabel *name = (UILabel *)([cell viewWithTag:100]);
     UIImageView *mostPlayedImageView = (UIImageView *)([cell viewWithTag:101]);
     UILabel *mostPlayedLabel = (UILabel *)([cell viewWithTag:102]);
+    UILabel *mostPlayedKda = (UILabel *)([cell viewWithTag:103]);
 
     if (![self.teammateManagers[indexPath.row] isEqual:[NSNull null]])
     {
@@ -92,6 +118,8 @@
     }
     mostPlayedImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", dataManager.champions[self.mostPlayedChampions[indexPath.row]][@"key"]]];
     mostPlayedLabel.text = dataManager.champions[self.mostPlayedChampions[indexPath.row]][@"name"];
+    mostPlayedKda.text = [NSString stringWithFormat:@"%@/%@/%@", self.mostPlayedChampionsKda[indexPath.row][0], self.mostPlayedChampionsKda[indexPath.row][1],
+                          self.mostPlayedChampionsKda[indexPath.row][2]];
 
     return cell;
 }
