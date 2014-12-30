@@ -36,8 +36,6 @@
 
 //scroll
 @property (nonatomic, strong) TAPScrollNavBarController *navbarController;
-@property (nonatomic) CGFloat previousOffset;
-@property (nonatomic) CGFloat startingOffset;
 @property (nonatomic) BOOL loadLock;
 
 //setup
