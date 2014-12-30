@@ -15,7 +15,8 @@
 @property (nonatomic, strong) SummonerManager *manager;
 
 //Nav bar
-//@property (nonatomic, weak) IBOutlet TAPSearchField* searchField;
+@property (nonatomic, strong) TAPSearchField* searchField;
+@property (nonatomic, strong) TAPScrollNavBarController *navbarController;
 
 //table
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
@@ -33,15 +34,12 @@
 //footer
 @property (nonatomic, weak) IBOutlet UIView* footer;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView* footerIndicator;
-
-//scroll
-@property (nonatomic, strong) TAPScrollNavBarController *navbarController;
 @property (nonatomic) BOOL loadLock;
 
 //setup
+- (void)setupNavbar;
 - (void)setupTableView;
 - (void)setupHeaderFooter;
-- (void)setupScrollEvents;
 
 @end
 #pragma mark -
@@ -70,9 +68,9 @@
         [self.manager registerSummoner];
     }
     
+    [self setupNavbar];
     [self setupTableView];
     [self setupHeaderFooter];
-    [self setupScrollEvents];
     
     self.needsUpdate = YES;
     [self.manager loadMatches];
@@ -108,6 +106,21 @@
     _summonerInfo = summonerInfo;
     self.manager = [[SummonerManager alloc] initWithSummoner:summonerInfo];
     self.manager.delegate = self;
+}
+
+/**
+ * @method setupNavbar
+ *
+ * Sets up elements in/needed for navbar.
+ */
+- (void)setupNavbar
+{
+    //search field
+    self.searchField = [[TAPSearchField alloc] initWithFrame:CGRectMake(0,0,320,22)];
+    self.navigationItem.titleView = self.searchField;
+    
+    //scroll navbar
+    self.navbarController = [[TAPScrollNavBarController alloc] initWithNavBar:self.navigationController.navigationBar];
 }
 
 /**
@@ -164,16 +177,6 @@
     
     //footer
     [self showFooter:YES];
-}
-
-/**
- * @method setupScrollEvents
- *
- * Sets several constants needed for handling scroll events.
- */
-- (void)setupScrollEvents
-{
-    self.navbarController = [[TAPScrollNavBarController alloc] initWithNavBar:self.navigationController.navigationBar];
 }
 
 

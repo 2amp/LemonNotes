@@ -72,6 +72,7 @@
         //NSLog(@"offset: %f", currentOffset);
         [self scrollNavbarWithDelta:delta];
         [self adjustScrollView:scrollView toDelta:delta];
+        [self adjustItemOpacity];
     }
 }
 
@@ -136,6 +137,26 @@
     insets.top += delta;
     scrollView.contentInset = insets;
     scrollView.scrollIndicatorInsets = insets;
+}
+
+/**
+ * @method adjustItemOpacity
+ *
+ * Adjust transparency of navbar's top navigation item
+ * according to the scroll & position of navbar.
+ */
+- (void)adjustItemOpacity
+{
+    CGFloat navbarEdge = CGRectGetMaxY(self.navbar.frame) - [self statusbarHeight];
+    CGFloat alpha = navbarEdge / navbarHeight;
+    UINavigationItem *topItem = self.navbar.topItem;
+    
+    //set transparency
+    topItem.titleView.alpha = navbarEdge / navbarHeight;
+    for (UIView *view in topItem.leftBarButtonItems)
+        view.alpha = alpha;
+    for (UIView *view in topItem.rightBarButtonItems)
+        view.alpha = alpha;
 }
 
 /**

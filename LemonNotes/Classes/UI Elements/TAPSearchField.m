@@ -31,10 +31,14 @@
 
 @implementation TAPSearchField
 
+#pragma mark Init
 /**
  * @method initWithCoder:
  *
- * Called by storyboard
+ * Called by storyboard.
+ * Call setup methods to complete setup.
+ *
+ * @param aDecoder - given by storyboard (?)
  */
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
@@ -47,12 +51,39 @@
 }
 
 /**
+ * @method initWithFrame:
+ * 
+ * Initialize searchField of given frame,
+ * and call setup methods to finish setup.
+ *
+ * @param frame - of this serachField
+ */
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    if (self = [super initWithFrame:frame])
+    {
+        [self setupButton];
+        [self setupPicker];
+    }
+    return self;
+}
+
+
+#pragma mark - Setup
+/**
  * @method setupButton
  *
  * Sets up region button as right view
  */
 - (void)setupButton
 {
+    self.frame = CGRectMake(0,0,500,26);
+    self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.borderStyle = UITextBorderStyleRoundedRect;
+    self.backgroundColor = [UIColor whiteColor];
+    self.placeholder = @"Search for a Summoner";
+    self.font = [UIFont fontWithName:@"Helvetica Neue" size:14];
+
     self.regionButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.regionButton setFrame:CGRectMake(0,0, 40, 26)];
     [self.regionButton setTitle:@"NA" forState:UIControlStateNormal];
@@ -154,16 +185,6 @@
  */
 - (void)pressedRegion
 {
-//    if ( ![self isFirstResponder] )
-//        [self showPicker];
-//    else
-//    {
-//        if ( !self.inputView )   //if keyboard
-//            [self showPicker];   //show picker
-//        else                     //already picker
-//            [self selectChoice]; //select choice
-//    }
-
     if ( ![self.pickerWrapper isFirstResponder] )
         [self showPicker];
     else
