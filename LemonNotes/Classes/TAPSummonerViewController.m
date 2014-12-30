@@ -243,6 +243,35 @@
 
 #pragma mark - Summoner Manager
 /**
+ * @method checkForLoad
+ *
+ * If tableView has been scrolled enough so that
+ * y-offset + screen height >= content height,
+ * then after a 1 second delay, manger is called to load more matches.
+ */
+- (void)checkForLoad
+{
+    CGFloat footerHeight = self.footer.bounds.size.height;
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    CGFloat scrollOffset = self.tableView.contentOffset.y;
+    CGFloat contentHeight = self.tableView.contentSize.height;
+    
+    BOOL loadZone = (screenHeight + scrollOffset <= contentHeight) &&
+                    (screenHeight + scrollOffset >= contentHeight - footerHeight);
+    
+    if (loadZone)
+    {
+        self.loadLock = YES;
+        
+        dispatch_time_t secondDelay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
+        dispatch_after(secondDelay, dispatch_get_main_queue(),
+        ^{
+            [self.manager loadMatches];
+        });
+    }
+}
+
+/**
  * @method didFinishLoadingMatches:
  *
  * Called by SummonerManager as delegate callback
@@ -287,76 +316,52 @@
 /**
  * @method scrollViewBeginDragging:
  *
- *
+ * Called when scrollView is about to start scrolling.
+ * Calls navbarController's corresponding method.
  */
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [self.navbarController scrollViewWillBeginDragging:scrollView];
-    
-    self.startingOffset = scrollView.contentOffset.y;
-    self.previousOffset = self.startingOffset;
 }
 
 /**
  * @method scrollViewDidScroll:
  *
  * Called whenever view is scrolled (by dragging).
- * Tells custom refresh control that scroll happened,
- * and passes on how much it has been dragged
+ * Calls navbarController's corresponding method.
+ * If loading is not locked, checks for loading matches.
  */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self.navbarController scrollViewDidScroll:scrollView];
-
-    CGFloat scrolledOffset = scrollView.contentOffset.y;
-//    CGFloat delta = scrolledOffset - self.previousOffset;
-    self.previousOffset = scrolledOffset;
     
-    if (!self.loadLock)
-        [self checkForLoad];
-}
-
-/**
- * @checkForLoad
- *
- * If tableView has been scrolled enough so that
- * y-offset + screen height >= content height,
- * then after a 1 second delay, manger is called to load more matches.
- */
-- (void)checkForLoad
-{
-    CGFloat footerHeight = self.footer.bounds.size.height;
-    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
-    CGFloat scrollOffset = self.tableView.contentOffset.y;
-    CGFloat contentHeight = self.tableView.contentSize.height;
-    
-    BOOL loadZone = (screenHeight + scrollOffset <= contentHeight) &&
-                    (screenHeight + scrollOffset >= contentHeight - footerHeight);
-    
-    if (loadZone)
-    {
-        self.loadLock = YES;
-        
-        dispatch_time_t secondDelay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
-        dispatch_after(secondDelay, dispatch_get_main_queue(),
-        ^{
-            [self.manager loadMatches];
-        });
-    }
+    if (!self.loadLock) [self checkForLoad];
 }
 
 /**
  * @method scrollViewDidEndDragging:willDecelerate:
  *
+ * Called when scrollView is no longer actively scrolling.
+ * Calls navbarController's corresponding method.
  *
+ * @param scrollView - dragging ended on
+ * @param decelerate - whether scrollView will slow down
  */
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     [self.navbarController scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
 }
 
-
-#pragma mark - NavBar Scroll
+/**
+ * @method scrollViewDidScrollToTop:
+ *
+ * Called when scrollView reaches the top after tapping on status bar.
+ * Calls navbarController's corresponding method.
+ */
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
+{
+    [self.navbarController scrollViewDidScrollToTop:scrollView];
+}
 
 
 
