@@ -7,7 +7,6 @@
 @interface TAPScrollNavBarController()
 {
     CGFloat navbarHeight;
-    CGFloat startingOffset;
     CGFloat previousOffset;
 }
 
@@ -24,7 +23,10 @@
 /**
  * @method initWithNavBar
  *
+ * Store a weak reference to the given navbar,
+ * and its height for convenient access later on.
  *
+ * @param navbar - to controll scrolling
  */
 - (instancetype)initWithNavBar:(UINavigationBar *)navbar
 {
@@ -32,7 +34,6 @@
     {
         self.navbar = navbar;
         navbarHeight = navbar.frame.size.height;
-        startingOffset = -CGRectGetMaxY(navbar.frame);
     }
     return self;
 }
@@ -50,8 +51,6 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     previousOffset = scrollView.contentOffset.y;
-    
-    //NSLog(@"y: %f, height: %f", self.navbar.frame.origin.y, self.navbar.frame.size.height);
 }
 
 /**
@@ -76,10 +75,18 @@
     }
 }
 
+/**
+ * @method scrollViewDidScrollToTop:
+ *
+ * Called when scrollView reaches the top after tapping on status bar.
+ * Sets the offset to match the modified inset (doesn't happen automatically).
+ *
+ * @param scrollView - scrolled to the top
+ */
 - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
 {
-    CGFloat navbarMaxY = [self statusbarHeight] + navbarHeight;
-    [scrollView setContentOffset:(CGPoint){0, -navbarMaxY} animated:NO];
+    CGFloat topInset = scrollView.contentInset.top;
+    [scrollView setContentOffset:(CGPoint){0, -topInset} animated:NO];
 }
 
 /**
@@ -151,6 +158,9 @@
         ^{
             [self scrollNavbarWithDelta:deltaToStatusBar];
             [self adjustScrollView:scrollView toDelta:deltaToStatusBar];
+            
+            CGFloat newOffset = -scrollView.contentOffset.y + deltaToStatusBar;
+            [scrollView setContentOffset:(CGPoint){0, -newOffset} animated:NO];
         }];
     }
 }

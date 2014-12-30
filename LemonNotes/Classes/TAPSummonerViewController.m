@@ -337,6 +337,19 @@
 }
 
 /**
+ * @method scrollViewDidScrollToTop:
+ *
+ * Called when scrollView reaches the top after tapping on status bar.
+ * Calls navbarController's corresponding method.
+ *
+ * @param scrollView - scrolled to the top
+ */
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
+{
+    [self.navbarController scrollViewDidScrollToTop:scrollView];
+}
+
+/**
  * @method scrollViewDidEndDragging:willDecelerate:
  *
  * Called when scrollView is no longer actively scrolling.
@@ -348,17 +361,6 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     [self.navbarController scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
-}
-
-/**
- * @method scrollViewDidScrollToTop:
- *
- * Called when scrollView reaches the top after tapping on status bar.
- * Calls navbarController's corresponding method.
- */
-- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
-{
-    [self.navbarController scrollViewDidScrollToTop:scrollView];
 }
 
 
