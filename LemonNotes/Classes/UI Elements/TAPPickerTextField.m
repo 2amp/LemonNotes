@@ -8,19 +8,17 @@
 @interface TAPPickerTextField()
 
 //setup
-- (void)setupButton;
 - (void)setupPicker;
 
 //region button
-@property (nonatomic, strong) UIButton *regionButton;
 - (void)pressedRegion;
 
 //picker
 @property (nonatomic) NSInteger tempRow;
-@property (nonatomic, strong) NSArray *regions;
-@property (nonatomic, strong) UIToolbar *regionToolBar;
+@property (nonatomic, strong) NSArray *choices;
 @property (nonatomic, strong) UITextField *pickerWrapper;
-@property (nonatomic, strong) UIPickerView *regionPicker;
+@property (nonatomic, strong) UIPickerView *pickerView;
+@property (nonatomic, strong) UIToolbar *pickerToolbar;
 
 @end
 
@@ -37,62 +35,48 @@
 {
     if (self = [super initWithCoder:aDecoder])
     {
-//        [self setupButton];
         [self setupPicker];
     }
     return self;
 }
 
 /**
- * @method setupButton
- *
- * Sets up region button as right view
- */
-- (void)setupButton
-{
-    self.regionButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [self.regionButton setFrame:CGRectMake(0,0, 40, 26)];
-    [self.regionButton setTitle:@"NA" forState:UIControlStateNormal];
-    [self.regionButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:14]];
-    [self.regionButton addTarget:self action:@selector(pressedRegion) forControlEvents:UIControlEventTouchUpInside];
-
-    self.rightView = self.regionButton;
-    self.rightViewMode = UITextFieldViewModeAlways;
-}
-
-/**
  * @method setupPicker
  *
- * Setups up picker
+ * Sets up picker
  */
 - (void)setupPicker
 {
-    //get regions & default to NA unless stored otherwises
-    self.regions = [TAPDataManager sharedManager].regions;
-    self.selectedItem = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"][@"region"];
+    // FIXME: Currently only allows 15 to 60 in increments of 15 because of how
+    // [TAPSummonerManager loadFromServer] works.
+    self.choices = @[@15, @30, @45, @60];
+    self.selectedItem = @30;
     if (!self.selectedItem)
-        self.selectedItem = @"na";
-    self.tempRow = [self.regions indexOfObject:self.selectedItem];
+    {
+        self.selectedItem = @30;
+    }
+    self.tempRow = [self.choices indexOfObject:self.selectedItem];
 
     //picker
-    self.regionPicker = [[UIPickerView alloc] init];
-    self.regionPicker.delegate = self;
-    self.regionPicker.dataSource = self;
-    self.regionPicker.backgroundColor = [UIColor whiteColor];
-    [self.regionPicker selectRow:self.tempRow inComponent:0 animated:NO];
+    self.pickerView = [[UIPickerView alloc] init];
+    self.pickerView.delegate = self;
+    self.pickerView.dataSource = self;
+    self.pickerView.backgroundColor = [UIColor whiteColor];
+    [self.pickerView selectRow:self.tempRow inComponent:0 animated:NO];
 
     //toolbar
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone   target:self action:@selector(selectChoice)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelChoice)];
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    self.regionToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0,0,320,44)];
-    self.regionToolBar.items = @[cancelButton, flexibleSpace, doneButton];
+    self.pickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0,0,320,44)];
+    self.pickerToolbar.items = @[cancelButton, flexibleSpace, doneButton];
 
     //set picker to wrapper
     self.pickerWrapper = [[UITextField alloc] init];
-    self.pickerWrapper.inputView = self.regionPicker;
-    self.pickerWrapper.inputAccessoryView = self.regionToolBar;
+    self.pickerWrapper.inputView = self.pickerView;
+    self.pickerWrapper.inputAccessoryView = self.pickerToolbar;
     [self addSubview:self.pickerWrapper];
+    self.text = [NSString stringWithFormat:@"%@", @30];
 }
 
 
@@ -115,7 +99,7 @@
  */
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return [self.regions count];
+    return [self.choices count];
 }
 
 /**
@@ -136,7 +120,7 @@
  */
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [self.regions[row] uppercaseString];
+    return [NSString stringWithFormat:@"%@", self.choices[row]];
 }
 
 
@@ -161,10 +145,14 @@
     //            [self selectChoice]; //select choice
     //    }
 
-    if ( ![self.pickerWrapper isFirstResponder] )
+    if (![self.pickerWrapper isFirstResponder])
+    {
         [self showPicker];
+    }
     else
+    {
         [self selectChoice];
+    }
 }
 
 /**
@@ -180,26 +168,27 @@
     NSLog(@"TAPPickerTextField %p showPicker", self);
     [self resignFirstResponder];
     [self.pickerWrapper becomeFirstResponder];
-    // some shade of gray
-    self.backgroundColor = [UIColor colorWithRed:(200.0 / 255) green:(200.0 / 255) blue:(200.0 / 255) alpha:1.0];
+    // some shade of gray for now
+    self.backgroundColor = [UIColor colorWithRed:(220.0 / 255) green:(220.0 / 255) blue:(220.0 / 255) alpha:1.0];
 }
 
 /**
  * @method cancelChoice
  *
  * Called when user taps Cancel.
- * Revert tempRow selection back to index of selecteRegion.
+ * Revert tempRow selection back to index of selectedRegion.
  * Dismiss picker.
  */
 - (void)cancelChoice
 {
     if ([self.pickerWrapper isFirstResponder])
     {
-        self.tempRow = [self.regions indexOfObject:self.selectedItem];
-        [self.regionPicker selectRow:self.tempRow inComponent:0 animated:NO];
+        self.tempRow = [self.choices indexOfObject:self.selectedItem];
+        [self.pickerView selectRow:self.tempRow inComponent:0 animated:NO];
         [self.pickerWrapper resignFirstResponder];
     }
     [self resignFirstResponder];
+    // reset color
     self.backgroundColor = [UIColor clearColor];
 }
 
@@ -213,12 +202,13 @@
  */
 - (void)selectChoice
 {
-    self.selectedItem = self.regions[self.tempRow];
-    [self.regionPicker selectRow:self.tempRow inComponent:0 animated:NO];
-    [self.regionButton setTitle:[self.selectedItem uppercaseString] forState:UIControlStateNormal];
+    self.selectedItem = self.choices[self.tempRow];
+    [self.pickerView selectRow:self.tempRow inComponent:0 animated:NO];
 
     [self.pickerWrapper resignFirstResponder];
+    // reset color and set text to selected choice
     self.backgroundColor = [UIColor clearColor];
+    self.text = [NSString stringWithFormat:@"%@", self.selectedItem];
 }
 
 @end

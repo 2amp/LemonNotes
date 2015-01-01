@@ -10,7 +10,7 @@
 
 @interface TAPPickerTextField : UITextField <UIPickerViewDelegate, UIPickerViewDataSource>
 
-@property (nonatomic, strong) NSString *selectedItem;
+@property (nonatomic, strong) NSNumber *selectedItem;
 
 - (void)showPicker;
 - (void)cancelChoice;

@@ -200,7 +200,7 @@
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="5Sf-uw-JgQ">
                                 <rect key="frame" x="490" y="175" width="94" height="29"/>
                             </stepper>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cVn-RK-UEl" customClass="TAPPickerTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cVn-RK-UEl" customClass="TAPPickerTextField">
                                 <rect key="frame" x="385" y="175" width="97" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="97" id="ZuS-gY-0MJ"/>
