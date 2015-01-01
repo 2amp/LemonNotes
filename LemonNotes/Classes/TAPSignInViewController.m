@@ -38,7 +38,7 @@
     
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
     self.urlSession = [NSURLSession sessionWithConfiguration:config];
-    [DataManager sharedManager].delegate = self;
+    [TAPDataManager sharedManager].delegate = self;
 
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"] != nil)
     {

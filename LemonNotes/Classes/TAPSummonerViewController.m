@@ -209,7 +209,7 @@
     NSDictionary *match = [self.matches firstObject];
     int summonerIndex = [match[@"summonerIndex"] intValue];
     NSString *champId = [match[@"participants"][summonerIndex][@"championId"] stringValue];
-    NSString *champKey = [DataManager sharedManager].champions[champId][@"key"];
+    NSString *champKey = [TAPDataManager sharedManager].champions[champId][@"key"];
     [[self.tableView tableHeaderView] sendSubviewToBack:self.championSplashView];
     self.championSplashView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_0.jpg", champKey]];
 }

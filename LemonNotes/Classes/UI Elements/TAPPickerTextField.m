@@ -68,7 +68,7 @@
 - (void)setupPicker
 {
     //get regions & default to NA unless stored otherwises
-    self.regions = [DataManager sharedManager].regions;
+    self.regions = [TAPDataManager sharedManager].regions;
     self.selectedItem = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"][@"region"];
     if (!self.selectedItem)
         self.selectedItem = @"na";
