@@ -97,24 +97,23 @@
     NSLog(@"%lu", index);
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if (textField == self.matchesToFetchField)
+    {
+        [self.matchesToFetchField showPicker];
+        return NO;
+    }
+    else
+    {
+        return YES;
+    }
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
     return YES;
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"showStats"])
-    {
-        TAPTeammateInfoViewController *teammateInfoVC = (TAPTeammateInfoViewController *)segue.destinationViewController;
-        teammateInfoVC.teammateManagers = self.teammateManagers;
-        teammateInfoVC.teammateRecentMatches = self.teammateRecentMatches;
-        for (NSArray *array in self.teammateRecentMatches)
-        {
-            NSLog(@"%lu", array.count);
-        }
-    }
 }
 
 @end

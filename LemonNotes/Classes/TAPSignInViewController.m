@@ -151,11 +151,11 @@
 {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"] != nil)
     {
+        self.view.userInteractionEnabled = YES;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.loadingIndicator stopAnimating];
+            [self performSegueWithIdentifier:@"showTabBarController" sender:self];
         });
-        self.view.userInteractionEnabled = YES;
-        [self performSegueWithIdentifier:@"showTabBarController" sender:self];
     }
 }
 

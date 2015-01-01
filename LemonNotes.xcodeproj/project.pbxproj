@@ -10,6 +10,7 @@
 		14DD64AD70E0D06AA18B09DF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B10A0C6918D0E25AC9C2085A /* libPods.a */; };
 		8948D6581A46031800CAEA4D /* TAPTeammateInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8948D6571A46031800CAEA4D /* TAPTeammateInfoViewController.m */; };
 		8948D65B1A4745BE00CAEA4D /* TAPMoreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8948D65A1A4745BE00CAEA4D /* TAPMoreTableViewController.m */; };
+		894B15971A52B60200B61D03 /* TAPPickerTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 894B15961A52B60200B61D03 /* TAPPickerTextField.m */; };
 		894BF63B1A008858009A1F1F /* UIImage+UIImageAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 894BF63A1A008858009A1F1F /* UIImage+UIImageAdditions.m */; };
 		89591DD51A03130B00F00637 /* 2AM Productions Logo.idraw in Resources */ = {isa = PBXBuildFile; fileRef = 89591B5C1A03130B00F00637 /* 2AM Productions Logo.idraw */; };
 		89591DD61A03130B00F00637 /* Lemon Notes Logo.idraw in Resources */ = {isa = PBXBuildFile; fileRef = 89591B5D1A03130B00F00637 /* Lemon Notes Logo.idraw */; };
@@ -911,6 +912,8 @@
 		8948D6571A46031800CAEA4D /* TAPTeammateInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPTeammateInfoViewController.m; sourceTree = "<group>"; };
 		8948D6591A4745BE00CAEA4D /* TAPMoreTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPMoreTableViewController.h; sourceTree = "<group>"; };
 		8948D65A1A4745BE00CAEA4D /* TAPMoreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPMoreTableViewController.m; sourceTree = "<group>"; };
+		894B15951A52B60200B61D03 /* TAPPickerTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPPickerTextField.h; sourceTree = "<group>"; };
+		894B15961A52B60200B61D03 /* TAPPickerTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPPickerTextField.m; sourceTree = "<group>"; };
 		894BF6391A008858009A1F1F /* UIImage+UIImageAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UIImageAdditions.h"; sourceTree = "<group>"; };
 		894BF63A1A008858009A1F1F /* UIImage+UIImageAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UIImageAdditions.m"; sourceTree = "<group>"; };
 		89591B5C1A03130B00F00637 /* 2AM Productions Logo.idraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = "2AM Productions Logo.idraw"; sourceTree = "<group>"; };
@@ -2920,6 +2923,8 @@
 			children = (
 				95F9F9161A1696E000CFEAF3 /* TAPSearchField.h */,
 				95F9F9171A1696E000CFEAF3 /* TAPSearchField.m */,
+				894B15951A52B60200B61D03 /* TAPPickerTextField.h */,
+				894B15961A52B60200B61D03 /* TAPPickerTextField.m */,
 				953C75131A19E75000832A55 /* TAPLemonRefreshControl.h */,
 				953C75141A19E75000832A55 /* TAPLemonRefreshControl.m */,
 				9554F9701A47909C00E14E56 /* TAPScrollNavBarController.h */,
@@ -3954,6 +3959,7 @@
 				8948D6581A46031800CAEA4D /* TAPTeammateInfoViewController.m in Sources */,
 				95F162E11A034C9B00DECF93 /* TAPSummonerViewController.m in Sources */,
 				95F9F9181A1696E000CFEAF3 /* TAPSearchField.m in Sources */,
+				894B15971A52B60200B61D03 /* TAPPickerTextField.m in Sources */,
 				9554F9721A47909C00E14E56 /* TAPScrollNavBarController.m in Sources */,
 				8984EF5C19F6341000C442FC /* TAPSignInViewController.m in Sources */,
 				950B2C421A00296A00DD8A23 /* DataManager.m in Sources */,

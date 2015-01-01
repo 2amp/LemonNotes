@@ -118,8 +118,21 @@
     }
     mostPlayedImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", dataManager.champions[self.mostPlayedChampions[indexPath.row]][@"key"]]];
     mostPlayedLabel.text = dataManager.champions[self.mostPlayedChampions[indexPath.row]][@"name"];
-    mostPlayedKda.text = [NSString stringWithFormat:@"%@/%@/%@", self.mostPlayedChampionsKda[indexPath.row][0], self.mostPlayedChampionsKda[indexPath.row][1],
-                          self.mostPlayedChampionsKda[indexPath.row][2]];
+    if (((NSNumber *)self.mostPlayedChampionsKda[indexPath.row][1]).intValue != 0)
+    {
+        mostPlayedKda.text = [NSString stringWithFormat:@"%.2f:1",
+                              (((NSNumber *)self.mostPlayedChampionsKda[indexPath.row][0]).floatValue +
+                               ((NSNumber *)self.mostPlayedChampionsKda[indexPath.row][2]).floatValue) /
+                              ((NSNumber *)self.mostPlayedChampionsKda[indexPath.row][1]).floatValue];
+    }
+    else
+    {
+        mostPlayedKda.text = [NSString stringWithFormat:@"%.2f:1",
+                              (((NSNumber *)self.mostPlayedChampionsKda[indexPath.row][0]).floatValue +
+                               ((NSNumber *)self.mostPlayedChampionsKda[indexPath.row][2]).floatValue) /
+                              (((NSNumber *)self.mostPlayedChampionsKda[indexPath.row][1]).floatValue)];
+    }
+
 
     return cell;
 }
