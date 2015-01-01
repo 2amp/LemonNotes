@@ -15,7 +15,8 @@
 @property (nonatomic, strong) SummonerManager *manager;
 
 //Nav bar
-//@property (nonatomic, weak) IBOutlet TAPSearchField* searchField;
+@property (nonatomic, strong) TAPSearchField* searchField;
+@property (nonatomic, strong) TAPScrollNavBarController *navbarController;
 
 //table
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
@@ -33,17 +34,12 @@
 //footer
 @property (nonatomic, weak) IBOutlet UIView* footer;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView* footerIndicator;
-
-//scroll
-@property (nonatomic, strong) TAPScrollNavBarController *navbarController;
-@property (nonatomic) CGFloat previousOffset;
-@property (nonatomic) CGFloat startingOffset;
 @property (nonatomic) BOOL loadLock;
 
 //setup
+- (void)setupNavbar;
 - (void)setupTableView;
 - (void)setupHeaderFooter;
-- (void)setupScrollEvents;
 
 @end
 #pragma mark -
@@ -72,9 +68,9 @@
         [self.manager registerSummoner];
     }
     
+    [self setupNavbar];
     [self setupTableView];
     [self setupHeaderFooter];
-    [self setupScrollEvents];
     
     self.needsUpdate = YES;
     [self.manager loadMatches];
@@ -110,6 +106,21 @@
     _summonerInfo = summonerInfo;
     self.manager = [[SummonerManager alloc] initWithSummoner:summonerInfo];
     self.manager.delegate = self;
+}
+
+/**
+ * @method setupNavbar
+ *
+ * Sets up elements in/needed for navbar.
+ */
+- (void)setupNavbar
+{
+    //search field
+    self.searchField = [[TAPSearchField alloc] initWithFrame:CGRectMake(0,0,320,22)];
+    self.navigationItem.titleView = self.searchField;
+    
+    //scroll navbar
+    self.navbarController = [[TAPScrollNavBarController alloc] initWithNavBar:self.navigationController.navigationBar];
 }
 
 /**
@@ -166,16 +177,6 @@
     
     //footer
     [self showFooter:YES];
-}
-
-/**
- * @method setupScrollEvents
- *
- * Sets several constants needed for handling scroll events.
- */
-- (void)setupScrollEvents
-{
-    self.navbarController = [[TAPScrollNavBarController alloc] initWithNavBar:self.navigationController.navigationBar];
 }
 
 
@@ -243,6 +244,35 @@
 
 #pragma mark - Summoner Manager
 /**
+ * @method checkForLoad
+ *
+ * If tableView has been scrolled enough so that
+ * y-offset + screen height >= content height,
+ * then after a 1 second delay, manger is called to load more matches.
+ */
+- (void)checkForLoad
+{
+    CGFloat footerHeight = self.footer.bounds.size.height;
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    CGFloat scrollOffset = self.tableView.contentOffset.y;
+    CGFloat contentHeight = self.tableView.contentSize.height;
+    
+    BOOL loadZone = (screenHeight + scrollOffset <= contentHeight) &&
+                    (screenHeight + scrollOffset >= contentHeight - footerHeight);
+    
+    if (loadZone)
+    {
+        self.loadLock = YES;
+        
+        dispatch_time_t secondDelay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
+        dispatch_after(secondDelay, dispatch_get_main_queue(),
+        ^{
+            [self.manager loadMatches];
+        });
+    }
+}
+
+/**
  * @method didFinishLoadingMatches:
  *
  * Called by SummonerManager as delegate callback
@@ -287,76 +317,54 @@
 /**
  * @method scrollViewBeginDragging:
  *
- *
+ * Called when scrollView is about to start scrolling.
+ * Calls navbarController's corresponding method.
  */
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [self.navbarController scrollViewWillBeginDragging:scrollView];
-    
-    self.startingOffset = scrollView.contentOffset.y;
-    self.previousOffset = self.startingOffset;
 }
 
 /**
  * @method scrollViewDidScroll:
  *
  * Called whenever view is scrolled (by dragging).
- * Tells custom refresh control that scroll happened,
- * and passes on how much it has been dragged
+ * Calls navbarController's corresponding method.
+ * If loading is not locked, checks for loading matches.
  */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self.navbarController scrollViewDidScroll:scrollView];
-
-    CGFloat scrolledOffset = scrollView.contentOffset.y;
-//    CGFloat delta = scrolledOffset - self.previousOffset;
-    self.previousOffset = scrolledOffset;
     
-    if (!self.loadLock)
-        [self checkForLoad];
+    if (!self.loadLock) [self checkForLoad];
 }
 
 /**
- * @checkForLoad
+ * @method scrollViewDidScrollToTop:
  *
- * If tableView has been scrolled enough so that
- * y-offset + screen height >= content height,
- * then after a 1 second delay, manger is called to load more matches.
+ * Called when scrollView reaches the top after tapping on status bar.
+ * Calls navbarController's corresponding method.
+ *
+ * @param scrollView - scrolled to the top
  */
-- (void)checkForLoad
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
 {
-    CGFloat footerHeight = self.footer.bounds.size.height;
-    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
-    CGFloat scrollOffset = self.tableView.contentOffset.y;
-    CGFloat contentHeight = self.tableView.contentSize.height;
-    
-    BOOL loadZone = (screenHeight + scrollOffset <= contentHeight) &&
-                    (screenHeight + scrollOffset >= contentHeight - footerHeight);
-    
-    if (loadZone)
-    {
-        self.loadLock = YES;
-        
-        dispatch_time_t secondDelay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
-        dispatch_after(secondDelay, dispatch_get_main_queue(),
-        ^{
-            [self.manager loadMatches];
-        });
-    }
+    [self.navbarController scrollViewDidScrollToTop:scrollView];
 }
 
 /**
  * @method scrollViewDidEndDragging:willDecelerate:
  *
+ * Called when scrollView is no longer actively scrolling.
+ * Calls navbarController's corresponding method.
  *
+ * @param scrollView - dragging ended on
+ * @param decelerate - whether scrollView will slow down
  */
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     [self.navbarController scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
 }
-
-
-#pragma mark - NavBar Scroll
 
 
 
