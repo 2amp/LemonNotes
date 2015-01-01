@@ -2,7 +2,7 @@
 #import "TAPSignInViewController.h"
 #import "NSURLSession+SynchronousTask.h"
 #import "TAPSearchField.h"
-#import "DataManager.h"
+#import "TAPDataManager.h"
 #import "Constants.h"
 
 
@@ -97,7 +97,7 @@
     [self.activityIndicator startAnimating];
 
     //async search/fetch summoner
-    [DataManager getSummonerForName:self.summonerName region:self.summonerRegion
+    [TAPDataManager getSummonerForName:self.summonerName region:self.summonerRegion
      successHandler:^(NSDictionary *summoner)
      {
          [self.activityIndicator stopAnimating];

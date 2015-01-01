@@ -683,7 +683,7 @@
 		95084C141A1B37AD0052F40F /* 740.png in Resources */ = {isa = PBXBuildFile; fileRef = 95084B071A1B37AD0052F40F /* 740.png */; };
 		95084C151A1B37AD0052F40F /* 8.png in Resources */ = {isa = PBXBuildFile; fileRef = 95084B081A1B37AD0052F40F /* 8.png */; };
 		95084C161A1B37AD0052F40F /* 9.png in Resources */ = {isa = PBXBuildFile; fileRef = 95084B091A1B37AD0052F40F /* 9.png */; };
-		950B2C421A00296A00DD8A23 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 950B2C411A00296A00DD8A23 /* DataManager.m */; };
+		950B2C421A00296A00DD8A23 /* TAPDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 950B2C411A00296A00DD8A23 /* TAPDataManager.m */; };
 		95153A611A1746D7003EA211 /* alarm (fill).png in Resources */ = {isa = PBXBuildFile; fileRef = 95153A1C1A1746D7003EA211 /* alarm (fill).png */; };
 		95153A621A1746D7003EA211 /* alarm (line).png in Resources */ = {isa = PBXBuildFile; fileRef = 95153A1D1A1746D7003EA211 /* alarm (line).png */; };
 		95153A631A1746D7003EA211 /* back (fill).png in Resources */ = {isa = PBXBuildFile; fileRef = 95153A1E1A1746D7003EA211 /* back (fill).png */; };
@@ -769,7 +769,7 @@
 		956116A41A3FB7200074D3A3 /* Kalista_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 956116A21A3FB7200074D3A3 /* Kalista_0.jpg */; };
 		956116A51A3FB7200074D3A3 /* RekSai_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 956116A31A3FB7200074D3A3 /* RekSai_0.jpg */; };
 		958136101A0C8B69000D8D43 /* NSURLSession+SynchronousTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581360F1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.m */; };
-		9585AB411A3B95D7007CE7A1 /* Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9585AB401A3B95D7007CE7A1 /* Manager.m */; };
+		9585AB411A3B95D7007CE7A1 /* TAPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9585AB401A3B95D7007CE7A1 /* TAPManager.m */; };
 		959157B91A0EDFD00098A610 /* Aatrox_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 959157401A0EDFCF0098A610 /* Aatrox_0.jpg */; };
 		959157BA1A0EDFD00098A610 /* Ahri_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 959157411A0EDFCF0098A610 /* Ahri_0.jpg */; };
 		959157BB1A0EDFD00098A610 /* Akali_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 959157421A0EDFCF0098A610 /* Akali_0.jpg */; };
@@ -891,7 +891,7 @@
 		9591582F1A0EDFD00098A610 /* Ziggs_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 959157B61A0EDFD00098A610 /* Ziggs_0.jpg */; };
 		959158301A0EDFD00098A610 /* Zilean_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 959157B71A0EDFD00098A610 /* Zilean_0.jpg */; };
 		959158311A0EDFD00098A610 /* Zyra_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 959157B81A0EDFD00098A610 /* Zyra_0.jpg */; };
-		95B298E31A189045000EC199 /* SummonerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 95B298E21A189045000EC199 /* SummonerManager.m */; };
+		95B298E31A189045000EC199 /* TAPSummonerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 95B298E21A189045000EC199 /* TAPSummonerManager.m */; };
 		95F162E11A034C9B00DECF93 /* TAPSummonerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F162E01A034C9B00DECF93 /* TAPSummonerViewController.m */; };
 		95F9F9181A1696E000CFEAF3 /* TAPSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F9F9171A1696E000CFEAF3 /* TAPSearchField.m */; };
 /* End PBXBuildFile section */
@@ -1596,8 +1596,8 @@
 		95084B071A1B37AD0052F40F /* 740.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 740.png; sourceTree = "<group>"; };
 		95084B081A1B37AD0052F40F /* 8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 8.png; sourceTree = "<group>"; };
 		95084B091A1B37AD0052F40F /* 9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 9.png; sourceTree = "<group>"; };
-		950B2C401A00296A00DD8A23 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
-		950B2C411A00296A00DD8A23 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		950B2C401A00296A00DD8A23 /* TAPDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPDataManager.h; sourceTree = "<group>"; };
+		950B2C411A00296A00DD8A23 /* TAPDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPDataManager.m; sourceTree = "<group>"; };
 		950FB68C19FE37B1005F870F /* apikeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = apikeys.h; sourceTree = "<group>"; };
 		950FB68D19FE37B1005F870F /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		95153A1C1A1746D7003EA211 /* alarm (fill).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alarm (fill).png"; sourceTree = "<group>"; };
@@ -1688,8 +1688,8 @@
 		956116A31A3FB7200074D3A3 /* RekSai_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RekSai_0.jpg; sourceTree = "<group>"; };
 		9581360E1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSession+SynchronousTask.h"; sourceTree = "<group>"; };
 		9581360F1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSession+SynchronousTask.m"; sourceTree = "<group>"; };
-		9585AB3F1A3B95D7007CE7A1 /* Manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manager.h; sourceTree = "<group>"; };
-		9585AB401A3B95D7007CE7A1 /* Manager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Manager.m; sourceTree = "<group>"; };
+		9585AB3F1A3B95D7007CE7A1 /* TAPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPManager.h; sourceTree = "<group>"; };
+		9585AB401A3B95D7007CE7A1 /* TAPManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPManager.m; sourceTree = "<group>"; };
 		959157401A0EDFCF0098A610 /* Aatrox_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Aatrox_0.jpg; sourceTree = "<group>"; };
 		959157411A0EDFCF0098A610 /* Ahri_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Ahri_0.jpg; sourceTree = "<group>"; };
 		959157421A0EDFCF0098A610 /* Akali_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Akali_0.jpg; sourceTree = "<group>"; };
@@ -1811,8 +1811,8 @@
 		959157B61A0EDFD00098A610 /* Ziggs_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Ziggs_0.jpg; sourceTree = "<group>"; };
 		959157B71A0EDFD00098A610 /* Zilean_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Zilean_0.jpg; sourceTree = "<group>"; };
 		959157B81A0EDFD00098A610 /* Zyra_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Zyra_0.jpg; sourceTree = "<group>"; };
-		95B298E11A189045000EC199 /* SummonerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SummonerManager.h; sourceTree = "<group>"; };
-		95B298E21A189045000EC199 /* SummonerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SummonerManager.m; sourceTree = "<group>"; };
+		95B298E11A189045000EC199 /* TAPSummonerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSummonerManager.h; sourceTree = "<group>"; };
+		95B298E21A189045000EC199 /* TAPSummonerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPSummonerManager.m; sourceTree = "<group>"; };
 		95F162DF1A034C9B00DECF93 /* TAPSummonerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSummonerViewController.h; sourceTree = "<group>"; };
 		95F162E01A034C9B00DECF93 /* TAPSummonerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPSummonerViewController.m; sourceTree = "<group>"; };
 		95F9F9161A1696E000CFEAF3 /* TAPSearchField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSearchField.h; sourceTree = "<group>"; };
@@ -2672,12 +2672,12 @@
 			children = (
 				950FB68C19FE37B1005F870F /* apikeys.h */,
 				950FB68D19FE37B1005F870F /* Constants.h */,
-				9585AB3F1A3B95D7007CE7A1 /* Manager.h */,
-				9585AB401A3B95D7007CE7A1 /* Manager.m */,
-				950B2C401A00296A00DD8A23 /* DataManager.h */,
-				950B2C411A00296A00DD8A23 /* DataManager.m */,
-				95B298E11A189045000EC199 /* SummonerManager.h */,
-				95B298E21A189045000EC199 /* SummonerManager.m */,
+				9585AB3F1A3B95D7007CE7A1 /* TAPManager.h */,
+				9585AB401A3B95D7007CE7A1 /* TAPManager.m */,
+				950B2C401A00296A00DD8A23 /* TAPDataManager.h */,
+				950B2C411A00296A00DD8A23 /* TAPDataManager.m */,
+				95B298E11A189045000EC199 /* TAPSummonerManager.h */,
+				95B298E21A189045000EC199 /* TAPSummonerManager.m */,
 				894BF6391A008858009A1F1F /* UIImage+UIImageAdditions.h */,
 				894BF63A1A008858009A1F1F /* UIImage+UIImageAdditions.m */,
 				9581360E1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.h */,
@@ -3951,7 +3951,7 @@
 			files = (
 				8984EF2E19F61FC100C442FC /* main.m in Sources */,
 				894BF63B1A008858009A1F1F /* UIImage+UIImageAdditions.m in Sources */,
-				9585AB411A3B95D7007CE7A1 /* Manager.m in Sources */,
+				9585AB411A3B95D7007CE7A1 /* TAPManager.m in Sources */,
 				8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */,
 				953C75151A19E75000832A55 /* TAPLemonRefreshControl.m in Sources */,
 				89A3D21C1A0D6C8E001E6AE2 /* Match.m in Sources */,
@@ -3962,9 +3962,9 @@
 				894B15971A52B60200B61D03 /* TAPPickerTextField.m in Sources */,
 				9554F9721A47909C00E14E56 /* TAPScrollNavBarController.m in Sources */,
 				8984EF5C19F6341000C442FC /* TAPSignInViewController.m in Sources */,
-				950B2C421A00296A00DD8A23 /* DataManager.m in Sources */,
+				950B2C421A00296A00DD8A23 /* TAPDataManager.m in Sources */,
 				958136101A0C8B69000D8D43 /* NSURLSession+SynchronousTask.m in Sources */,
-				95B298E31A189045000EC199 /* SummonerManager.m in Sources */,
+				95B298E31A189045000EC199 /* TAPSummonerManager.m in Sources */,
 				89A86C0B19F8E60300477FC6 /* TAPStartGameViewController.m in Sources */,
 				8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */,
 				89A3D21F1A0D6C8E001E6AE2 /* Summoner.m in Sources */,

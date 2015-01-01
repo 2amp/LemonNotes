@@ -4,7 +4,7 @@
 #import "TAPScrollNavBarController.h"
 #import "TAPLemonRefreshControl.h"
 #import "TAPSearchField.h"
-#import "DataManager.h"
+#import "TAPDataManager.h"
 #import "Constants.h"
 
 
@@ -12,7 +12,7 @@
 @interface TAPSummonerViewController()
 
 //summoner
-@property (nonatomic, strong) SummonerManager *manager;
+@property (nonatomic, strong) TAPSummonerManager *manager;
 
 //Nav bar
 @property (nonatomic, strong) TAPSearchField* searchField;
@@ -104,7 +104,7 @@
 {
     NSLog(@"SummonerVC [setSummonerInfo]");
     _summonerInfo = summonerInfo;
-    self.manager = [[SummonerManager alloc] initWithSummoner:summonerInfo];
+    self.manager = [[TAPSummonerManager alloc] initWithSummoner:summonerInfo];
     self.manager.delegate = self;
 }
 
@@ -480,7 +480,7 @@
     }
 
     //set images
-    DataManager *dataManager = [DataManager sharedManager];
+    TAPDataManager *dataManager = [TAPDataManager sharedManager];
     NSString *champion = dataManager.champions[ [info[@"championId"] stringValue] ][@"key"];
     NSString *spell1   = dataManager.summonerSpells[ [info[@"spell1Id"] stringValue] ][@"key"];
     NSString *spell2   = dataManager.summonerSpells[ [info[@"spell2Id"] stringValue] ][@"key"];
@@ -557,7 +557,7 @@
     //FILL: start activity indicator
     
     //async fetch/search summoner
-    [DataManager getSummonerForName:name region:region
+    [TAPDataManager getSummonerForName:name region:region
     successHandler:^(NSDictionary *summoner)
     {
         //self.searchField.text = @"";

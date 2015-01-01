@@ -1,7 +1,7 @@
 
 #import "TAPStartGameViewController.h"
-#import "DataManager.h"
-#import "SummonerManager.h"
+#import "TAPDataManager.h"
+#import "TAPSummonerManager.h"
 #import "TAPTeammateInfoViewController.h"
 
 
@@ -70,10 +70,10 @@
             ((UIImageView *)self.teammateChecks[index]).image = nil;
             [self.teammateIndicators[index] startAnimating];
         });
-        [DataManager getSummonerForName:textField.text
+        [TAPDataManager getSummonerForName:textField.text
                                  region:@"na"
                          successHandler:^(NSDictionary *summoner) {
-                             SummonerManager *manager = [[SummonerManager alloc] initWithSummoner:summoner];
+                             TAPSummonerManager *manager = [[TAPSummonerManager alloc] initWithSummoner:summoner];
                              manager.delegate = self;
                              // [manager loadServer] is synchronous, so place in async block
                              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{

@@ -1,12 +1,12 @@
 
-#import "DataManager.h"
+#import "TAPDataManager.h"
 #import "Constants.h"
 #import "NSURLSession+SynchronousTask.h"
 #import "Match.h"
 
 
 
-@interface DataManager()
+@interface TAPDataManager()
 
 //session
 @property (nonatomic, strong) NSURLSession *urlSession;
@@ -19,7 +19,7 @@
 #pragma mark -
 
 
-@implementation DataManager
+@implementation TAPDataManager
 
 #pragma mark Init Methods
 /**
@@ -32,7 +32,7 @@
  */
 + (instancetype)sharedManager
 {
-    static DataManager *sharedManager = nil;
+    static TAPDataManager *sharedManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedManager = [[self alloc] init];

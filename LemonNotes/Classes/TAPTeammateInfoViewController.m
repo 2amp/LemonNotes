@@ -7,8 +7,8 @@
 //
 
 #import "TAPTeammateInfoViewController.h"
-#import "DataManager.h"
-#import "SummonerManager.h"
+#import "TAPDataManager.h"
+#import "TAPSummonerManager.h"
 
 @interface TAPTeammateInfoViewController ()
 
@@ -104,7 +104,7 @@
     NSLog(@"tableView:cellForRowAtIndexPath:");
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"teammateInfoCell" forIndexPath:indexPath];
 
-    DataManager *dataManager = [DataManager sharedManager];
+    TAPDataManager *dataManager = [TAPDataManager sharedManager];
 
     // Configure the cell...
     UILabel *name = (UILabel *)([cell viewWithTag:100]);
@@ -114,7 +114,7 @@
 
     if (![self.teammateManagers[indexPath.row] isEqual:[NSNull null]])
     {
-        name.text = ((SummonerManager *)self.teammateManagers[indexPath.row]).summonerInfo[@"name"];
+        name.text = ((TAPSummonerManager *)self.teammateManagers[indexPath.row]).summonerInfo[@"name"];
     }
     mostPlayedImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", dataManager.champions[self.mostPlayedChampions[indexPath.row]][@"key"]]];
     mostPlayedLabel.text = dataManager.champions[self.mostPlayedChampions[indexPath.row]][@"name"];

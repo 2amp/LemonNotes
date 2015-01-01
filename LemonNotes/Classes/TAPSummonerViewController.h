@@ -1,6 +1,6 @@
 
 #import <UIKit/UIKit.h>
-#import "SummonerManager.h"
+#import "TAPSummonerManager.h"
 
 /**
  * @class TAPMainViewController
@@ -17,7 +17,7 @@
  * @version 0.1
  */
 @interface TAPSummonerViewController : UIViewController
-<SummonerManagerDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
+<TAPSummonerManagerDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) NSDictionary *summonerInfo;
 

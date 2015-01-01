@@ -1,7 +1,7 @@
 
 #import "TAPSearchField.h"
 #import <QuartzCore/QuartzCore.h>
-#import "DataManager.h"
+#import "TAPDataManager.h"
 
 
 

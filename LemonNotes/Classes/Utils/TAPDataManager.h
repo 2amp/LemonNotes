@@ -1,11 +1,11 @@
 
 #import <UIKit/UIKit.h>
-#import "Manager.h"
+#import "TAPManager.h"
 #import "Summoner.h"
 
 
 
-@protocol DataManagerDelegate
+@protocol TAPDataManagerDelegate
 
 @optional
 - (void)didFinishLoadingData;
@@ -25,7 +25,7 @@
  * @author Bohui Moon, Chris Fu
  * @version 0.1
  */
-@interface DataManager : Manager
+@interface TAPDataManager : TAPManager
 
 + (instancetype)sharedManager;
 + (void)getSummonerForName:(NSString *)name
@@ -44,7 +44,7 @@
 - (NSNumber *)saveRecentMatchesForSummoner:(Summoner *)summoner;
 
 // delegate
-@property (nonatomic, weak) id<DataManagerDelegate> delegate;
+@property (nonatomic, weak) id<TAPDataManagerDelegate> delegate;
 
 //static data
 @property (nonatomic) NSArray *regions;

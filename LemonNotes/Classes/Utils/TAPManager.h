@@ -13,7 +13,7 @@
  * @author Apple
  * @version 1.0
  */
-@interface Manager : NSObject
+@interface TAPManager : NSObject
 
 @property (nonatomic, strong, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;

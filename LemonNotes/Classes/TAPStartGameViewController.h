@@ -1,6 +1,6 @@
 
 #import <UIKit/UIKit.h>
-#import "SummonerManager.h"
+#import "TAPSummonerManager.h"
 #import "TAPPickerTextField.h"
 
 /**
@@ -17,7 +17,7 @@
  * @author Chris Fu
  * @version 0.1
  */
-@interface TAPStartGameViewController : UIViewController <UITextFieldDelegate, SummonerManagerDelegate>
+@interface TAPStartGameViewController : UIViewController <UITextFieldDelegate, TAPSummonerManagerDelegate>
 
 @property (nonatomic) NSString *summonerName;
 @property (nonatomic) NSNumber *idNumber;

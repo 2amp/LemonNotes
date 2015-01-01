@@ -1,13 +1,13 @@
 
 #import "NSURLSession+SynchronousTask.h"
-#import "SummonerManager.h"
-#import "DataManager.h"
+#import "TAPSummonerManager.h"
+#import "TAPDataManager.h"
 #import "Constants.h"
 #import "Summoner.h"
 #import "Match.h"
 
 
-@interface SummonerManager()
+@interface TAPSummonerManager()
 
 //summoner
 @property (nonatomic, strong) NSDictionary *rankedSummary;
@@ -31,7 +31,7 @@
 @end
 
 
-@implementation SummonerManager
+@implementation TAPSummonerManager
 
 #pragma mark Init
 /**
