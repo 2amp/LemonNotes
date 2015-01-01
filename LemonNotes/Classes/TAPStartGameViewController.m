@@ -26,12 +26,15 @@
  * @method viewDidLoad
  * 
  * Called when view is loaded to memory
- * Sets the summoner name label text to the name of the summoner.
+ * Sets the summoner name label text to the name of the summoner and performs a
+ * bunch of setup.
  */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
+    // FIXME: A bunch of setup that should probably not be hardcoded if we want to take into account
+    // other game modes in the future
     self.teammateFields = [NSMutableArray arrayWithArray:@[self.teammate0Field, self.teammate1Field, self.teammate2Field, self.teammate3Field]];
     self.teammateChecks = [NSMutableArray arrayWithArray:@[self.teammate0Check, self.teammate1Check, self.teammate2Check, self.teammate3Check]];
     self.teammateIndicators = [NSMutableArray arrayWithArray:@[self.teammate0Indicator, self.teammate1Indicator, self.teammate2Indicator, self.teammate3Indicator]];
@@ -60,6 +63,7 @@
  * When the user presses return or moves focus off of the text field, initializes
  * a SummonerManager for the entered summoner name if it is valid and displays
  * a checkmark next to the name. Otherwise, displays an X next to the name.
+ * Currently fetches the 30 most recent matches for each entered summoner.
  */
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -78,9 +82,11 @@
                              // [manager loadServer] is synchronous, so place in async block
                              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
                                  NSMutableArray *matches = [[NSMutableArray alloc] init];
+                                 // loadServer loads 15 matches, so call twice
                                  [matches addObjectsFromArray:[manager loadFromServer]];
                                  [matches addObjectsFromArray:[manager loadFromServer]];
                                  self.teammateRecentMatches[index] = matches;
+                                 // Update UI on main thread
                                  dispatch_async(dispatch_get_main_queue(), ^{
                                      ((UIImageView *)self.teammateChecks[index]).image = [UIImage imageNamed:@"checkmark.png"];
                                      [self.teammateIndicators[index] stopAnimating];
@@ -90,6 +96,8 @@
                              self.teammateManagers[index] = manager;
                          }
                          failureHandler:^(NSString *errorMessage) {
+                             // Handler callbacks are already called on the main thread, so we don't need to wrap this
+                             // in a dispatch_async block
                              ((UIImageView *)self.teammateChecks[index]).image = [UIImage imageNamed:@"cross.png"];
                              [self.teammateIndicators[index] stopAnimating];
                          }];
@@ -112,6 +120,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    // dismiss keyboard upon losing focus
     [textField resignFirstResponder];
     return YES;
 }

@@ -82,42 +82,21 @@
 
 
 #pragma mark - Picker
-/**
- * @method numberOfComponentsInPickerView
- *
- * Only 1 column of regions
- */
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;
 }
 
-/**
- * @method pickerView:numberRowsInComponent
- *
- * Returns number of regions defined in DataManager
- */
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
     return [self.choices count];
 }
 
-/**
- * @method pickerView:didSelectRow:inComponent
- *
- * When a certain row is selected,
- * the region is set as summoner's region and button's title is updated
- */
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     self.tempRow = row;
 }
 
-/**
- * @method pickerView:titleForRow:forComponent
- *
- * Sets the row's titles as regions in uppercase
- */
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     return [NSString stringWithFormat:@"%@", self.choices[row]];
@@ -127,57 +106,26 @@
 
 #pragma mark - Events
 /**
- * @method pressedRegion
- *
- * Called when user taps region button.
- * If not already showing picker, show it.
- * Otherwise select the choice.
- */
-- (void)pressedRegion
-{
-    //    if ( ![self isFirstResponder] )
-    //        [self showPicker];
-    //    else
-    //    {
-    //        if ( !self.inputView )   //if keyboard
-    //            [self showPicker];   //show picker
-    //        else                     //already picker
-    //            [self selectChoice]; //select choice
-    //    }
-
-    if (![self.pickerWrapper isFirstResponder])
-    {
-        [self showPicker];
-    }
-    else
-    {
-        [self selectChoice];
-    }
-}
-
-/**
  * @method showPicker
  *
- * Shows picker by setting input & accessory views to picker & toolbar.
- * Toolbar shows either Done or Search based on whether field has text.
- * If keyboard is already up, setting inputView will not change UI.
- * Therefore has to resign first responder first to ensure picker.
+ * Shows picker by setting input & accessory views to picker & toolbar. Toolbar 
+ * shows either Done or Search based on whether field has text. If keyboard is 
+ * already up, setting inputView will not change UI. Therefore has to resign 
+ * first responder first to ensure picker.
  */
 - (void)showPicker
 {
     NSLog(@"TAPPickerTextField %p showPicker", self);
     [self resignFirstResponder];
     [self.pickerWrapper becomeFirstResponder];
-    // some shade of gray for now
+    // Selected color is some shade of gray for now
     self.backgroundColor = [UIColor colorWithRed:(220.0 / 255) green:(220.0 / 255) blue:(220.0 / 255) alpha:1.0];
 }
 
 /**
  * @method cancelChoice
  *
- * Called when user taps Cancel.
- * Revert tempRow selection back to index of selectedRegion.
- * Dismiss picker.
+ * Called when user taps Cancel. Dismisses picker and resets background color.
  */
 - (void)cancelChoice
 {
@@ -188,17 +136,15 @@
         [self.pickerWrapper resignFirstResponder];
     }
     [self resignFirstResponder];
-    // reset color
+    // Reset color
     self.backgroundColor = [UIColor clearColor];
 }
 
 /**
  * @method selectChoice
  *
- * Called when user taps Done.
- * Finalize the choice by setting selectedRegion to region at tempRow.
- * Change title of button to the confirmed region.
- * Dismiss picker
+ * Called when user taps Done. Dismisses picker and sets the text of the text 
+ * field to the selected choice.
  */
 - (void)selectChoice
 {
@@ -206,7 +152,7 @@
     [self.pickerView selectRow:self.tempRow inComponent:0 animated:NO];
 
     [self.pickerWrapper resignFirstResponder];
-    // reset color and set text to selected choice
+    // Reset color and set text to selected choice
     self.backgroundColor = [UIColor clearColor];
     self.text = [NSString stringWithFormat:@"%@", self.selectedItem];
 }
