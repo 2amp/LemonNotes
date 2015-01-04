@@ -130,7 +130,7 @@
         mostPlayedKda.text = [NSString stringWithFormat:@"%.2f:1",
                               (((NSNumber *)self.mostPlayedChampionsKda[indexPath.row][0]).floatValue +
                                ((NSNumber *)self.mostPlayedChampionsKda[indexPath.row][2]).floatValue) /
-                              (((NSNumber *)self.mostPlayedChampionsKda[indexPath.row][1]).floatValue)];
+                              (((NSNumber *)self.mostPlayedChampionsKda[indexPath.row][1]).floatValue + 1)];
     }
 
 

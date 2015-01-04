@@ -10,9 +10,6 @@
 //setup
 - (void)setupPicker;
 
-//region button
-- (void)pressedRegion;
-
 //picker
 @property (nonatomic) NSInteger tempRow;
 @property (nonatomic, strong) NSArray *choices;
@@ -65,10 +62,10 @@
     [self.pickerView selectRow:self.tempRow inComponent:0 animated:NO];
 
     //toolbar
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone   target:self action:@selector(selectChoice)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectChoice)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelChoice)];
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    self.pickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0,0,320,44)];
+    self.pickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     self.pickerToolbar.items = @[cancelButton, flexibleSpace, doneButton];
 
     //set picker to wrapper

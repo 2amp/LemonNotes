@@ -307,21 +307,29 @@
 }
 
 /**
- * @method loadFromServer
+ * Calculates index range of the specified number of next oldest matches.
+ * Increments endMatchIndex accordingly and returns matches fetched by 
+ * matchHistoryFrom:To:
  *
- * Calculates index range of the next 15 older matches.
- * Increments endMatchIndex accordingly,
- * and returns using - matchHistoryFrom:To:
+ * @return NSArray of matches in reverse chronological order
+ */
+- (NSArray *)loadFromServer:(int)numberOfMatches
+{
+    NSLog(@"[loadFromServer]");
+
+    long begin = self.lastFetchIndex;
+    self.lastFetchIndex += numberOfMatches;
+    return [self matchHistoryFrom:begin to:self.lastFetchIndex];
+}
+
+/**
+ * Returns the 15 next oldest matches for the summoner.
  *
- * @return NSArray of matches in reverse chronological
+ * @return NSArray of 15 matches in reverse chronological order
  */
 - (NSArray *)loadFromServer
 {
-    NSLog(@"[loadFromServer]");
-    
-    long begin = self.lastFetchIndex;
-    self.lastFetchIndex += 15;
-    return [self matchHistoryFrom:begin to:self.lastFetchIndex];
+    return [self loadFromServer:15];
 }
 
 /**
