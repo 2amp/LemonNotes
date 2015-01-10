@@ -1,8 +1,8 @@
 
-#import "Manager.h"
+#import "TAPManager.h"
 
 
-@implementation Manager
+@implementation TAPManager
 
 #pragma mark - Core Data stack
 @synthesize managedObjectModel = _managedObjectModel;

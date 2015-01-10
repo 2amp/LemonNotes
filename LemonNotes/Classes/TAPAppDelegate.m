@@ -1,6 +1,6 @@
 
 #import "TAPAppDelegate.h"
-#import "DataManager.h"
+#import "TAPDataManager.h"
 
 
 
@@ -28,7 +28,7 @@
     //data updates
 //    [[DataManager sharedManager] updateChampionIds];
 //    [[DataManager sharedManager] updateSummonerSpells];
-    [[DataManager sharedManager] updateAllData];
+    [[TAPDataManager sharedManager] updateAllData];
 //    [[DataManager sharedManager] deleteAllSummoners];
 //    [[DataManager sharedManager] summonerDump];
 
@@ -71,7 +71,7 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
-    [[DataManager sharedManager] saveContext];
+    [[TAPDataManager sharedManager] saveContext];
 }
 
 @end

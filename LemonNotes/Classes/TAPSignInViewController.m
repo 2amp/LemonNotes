@@ -2,7 +2,7 @@
 #import "TAPSignInViewController.h"
 #import "NSURLSession+SynchronousTask.h"
 #import "TAPSearchField.h"
-#import "DataManager.h"
+#import "TAPDataManager.h"
 #import "Constants.h"
 
 
@@ -38,7 +38,7 @@
     
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
     self.urlSession = [NSURLSession sessionWithConfiguration:config];
-    [DataManager sharedManager].delegate = self;
+    [TAPDataManager sharedManager].delegate = self;
 
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"] != nil)
     {
@@ -97,7 +97,7 @@
     [self.activityIndicator startAnimating];
 
     //async search/fetch summoner
-    [DataManager getSummonerForName:self.summonerName region:self.summonerRegion
+    [TAPDataManager getSummonerForName:self.summonerName region:self.summonerRegion
      successHandler:^(NSDictionary *summoner)
      {
          [self.activityIndicator stopAnimating];
@@ -151,11 +151,11 @@
 {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"] != nil)
     {
+        self.view.userInteractionEnabled = YES;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.loadingIndicator stopAnimating];
+            [self performSegueWithIdentifier:@"showTabBarController" sender:self];
         });
-        self.view.userInteractionEnabled = YES;
-        [self performSegueWithIdentifier:@"showTabBarController" sender:self];
     }
 }
 

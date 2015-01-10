@@ -1,6 +1,6 @@
 
 #import <UIKit/UIKit.h>
-#import "DataManager.h"
+#import "TAPDataManager.h"
 
 /**
  * @class TAPSignInViewController
@@ -15,7 +15,7 @@
  * @version 0.1
  */
 @interface TAPSignInViewController : UIViewController
-           <UITextFieldDelegate, DataManagerDelegate>
+           <UITextFieldDelegate, TAPDataManagerDelegate>
 
 @end
 

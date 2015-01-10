@@ -1,6 +1,7 @@
 
 #import <UIKit/UIKit.h>
-#import "SummonerManager.h"
+#import "TAPSummonerManager.h"
+#import "TAPPickerTextField.h"
 
 /**
  * @class TAPStartGameViewController
@@ -16,7 +17,7 @@
  * @author Chris Fu
  * @version 0.1
  */
-@interface TAPStartGameViewController : UIViewController <UITextFieldDelegate, SummonerManagerDelegate>
+@interface TAPStartGameViewController : UIViewController <UITextFieldDelegate, TAPSummonerManagerDelegate>
 
 @property (nonatomic) NSString *summonerName;
 @property (nonatomic) NSNumber *idNumber;
@@ -39,5 +40,9 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *teammate1Indicator;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *teammate2Indicator;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *teammate3Indicator;
+
+@property (weak, nonatomic) IBOutlet TAPPickerTextField *matchesToFetchField;
+
+@property (nonatomic, strong) NSString *selectedRegion;
 
 @end
