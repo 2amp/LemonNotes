@@ -148,7 +148,7 @@
     [self.view sendSubviewToBack:self.tableView];
     
     //refresh
-    //self.lemonRefresh = [[TAPLemonRefreshControl alloc] initWithTableView:self.tableView];
+    self.lemonRefresh = [[TAPLemonRefreshControl alloc] initWithTableView:self.tableView];
     //[self.lemonRefresh addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
 }
 
@@ -173,6 +173,7 @@
     [self.summonerIconView.layer setBorderColor:[[UIColor whiteColor] CGColor]];
     
     //landscape: put header behind table view
+    [self.tableView tableFooterView].clipsToBounds = YES;
     [self.tableView sendSubviewToBack:[self.tableView tableHeaderView]];
     
     //footer
@@ -334,6 +335,7 @@
  */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    //[self.lemonRefresh didScroll];
     [self.navbarController scrollViewDidScroll:scrollView];
     
     if (!self.loadLock) [self checkForLoad];
