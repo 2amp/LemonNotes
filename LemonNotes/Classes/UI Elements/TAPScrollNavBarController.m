@@ -66,7 +66,7 @@
     CGFloat currentOffset = scrollView.contentOffset.y;
     CGFloat delta = [self validDelta:(previousOffset - currentOffset)];
     previousOffset = currentOffset;
-
+    
     if ([self isValidOffset:currentOffset])
     {
         //NSLog(@"offset: %f", currentOffset);
@@ -170,19 +170,28 @@
 - (void)preventPartialScroll:(UIScrollView *)scrollView
 {
     CGRect frame = self.navbar.frame;
+    CGFloat bottomEdge = CGRectGetMaxY(frame);
     
-    if (CGRectGetMaxY(frame) < [self statusbarHeight] + navbarHeight)
+    //navbar is not fully scrolled to top or bottom limit
+    if ([self statusbarHeight] < bottomEdge && bottomEdge < [self navbarBottomLimit])
     {
-        CGFloat deltaToStatusBar = [self statusbarHeight] - CGRectGetMaxY(frame);
+        CGFloat dest = [self statusbarHeight];
+        
+        //is within top error magin, switch destination to top
+        if ([self navbarBottomLimit] - SCROLL_ERROR_MARGIN <= bottomEdge)
+            dest += navbarHeight;
+        
+        CGFloat deltaToStatusBar = dest - CGRectGetMaxY(frame);
         
         [UIView animateWithDuration:0.1 animations:
-        ^{
-            [self scrollNavbarWithDelta:deltaToStatusBar];
-            [self adjustScrollView:scrollView toDelta:deltaToStatusBar];
-            
-            CGFloat newOffset = -scrollView.contentOffset.y + deltaToStatusBar;
-            [scrollView setContentOffset:(CGPoint){0, -newOffset} animated:NO];
-        }];
+         ^{
+             CGFloat newOffest = -scrollView.contentOffset.y + deltaToStatusBar;
+             
+             [self scrollNavbarWithDelta:deltaToStatusBar];
+             [self adjustScrollView:scrollView toDelta:deltaToStatusBar];
+             
+             [scrollView setContentOffset:(CGPoint){0, -newOffest} animated:NO];
+         }];
     }
 }
 
@@ -199,6 +208,16 @@
     return [[UIApplication sharedApplication] isStatusBarHidden] ? 0 : 20;
 }
 
+- (CGFloat)navbarBottomEdge
+{
+    return CGRectGetMaxY(self.navbar.frame);
+}
+
+- (CGFloat)navbarBottomLimit
+{
+    return [self statusbarHeight] + navbarHeight;
+}
+
 /**
  * @method isValidOffset:
  *
@@ -211,8 +230,7 @@
  */
 - (BOOL)isValidOffset:(CGFloat)offset;
 {
-   CGFloat navbarMaxY = [self statusbarHeight] + navbarHeight;
-   return -offset < navbarMaxY;
+   return -offset < [self statusbarHeight] + navbarHeight;
 }
 
 /**

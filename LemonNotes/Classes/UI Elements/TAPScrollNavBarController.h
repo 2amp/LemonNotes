@@ -23,3 +23,5 @@
                   willDecelerate:(BOOL)decelerate;
 
 @end
+
+#define SCROLL_ERROR_MARGIN 2.0f
