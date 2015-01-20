@@ -144,7 +144,6 @@
     inset.top = CGRectGetMaxY(navbarFrame);
     self.tableView.contentInset = inset;
     self.tableView.scrollIndicatorInsets = inset;
-    NSLog(@"inset: %f, offset: %f, wanted inset: %f", self.tableView.contentInset.top, self.tableView.contentOffset.y, inset.top);
     [self.view sendSubviewToBack:self.tableView];
     
     //refresh
@@ -426,6 +425,7 @@
  * @return cell containing critical match information
  *
  * @code View tags
+ * 10 : (UIImageView *)     Results Mark
  * 100: (UILabel *)         Outcome label
  * 101: (UIImageView *)     Champion icon
  * 102: (UILabel *)         Champion name label
@@ -437,6 +437,7 @@
 {
     // Configure the cell...
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"matchHistoryCell" forIndexPath:indexPath];
+    UIImageView *resultsMark            = (UIImageView *)[cell viewWithTag:10];
     UILabel     *outcome                = (UILabel *)    [cell viewWithTag:100];
     UIImageView *championImageView      = (UIImageView *)[cell viewWithTag:101];
     UILabel     *championName           = (UILabel *)    [cell viewWithTag:102];
@@ -473,13 +474,17 @@
     if ([stats[@"winner"] boolValue])
     {
         outcome.text = @"Victory";
-        outcome.textColor = [UIColor colorWithRed:0 green:0.4 blue:0 alpha:1];
+        //outcome.textColor = [UIColor colorWithRed:(145.f/255.f) green:(200.f/255.f) blue:(92.f/255.f) alpha:1];
+        //outcome.textColor = [UIColor colorWithRed:0 green:0.4 blue:0 alpha:1];
     }
     else
     {
         outcome.text = @"Defeat";
-        outcome.textColor = [UIColor redColor];
+        //outcome.textColor = [UIColor colorWithRed:1.f green:(97.f/255.f) blue:(63.f/255.f) alpha:1];
+        //outcome.textColor = [UIColor redColor];
     }
+    resultsMark.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@ Mark.png", outcome.text]];
+    
 
     //set images
     TAPDataManager *dataManager = [TAPDataManager sharedManager];

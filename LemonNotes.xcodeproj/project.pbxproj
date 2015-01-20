@@ -414,6 +414,9 @@
 		89A3D21C1A0D6C8E001E6AE2 /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = 89A3D21B1A0D6C8E001E6AE2 /* Match.m */; };
 		89A3D21F1A0D6C8E001E6AE2 /* Summoner.m in Sources */ = {isa = PBXBuildFile; fileRef = 89A3D21E1A0D6C8E001E6AE2 /* Summoner.m */; };
 		89A86C0B19F8E60300477FC6 /* TAPStartGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */; };
+		9504F5971A6EE0BA0079BD5F /* Defeat Mark.png in Resources */ = {isa = PBXBuildFile; fileRef = 9504F5941A6EE0BA0079BD5F /* Defeat Mark.png */; };
+		9504F5991A6EE0BA0079BD5F /* Victory Mark.png in Resources */ = {isa = PBXBuildFile; fileRef = 9504F5961A6EE0BA0079BD5F /* Victory Mark.png */; };
+		9504F59B1A6EE1F90079BD5F /* Victory Mark (Blue).png in Resources */ = {isa = PBXBuildFile; fileRef = 9504F59A1A6EE1F90079BD5F /* Victory Mark (Blue).png */; };
 		95084B0A1A1B37AD0052F40F /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = 950849FD1A1B37AC0052F40F /* 0.png */; };
 		95084B0B1A1B37AD0052F40F /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 950849FE1A1B37AC0052F40F /* 1.png */; };
 		95084B0C1A1B37AD0052F40F /* 10.png in Resources */ = {isa = PBXBuildFile; fileRef = 950849FF1A1B37AC0052F40F /* 10.png */; };
@@ -1327,6 +1330,9 @@
 		89A3D21E1A0D6C8E001E6AE2 /* Summoner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Summoner.m; sourceTree = "<group>"; };
 		89A86C0919F8E60300477FC6 /* TAPStartGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPStartGameViewController.h; sourceTree = "<group>"; };
 		89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPStartGameViewController.m; sourceTree = "<group>"; };
+		9504F5941A6EE0BA0079BD5F /* Defeat Mark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Defeat Mark.png"; sourceTree = "<group>"; };
+		9504F5961A6EE0BA0079BD5F /* Victory Mark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Victory Mark.png"; sourceTree = "<group>"; };
+		9504F59A1A6EE1F90079BD5F /* Victory Mark (Blue).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Victory Mark (Blue).png"; sourceTree = "<group>"; };
 		950849FD1A1B37AC0052F40F /* 0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0.png; sourceTree = "<group>"; };
 		950849FE1A1B37AC0052F40F /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		950849FF1A1B37AC0052F40F /* 10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 10.png; sourceTree = "<group>"; };
@@ -1851,6 +1857,7 @@
 		895918EE1A03130A00F00637 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				9504F5931A6EE0BA0079BD5F /* UI */,
 				95153A1B1A1746D7003EA211 /* Icons */,
 				95153A5D1A1746D7003EA211 /* Logos */,
 				953C75161A19E79800832A55 /* Refresh */,
@@ -2389,6 +2396,16 @@
 				89591DE41A03131700F00637 /* LoL */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		9504F5931A6EE0BA0079BD5F /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				9504F5941A6EE0BA0079BD5F /* Defeat Mark.png */,
+				9504F5961A6EE0BA0079BD5F /* Victory Mark.png */,
+				9504F59A1A6EE1F90079BD5F /* Victory Mark (Blue).png */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		950849FC1A1B37AC0052F40F /* Profile Icons */ = {
@@ -3072,6 +3089,7 @@
 				95084B3A1A1B37AD0052F40F /* 524.png in Resources */,
 				8959219B1A0330F600F00637 /* 3261.png in Resources */,
 				8959218C1A0330F600F00637 /* 3208.png in Resources */,
+				9504F5991A6EE0BA0079BD5F /* Victory Mark.png in Resources */,
 				95084C041A1B37AD0052F40F /* 724.png in Resources */,
 				95084C001A1B37AD0052F40F /* 720.png in Resources */,
 				895921941A0330F600F00637 /* 3254.png in Resources */,
@@ -3548,6 +3566,7 @@
 				95153A681A1746D7003EA211 /* box (line).png in Resources */,
 				895921BE1A0330F600F00637 /* 3364.png in Resources */,
 				959157D61A0EDFD00098A610 /* Gnar_0.jpg in Resources */,
+				9504F59B1A6EE1F90079BD5F /* Victory Mark (Blue).png in Resources */,
 				959158101A0EDFD00098A610 /* Skarner_0.jpg in Resources */,
 				959158021A0EDFD00098A610 /* Quinn_0.jpg in Resources */,
 				95084BFF1A1B37AD0052F40F /* 719.png in Resources */,
@@ -3805,6 +3824,7 @@
 				95153A861A1746D7003EA211 /* look (line).png in Resources */,
 				95084BE31A1B37AD0052F40F /* 692.png in Resources */,
 				9591582A1A0EDFD00098A610 /* XinZhao_0.jpg in Resources */,
+				9504F5971A6EE0BA0079BD5F /* Defeat Mark.png in Resources */,
 				95084BAB1A1B37AD0052F40F /* 636.png in Resources */,
 				895920B41A0330F600F00637 /* Ryze.png in Resources */,
 				895921C21A0330F600F00637 /* 3407.png in Resources */,
