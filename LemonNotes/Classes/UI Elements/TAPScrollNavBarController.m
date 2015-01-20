@@ -69,7 +69,6 @@
     
     if ([self isValidOffset:currentOffset])
     {
-        //NSLog(@"offset: %f", currentOffset);
         [self scrollNavbarWithDelta:delta];
         [self adjustScrollView:scrollView toDelta:delta];
         [self adjustItemOpacity];
@@ -147,7 +146,7 @@
  */
 - (void)adjustItemOpacity
 {
-    CGFloat navbarEdge = CGRectGetMaxY(self.navbar.frame) - [self statusbarHeight];
+    CGFloat navbarEdge = [self navbarBottomEdge] - [self statusbarHeight];
     CGFloat alpha = navbarEdge / navbarHeight;
     UINavigationItem *topItem = self.navbar.topItem;
     
@@ -162,8 +161,18 @@
 /**
  * @method preventPartialScroll:
  *
- * If the lower edge of navbar is smaller than fully expanded,
- * animate both navbar & scrollView to collapse.
+ * Prevents any partially scrolled navbars when user
+ * stops scrolling/dragging at non-edge case values.
+ * Operations will only trigger if navbar's bottom edge
+ * is between the status bar and its bottom limit.
+ * To account for scrolling errors, a 2 pt margin is given
+ * when scrolling down (expanding navbar) so that
+ * navbar doesn't revert back to hiding when not wanted.
+ *
+ * Destination is set to bottom limit if within error margin;
+ * otherwise, the statusbar value for fulling hiding navbar.
+ * A delta to the set destination is calculated,
+ * and necessary components are scrolled using UIVIew animations.
  *
  * @param scrollView - to prevent partial scrolling
  */
@@ -201,6 +210,7 @@
  * @method statusBarHeight
  *
  * Gives the status bar height according to orientation & visibility
+ *
  * @return CGFloat of status bar height
  */
 - (CGFloat)statusbarHeight
@@ -208,11 +218,29 @@
     return [[UIApplication sharedApplication] isStatusBarHidden] ? 0 : 20;
 }
 
+/**
+ * @method navbarBottomEdge
+ *
+ * Returns the current y-value of the navbar's bottom edge,
+ * which is computed as its offset + height.
+ *
+ * @return MaxY or bottom edge value of navbar
+ */
 - (CGFloat)navbarBottomEdge
 {
     return CGRectGetMaxY(self.navbar.frame);
 }
 
+/**
+ * @method navbarBottomLimit
+ *
+ * Returns the max bottom edge value navbar can take on,
+ * which is the statusbar + navbar's height.
+ * Instead of hard coding the value 64 (portrait mode),
+ * this accounts for landscape mode, too.
+ *
+ * @return bottom limit or furthest navbar can be pulled down
+ */
 - (CGFloat)navbarBottomLimit
 {
     return [self statusbarHeight] + navbarHeight;
