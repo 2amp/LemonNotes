@@ -142,8 +142,6 @@
     insets.top += delta;
     scrollView.contentInset = insets;
     scrollView.scrollIndicatorInsets = insets;
-    
-    NSLog(@"new inset: %f", insets.top);
 }
 
 /**
@@ -177,11 +175,6 @@
  * when scrolling down (expanding navbar) so that
  * navbar doesn't revert back to hiding when not wanted.
  *
- * Destination is set to bottom limit if within error margin;
- * otherwise, the statusbar value for fulling hiding navbar.
- * A delta to the set destination is calculated,
- * and necessary components are scrolled using UIVIew animations.
- *
  * @param scrollView - to prevent partial scrolling
  */
 - (void)preventPartialScroll:(UIScrollView *)scrollView
@@ -192,14 +185,7 @@
     //navbar is not fully scrolled to top or bottom limit
     if ([self statusbarHeight] < bottomEdge && bottomEdge < [self navbarBottomLimit])
     {
-        NSLog(@"why");
-        CGFloat dest = [self statusbarHeight];
-        
-        //is within top error magin, switch destination to top
-        if ([self navbarBottomLimit] - SCROLL_ERROR_MARGIN <= bottomEdge)
-            dest += navbarHeight;
-        
-        CGFloat deltaToStatusBar = dest - CGRectGetMaxY(frame);
+        CGFloat deltaToStatusBar = [self statusbarHeight] - CGRectGetMaxY(frame);
         
         [UIView animateWithDuration:0.1 animations:
          ^{
