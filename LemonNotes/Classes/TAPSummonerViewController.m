@@ -474,13 +474,13 @@
     if ([stats[@"winner"] boolValue])
     {
         outcome.text = @"Victory";
-        //outcome.textColor = [UIColor colorWithRed:(145.f/255.f) green:(200.f/255.f) blue:(92.f/255.f) alpha:1];
+        outcome.textColor = [UIColor colorWithRed:(145.f/255.f) green:(200.f/255.f) blue:(92.f/255.f) alpha:1];
         //outcome.textColor = [UIColor colorWithRed:0 green:0.4 blue:0 alpha:1];
     }
     else
     {
         outcome.text = @"Defeat";
-        //outcome.textColor = [UIColor colorWithRed:1.f green:(97.f/255.f) blue:(63.f/255.f) alpha:1];
+        outcome.textColor = [UIColor colorWithRed:1.f green:(97.f/255.f) blue:(63.f/255.f) alpha:1];
         //outcome.textColor = [UIColor redColor];
     }
     resultsMark.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@ Mark.png", outcome.text]];
