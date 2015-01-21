@@ -8,6 +8,7 @@
 {
     CGFloat navbarHeight;
     CGFloat previousOffset;
+    BOOL dragging;
 }
 
 @property (nonatomic, weak) UINavigationBar *navbar;
@@ -34,6 +35,8 @@
     {
         self.navbar = navbar;
         navbarHeight = navbar.frame.size.height;
+        
+        dragging = NO;
     }
     return self;
 }
@@ -50,6 +53,7 @@
  */
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
+    dragging = YES;
     previousOffset = scrollView.contentOffset.y;
 }
 
@@ -65,14 +69,15 @@
 {
     CGFloat currentOffset = scrollView.contentOffset.y;
     CGFloat delta = [self validDelta:(previousOffset - currentOffset)];
-    previousOffset = currentOffset;
     
-    if ([self isValidOffset:currentOffset])
+    NSLog(@"current: %f, delta: %f", -currentOffset, delta);
+    if ([self isValidOffset:currentOffset] || [self isValidOffset:previousOffset])
     {
         [self scrollNavbarWithDelta:delta];
         [self adjustScrollView:scrollView toDelta:delta];
-        [self adjustItemOpacity];
     }
+    [self adjustItemOpacity];
+    previousOffset = currentOffset;
 }
 
 /**
@@ -100,6 +105,7 @@
  */
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
+    dragging = NO;
     [self preventPartialScroll:scrollView];
 }
 
@@ -136,6 +142,8 @@
     insets.top += delta;
     scrollView.contentInset = insets;
     scrollView.scrollIndicatorInsets = insets;
+    
+    NSLog(@"new inset: %f", insets.top);
 }
 
 /**
@@ -184,6 +192,7 @@
     //navbar is not fully scrolled to top or bottom limit
     if ([self statusbarHeight] < bottomEdge && bottomEdge < [self navbarBottomLimit])
     {
+        NSLog(@"why");
         CGFloat dest = [self statusbarHeight];
         
         //is within top error magin, switch destination to top
@@ -279,7 +288,7 @@
     if (delta > 0) limit += navbarHeight;
     
     //get displacement
-    CGFloat displ = limit - CGRectGetMaxY(self.navbar.frame);
+    CGFloat displ = limit - [self navbarBottomEdge];
     return ( fabsf(delta) < fabsf(displ) ) ? delta : displ;
 }
 

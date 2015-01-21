@@ -23,4 +23,7 @@
 - (void)beginRefreshing;
 - (void)endRefreshing;
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView;
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView;
+
 @end
