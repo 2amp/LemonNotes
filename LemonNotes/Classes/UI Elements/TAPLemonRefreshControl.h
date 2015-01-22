@@ -15,14 +15,13 @@
  */
 @interface TAPLemonRefreshControl : UIControl
 
-- (instancetype)initWithTableView:(UITableView *)tableView;
+- (instancetype)initWithScrollView:(UITableView *)tableView;
 
-@property (nonatomic, readonly) BOOL isRefreshing;
-- (void)didScroll;
-- (void)didEndDragging;
+@property (nonatomic, readonly, getter=isRefreshing) BOOL refreshing;
 - (void)beginRefreshing;
 - (void)endRefreshing;
 
+- (void)scrollViewWillBegingDragging:(UIScrollView *)scrollView;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView;
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView;
 

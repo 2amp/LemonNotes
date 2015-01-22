@@ -147,8 +147,8 @@
     [self.view sendSubviewToBack:self.tableView];
     
     //refresh
-    self.lemonRefresh = [[TAPLemonRefreshControl alloc] initWithTableView:self.tableView];
-    //[self.lemonRefresh addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    self.lemonRefresh = [[TAPLemonRefreshControl alloc] initWithScrollView:self.tableView];
+    [self.lemonRefresh addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
 }
 
 /**
@@ -323,6 +323,7 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [self.navbarController scrollViewWillBeginDragging:scrollView];
+    [self.lemonRefresh scrollViewWillBegingDragging:scrollView];
 }
 
 /**
@@ -334,8 +335,8 @@
  */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    //[self.lemonRefresh didScroll];
     [self.navbarController scrollViewDidScroll:scrollView];
+    [self.lemonRefresh scrollViewDidScroll:scrollView];
     
     if (!self.loadLock) [self checkForLoad];
 }
@@ -365,6 +366,7 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     [self.navbarController scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
+    [self.lemonRefresh scrollViewDidEndDragging:scrollView];
 }
 
 

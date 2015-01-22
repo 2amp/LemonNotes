@@ -70,7 +70,6 @@
     CGFloat currentOffset = scrollView.contentOffset.y;
     CGFloat delta = [self validDelta:(previousOffset - currentOffset)];
     
-    NSLog(@"current: %f, delta: %f", -currentOffset, delta);
     if ([self isValidOffset:currentOffset] || [self isValidOffset:previousOffset])
     {
         [self scrollNavbarWithDelta:delta];
