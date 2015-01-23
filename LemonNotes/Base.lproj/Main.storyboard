@@ -661,9 +661,7 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="Dt4-0Z-z61"/>
-                    <navigationItem key="navigationItem" id="OUw-0s-tTN">
-                        <barButtonItem key="backBarButtonItem" title=" " id="uaC-Av-FIi"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="OUw-0s-tTN"/>
                     <connections>
                         <outlet property="championSplashView" destination="3io-ee-6Gl" id="kS8-Lb-1sa"/>
                         <outlet property="footer" destination="aqS-jh-TRe" id="1Sn-6u-6tU"/>

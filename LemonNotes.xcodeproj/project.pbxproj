@@ -896,6 +896,7 @@
 		959158301A0EDFD00098A610 /* Zilean_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 959157B71A0EDFD00098A610 /* Zilean_0.jpg */; };
 		959158311A0EDFD00098A610 /* Zyra_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 959157B81A0EDFD00098A610 /* Zyra_0.jpg */; };
 		95B298E31A189045000EC199 /* TAPSummonerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 95B298E21A189045000EC199 /* TAPSummonerManager.m */; };
+		95CF56CF1A71F6DB0000AF92 /* Button Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 95CF56CE1A71F6DB0000AF92 /* Button Background.png */; };
 		95F162E11A034C9B00DECF93 /* TAPSummonerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F162E01A034C9B00DECF93 /* TAPSummonerViewController.m */; };
 		95F9F9181A1696E000CFEAF3 /* TAPSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F9F9171A1696E000CFEAF3 /* TAPSearchField.m */; };
 /* End PBXBuildFile section */
@@ -1821,6 +1822,7 @@
 		959157B81A0EDFD00098A610 /* Zyra_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Zyra_0.jpg; sourceTree = "<group>"; };
 		95B298E11A189045000EC199 /* TAPSummonerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSummonerManager.h; sourceTree = "<group>"; };
 		95B298E21A189045000EC199 /* TAPSummonerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPSummonerManager.m; sourceTree = "<group>"; };
+		95CF56CE1A71F6DB0000AF92 /* Button Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Button Background.png"; sourceTree = "<group>"; };
 		95F162DF1A034C9B00DECF93 /* TAPSummonerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSummonerViewController.h; sourceTree = "<group>"; };
 		95F162E01A034C9B00DECF93 /* TAPSummonerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPSummonerViewController.m; sourceTree = "<group>"; };
 		95F9F9161A1696E000CFEAF3 /* TAPSearchField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSearchField.h; sourceTree = "<group>"; };
@@ -2404,6 +2406,7 @@
 			isa = PBXGroup;
 			children = (
 				9567B3091A71C85900F89EFC /* ActivityIndicator Background.png */,
+				95CF56CE1A71F6DB0000AF92 /* Button Background.png */,
 				9504F5941A6EE0BA0079BD5F /* Defeat Mark.png */,
 				9504F5961A6EE0BA0079BD5F /* Victory Mark.png */,
 				9504F59A1A6EE1F90079BD5F /* Victory Mark (Blue).png */,
@@ -3464,6 +3467,7 @@
 				95084BAD1A1B37AD0052F40F /* 638.png in Resources */,
 				8959210D1A0330F600F00637 /* 2052.png in Resources */,
 				95084C0D1A1B37AD0052F40F /* 733.png in Resources */,
+				95CF56CF1A71F6DB0000AF92 /* Button Background.png in Resources */,
 				8959213A1A0330F600F00637 /* 3082.png in Resources */,
 				959157CE1A0EDFD00098A610 /* Evelynn_0.jpg in Resources */,
 				8959216E1A0330F600F00637 /* 3157.png in Resources */,

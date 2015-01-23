@@ -81,6 +81,7 @@
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.borderStyle = UITextBorderStyleRoundedRect;
     self.backgroundColor = [UIColor whiteColor];
+    self.tintColor = [UIColor colorWithRed:0 green:0.478431 blue:1.0 alpha:1.0];
     self.placeholder = @"Search for a Summoner";
     self.font = [UIFont fontWithName:@"Helvetica Neue" size:14];
 
@@ -91,7 +92,6 @@
     [self.regionButton addTarget:self action:@selector(pressedRegion) forControlEvents:UIControlEventTouchUpInside];
     
     self.rightView = self.regionButton;
-    self.rightView.tintColor = [[UIApplication sharedApplication] keyWindow].tintColor;
     self.rightViewMode = UITextFieldViewModeAlways;
 }
 
