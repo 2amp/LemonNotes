@@ -109,6 +109,7 @@ typedef enum {
 {
     touchEnded = NO;
     startingInset = scrollView.contentInset.top;
+    storedInset = startingInset;
     
     //adjust frame according to drag
     CGFloat frameWidth = CGRectGetWidth(scrollView.frame);

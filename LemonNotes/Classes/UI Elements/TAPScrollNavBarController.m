@@ -137,9 +137,13 @@
  */
 - (void)adjustScrollView:(UIScrollView *)scrollView toDelta:(CGFloat)delta
 {
-    UIEdgeInsets insets = scrollView.contentInset;
+//    UIEdgeInsets insets = scrollView.contentInset;
+//    insets.top += delta;
+//    scrollView.contentInset = insets;
+//    scrollView.scrollIndicatorInsets = insets;
+
+    UIEdgeInsets insets = scrollView.scrollIndicatorInsets;
     insets.top += delta;
-    scrollView.contentInset = insets;
     scrollView.scrollIndicatorInsets = insets;
 }
 
