@@ -1,5 +1,6 @@
 
 #import "TAPSummonerViewController.h"
+#import "UIImageView+UIImageViewAdditions.h"
 #import "NSURLSession+SynchronousTask.h"
 #import "TAPScrollNavBarController.h"
 #import "TAPLemonRefreshControl.h"
@@ -288,6 +289,8 @@
     if (moreMatches.count > 0)
     {
         self.loadLock = NO;
+        
+        NSLog(@"%@", [moreMatches firstObject]);
     
         //append loaded matches to matches
         [self.matches addObjectsFromArray:moreMatches];
@@ -453,14 +456,9 @@
     UILabel     *scoreLabel             = (UILabel *)    [cell viewWithTag:105];
 
     //
-    championImageView.layer.cornerRadius = championImageView.frame.size.width / 2;
-    championImageView.layer.borderColor = [UIColor blackColor].CGColor;
-    championImageView.layer.borderWidth = 2.0f;
-    championImageView.clipsToBounds = YES;
-
-    // Debug
-    UILabel *matchNumberLabel = (UILabel *)[cell viewWithTag:200];
-
+    [championImageView setBorderRadius: CGRectGetWidth(championImageView.frame)/2];
+    [championImageView setBorderWidth:2.0f color:[UIColor blackColor]];
+    
     // items
     UIImageView *item0ImageView = (UIImageView *)[cell viewWithTag:300];
     UIImageView *item1ImageView = (UIImageView *)[cell viewWithTag:301];
@@ -471,6 +469,11 @@
     UIImageView *item6ImageView = (UIImageView *)[cell viewWithTag:306];
 
     NSArray *itemImageViews = @[item0ImageView, item1ImageView, item2ImageView, item3ImageView, item4ImageView, item5ImageView, item6ImageView];
+    for (UIImageView *itemView in itemImageViews)
+    {
+        [itemView setBorderRadius:5.0f];
+        [itemView setBorderWidth:1.0f color:[UIColor whiteColor]];
+    }
     
     //pull data
     NSDictionary *match = self.matches[indexPath.row];
@@ -523,7 +526,8 @@
     championName.text = dataManager.champions[ [info[@"championId"] stringValue] ][@"name"];
 
     // debug
-    matchNumberLabel.text = [[NSNumber numberWithInteger:(indexPath.row + 1)] stringValue];
+    //UILabel *matchNumberLabel = (UILabel *)[cell viewWithTag:200];
+    //matchNumberLabel.text = [[NSNumber numberWithInteger:(indexPath.row + 1)] stringValue];
     return cell;
 }
 

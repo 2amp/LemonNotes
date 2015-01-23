@@ -563,12 +563,6 @@
                                                                 <constraint firstAttribute="height" constant="64" id="QWD-oE-nNH"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oma-5y-QED">
-                                                            <rect key="frame" x="400" y="54" width="42" height="30"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
                                                         <imageView userInteractionEnabled="NO" tag="10" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Victory Mark.png" translatesAutoresizingMaskIntoConstraints="NO" id="P2T-QR-xY2">
                                                             <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
                                                         </imageView>
@@ -577,10 +571,8 @@
                                                     <constraints>
                                                         <constraint firstItem="X73-R1-23u" firstAttribute="leading" secondItem="P2T-QR-xY2" secondAttribute="trailing" constant="-20" id="1mr-2N-864"/>
                                                         <constraint firstAttribute="trailing" secondItem="gyS-gv-b81" secondAttribute="trailing" constant="8" id="5LY-AX-pfU"/>
-                                                        <constraint firstItem="1yK-wu-Lcv" firstAttribute="leading" secondItem="Oma-5y-QED" secondAttribute="trailing" constant="8" symbolic="YES" id="5R1-x0-15A"/>
                                                         <constraint firstItem="X73-R1-23u" firstAttribute="leading" secondItem="P2T-QR-xY2" secondAttribute="trailing" constant="-25" id="7A5-rV-0u0"/>
                                                         <constraint firstItem="5Ss-OL-A0U" firstAttribute="top" secondItem="evZ-bq-ySr" secondAttribute="bottom" constant="8" id="82H-3R-F4U"/>
-                                                        <constraint firstItem="Oma-5y-QED" firstAttribute="bottom" secondItem="gyS-gv-b81" secondAttribute="bottom" id="8rv-Lz-Bt8"/>
                                                         <constraint firstItem="ThP-fx-iga" firstAttribute="top" secondItem="Cay-D2-zsM" secondAttribute="bottom" constant="2" id="AnJ-iN-qWW"/>
                                                         <constraint firstItem="Cay-D2-zsM" firstAttribute="top" secondItem="zYQ-Jo-Dz7" secondAttribute="top" constant="38" id="GMW-Uq-v1i"/>
                                                         <constraint firstItem="cV8-AM-Ns7" firstAttribute="leading" secondItem="1yK-wu-Lcv" secondAttribute="trailing" constant="2" id="Hrm-QD-uZD"/>
@@ -599,7 +591,6 @@
                                                         <constraint firstAttribute="bottom" secondItem="P2T-QR-xY2" secondAttribute="bottom" constant="102" id="YlA-wV-xMd"/>
                                                         <constraint firstAttribute="bottom" secondItem="P2T-QR-xY2" secondAttribute="bottom" constant="112" id="cFh-yi-S60"/>
                                                         <constraint firstItem="X73-R1-23u" firstAttribute="leading" secondItem="P2T-QR-xY2" secondAttribute="trailing" constant="-30" id="cVp-Bb-nKs"/>
-                                                        <constraint firstItem="Oma-5y-QED" firstAttribute="top" secondItem="gyS-gv-b81" secondAttribute="top" id="cqP-cV-qK1"/>
                                                         <constraint firstItem="ThP-fx-iga" firstAttribute="leading" secondItem="evZ-bq-ySr" secondAttribute="trailing" constant="8" id="imo-S7-29Q"/>
                                                         <constraint firstItem="MZy-PF-TqX" firstAttribute="top" secondItem="zYQ-Jo-Dz7" secondAttribute="top" constant="58" id="j9p-s8-CtL"/>
                                                         <constraint firstItem="X73-R1-23u" firstAttribute="top" secondItem="zYQ-Jo-Dz7" secondAttribute="top" constant="8" id="jFI-iG-KlF"/>
