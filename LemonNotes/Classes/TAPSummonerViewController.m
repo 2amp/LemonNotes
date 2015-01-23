@@ -4,8 +4,8 @@
 #import "NSURLSession+SynchronousTask.h"
 #import "TAPScrollNavBarController.h"
 #import "TAPLemonRefreshControl.h"
-#import "TAPSearchField.h"
 #import "TAPDataManager.h"
+#import "TAPSearchField.h"
 #import "Constants.h"
 
 
@@ -123,10 +123,15 @@
     //search field
     self.searchField = [[TAPSearchField alloc] initWithFrame:CGRectMake(0,0,320,22)];
     self.searchField.delegate = self;
+    self.searchField.text = self.summonerInfo[@"name"];
     self.navigationItem.titleView = self.searchField;
     
     //scroll navbar
-    self.navbarController = [[TAPScrollNavBarController alloc] initWithNavBar:self.navigationController.navigationBar];
+    if (self == [self.navigationController.viewControllers firstObject])
+    {
+        self.searchField.text = @"";
+        self.navbarController = [[TAPScrollNavBarController alloc] initWithNavBar:self.navigationController.navigationBar];
+    }
 }
 
 /**
