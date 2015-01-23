@@ -115,8 +115,17 @@
  */
 - (void)setupNavbar
 {
+    #pragma mark FIX ME: backbutton wont turn white
+    //UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    //backButton.tintColor = [UIColor whiteColor];
+    //self.navigationItem.backBarButtonItem = backButton;
+
+    #pragma mark FIX ME: backbutton turns white, but so does everything else. Can't region picker in search bar.
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
     //search field
     self.searchField = [[TAPSearchField alloc] initWithFrame:CGRectMake(0,0,320,22)];
+    self.searchField.delegate = self;
     self.navigationItem.titleView = self.searchField;
     
     //scroll navbar
@@ -544,7 +553,7 @@
  */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    //[self searchSummonerWithName:self.searchField.text Region:self.searchField.selectedRegion];
+    [self searchSummonerWithName:self.searchField.text region:self.searchField.selectedRegion];
     
     [textField resignFirstResponder];
     return YES;

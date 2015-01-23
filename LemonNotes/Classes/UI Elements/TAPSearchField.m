@@ -91,6 +91,7 @@
     [self.regionButton addTarget:self action:@selector(pressedRegion) forControlEvents:UIControlEventTouchUpInside];
     
     self.rightView = self.regionButton;
+    self.rightView.tintColor = [[UIApplication sharedApplication] keyWindow].tintColor;
     self.rightViewMode = UITextFieldViewModeAlways;
 }
 

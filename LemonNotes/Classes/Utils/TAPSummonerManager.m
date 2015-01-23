@@ -72,7 +72,8 @@
  *
  * Fetches summoner entities with id.
  * If registered, sets self.summoner to object or nil if not found.
- * Sets self.isRegistered accordingly.
+ * Sets isRegistered accordingly.
+ *
  * @note One time method to be called in init.
  *       Only other time isRegistered should change is when
  *       registerSummoner or deregisterSummoner
@@ -89,6 +90,7 @@
     self.summoner = (result.count > 0) ? result[0] : nil;
     self.isRegistered = self.summoner != nil;
 }
+
 
 #pragma mark - Account
 /**
