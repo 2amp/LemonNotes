@@ -63,8 +63,6 @@
     
     if (self == [self.navigationController.viewControllers firstObject])
     {
-        NSString *summonerName = [[[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"] objectForKey:@"name"];
-        self.summonerNameLabel.text  = summonerName;
         self.summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
         [self.manager registerSummoner];
     }
@@ -253,49 +251,18 @@
 }
 
 
-#pragma mark - Summoner Manager
-/**
- * @method checkForLoad
- *
- * If tableView has been scrolled enough so that
- * y-offset + screen height >= content height,
- * then after a 1 second delay, manger is called to load more matches.
- */
-- (void)checkForLoad
-{
-    CGFloat footerHeight = self.footer.bounds.size.height;
-    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
-    CGFloat scrollOffset = self.tableView.contentOffset.y;
-    CGFloat contentHeight = self.tableView.contentSize.height;
-    
-    BOOL loadZone = (screenHeight + scrollOffset <= contentHeight) &&
-                    (screenHeight + scrollOffset >= contentHeight - footerHeight);
-    
-    if (loadZone)
-    {
-        self.loadLock = YES;
-        
-        dispatch_time_t secondDelay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
-        dispatch_after(secondDelay, dispatch_get_main_queue(),
-        ^{
-            [self.manager loadMatches];
-        });
-    }
-}
-
+#pragma mark - Summoner Manager Delegate Methods
 /**
  * @method didFinishLoadingMatches:
  *
  * Called by SummonerManager as delegate callback
- *  when [loadMatches] has been completed.
+ * when -loadMatches has been completed.
  */
 - (void)didFinishLoadingMatches:(NSArray *)moreMatches
 {
     if (moreMatches.count > 0)
     {
         self.loadLock = NO;
-        
-        NSLog(@"%@", [moreMatches firstObject]);
     
         //append loaded matches to matches
         [self.matches addObjectsFromArray:moreMatches];
@@ -326,7 +293,7 @@
 }
 
 
-#pragma mark - Scroll View
+#pragma mark - ScrollView Events
 /**
  * @method scrollViewBeginDragging:
  *
@@ -355,19 +322,6 @@
 }
 
 /**
- * @method scrollViewDidScrollToTop:
- *
- * Called when scrollView reaches the top after tapping on status bar.
- * Calls navbarController's corresponding method.
- *
- * @param scrollView - scrolled to the top
- */
-- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
-{
-    [self.navbarController scrollViewDidScrollToTop:scrollView];
-}
-
-/**
  * @method scrollViewDidEndDragging:willDecelerate:
  *
  * Called when scrollView is no longer actively scrolling.
@@ -382,9 +336,51 @@
     [self.lemonRefresh scrollViewDidEndDragging:scrollView];
 }
 
+/**
+ * @method scrollViewDidScrollToTop:
+ *
+ * Called when scrollView reaches the top after tapping on status bar.
+ * Calls navbarController's corresponding method.
+ *
+ * @param scrollView - scrolled to the top
+ */
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
+{
+    [self.navbarController scrollViewDidScrollToTop:scrollView];
+}
+
+/**
+ * @method checkForLoad
+ *
+ * If tableView has been scrolled enough so that
+ * y-offset + screen height >= content height,
+ * then after a 1 second delay, manger is called to load more matches.
+ */
+- (void)checkForLoad
+{
+    CGFloat footerHeight = self.footer.bounds.size.height;
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    CGFloat scrollOffset = self.tableView.contentOffset.y;
+    CGFloat contentHeight = self.tableView.contentSize.height;
+    
+    BOOL loadZone = (screenHeight + scrollOffset <= contentHeight) &&
+    (screenHeight + scrollOffset >= contentHeight - footerHeight);
+    
+    if (loadZone)
+    {
+        self.loadLock = YES;
+        
+        dispatch_time_t secondDelay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
+        dispatch_after(secondDelay, dispatch_get_main_queue(),
+        ^{
+            [self.manager loadMatches];
+        });
+    }
+}
 
 
-#pragma mark - Table View
+
+#pragma mark - TableView Events
 /**
  * @method refresh
  *
@@ -583,8 +579,6 @@
     [TAPDataManager getSummonerForName:name region:region
     successHandler:^(NSDictionary *summoner)
     {
-        //self.searchField.text = @"";
-        
         TAPSummonerViewController *nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"summonerVC"];
         nextVC.summonerInfo = summoner;
         [self.navigationController pushViewController:nextVC animated:YES];
@@ -593,15 +587,6 @@
     {
         [self showAlertWithTitle:@"Error" message:errorMessage];
     }];
-}
-
-#pragma mark - Navigation Events
-/**
- * Currently no segue from the main vc occurs. Will soon change!
- */
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    
 }
 
 @end

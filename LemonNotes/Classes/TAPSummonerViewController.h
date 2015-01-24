@@ -13,7 +13,7 @@
  * Upon app start, if there is no default user registered in UserDefaults,
  * redirects to TAPSignInViewController for enter a summonerName.
  *
- * @author Bohui Moon
+ * @author Bohui Moon, Chris Fu
  * @version 0.1
  */
 @interface TAPSummonerViewController : UIViewController
