@@ -220,23 +220,6 @@
     NSLog(@"%lul", [self.managedObjectContext executeFetchRequest:summonerFetch error:&error].count);
 }
 
-/**
- * @method registerSummoner
- *
- * Enters the summoner as a new entity into core data.
- * Saves all ranked games.
- *
- * @note currently only saves last 15 games,
- *       but should save all games in the future.
- */
-- (void)registerSummoner
-{
-    Summoner *summoner = [self currentSummonerEntity];
-    NSNumber *lastMatchId = [self saveRecentMatchesForSummoner:summoner];
-    [summoner setValue:lastMatchId forKey:@"lastMatchId"];
-    [self saveContext];
-}
-
 
 #pragma mark - Champion Static Data Methods
 /**

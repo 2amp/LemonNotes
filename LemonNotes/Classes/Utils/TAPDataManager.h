@@ -39,9 +39,7 @@
 - (void)deleteAllSummoners;
 
 //recent games
-@property (nonatomic) NSArray *recentMatches;
-- (void)loadRecentMatches;
-- (NSNumber *)saveRecentMatchesForSummoner:(Summoner *)summoner;
+
 
 // delegate
 @property (nonatomic, weak) id<TAPDataManagerDelegate> delegate;
