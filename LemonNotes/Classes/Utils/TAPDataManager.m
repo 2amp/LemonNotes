@@ -226,7 +226,6 @@
  * @method updateChampionIds
  *
  * Updates the championIds dictionary by calling Riot API.
- *
  * @note the keys are string values, not NSNumbers
  */
 - (void)updateChampionIds
@@ -249,7 +248,9 @@
 }
 
 /**
- * Updates the summoner spell dictionary by calling Riot API.
+ * @method updateSummonerSpells
+ *
+ * Async. updates the summoner spell dictionary by calling Riot API.
  */
 - (void)updateSummonerSpells
 {
@@ -270,6 +271,13 @@
      resume];
 }
 
+/**
+ * @method updateAllData
+ *
+ * Asynchronously updates both champion and summonerSpell data,
+ * chaining the second after the first is complete.
+ * Once both is done, delegate's didFinishLoadingData is called.
+ */
 - (void)updateAllData
 {
     void (^summonerSpellCompletionHandler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)

@@ -35,7 +35,6 @@
 
 //accounts
 - (void)summonerDump;
-- (void)registerSummoner;
 - (void)deleteAllSummoners;
 
 //recent games

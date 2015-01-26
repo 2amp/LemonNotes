@@ -93,6 +93,8 @@
  */
 - (void)signIn
 {
+    NSLog(@"[SignInVC signIn]");
+    
     //start rolling
     [self.activityIndicator startAnimating];
 
