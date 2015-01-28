@@ -519,6 +519,8 @@
     NSString *spell2   = dataManager.summonerSpells[ [info[@"spell2Id"] stringValue] ][@"key"];
     [summonerIcon1ImageView setImage: [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", spell1]]];
     [summonerIcon2ImageView setImage: [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", spell2]]];
+    [summonerIcon1ImageView setBorderRadius:3.0f];
+    [summonerIcon2ImageView setBorderRadius:3.0f];
 
     //Stats labels
     NSNumber *kills   = stats[@"kills"];
@@ -549,8 +551,8 @@
         if ([itemKey isEqualToString:@"0"]) itemKey = @"0000";
 
         UIImageView *itemView = (UIImageView *)itemImageViews[i];
-        [itemView setBorderRadius:5.0f];
-        [itemView setBorderWidth:1.0f color:[UIColor whiteColor]];
+        [itemView setBorderRadius:4.0f];
+        [itemView setBorderWidth:0.5f color:[UIColor whiteColor]];
         [itemView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png", itemKey]]];
     }
 
