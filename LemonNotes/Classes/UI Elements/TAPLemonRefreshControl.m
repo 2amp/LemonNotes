@@ -160,10 +160,7 @@ typedef enum {
     }
     
     if (state == kStateResetting && diff == 0)
-    {
         state = kStateIdle;
-        self.imageView.transform = CGAffineTransformMakeRotation(0);
-    }
 }
 
 /**
@@ -199,7 +196,7 @@ typedef enum {
 {
     if (state == kStateIdle)
     {
-        [self spin];
+        [self startSpin];
     
         state = kStateRefreshing;
         [self sendActionsForControlEvents:UIControlEventValueChanged];
@@ -222,6 +219,7 @@ typedef enum {
 {
     if (state == kStateRefreshing)
     {
+        [self stopSpin];
         state = kStateResetting;
         
         storedInset = startingInset;
@@ -238,18 +236,32 @@ typedef enum {
  * Recursively spins the lemon until refreshing is over.
  * using UIView animations and CGAffineTransform rotations.
  */
-- (void)spin
+- (void)startSpin
 {
-    [UIView animateWithDuration:0.4 delay:0.0 options:kNilOptions
-    animations:^()
-    {
-        self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, M_PI_2);
-    }
-    completion:^(BOOL finished)
-    {
-        if (state == kStateRefreshing)
-            [self spin];
-    }];
+    [UIView animateWithDuration:0.5 delay:0.0
+     options:(UIViewAnimationCurveLinear | UIViewAnimationOptionRepeat | UIViewAnimationOptionAllowUserInteraction)
+     animations:^()
+     {
+         self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, M_PI_4);
+     }
+     completion:^(BOOL finished)
+     {
+         
+     }];
+}
+
+- (void)stopSpin
+{
+    [UIView animateWithDuration:0.5 delay:0.0
+     options:(UIViewAnimationOptionCurveLinear | UIViewAnimationOptionBeginFromCurrentState)
+     animations:^
+     {
+         self.imageView.transform = CGAffineTransformMakeRotation(0);
+     }
+     completion:^(BOOL finished)
+     {
+         
+     }];
 }
 
 
