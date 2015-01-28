@@ -146,7 +146,17 @@
  */
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-
+    if ([segue.identifier isEqualToString:@"showTabBarController"])
+    {
+        UITabBarController *tabBarController = (UITabBarController *)(segue.destinationViewController);
+        UIStoryboard *matchHistoryStoryboard = [UIStoryboard storyboardWithName:@"MatchHistory" bundle:nil];
+        UIStoryboard *gameStartStoryboard = [UIStoryboard storyboardWithName:@"StartGame" bundle:nil];
+        UIStoryboard *moreStoryboard = [UIStoryboard storyboardWithName:@"More" bundle:nil];
+        UINavigationController *summonerVNC = [matchHistoryStoryboard instantiateInitialViewController];
+        UINavigationController *startGameVNC = [gameStartStoryboard instantiateInitialViewController];
+        UINavigationController *moreVNC = [moreStoryboard instantiateInitialViewController];
+        tabBarController.viewControllers = @[summonerVNC, startGameVNC, moreVNC];
+    }
 }
 
 - (void)didFinishLoadingData

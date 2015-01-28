@@ -403,6 +403,9 @@
 		895922D71A0330F600F00637 /* SummonerTeleport.png in Resources */ = {isa = PBXBuildFile; fileRef = 895920641A0330F600F00637 /* SummonerTeleport.png */; };
 		8960B9DC1A43FCB700CC3D87 /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 8960B9DA1A43FCB700CC3D87 /* checkmark.png */; };
 		8960B9DD1A43FCB700CC3D87 /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 8960B9DB1A43FCB700CC3D87 /* cross.png */; };
+		898295281A7995160042F438 /* MatchHistory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 898295261A7995160042F438 /* MatchHistory.storyboard */; };
+		8982952E1A7998000042F438 /* StartGame.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8982952C1A7998000042F438 /* StartGame.storyboard */; };
+		898295311A7998A50042F438 /* More.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8982952F1A7998A50042F438 /* More.storyboard */; };
 		8984EF2E19F61FC100C442FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF2D19F61FC100C442FC /* main.m */; };
 		8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF3219F61FC100C442FC /* LemonNotes.xcdatamodeld */; };
 		8984EF3A19F61FC100C442FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8984EF3819F61FC100C442FC /* Main.storyboard */; };
@@ -1313,6 +1316,9 @@
 		895920641A0330F600F00637 /* SummonerTeleport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SummonerTeleport.png; sourceTree = "<group>"; };
 		8960B9DA1A43FCB700CC3D87 /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
 		8960B9DB1A43FCB700CC3D87 /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
+		898295271A7995160042F438 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MatchHistory.storyboard; sourceTree = "<group>"; };
+		8982952D1A7998000042F438 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/StartGame.storyboard; sourceTree = "<group>"; };
+		898295301A7998A50042F438 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/More.storyboard; sourceTree = "<group>"; };
 		8984EF2819F61FC100C442FC /* LemonNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LemonNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8984EF2C19F61FC100C442FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8984EF2D19F61FC100C442FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -2328,6 +2334,9 @@
 			children = (
 				8984EF3219F61FC100C442FC /* LemonNotes.xcdatamodeld */,
 				8984EF3819F61FC100C442FC /* Main.storyboard */,
+				8982952C1A7998000042F438 /* StartGame.storyboard */,
+				898295261A7995160042F438 /* MatchHistory.storyboard */,
+				8982952F1A7998A50042F438 /* More.storyboard */,
 				8984EF3D19F61FC100C442FC /* LaunchScreen.xib */,
 				8984EF5619F633EA00C442FC /* Classes */,
 				8984EF3B19F61FC100C442FC /* Images.xcassets */,
@@ -3118,6 +3127,7 @@
 				895921771A0330F600F00637 /* 3170.png in Resources */,
 				895921141A0330F600F00637 /* 3008.png in Resources */,
 				895921A11A0330F600F00637 /* 3267.png in Resources */,
+				898295311A7998A50042F438 /* More.storyboard in Resources */,
 				95084BA01A1B37AD0052F40F /* 625.png in Resources */,
 				895921511A0330F600F00637 /* 3112.png in Resources */,
 				895921B71A0330F600F00637 /* 3340.png in Resources */,
@@ -3405,6 +3415,7 @@
 				8959212E1A0330F600F00637 /* 3065.png in Resources */,
 				95084B771A1B37AD0052F40F /* 585.png in Resources */,
 				95084BAA1A1B37AD0052F40F /* 635.png in Resources */,
+				8982952E1A7998000042F438 /* StartGame.storyboard in Resources */,
 				8959214A1A0330F600F00637 /* 3102.png in Resources */,
 				895920E41A0330F600F00637 /* 1027.png in Resources */,
 				959157E51A0EDFD00098A610 /* Kayle_0.jpg in Resources */,
@@ -3794,6 +3805,7 @@
 				9522BCAF1A2E93DA0037F84C /* Lemon Indicator 8.png in Resources */,
 				959157BC1A0EDFD00098A610 /* Alistar_0.jpg in Resources */,
 				895921871A0330F600F00637 /* 3200.png in Resources */,
+				898295281A7995160042F438 /* MatchHistory.storyboard in Resources */,
 				895920B51A0330F600F00637 /* Sejuani.png in Resources */,
 				895921861A0330F600F00637 /* 3198.png in Resources */,
 				9567B30A1A71C85900F89EFC /* ActivityIndicator Background.png in Resources */,
@@ -4024,6 +4036,30 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		898295261A7995160042F438 /* MatchHistory.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				898295271A7995160042F438 /* Base */,
+			);
+			name = MatchHistory.storyboard;
+			sourceTree = "<group>";
+		};
+		8982952C1A7998000042F438 /* StartGame.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8982952D1A7998000042F438 /* Base */,
+			);
+			name = StartGame.storyboard;
+			sourceTree = "<group>";
+		};
+		8982952F1A7998A50042F438 /* More.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				898295301A7998A50042F438 /* Base */,
+			);
+			name = More.storyboard;
+			sourceTree = "<group>";
+		};
 		8984EF3819F61FC100C442FC /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
