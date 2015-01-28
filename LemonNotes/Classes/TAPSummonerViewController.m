@@ -263,7 +263,8 @@
     if (moreMatches.count > 0)
     {
         self.loadLock = NO;
-    
+        
+        NSLog(@"%@", [moreMatches lastObject]);
         //append loaded matches to matches
         [self.matches addObjectsFromArray:moreMatches];
         [self.tableView reloadData];
@@ -520,12 +521,12 @@
     }
 
     //set labels
+    championName.text = dataManager.champions[ [info[@"championId"] stringValue] ][@"name"];
+    
     NSNumber *kills   = stats[@"kills"];
     NSNumber *deaths  = stats[@"deaths"];
     NSNumber *assists = stats[@"assists"];
     scoreLabel.text = [NSString stringWithFormat:@"%@/%@/%@", kills, deaths, assists];
-
-    championName.text = dataManager.champions[ [info[@"championId"] stringValue] ][@"name"];
 
     // debug
     //UILabel *matchNumberLabel = (UILabel *)[cell viewWithTag:200];

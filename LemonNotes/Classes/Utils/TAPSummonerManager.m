@@ -393,7 +393,6 @@
             // Set up placeholder values
             // These will be set when the specific match is fetched
             newMatch.summonerIndex = @0;
-            newMatch.matchCreation = @0;
             newMatch.teams = @[];
             [self.summoner addMatchesObject:newMatch];
             
