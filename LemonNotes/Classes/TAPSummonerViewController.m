@@ -1,9 +1,9 @@
 
 #import "TAPSummonerViewController.h"
-#import "UIImageView+UIImageViewAdditions.h"
 #import "NSURLSession+SynchronousTask.h"
 #import "TAPScrollNavBarController.h"
 #import "TAPLemonRefreshControl.h"
+#import "UIView+BorderAdditions.h"
 #import "TAPDataManager.h"
 #import "TAPSearchField.h"
 #import "Constants.h"
@@ -482,6 +482,7 @@
     NSDictionary *info  = match[@"participants"][summonerIndex];
     NSDictionary *stats = info[@"stats"];
 
+    //result
     if ([stats[@"winner"] boolValue])
     {
         outcome.text = @"Victory";

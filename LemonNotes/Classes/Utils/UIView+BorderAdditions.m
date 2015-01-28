@@ -1,8 +1,8 @@
 
-#import "UIImageView+UIImageViewAdditions.h"
+#import "UIView+BorderAdditions.h"
 
 
-@implementation UIImageView (UIImageViewAdditions)
+@implementation UIView (BorderAdditions)
 
 /**
  * @method setBorderRadius:

@@ -10,7 +10,7 @@
  * @author Bohui (Dennis) Moon
  * @version 0.1
  */
-@interface UIImageView (UIImageViewAdditions)
+@interface UIView (BorderAdditions)
 
 - (void)setBorderRadius:(CGFloat)radius;
 - (void)setBorderWidth:(CGFloat)width color:(UIColor *)color;
