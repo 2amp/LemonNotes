@@ -318,18 +318,10 @@
 - (NSArray *)loadFromServer:(int)numberOfMatches
 {
     NSLog(@"[loadFromServer]");
-    NSMutableArray *matches = [[NSMutableArray alloc] init];
-    while (numberOfMatches > 15)
-    {
-        long begin = self.lastFetchIndex;
-        self.lastFetchIndex += 15;
-        [matches addObjectsFromArray:[self matchHistoryFrom:begin to:self.lastFetchIndex]];
-        numberOfMatches -= 15;
-    }
+
     long begin = self.lastFetchIndex;
     self.lastFetchIndex += numberOfMatches;
-    [matches addObjectsFromArray:[self matchHistoryFrom:begin to:self.lastFetchIndex]];
-    return matches;
+    return [self matchHistoryFrom:begin to:self.lastFetchIndex];
 }
 
 /**
@@ -346,18 +338,12 @@
  * @method matchHistoryFrom:To:
  *
  * Given an begin & end index query params,
- * fetches that many matches from match history
- *
- * It appears that the range specified by the indicies behaves as [begin, end).
- * Fetching 0 to 15 will give you 15 matches (0 to 14). Fetching 15 to 30 will
- * give you 15 matches: (15 to 29).
- *
+ * fetchs that many matches from match history 
  * @note This method does not fetch from match api,
  *       which contains the specific data for all summoners
  */
 - (NSArray *)matchHistoryFrom:(long)begin to:(long)end
 {
-    NSLog(@"matchHistoryFrom:%ld to:%ld", begin, end);
     NSString *beginIndex = [NSString stringWithFormat:@"beginIndex=%ld", begin];
     NSString *endIndex   = [NSString stringWithFormat:@"endIndex=%ld", end];
     NSURL *url = apiURL(kLoLMatchHistory, self.summonerInfo[@"region"], [self.summonerInfo[@"id"] stringValue], @[beginIndex, endIndex]);

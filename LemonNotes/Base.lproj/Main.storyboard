@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -191,6 +191,12 @@
                                     <segue destination="Ixc-oc-g8J" kind="show" identifier="showStats" id="WjW-f3-N8H"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Matches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oLm-qF-U67">
+                                <rect key="frame" x="16" y="179" width="66" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="5Sf-uw-JgQ">
                                 <rect key="frame" x="490" y="175" width="94" height="29"/>
                             </stepper>
@@ -205,12 +211,6 @@
                                     <outlet property="delegate" destination="atR-Qs-Cne" id="IlC-58-gCz"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Matches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oLm-qF-U67">
-                                <rect key="frame" x="16" y="179" width="66" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -227,7 +227,7 @@
                             <constraint firstItem="6X6-pb-YSP" firstAttribute="top" secondItem="5OC-FK-Hyi" secondAttribute="bottom" constant="8" id="FdV-mi-BJT"/>
                             <constraint firstItem="E2V-ga-P9e" firstAttribute="leading" secondItem="gHI-uM-spk" secondAttribute="leadingMargin" id="HYu-7o-peB"/>
                             <constraint firstItem="QyO-rF-koI" firstAttribute="top" secondItem="QUd-os-2Em" secondAttribute="bottom" constant="-25" id="IJn-Ow-ZXh"/>
-                            <constraint firstItem="oLm-qF-U67" firstAttribute="top" secondItem="GBx-8J-7xk" secondAttribute="bottom" constant="17" id="JN8-Xe-nGO"/>
+                            <constraint firstItem="oLm-qF-U67" firstAttribute="top" secondItem="GBx-8J-7xk" secondAttribute="bottom" constant="18" id="JN8-Xe-nGO"/>
                             <constraint firstItem="5Sf-uw-JgQ" firstAttribute="leading" secondItem="cVn-RK-UEl" secondAttribute="trailing" constant="8" id="MmE-0r-meD"/>
                             <constraint firstItem="GBx-8J-7xk" firstAttribute="leading" secondItem="gHI-uM-spk" secondAttribute="leadingMargin" id="O0z-Hn-dKq"/>
                             <constraint firstItem="yzC-rf-9cM" firstAttribute="leading" secondItem="Sac-BG-8aN" secondAttribute="trailing" constant="-25" id="OQP-I4-c5u"/>

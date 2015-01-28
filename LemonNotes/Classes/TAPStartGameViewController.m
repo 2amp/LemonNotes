@@ -83,7 +83,8 @@
                              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
                                  NSMutableArray *matches = [[NSMutableArray alloc] init];
                                  // loadServer loads 15 matches, so call twice
-                                 [matches addObjectsFromArray:[manager loadFromServer:self.matchesToFetchField.selectedItem.intValue]];
+                                 [matches addObjectsFromArray:[manager loadFromServer]];
+                                 [matches addObjectsFromArray:[manager loadFromServer]];
                                  self.teammateRecentMatches[index] = matches;
                                  // Update UI on main thread
                                  dispatch_async(dispatch_get_main_queue(), ^{
