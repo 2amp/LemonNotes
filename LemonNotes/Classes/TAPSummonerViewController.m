@@ -264,7 +264,6 @@
     {
         self.loadLock = NO;
         
-        NSLog(@"%@", [moreMatches lastObject]);
         //append loaded matches to matches
         [self.matches addObjectsFromArray:moreMatches];
         [self.tableView reloadData];
@@ -276,6 +275,8 @@
             self.loadLock = YES;
             [self showFooter:NO];
         }
+        
+        //NSLog(@"%@", [moreMatches lastObject]);
     }
 }
 
@@ -447,43 +448,47 @@
  */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Configure the cell...
+    /* GET LABELS */
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"matchHistoryCell" forIndexPath:indexPath];
-    UIImageView *resultsMark            = (UIImageView *)[cell viewWithTag:10];
-    UILabel     *outcome                = (UILabel *)    [cell viewWithTag:100];
-    UIImageView *championImageView      = (UIImageView *)[cell viewWithTag:101];
-    UILabel     *championName           = (UILabel *)    [cell viewWithTag:102];
-    UIImageView *summonerIcon1ImageView = (UIImageView *)[cell viewWithTag:103];
-    UIImageView *summonerIcon2ImageView = (UIImageView *)[cell viewWithTag:104];
-    UILabel     *scoreLabel             = (UILabel *)    [cell viewWithTag:105];
 
-    //
-    [championImageView setBorderRadius: CGRectGetWidth(championImageView.frame)/2];
-    [championImageView setBorderWidth:2.0f color:[UIColor blackColor]];
+    //Match Related
+    UIImageView *resultsMark            = (UIImageView *)[cell viewWithTag:100];
+    UILabel     *outcome                = (UILabel     *)[cell viewWithTag:101];
+    UILabel     *durationLabel          = (UILabel     *)[cell viewWithTag:102];
     
-    // items
-    UIImageView *item0ImageView = (UIImageView *)[cell viewWithTag:300];
-    UIImageView *item1ImageView = (UIImageView *)[cell viewWithTag:301];
-    UIImageView *item2ImageView = (UIImageView *)[cell viewWithTag:302];
-    UIImageView *item3ImageView = (UIImageView *)[cell viewWithTag:303];
-    UIImageView *item4ImageView = (UIImageView *)[cell viewWithTag:304];
-    UIImageView *item5ImageView = (UIImageView *)[cell viewWithTag:305];
-    UIImageView *item6ImageView = (UIImageView *)[cell viewWithTag:306];
+    //Champion Related
+    UIImageView *championImageView      = (UIImageView *)[cell viewWithTag:200];
+    UILabel     *championName           = (UILabel     *)[cell viewWithTag:201];
+    UIImageView *summonerIcon1ImageView = (UIImageView *)[cell viewWithTag:202];
+    UIImageView *summonerIcon2ImageView = (UIImageView *)[cell viewWithTag:203];
+    
+    //Stat Related
+    UILabel     *scoreLabel             = (UILabel     *)[cell viewWithTag:300];
+    UILabel     *kdaLabel               = (UILabel     *)[cell viewWithTag:301];
+    UILabel     *multiKillLabel         = (UILabel     *)[cell viewWithTag:302];
+    UILabel     *levelLabel             = (UILabel     *)[cell viewWithTag:303];
+    UILabel     *creepLabel             = (UILabel     *)[cell viewWithTag:304];
+    
+    //Item Related
+    UIImageView *item0ImageView = (UIImageView *)[cell viewWithTag:600];
+    UIImageView *item1ImageView = (UIImageView *)[cell viewWithTag:601];
+    UIImageView *item2ImageView = (UIImageView *)[cell viewWithTag:602];
+    UIImageView *item3ImageView = (UIImageView *)[cell viewWithTag:603];
+    UIImageView *item4ImageView = (UIImageView *)[cell viewWithTag:604];
+    UIImageView *item5ImageView = (UIImageView *)[cell viewWithTag:605];
+    UIImageView *item6ImageView = (UIImageView *)[cell viewWithTag:606];
 
-    NSArray *itemImageViews = @[item0ImageView, item1ImageView, item2ImageView, item3ImageView, item4ImageView, item5ImageView, item6ImageView];
-    for (UIImageView *itemView in itemImageViews)
-    {
-        [itemView setBorderRadius:5.0f];
-        [itemView setBorderWidth:1.0f color:[UIColor whiteColor]];
-    }
-    
-    //pull data
+
+    /* GET STATIC DATA */
+    TAPDataManager *dataManager = [TAPDataManager sharedManager];
     NSDictionary *match = self.matches[indexPath.row];
     int summonerIndex = [match[@"summonerIndex"] intValue];
     NSDictionary *info  = match[@"participants"][summonerIndex];
     NSDictionary *stats = info[@"stats"];
+    
 
-    //result
+    /* SET LABELS */
+    //Result labels
     if ([stats[@"winner"] boolValue])
     {
         outcome.text = @"Victory";
@@ -498,35 +503,56 @@
     }
     resultsMark.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@ Mark.png", outcome.text]];
     
-
-    //set images
-    TAPDataManager *dataManager = [TAPDataManager sharedManager];
+    long duration = [match[@"matchDuration"] longValue];
+    int min = (int)(duration / 60);
+    int sec = (int)(duration % 60);
+    [durationLabel setText: [NSString stringWithFormat:@"%d:%d", min, sec]];
+    
+    //Champion labels
     NSString *champion = dataManager.champions[ [info[@"championId"] stringValue] ][@"key"];
+    [championName setText: dataManager.champions[ [info[@"championId"] stringValue] ][@"name"]];
+    [championImageView setBorderWidth:2.0f color:[UIColor blackColor]];
+    [championImageView setBorderRadius: CGRectGetWidth(championImageView.frame)/2];
+    [championImageView setImage: [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", champion]]];
+    
     NSString *spell1   = dataManager.summonerSpells[ [info[@"spell1Id"] stringValue] ][@"key"];
     NSString *spell2   = dataManager.summonerSpells[ [info[@"spell2Id"] stringValue] ][@"key"];
-    championImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", champion]];
-    summonerIcon1ImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", spell1]];
-    summonerIcon2ImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", spell2]];
+    [summonerIcon1ImageView setImage: [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", spell1]]];
+    [summonerIcon2ImageView setImage: [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", spell2]]];
 
-    // items
+    //Stats labels
+    NSNumber *kills   = stats[@"kills"];
+    NSNumber *deaths  = stats[@"deaths"];
+    NSNumber *assists = stats[@"assists"];
+    float kdaStat = ([kills floatValue] + [assists floatValue]) / [deaths floatValue];
+    [scoreLabel setText: [NSString stringWithFormat:@"%@/%@/%@", kills, deaths, assists]];
+    [kdaLabel   setText: [NSString stringWithFormat:@"%.2f KDA", kdaStat]];
+    [levelLabel setText: [NSString stringWithFormat:@"Lv.%@", stats[@"champLevel"]]];
+    [creepLabel setText: [NSString stringWithFormat:@"CS %@", stats[@"minionsKilled"]]];
+    
+    //Multikill
+    int multikill = [stats[@"largestMultiKill"] intValue];
+    NSString *multikillString;
+    if (multikill == 5) multikillString = @"Penta Kill";
+    if (multikill == 4) multikillString = @"Quadra Kill";
+    if (multikill == 3) multikillString = @"Triple Kill";
+    if (multikill == 2) multikillString = @"Double Kill";
+    [multiKillLabel setText: multikillString];
+    
+
+    //Item icons
+    NSArray *itemImageViews = @[item0ImageView, item1ImageView, item2ImageView, item3ImageView, item4ImageView, item5ImageView, item6ImageView];
     NSArray *items = @[stats[@"item0"], stats[@"item1"], stats[@"item2"], stats[@"item3"], stats[@"item4"], stats[@"item5"], stats[@"item6"]];
     for (int i = 0; i < itemImageViews.count; i++)
     {
         NSString *itemKey = [items[i] stringValue];
-        if ([itemKey isEqualToString:@"0"])
-        {
-            itemKey = @"0000";
-        }
-        ((UIImageView *)itemImageViews[i]).image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", itemKey]];
-    }
+        if ([itemKey isEqualToString:@"0"]) itemKey = @"0000";
 
-    //set labels
-    championName.text = dataManager.champions[ [info[@"championId"] stringValue] ][@"name"];
-    
-    NSNumber *kills   = stats[@"kills"];
-    NSNumber *deaths  = stats[@"deaths"];
-    NSNumber *assists = stats[@"assists"];
-    scoreLabel.text = [NSString stringWithFormat:@"%@/%@/%@", kills, deaths, assists];
+        UIImageView *itemView = (UIImageView *)itemImageViews[i];
+        [itemView setBorderRadius:5.0f];
+        [itemView setBorderWidth:1.0f color:[UIColor whiteColor]];
+        [itemView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png", itemKey]]];
+    }
 
     // debug
     //UILabel *matchNumberLabel = (UILabel *)[cell viewWithTag:200];
