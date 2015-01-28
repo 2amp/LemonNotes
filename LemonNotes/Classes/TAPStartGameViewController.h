@@ -43,6 +43,4 @@
 
 @property (weak, nonatomic) IBOutlet TAPPickerTextField *matchesToFetchField;
 
-@property (nonatomic, strong) NSString *selectedRegion;
-
 @end

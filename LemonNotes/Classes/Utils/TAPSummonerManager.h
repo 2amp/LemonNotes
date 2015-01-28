@@ -56,5 +56,6 @@
 - (void)refreshMatches;
 - (void)loadMatches;
 - (NSArray *)loadFromServer;
+- (NSArray *)loadFromServer:(int)numberOfMatches;
 
 @end
