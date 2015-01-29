@@ -259,8 +259,8 @@
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 days ago" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H8Z-C1-NzO">
-                                                            <rect key="frame" x="507" y="5" width="80" height="20"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" tag="103" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 days ago" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H8Z-C1-NzO">
+                                                            <rect key="frame" x="501" y="5" width="80" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="80" id="8WJ-iX-Dla"/>
                                                                 <constraint firstAttribute="height" constant="20" id="yjR-Rt-efE"/>
@@ -395,7 +395,7 @@
                                                         <constraint firstItem="amW-BX-EOR" firstAttribute="top" secondItem="CmI-Zg-sso" secondAttribute="top" constant="30" id="Et4-XH-3xt"/>
                                                         <constraint firstItem="mXx-Yo-d9V" firstAttribute="top" secondItem="CmI-Zg-sso" secondAttribute="top" constant="8" id="FbY-YR-kDO"/>
                                                         <constraint firstItem="dDi-NQ-xFk" firstAttribute="leading" secondItem="VuN-ic-gfh" secondAttribute="trailing" id="G4W-Ls-fPx"/>
-                                                        <constraint firstAttribute="trailing" secondItem="H8Z-C1-NzO" secondAttribute="trailing" constant="-3" id="H90-hq-wEH"/>
+                                                        <constraint firstAttribute="trailing" secondItem="H8Z-C1-NzO" secondAttribute="trailing" constant="3" id="H90-hq-wEH"/>
                                                         <constraint firstItem="mXx-Yo-d9V" firstAttribute="leading" secondItem="CmI-Zg-sso" secondAttribute="leading" id="Hdv-Vp-K5Y"/>
                                                         <constraint firstItem="SJH-Ca-V8I" firstAttribute="top" secondItem="vPF-uG-yB8" secondAttribute="bottom" constant="1" id="JJ5-Cd-z32"/>
                                                         <constraint firstItem="oTI-n3-Wvl" firstAttribute="trailing" secondItem="QR6-4n-q9c" secondAttribute="trailing" constant="2" id="Krj-tP-IOh"/>

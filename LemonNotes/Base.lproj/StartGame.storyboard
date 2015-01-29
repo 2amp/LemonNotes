@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="L2u-Ic-S4e">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="L2u-Ic-S4e">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -8,7 +8,6 @@
         <!--Game-->
         <scene sceneID="9jU-JI-SXO">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lbK-X5-O8Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="startGameVC" title="Game" id="3fj-Ix-P6Q" customClass="TAPStartGameViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lpz-1v-W51"/>
@@ -219,13 +218,13 @@
                         <outlet property="teammate3Indicator" destination="972-aZ-zfi" id="GWA-Sv-Caz"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lbK-X5-O8Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3220" y="450"/>
         </scene>
         <!--Teammate Info View Controller-->
         <scene sceneID="veQ-2w-PAk">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PyC-XJ-5PE" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="FqX-BI-wK4" customClass="TAPTeammateInfoViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7mu-WE-C3J"/>
@@ -308,8 +307,8 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="xcn-BR-UAc"/>
                                                     <exclude reference="YPu-cs-V2t"/>
+                                                    <exclude reference="xcn-BR-UAc"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -330,13 +329,13 @@
                         </constraints>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PyC-XJ-5PE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3870" y="450"/>
         </scene>
         <!--Game-->
         <scene sceneID="Pse-eY-wMJ">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fNI-hv-XSQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="L2u-Ic-S4e" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Game" id="yh4-v5-zuq"/>
                     <toolbarItems/>
@@ -350,6 +349,7 @@
                         <segue destination="3fj-Ix-P6Q" kind="relationship" relationship="rootViewController" id="K1O-88-TXm"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fNI-hv-XSQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2554" y="450"/>
         </scene>
