@@ -126,11 +126,14 @@
                                     <segue destination="FqX-BI-wK4" kind="show" identifier="showStats" id="8Wz-ko-x3e"/>
                                 </connections>
                             </button>
-                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="h8v-xE-eWV">
-                                <rect key="frame" x="490" y="175" width="94" height="29"/>
-                            </stepper>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Matches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IhN-01-EBj">
+                                <rect key="frame" x="16" y="179" width="66" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ie5-yA-wcI" customClass="TAPPickerTextField">
-                                <rect key="frame" x="385" y="175" width="97" height="30"/>
+                                <rect key="frame" x="487" y="175" width="97" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="97" id="Qau-Dg-Pkc"/>
                                 </constraints>
@@ -140,12 +143,6 @@
                                     <outlet property="delegate" destination="3fj-Ix-P6Q" id="F2t-G9-Nij"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Matches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IhN-01-EBj">
-                                <rect key="frame" x="16" y="179" width="66" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -166,18 +163,15 @@
                             <constraint firstItem="YYu-KZ-Zlc" firstAttribute="top" secondItem="caj-jn-12M" secondAttribute="bottom" constant="8" id="GvU-NT-slO"/>
                             <constraint firstItem="eBu-b2-ETh" firstAttribute="trailing" secondItem="ckh-H1-Rz7" secondAttribute="trailingMargin" id="KGr-JV-lRn"/>
                             <constraint firstItem="yu4-GO-O2o" firstAttribute="trailing" secondItem="ckh-H1-Rz7" secondAttribute="trailingMargin" id="KIr-i5-f0x"/>
-                            <constraint firstItem="h8v-xE-eWV" firstAttribute="leading" secondItem="Ie5-yA-wcI" secondAttribute="trailing" constant="8" id="MxN-e4-Ml5"/>
                             <constraint firstItem="caj-jn-12M" firstAttribute="trailing" secondItem="ckh-H1-Rz7" secondAttribute="trailingMargin" id="OMA-Ng-TIj"/>
                             <constraint firstItem="QJD-xV-ZMp" firstAttribute="top" secondItem="CoR-J8-mf9" secondAttribute="bottom" constant="-25" id="PeO-u3-fLS"/>
                             <constraint firstItem="0Gf-1X-Kvp" firstAttribute="leading" secondItem="QJD-xV-ZMp" secondAttribute="trailing" constant="-25" id="U4h-Gs-o0K"/>
                             <constraint firstItem="pSa-sv-TSL" firstAttribute="trailing" secondItem="ckh-H1-Rz7" secondAttribute="trailingMargin" id="UPz-aT-HvO"/>
                             <constraint firstItem="eBu-b2-ETh" firstAttribute="top" secondItem="lpz-1v-W51" secondAttribute="bottom" constant="36" id="Zq9-ST-Y1L"/>
-                            <constraint firstItem="h8v-xE-eWV" firstAttribute="top" secondItem="OJY-Sc-HXH" secondAttribute="bottom" constant="8" id="Zzc-rp-nzm"/>
                             <constraint firstItem="IhN-01-EBj" firstAttribute="leading" secondItem="ckh-H1-Rz7" secondAttribute="leadingMargin" id="bVs-sf-3we"/>
                             <constraint firstItem="yu4-GO-O2o" firstAttribute="leading" secondItem="ckh-H1-Rz7" secondAttribute="leadingMargin" id="d6L-t2-hIg"/>
                             <constraint firstItem="2CG-Ok-SBN" firstAttribute="leading" secondItem="ckh-H1-Rz7" secondAttribute="leadingMargin" id="daD-iX-aP0"/>
                             <constraint firstItem="yu4-GO-O2o" firstAttribute="top" secondItem="QJD-xV-ZMp" secondAttribute="bottom" constant="8" id="fz9-Q9-Kgt"/>
-                            <constraint firstItem="h8v-xE-eWV" firstAttribute="trailing" secondItem="ckh-H1-Rz7" secondAttribute="trailingMargin" id="h5S-Kv-8D1"/>
                             <constraint firstItem="gbA-h9-iha" firstAttribute="top" secondItem="yu4-GO-O2o" secondAttribute="bottom" constant="-25" id="hLp-Ud-vI3"/>
                             <constraint firstItem="0Gf-1X-Kvp" firstAttribute="top" secondItem="QJD-xV-ZMp" secondAttribute="bottom" constant="-25" id="hOa-Fs-QfS"/>
                             <constraint firstItem="OJY-Sc-HXH" firstAttribute="trailing" secondItem="ckh-H1-Rz7" secondAttribute="trailingMargin" id="iPs-e0-Cgh"/>
@@ -185,6 +179,7 @@
                             <constraint firstItem="gbA-h9-iha" firstAttribute="leading" secondItem="yu4-GO-O2o" secondAttribute="trailing" constant="-25" id="jwn-fL-a4q"/>
                             <constraint firstItem="pSa-sv-TSL" firstAttribute="top" secondItem="lpz-1v-W51" secondAttribute="bottom" constant="8" id="pbb-CJ-XDn"/>
                             <constraint firstItem="2Bq-nY-Y8U" firstAttribute="leading" secondItem="ckh-H1-Rz7" secondAttribute="leadingMargin" id="q2u-IV-moT"/>
+                            <constraint firstItem="Ie5-yA-wcI" firstAttribute="trailing" secondItem="ckh-H1-Rz7" secondAttribute="trailingMargin" id="qBF-wk-gz5"/>
                             <constraint firstItem="PhE-Yl-Qjt" firstAttribute="leading" secondItem="2Bq-nY-Y8U" secondAttribute="trailing" constant="-25" id="qNC-hI-wAI"/>
                             <constraint firstItem="zjI-xB-xJc" firstAttribute="leading" secondItem="2Bq-nY-Y8U" secondAttribute="trailing" constant="-25" id="qbu-eG-TZt"/>
                             <constraint firstItem="2Bq-nY-Y8U" firstAttribute="top" secondItem="lpz-1v-W51" secondAttribute="bottom" constant="149" id="sjA-bO-BLQ"/>
@@ -235,7 +230,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="205" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="jWF-7w-FxA">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="649"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="teammateInfoCell" rowHeight="205" id="BEj-qr-XVw">
@@ -322,10 +317,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="jWF-7w-FxA" firstAttribute="top" secondItem="77i-Tw-97f" secondAttribute="top" id="FNa-SB-mEe"/>
-                            <constraint firstAttribute="trailing" secondItem="jWF-7w-FxA" secondAttribute="trailing" id="K7i-Op-eHs"/>
-                            <constraint firstItem="jWF-7w-FxA" firstAttribute="leading" secondItem="77i-Tw-97f" secondAttribute="leading" id="ehs-XZ-2Xh"/>
-                            <constraint firstItem="jWF-7w-FxA" firstAttribute="bottom" secondItem="pJy-pa-1Tx" secondAttribute="top" id="kfY-as-H4d"/>
+                            <constraint firstItem="pJy-pa-1Tx" firstAttribute="top" secondItem="jWF-7w-FxA" secondAttribute="bottom" constant="-49" id="dia-1h-7T6"/>
+                            <constraint firstItem="jWF-7w-FxA" firstAttribute="top" secondItem="7mu-WE-C3J" secondAttribute="bottom" constant="-64" id="fox-Sh-Bt7"/>
+                            <constraint firstItem="jWF-7w-FxA" firstAttribute="leading" secondItem="77i-Tw-97f" secondAttribute="leadingMargin" constant="-16" id="hLx-Po-UZY"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="jWF-7w-FxA" secondAttribute="trailing" constant="-16" id="xUu-qS-mzp"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -336,7 +331,7 @@
         <!--Game-->
         <scene sceneID="Pse-eY-wMJ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="L2u-Ic-S4e" sceneMemberID="viewController">
+                <navigationController id="L2u-Ic-S4e" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Game" id="yh4-v5-zuq"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="MPL-tD-qna">
