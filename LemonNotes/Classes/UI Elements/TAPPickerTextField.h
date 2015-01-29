@@ -3,8 +3,10 @@
 
 @interface TAPPickerTextField : UITextField <UIPickerViewDelegate, UIPickerViewDataSource>
 
-@property (nonatomic, strong) NSNumber *selectedItem;
+- (instancetype)initWithFrame:(CGRect)frame;
+- (instancetype)initWithCoder:(NSCoder *)aDecoder;
 
+@property (nonatomic, strong) NSNumber *selectedItem;
 - (void)showPicker;
 - (void)cancelChoice;
 - (void)selectChoice;

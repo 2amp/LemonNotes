@@ -597,6 +597,7 @@
 {
     [self searchSummonerWithName:self.searchField.text region:self.searchField.selectedRegion];
     
+    self.searchField.textAlignment = NSTextAlignmentLeft;
     [textField resignFirstResponder];
     return YES;
 }
