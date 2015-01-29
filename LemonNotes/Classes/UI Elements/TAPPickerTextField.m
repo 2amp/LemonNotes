@@ -58,13 +58,11 @@
  */
 - (void)setupPicker
 {
-    // FIXME: Currently only allows 15 to 60 in increments of 15 because of how
-    // [TAPSummonerManager loadFromServer] works.
-    self.choices = @[@15, @30, @45, @60];
-    self.selectedItem = @30;
+    self.choices = @[@20, @40, @60, @80, @100];
+    self.selectedItem = @40;
     if (!self.selectedItem)
     {
-        self.selectedItem = @30;
+        self.selectedItem = @40;
     }
     self.tempRow = [self.choices indexOfObject:self.selectedItem];
 
@@ -87,7 +85,7 @@
     self.pickerWrapper.inputView = self.pickerView;
     self.pickerWrapper.inputAccessoryView = self.pickerToolbar;
     [self addSubview:self.pickerWrapper];
-    self.text = [NSString stringWithFormat:@"%@", @30];
+    self.text = [NSString stringWithFormat:@"%@", @40];
 }
 
 
@@ -129,7 +127,7 @@
     NSLog(@"TAPPickerTextField %p showPicker", self);
     [self resignFirstResponder];
     [self.pickerWrapper becomeFirstResponder];
-    // Selected color is some shade of gray for now
+    // FIXME: Selected color is some shade of gray for now
     self.backgroundColor = [UIColor colorWithRed:(220.0 / 255) green:(220.0 / 255) blue:(220.0 / 255) alpha:1.0];
 }
 
