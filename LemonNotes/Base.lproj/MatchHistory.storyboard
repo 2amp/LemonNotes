@@ -193,7 +193,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="300" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10/4/9" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dDi-NQ-xFk">
-                                                            <rect key="frame" x="104" y="42" width="80" height="21.5"/>
+                                                            <rect key="frame" x="104" y="42" width="80" height="22"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="80" id="Mf8-Ig-Yth"/>
                                                             </constraints>
@@ -215,7 +215,7 @@
                                                                 <constraint firstAttribute="height" constant="20" id="nbr-nY-wdt"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" tag="301" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3.50:1 KDA" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gB-eq-gKU">
+                                                        <label opaque="NO" userInteractionEnabled="NO" tag="301" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="3.50:1 KDA" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gB-eq-gKU">
                                                             <rect key="frame" x="104" y="63" width="80" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="DSu-ns-HpK"/>
@@ -225,7 +225,7 @@
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" tag="302" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Double Kill" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NKd-uf-23i">
+                                                        <label opaque="NO" userInteractionEnabled="NO" tag="302" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Double Kill" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NKd-uf-23i">
                                                             <rect key="frame" x="104" y="75" width="80" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="Hde-jz-f7H"/>
