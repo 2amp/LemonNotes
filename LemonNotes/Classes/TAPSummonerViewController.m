@@ -462,12 +462,16 @@
     UIImageView *summonerIcon1ImageView = (UIImageView *)[cell viewWithTag:202];
     UIImageView *summonerIcon2ImageView = (UIImageView *)[cell viewWithTag:203];
     
-    //Stat Related
+    //Score Related
     UILabel     *scoreLabel             = (UILabel     *)[cell viewWithTag:300];
     UILabel     *kdaLabel               = (UILabel     *)[cell viewWithTag:301];
     UILabel     *multiKillLabel         = (UILabel     *)[cell viewWithTag:302];
-    UILabel     *levelLabel             = (UILabel     *)[cell viewWithTag:303];
-    UILabel     *creepLabel             = (UILabel     *)[cell viewWithTag:304];
+    
+    //Stat Related
+    UILabel     *levelLabel             = (UILabel     *)[cell viewWithTag:400];
+    UILabel     *creepLabel             = (UILabel     *)[cell viewWithTag:401];
+    UILabel     *goldLabel              = (UILabel     *)[cell viewWithTag:402];
+    UILabel     *wardLabel              = (UILabel     *)[cell viewWithTag:403];
     
     //Item Related
     UIImageView *item0ImageView = (UIImageView *)[cell viewWithTag:600];
@@ -492,13 +496,13 @@
     if ([stats[@"winner"] boolValue])
     {
         outcome.text = @"Victory";
-        outcome.textColor = [UIColor colorWithRed:(145.f/255.f) green:(200.f/255.f) blue:(92.f/255.f) alpha:1];
+        //outcome.textColor = [UIColor colorWithRed:(145.f/255.f) green:(200.f/255.f) blue:(92.f/255.f) alpha:1];
         //outcome.textColor = [UIColor colorWithRed:0 green:0.4 blue:0 alpha:1];
     }
     else
     {
         outcome.text = @"Defeat";
-        outcome.textColor = [UIColor colorWithRed:1.f green:(97.f/255.f) blue:(63.f/255.f) alpha:1];
+        //outcome.textColor = [UIColor colorWithRed:1.f green:(97.f/255.f) blue:(63.f/255.f) alpha:1];
         //outcome.textColor = [UIColor redColor];
     }
     resultsMark.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@ Mark.png", outcome.text]];
@@ -510,7 +514,8 @@
     
     //Champion labels
     NSString *champion = dataManager.champions[ [info[@"championId"] stringValue] ][@"key"];
-    [championName setText: dataManager.champions[ [info[@"championId"] stringValue] ][@"name"]];
+    NSString *champName = dataManager.champions[ [info[@"championId"] stringValue] ][@"name"];
+    [championName setText: champName];//[champName uppercaseString]];
     [championImageView setBorderWidth:2.0f color:[UIColor blackColor]];
     [championImageView setBorderRadius: CGRectGetWidth(championImageView.frame)/2];
     [championImageView setImage: [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", champion]]];
@@ -522,15 +527,21 @@
     [summonerIcon1ImageView setBorderRadius:3.0f];
     [summonerIcon2ImageView setBorderRadius:3.0f];
 
-    //Stats labels
+    //Score labels
     NSNumber *kills   = stats[@"kills"];
     NSNumber *deaths  = stats[@"deaths"];
     NSNumber *assists = stats[@"assists"];
     float kdaStat = ([kills floatValue] + [assists floatValue]) / [deaths floatValue];
     [scoreLabel setText: [NSString stringWithFormat:@"%@/%@/%@", kills, deaths, assists]];
     [kdaLabel   setText: [NSString stringWithFormat:@"%.2f KDA", kdaStat]];
-    [levelLabel setText: [NSString stringWithFormat:@"Lv.%@", stats[@"champLevel"]]];
-    [creepLabel setText: [NSString stringWithFormat:@"CS %@", stats[@"minionsKilled"]]];
+    
+    //Stat labels
+    int gold = (int)[stats[@"goldEarned"] longValue]/1000;
+    int wards  = stats[@"wardsPlaced"] ? [stats[@"wardsPlaced"] intValue] : 0;
+    [levelLabel setText: [NSString stringWithFormat:@"%@", stats[@"champLevel"]]];
+    [creepLabel setText: [NSString stringWithFormat:@"%@", stats[@"minionsKilled"]]];
+    [goldLabel  setText: [NSString stringWithFormat:@"%dk", gold]];
+    [wardLabel  setText: [NSString stringWithFormat:@"%d", wards]];
     
     //Multikill
     int multikill = [stats[@"largestMultiKill"] intValue];
