@@ -510,7 +510,8 @@
     long duration = [match[@"matchDuration"] longValue];
     int min = (int)(duration / 60);
     int sec = (int)(duration % 60);
-    [durationLabel setText: [NSString stringWithFormat:@"%d:%d", min, sec]];
+    NSString *durationFormat = (sec > 10) ? @"%d:%d" : @"%d:0%d";
+    [durationLabel setText: [NSString stringWithFormat:durationFormat, min, sec]];
     
     //Champion labels
     NSString *champion = dataManager.champions[ [info[@"championId"] stringValue] ][@"key"];
@@ -597,7 +598,6 @@
 {
     [self searchSummonerWithName:self.searchField.text region:self.searchField.selectedRegion];
     
-    self.searchField.textAlignment = NSTextAlignmentLeft;
     [textField resignFirstResponder];
     return YES;
 }
@@ -621,6 +621,9 @@
     [TAPDataManager getSummonerForName:name region:region
     successHandler:^(NSDictionary *summoner)
     {
+        //revert this search field back to this summoner's name
+        self.searchField.text = self.summonerInfo[@"name"];
+    
         TAPSummonerViewController *nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"summonerVC"];
         nextVC.summonerInfo = summoner;
         [self.navigationController pushViewController:nextVC animated:YES];
