@@ -455,6 +455,7 @@
     UIImageView *resultsMark            = (UIImageView *)[cell viewWithTag:100];
     UILabel     *outcome                = (UILabel     *)[cell viewWithTag:101];
     UILabel     *durationLabel          = (UILabel     *)[cell viewWithTag:102];
+    UILabel     *creationLabel          = (UILabel     *)[cell viewWithTag:103];
     
     //Champion Related
     UIImageView *championImageView      = (UIImageView *)[cell viewWithTag:200];
@@ -507,11 +508,19 @@
     }
     resultsMark.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@ Mark.png", outcome.text]];
     
+    //duration
     long duration = [match[@"matchDuration"] longValue];
     int min = (int)(duration / 60);
     int sec = (int)(duration % 60);
     NSString *durationFormat = (sec > 10) ? @"%d:%d" : @"%d:0%d";
     [durationLabel setText: [NSString stringWithFormat:durationFormat, min, sec]];
+    
+    //time
+    long creation = [match[@"matchCreation"] longValue]/1000;
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:creation];
+    NSLog(@"%@", date);
+    [creationLabel setText:getTimeAgoWith(date)];
+    
     
     //Champion labels
     NSString *champion = dataManager.champions[ [info[@"championId"] stringValue] ][@"key"];

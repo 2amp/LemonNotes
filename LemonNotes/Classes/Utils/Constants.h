@@ -133,4 +133,55 @@ static inline NSURL *apiURL(NSString *call, NSString *region, NSString *pathPara
     return [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 }
 
+/**
+ * @function getTimeAgoWith
+ *
+ * Given a NSDate since Epoch of match creation time,
+ * returns the English translation of how long ago the game was.
+ *
+ * @param dateSinceEpoch - creation date of match given since Epoch
+ */
+static inline NSString* getTimeAgoWith(NSDate *dateSinceEpoch)
+{
+    double interval = -dateSinceEpoch.timeIntervalSinceNow;
+    NSString *units;
+    
+    //minutes
+    interval /= 60;
+    if (interval < 60)
+    {
+        units = (interval > 2) ? @"minutes" : @"minute";
+        return [NSString stringWithFormat:@"%d %@ ago", (int)interval, units];
+    }
+    
+    //hours
+    interval /= 60;
+    if (interval < 24)
+    {
+        units = (interval > 2) ? @"hours" : @"hour";
+        return [NSString stringWithFormat:@"%d %@ ago", (int)interval, units];
+    }
+    
+    //days
+    interval /= 24;
+    if (interval < 30)
+    {
+        units = (interval > 2) ? @"days" : @"day";
+        return [NSString stringWithFormat:@"%d %@ ago", (int)interval, units];
+    }
+    
+    //months
+    interval /= 30;
+    if (interval < 12)
+    {
+        units = (interval > 2) ? @"months" : @"month";
+        return [NSString stringWithFormat:@"%d %@ ago", (int)interval, units];
+    }
+    
+    //years
+    interval /= 12;
+    units = (interval > 2) ? @"years" : @"year";
+    return [NSString stringWithFormat:@"%d %@ ago", (int)interval, units];
+}
+
 #endif
