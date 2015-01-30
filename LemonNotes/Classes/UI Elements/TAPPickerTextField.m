@@ -38,20 +38,6 @@
 }
 
 /**
- * @method initWithFrame:
- *
- * Called when manually initiallizing with frame
- */
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    if (self = [super initWithFrame:frame])
-    {
-        [self setupPicker];
-    }
-    return self;
-}
-
-/**
  * @method setupPicker
  *
  * Sets up picker
