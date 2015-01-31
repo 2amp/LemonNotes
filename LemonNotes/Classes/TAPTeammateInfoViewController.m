@@ -14,6 +14,7 @@
 
 @property NSMutableArray *mostPlayedChampions;
 @property NSMutableArray *mostPlayedChampionsKda;
+@property NSArray *teammateStats;
 
 @end
 
@@ -27,6 +28,8 @@
     // Array setup with magic numbers D:<
     self.mostPlayedChampions = [[NSMutableArray alloc] init];
     self.mostPlayedChampionsKda = [[NSMutableArray alloc] init];
+    self.teammateStats = [self buildStats];
+    NSLog(@"%@", self.teammateStats);
     for (int i = 0; i < 4; i++)
     {
         [self.mostPlayedChampions addObject:[NSNumber numberWithInt:-1]];
@@ -38,21 +41,10 @@
         if (((NSArray *)(self.teammateRecentMatches[i])).count > 0)
         {
             self.mostPlayedChampions[i] = [self mostPlayedChampionForTeammate:i];
-            for (NSDictionary *match in self.teammateRecentMatches[i])
-            {
-                int summonerIndex = [match[@"summonerIndex"] intValue];
-                NSDictionary *info = match[@"participants"][summonerIndex];
-                if ([[info[@"championId"] stringValue] isEqualToString:self.mostPlayedChampions[i]])
-                {
-                    NSDictionary *stats = info[@"stats"];
-                    int kills   = ((NSNumber *)stats[@"kills"]).intValue;
-                    int deaths  = ((NSNumber *)stats[@"deaths"]).intValue;
-                    int assists = ((NSNumber *)stats[@"assists"]).intValue;
-                    self.mostPlayedChampionsKda[i][0] = [NSNumber numberWithInt:(((NSNumber *)self.mostPlayedChampionsKda[i][0]).intValue + kills)];
-                    self.mostPlayedChampionsKda[i][1] = [NSNumber numberWithInt:(((NSNumber *)self.mostPlayedChampionsKda[i][1]).intValue + deaths)];
-                    self.mostPlayedChampionsKda[i][2] = [NSNumber numberWithInt:(((NSNumber *)self.mostPlayedChampionsKda[i][2]).intValue + assists)];
-                }
-            }
+            NSDictionary *mostPlayedChampionStats = self.teammateStats[i][self.mostPlayedChampions[i]];
+            self.mostPlayedChampionsKda[i][0] = mostPlayedChampionStats[@"kills"];
+            self.mostPlayedChampionsKda[i][1] = mostPlayedChampionStats[@"deaths"];
+            self.mostPlayedChampionsKda[i][2] = mostPlayedChampionStats[@"assists"];
         }
     }
 }
@@ -66,27 +58,79 @@
 /**
  * @return the id of the most played champion for the specified teammate.
  */
-- (NSNumber *)mostPlayedChampionForTeammate:(int)teammateIndex
+- (NSString *)mostPlayedChampionForTeammate:(int)teammateIndex
 {
-    NSMutableArray *championsPlayed = [[NSMutableArray alloc] init];
-    for (NSDictionary *match in self.teammateRecentMatches[teammateIndex])
+    NSDictionary *stats = self.teammateStats[teammateIndex];
+    if ([stats allKeys].count == 0)
     {
-        int summonerIndex = [match[@"summonerIndex"] intValue];
-        NSDictionary *info  = match[@"participants"][summonerIndex];
-        [championsPlayed addObject:[info[@"championId"] stringValue]];
+        return @"";
     }
-    NSCountedSet *countedSet = [[NSCountedSet alloc] initWithArray:championsPlayed];
-    NSNumber *mostPlayedChampion;
-    NSUInteger max = 0;
-    for (NSNumber *championId in countedSet)
+    int max = 0;
+    NSString *mostPlayedChampion = @"";
+    for (NSString *championId in stats)
     {
-        if ([countedSet countForObject:championId] > max)
+        if (((NSNumber *)stats[championId][@"games"]).intValue > max)
         {
-            max = [countedSet countForObject:championId];
+            max = ((NSNumber *)stats[championId][@"games"]).intValue;
             mostPlayedChampion = championId;
         }
     }
     return mostPlayedChampion;
+}
+
+/**
+ * NSArray of NSDictionaries (one per summoner)
+ * NSDictionary compiles stats for each summoner
+ * @{
+ *      @"1": @{@"wins": 10, @"games": 20, @"kills": 100, @"deaths": 100, @"assists": 100, @"cs": 100},
+ * }
+ */
+- (NSArray *)buildStats
+{
+    NSMutableArray *stats = [[NSMutableArray alloc] init];
+    for (int i = 0; i < self.teammateRecentMatches.count; i ++)
+    {
+        NSMutableDictionary *playerStats = [[NSMutableDictionary alloc] init];
+        for (NSDictionary *match in self.teammateRecentMatches[i])
+        {
+            int summonerIndex = [match[@"summonerIndex"] intValue];
+            NSDictionary *info = match[@"participants"][summonerIndex];
+            NSString *champion = [info[@"championId"] stringValue];
+            NSDictionary *stats = info[@"stats"];
+
+            BOOL winner = [stats[@"winner"] boolValue];
+            int kills   = ((NSNumber *)stats[@"kills"]).intValue;
+            int deaths  = ((NSNumber *)stats[@"deaths"]).intValue;
+            int assists = ((NSNumber *)stats[@"assists"]).intValue;
+            int cs      = ((NSNumber *)stats[@"minionsKilled"]).intValue;
+
+            if (playerStats[champion] == nil)
+            {
+                playerStats[champion] = [NSMutableDictionary dictionaryWithDictionary:
+                                         @{@"wins": winner ? @1 : @0,
+                                           @"games": @1,
+                                           @"kills": [NSNumber numberWithInt:kills],
+                                           @"deaths": [NSNumber numberWithInt:deaths],
+                                           @"assists": [NSNumber numberWithInt:assists],
+                                           @"cs": [NSNumber numberWithInt:cs]}];
+            }
+            else
+            {
+                if (winner)
+                {
+                    playerStats[champion][@"wins"] = [NSNumber numberWithInt:([playerStats[champion][@"wins"] intValue] + 1)];
+                }
+                playerStats[champion][@"games"] = [NSNumber numberWithInt:([playerStats[champion][@"games"] intValue] + 1)];
+                playerStats[champion][@"kills"] = [NSNumber numberWithInt:([playerStats[champion][@"kills"] intValue] + kills)];
+                playerStats[champion][@"deaths"] = [NSNumber numberWithInt:([playerStats[champion][@"deaths"] intValue] + deaths)];
+                playerStats[champion][@"assists"] = [NSNumber numberWithInt:([playerStats[champion][@"assists"] intValue] + assists)];
+                playerStats[champion][@"cs"] = [NSNumber numberWithInt:([playerStats[champion][@"cs"] intValue] + cs)];
+            }
+            NSLog(@"winner: %d, kills: %d, deaths: %d, assists: %d", winner, kills, deaths, assists);
+        }
+        stats[i] = playerStats;
+    }
+    return [NSArray arrayWithArray:stats];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -101,7 +145,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"tableView:cellForRowAtIndexPath:");
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"teammateInfoCell" forIndexPath:indexPath];
 
     TAPDataManager *dataManager = [TAPDataManager sharedManager];

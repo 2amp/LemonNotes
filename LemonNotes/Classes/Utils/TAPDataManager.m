@@ -298,6 +298,8 @@
         if (!error)
         {
             self.champions = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil][@"data"];
+            // dataById: If specified as true, the returned data map will use the champions' IDs as the keys.
+            // If not specified or specified as false, the returned data map will use the champions' keys instead.
             [[self.urlSession dataTaskWithURL:apiURL(kLoLStaticSpellList, @"na", @"", @[@"dataById=true"])
                             completionHandler:summonerSpellCompletionHandler]
              resume];
