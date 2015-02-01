@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-CorePlot.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-TRVSURLSessionOperation.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1E612C82DF68E0883919E898</key>
+		<key>174D3DAF77979796679D6B75</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E348DB9DB4BCAEF89FEA195A</key>
+		<key>CCA5E69750AE6C441CB0F3CA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E69A7AD1ADDC1428837629F8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
