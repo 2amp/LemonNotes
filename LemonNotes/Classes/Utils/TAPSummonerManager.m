@@ -163,7 +163,7 @@
         for (int i = (int)(newMatches.count-1); i >= 0; i--)
         {
             NSDictionary *match = [newMatches objectAtIndex:i];
-            if ([match[@"matchId"] longValue] <= [self.summoner.lastMatchId longValue])
+            if ([match[@"matchId"] longValue] <= [[self.summoner.matches firstObject][@"matchId"] longValue])
             {
                 // remove any overlap matches with a match id equal/lower than current
                 [newMatches removeObjectAtIndex:i];
@@ -278,7 +278,7 @@
     //NOTE: literally unkown magic number, no other changing the 5 to a 0 will not work. ??????????
     self.oldestLoadedMatchId = (self.oldestLoadedMatchId > 0) ? self.oldestLoadedMatchId : 10500000000;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"summoner == %@ && %@ <= matchId && matchId < %@",
-                                                              self.summoner, self.summoner.firstMatchId, [NSNumber numberWithLong:self.oldestLoadedMatchId]];
+                                                              self.summoner, [self.summoner.matches lastObject][@"matchId"], [NSNumber numberWithLong:self.oldestLoadedMatchId]];
 
     //set fetch
     NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"Match"];
@@ -383,7 +383,7 @@
 - (void)saveMatches:(NSArray *)matches
 {
     NSMutableArray *existingMatchIds = [[NSMutableArray alloc] init];
-    for (Match *match in [[self.summoner matches] allObjects])
+    for (Match *match in self.summoner.matches)
     {
         [existingMatchIds addObject:match.matchId];
     }
@@ -414,14 +414,6 @@
     }
 
     // FIXME: Crashes when matches is an empty array because firstMatchId is set to nil
-
-    //set matchId end points
-    if (self.summoner.matches.count == 0)
-    {
-        self.summoner.lastMatchId = [matches firstObject][@"matchId"];
-        self.summoner.firstMatchId = [matches lastObject][@"matchId"];
-    }
-    self.summoner.lastMatchId =  MAX(self.summoner.lastMatchId, [matches firstObject][@"matchId"]);
 
     [self saveContext];
 }
@@ -466,11 +458,7 @@
             [match setObject:[[matchEntities firstObject] valueForKey:property.name] forKey:property.name];
         }
     }
-    self.summoner.firstMatchId = match[@"matchId"];
     [self saveContext];
-    
-    NSLog(@"[SummonerManager setFirstMatchId]");
-    NSLog(@"    first match id: %@", self.summoner.firstMatchId);
 }
 
 @end
