@@ -5,20 +5,19 @@
  * @protocol SummonerManagerDelegate
  * @brief    SummonerManagerDelegate
  *
- * SummonerManager calls various methods 
+ * SummonerManager calls various methods
  * as defined by SummonerManagerDelegate.
  *
  * Becase many of the recent matches fetching
- * must be done asynchronously, 
+ * must be done asynchronously,
  * fetched data is given through delegate methods.
  */
 @protocol TAPSummonerManagerDelegate
 
-//data from refresh should be added to the front
-//data from loading should be added to the back
 @optional
-- (void)didFinishRefreshingMatches:(NSArray *)matches;
-- (void)didFinishLoadingMatches:(NSArray *)matches;
+- (void)didFinishInitalLoadMatches:(int)numLoaded;
+- (void)didFinishLoadingNewMatches:(int)numLoaded;
+- (void)didFinishLoadingOldMatches:(int)numLoaded;
 
 @end
 
@@ -26,7 +25,7 @@
 /**
  * @class SummonerManager
  * @brief SummonerManager
- * 
+ *
  * Summoner manager controls one summoner.
  * It can add/delete summoners through core data.
  *
@@ -40,22 +39,21 @@
  */
 @interface TAPSummonerManager : TAPManager
 
-- (instancetype)initWithSummoner:(NSDictionary *)summoner;
-
-//delegate
+@property (nonatomic, readonly) NSArray *loadedMatches;
+@property (nonatomic, strong) NSDictionary *summonerInfo;
 @property (nonatomic, weak) id<TAPSummonerManagerDelegate> delegate;
 
 //account
+- (instancetype)initWithSummoner:(NSDictionary *)summoner;
 - (void)registerSummoner;
 - (void)deregisterSummoner;
 
-// summoner
-@property (nonatomic, strong) NSDictionary *summonerInfo;
+//matches
+- (void)initalLoad;
+- (void)loadNewMatches;
+- (void)loadOldMatches;
 
-//recent matches
-- (void)refreshMatches;
-- (void)loadMatches;
-- (NSArray *)loadFromServer;
+//other
 - (NSArray *)loadFromServer:(int)numberOfMatches;
 
 @end
