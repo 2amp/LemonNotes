@@ -13,19 +13,18 @@
 @interface TAPSummonerViewController()
 
 //summoner
-@property (nonatomic, strong) TAPSummonerManager *manager;
+@property (nonatomic, strong) TAPSummonerManager *summonerManager;
 
 //Nav bar
 @property (nonatomic, strong) TAPSearchField* searchField;
 @property (nonatomic, strong) TAPScrollNavBarController *navbarController;
 
 //table
+@property (nonatomic, weak) NSArray *matches;
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
-@property (nonatomic, strong) NSMutableArray* matches;
 @property (nonatomic, strong) TAPLemonRefreshControl* lemonRefresh;
 
 //Header
-@property (nonatomic) BOOL needsUpdate;
 @property (nonatomic, weak) IBOutlet UIView*  header;
 @property (nonatomic, weak) IBOutlet UILabel* summonerNameLabel;
 @property (nonatomic, weak) IBOutlet UILabel* summonerLevelLabel;
@@ -37,7 +36,7 @@
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView* footerIndicator;
 @property (nonatomic) BOOL loadLock;
 
-//setup
+    //setup
 - (void)setupNavbar;
 - (void)setupTableView;
 - (void)setupHeaderFooter;
@@ -64,22 +63,21 @@
     if (self == [self.navigationController.viewControllers firstObject])
     {
         self.summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
-        [self.manager registerSummoner];
+        [self.summonerManager registerSummoner];
     }
     
     [self setupNavbar];
     [self setupTableView];
     [self setupHeaderFooter];
     
-    self.needsUpdate = YES;
-    [self.manager loadMatches];
+    [self.summonerManager initalLoad];
 }
 
 /**
  * @method: viewWillAppear:
  *
  * Called when this view is about to appear.
- * Setup all necessary components, 
+ * Setup all necessary components,
  * then tell manager to load matches.
  */
 - (void)viewWillAppear:(BOOL)animated
@@ -103,8 +101,10 @@
 {
     NSLog(@"SummonerVC [setSummonerInfo]");
     _summonerInfo = summonerInfo;
-    self.manager = [[TAPSummonerManager alloc] initWithSummoner:summonerInfo];
-    self.manager.delegate = self;
+    self.summonerManager = [[TAPSummonerManager alloc] initWithSummoner:summonerInfo];
+    self.summonerManager.delegate = self;
+    
+    self.matches = self.summonerManager.loadedMatches;
 }
 
 /**
@@ -145,7 +145,6 @@
 {
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.matches = [[NSMutableArray alloc] init];
     
     //Position
     CGRect navbarFrame = self.navigationController.navigationBar.frame;
@@ -215,7 +214,7 @@
  */
 - (void)updateHeaderSplash
 {
-    NSDictionary *match = [self.matches firstObject];
+    NSDictionary *match = [self.summonerManager.loadedMatches firstObject];
     int summonerIndex = [match[@"summonerIndex"] intValue];
     NSString *champId = [match[@"participants"][summonerIndex][@"championId"] stringValue];
     NSString *champKey = [TAPDataManager sharedManager].champions[champId][@"key"];
@@ -253,45 +252,48 @@
 
 #pragma mark - Summoner Manager Delegate Methods
 /**
- * @method didFinishLoadingMatches:
+ * @method didFinishInitalLoadMatches
  *
- * Called by SummonerManager as delegate callback
- * when -loadMatches has been completed.
+ * Callback by SummonerManager once inital matches have been loaded.
+ * Update the header splash and reload the table
  */
-- (void)didFinishLoadingMatches:(NSArray *)moreMatches
+- (void)didFinishInitalLoadMatches:(int)numLoaded
 {
-    if (moreMatches.count > 0)
-    {
-        self.loadLock = NO;
-        
-        //append loaded matches to matches
-        [self.matches addObjectsFromArray:moreMatches];
-        [self.tableView reloadData];
-        [self updateHeaderSplash];
-        
-        //no more loading necessary
-        if (moreMatches.count < 15)
-        {
-            self.loadLock = YES;
-            [self showFooter:NO];
-        }
-        
-        //NSLog(@"%@", [moreMatches lastObject]);
-    }
+    [self updateHeaderSplash];
+    [self.tableView reloadData];
 }
 
 /**
- * @method didFinishRefreshingMatches:
+ * @method didFinishLoadingNewMatches
  *
- * Called by SummonerManager as delegate callback
- * when [refreshMatches] has been completed.
+ * Callback by SummonerManager once new matches have been loaded/refreshed.
+ * Reload the tableview
  */
-- (void)didFinishRefreshingMatches:(NSArray *)newMatches
+- (void)didFinishLoadingNewMatches:(int)numLoaded
 {
-    [self.matches insertObjects:newMatches atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, newMatches.count)]];
-    [self.tableView reloadData];
-    
     [self.lemonRefresh endRefreshing];
+    [self.tableView reloadData];
+}
+
+/**
+ * @method didFinishLoadingOldMatches
+ *
+ * Callback by SummonerManager once old matches have been loaded.
+ * Release loadLock, and reload tableview
+ */
+- (void)didFinishLoadingOldMatches:(int)numLoaded
+{
+    if (numLoaded > 0)
+    {
+        self.loadLock = NO;
+        [self.tableView reloadData];
+        
+        if (numLoaded < 15)
+        {
+            self.loadLock = YES;
+            [self showFooter:YES];
+        }
+    }
 }
 
 
@@ -375,7 +377,7 @@
         dispatch_time_t secondDelay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
         dispatch_after(secondDelay, dispatch_get_main_queue(),
         ^{
-            [self.manager loadMatches];
+            [self.summonerManager loadOldMatches];
         });
     }
 }
@@ -391,12 +393,10 @@
  */
 - (void)refresh
 {
-    NSLog(@"-[TAPSummonerVC refresh]");
-    
-    double delayInSeconds = 2.2;
+    double delayInSeconds = 0.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self.lemonRefresh endRefreshing];
+        [self.summonerManager loadNewMatches];
     });
 }
 
@@ -450,7 +450,7 @@
 {
     /* GET LABELS */
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"matchHistoryCell" forIndexPath:indexPath];
-
+    
     //Match Related
     UIImageView *resultsMark            = (UIImageView *)[cell viewWithTag:100];
     UILabel     *outcome                = (UILabel     *)[cell viewWithTag:101];
@@ -482,8 +482,8 @@
     UIImageView *item4ImageView = (UIImageView *)[cell viewWithTag:604];
     UIImageView *item5ImageView = (UIImageView *)[cell viewWithTag:605];
     UIImageView *item6ImageView = (UIImageView *)[cell viewWithTag:606];
-
-
+    
+    
     /* GET STATIC DATA */
     TAPDataManager *dataManager = [TAPDataManager sharedManager];
     NSDictionary *match = self.matches[indexPath.row];
@@ -491,20 +491,18 @@
     NSDictionary *info  = match[@"participants"][summonerIndex];
     NSDictionary *stats = info[@"stats"];
     
-
+    
     /* SET LABELS */
     //Result labels
     if ([stats[@"winner"] boolValue])
     {
         outcome.text = @"Victory";
         outcome.textColor = [UIColor colorWithRed:(145.f/255.f) green:(200.f/255.f) blue:(92.f/255.f) alpha:1];
-        //outcome.textColor = [UIColor colorWithRed:0 green:0.4 blue:0 alpha:1];
     }
     else
     {
         outcome.text = @"Defeat";
         outcome.textColor = [UIColor colorWithRed:1.f green:(97.f/255.f) blue:(63.f/255.f) alpha:1];
-        //outcome.textColor = [UIColor redColor];
     }
     resultsMark.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@ Mark.png", outcome.text]];
     
@@ -512,15 +510,13 @@
     long duration = [match[@"matchDuration"] longValue];
     int min = (int)(duration / 60);
     int sec = (int)(duration % 60);
-    NSString *durationFormat = (sec > 10) ? @"%d:%d" : @"%d:0%d";
-    [durationLabel setText: [NSString stringWithFormat:durationFormat, min, sec]];
+    NSString *format = (sec < 10) ? @"%d:0%d" : @"%d:%d";
+    [durationLabel setText: [NSString stringWithFormat:format, min, sec]];
     
     //time
     long creation = [match[@"matchCreation"] longValue]/1000;
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:creation];
-    NSLog(@"%@", date);
     [creationLabel setText:getTimeAgoWith(date)];
-    
     
     //Champion labels
     NSString *champion = dataManager.champions[ [info[@"championId"] stringValue] ][@"key"];
@@ -536,14 +532,14 @@
     [summonerIcon2ImageView setImage: [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", spell2]]];
     [summonerIcon1ImageView setBorderRadius:3.0f];
     [summonerIcon2ImageView setBorderRadius:3.0f];
-
+    
     //Score labels
-    NSNumber *kills   = stats[@"kills"];
-    NSNumber *deaths  = stats[@"deaths"];
-    NSNumber *assists = stats[@"assists"];
-    float kdaStat = ([kills floatValue] + [assists floatValue]) / [deaths floatValue];
-    [scoreLabel setText: [NSString stringWithFormat:@"%@/%@/%@", kills, deaths, assists]];
-    [kdaLabel   setText: [NSString stringWithFormat:@"%.2f KDA", kdaStat]];
+    int kills   = [stats[@"kills"] intValue];
+    int deaths  = [stats[@"deaths"] intValue];
+    int assists = [stats[@"assists"] intValue];
+    float kda = (deaths == 0) ? -1 : (kills + assists)/deaths;
+    [scoreLabel setText: [NSString stringWithFormat:@"%d/%d/%d", kills, deaths, assists]];
+    [kdaLabel   setText: [NSString stringWithFormat:@"%@ KDA", (kda < 0) ? @"Perfect" : [NSString stringWithFormat:@"%.2f", kda]]];
     
     //Stat labels
     int gold = (int)[stats[@"goldEarned"] longValue]/1000;
@@ -562,7 +558,7 @@
     if (multikill == 2) multikillString = @"Double Kill";
     [multiKillLabel setText: multikillString];
     
-
+    
     //Item icons
     NSArray *itemImageViews = @[item0ImageView, item1ImageView, item2ImageView, item3ImageView, item4ImageView, item5ImageView, item6ImageView];
     NSArray *items = @[stats[@"item0"], stats[@"item1"], stats[@"item2"], stats[@"item3"], stats[@"item4"], stats[@"item5"], stats[@"item6"]];
@@ -570,13 +566,13 @@
     {
         NSString *itemKey = [items[i] stringValue];
         if ([itemKey isEqualToString:@"0"]) itemKey = @"0000";
-
+        
         UIImageView *itemView = (UIImageView *)itemImageViews[i];
         [itemView setBorderRadius:4.0f];
         [itemView setBorderWidth:0.5f color:[UIColor whiteColor]];
         [itemView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png", itemKey]]];
     }
-
+    
     // debug
     //UILabel *matchNumberLabel = (UILabel *)[cell viewWithTag:200];
     //matchNumberLabel.text = [[NSNumber numberWithInteger:(indexPath.row + 1)] stringValue];
@@ -628,19 +624,16 @@
     
     //async fetch/search summoner
     [TAPDataManager getSummonerForName:name region:region
-    successHandler:^(NSDictionary *summoner)
-    {
-        //revert this search field back to this summoner's name
-        self.searchField.text = self.summonerInfo[@"name"];
-    
-        TAPSummonerViewController *nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"summonerVC"];
-        nextVC.summonerInfo = summoner;
-        [self.navigationController pushViewController:nextVC animated:YES];
-    }
-    failureHandler:^(NSString *errorMessage)
-    {
-        [self showAlertWithTitle:@"Error" message:errorMessage];
-    }];
+     successHandler:^(NSDictionary *summoner)
+     {
+         TAPSummonerViewController *nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"summonerVC"];
+         nextVC.summonerInfo = summoner;
+         [self.navigationController pushViewController:nextVC animated:YES];
+     }
+     failureHandler:^(NSString *errorMessage)
+     {
+         [self showAlertWithTitle:@"Error" message:errorMessage];
+     }];
 }
 
 @end

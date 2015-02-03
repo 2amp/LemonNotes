@@ -19,15 +19,13 @@
         <relationship name="summoner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Summoner" inverseName="matches" inverseEntity="Summoner" syncable="YES"/>
     </entity>
     <entity name="Summoner" representedClassName="Summoner" syncable="YES">
-        <attribute name="firstMatchId" attributeType="Integer 32" defaultValueString="-1" syncable="YES"/>
         <attribute name="id" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
-        <attribute name="lastMatchId" attributeType="Integer 32" defaultValueString="-1" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="region" attributeType="String" defaultValueString="na" syncable="YES"/>
-        <relationship name="matches" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Match" inverseName="summoner" inverseEntity="Match" syncable="YES"/>
+        <relationship name="matches" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Match" inverseName="summoner" inverseEntity="Match" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Match" positionX="-4889" positionY="81" width="128" height="285"/>
-        <element name="Summoner" positionX="-5105" positionY="77" width="128" height="133"/>
+        <element name="Match" positionX="-4889" positionY="81" width="128" height="283"/>
+        <element name="Summoner" positionX="-5105" positionY="77" width="128" height="103"/>
     </elements>
 </model>
