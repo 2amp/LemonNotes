@@ -214,6 +214,9 @@
     NSArray *result = [self.managedObjectContext executeFetchRequest:summonerFetch error:&error];
     for (Summoner *summoner in result)
     {
+        for (Match* match in summoner.matches)
+            [self.managedObjectContext deleteObject:match];
+        
         [self.managedObjectContext deleteObject:summoner];
     }
     [self saveContext];

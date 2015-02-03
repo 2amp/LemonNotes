@@ -407,7 +407,6 @@
 		8982952E1A7998000042F438 /* StartGame.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8982952C1A7998000042F438 /* StartGame.storyboard */; };
 		898295311A7998A50042F438 /* More.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8982952F1A7998A50042F438 /* More.storyboard */; };
 		8984EF2E19F61FC100C442FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF2D19F61FC100C442FC /* main.m */; };
-		8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF3219F61FC100C442FC /* LemonNotes.xcdatamodeld */; };
 		8984EF3A19F61FC100C442FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8984EF3819F61FC100C442FC /* Main.storyboard */; };
 		8984EF3C19F61FC100C442FC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8984EF3B19F61FC100C442FC /* Images.xcassets */; };
 		8984EF3F19F61FC100C442FC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8984EF3D19F61FC100C442FC /* LaunchScreen.xib */; };
@@ -688,6 +687,7 @@
 		95084C151A1B37AD0052F40F /* 8.png in Resources */ = {isa = PBXBuildFile; fileRef = 95084B081A1B37AD0052F40F /* 8.png */; };
 		95084C161A1B37AD0052F40F /* 9.png in Resources */ = {isa = PBXBuildFile; fileRef = 95084B091A1B37AD0052F40F /* 9.png */; };
 		950B2C421A00296A00DD8A23 /* TAPDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 950B2C411A00296A00DD8A23 /* TAPDataManager.m */; };
+		950F19D41A80986D008EB05B /* LemonNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 950F19D01A80986D008EB05B /* LemonNotes.xcdatamodeld */; };
 		95153A611A1746D7003EA211 /* alarm (fill).png in Resources */ = {isa = PBXBuildFile; fileRef = 95153A1C1A1746D7003EA211 /* alarm (fill).png */; };
 		95153A621A1746D7003EA211 /* alarm (line).png in Resources */ = {isa = PBXBuildFile; fileRef = 95153A1D1A1746D7003EA211 /* alarm (line).png */; };
 		95153A631A1746D7003EA211 /* back (fill).png in Resources */ = {isa = PBXBuildFile; fileRef = 95153A1E1A1746D7003EA211 /* back (fill).png */; };
@@ -1322,7 +1322,6 @@
 		8984EF2819F61FC100C442FC /* LemonNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LemonNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8984EF2C19F61FC100C442FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8984EF2D19F61FC100C442FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		8984EF3319F61FC100C442FC /* LemonNotes.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LemonNotes.xcdatamodel; sourceTree = "<group>"; };
 		8984EF3919F61FC100C442FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8984EF3B19F61FC100C442FC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8984EF3E19F61FC100C442FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -1609,6 +1608,9 @@
 		95084B091A1B37AD0052F40F /* 9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 9.png; sourceTree = "<group>"; };
 		950B2C401A00296A00DD8A23 /* TAPDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPDataManager.h; sourceTree = "<group>"; };
 		950B2C411A00296A00DD8A23 /* TAPDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPDataManager.m; sourceTree = "<group>"; };
+		950F19D11A80986D008EB05B /* LemonNotes 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "LemonNotes 2.xcdatamodel"; sourceTree = "<group>"; };
+		950F19D21A80986D008EB05B /* LemonNotes 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "LemonNotes 3.xcdatamodel"; sourceTree = "<group>"; };
+		950F19D31A80986D008EB05B /* LemonNotes.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LemonNotes.xcdatamodel; sourceTree = "<group>"; };
 		950FB68C19FE37B1005F870F /* apikeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = apikeys.h; sourceTree = "<group>"; };
 		950FB68D19FE37B1005F870F /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		95153A1C1A1746D7003EA211 /* alarm (fill).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alarm (fill).png"; sourceTree = "<group>"; };
@@ -1827,7 +1829,6 @@
 		959157B81A0EDFD00098A610 /* Zyra_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Zyra_0.jpg; sourceTree = "<group>"; };
 		95B298E11A189045000EC199 /* TAPSummonerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSummonerManager.h; sourceTree = "<group>"; };
 		95B298E21A189045000EC199 /* TAPSummonerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPSummonerManager.m; sourceTree = "<group>"; };
-		95BA1A271A7DCE640075594D /* LemonNotes 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "LemonNotes 2.xcdatamodel"; sourceTree = "<group>"; };
 		95BA1A281A7DCEA60075594D /* Summoner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Summoner.h; sourceTree = "<group>"; };
 		95BA1A291A7DCEA60075594D /* Summoner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Summoner.m; sourceTree = "<group>"; };
 		95BA1A2B1A7DCEA60075594D /* Match.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Match.h; sourceTree = "<group>"; };
@@ -2333,7 +2334,7 @@
 		8984EF2A19F61FC100C442FC /* LemonNotes */ = {
 			isa = PBXGroup;
 			children = (
-				8984EF3219F61FC100C442FC /* LemonNotes.xcdatamodeld */,
+				950F19D01A80986D008EB05B /* LemonNotes.xcdatamodeld */,
 				8984EF3819F61FC100C442FC /* Main.storyboard */,
 				8982952C1A7998000042F438 /* StartGame.storyboard */,
 				898295261A7995160042F438 /* MatchHistory.storyboard */,
@@ -4002,6 +4003,7 @@
 				8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */,
 				953C75151A19E75000832A55 /* TAPLemonRefreshControl.m in Sources */,
 				8948D65B1A4745BE00CAEA4D /* TAPMoreTableViewController.m in Sources */,
+				950F19D41A80986D008EB05B /* LemonNotes.xcdatamodeld in Sources */,
 				8948D6581A46031800CAEA4D /* TAPTeammateInfoViewController.m in Sources */,
 				95F162E11A034C9B00DECF93 /* TAPSummonerViewController.m in Sources */,
 				95F9F9181A1696E000CFEAF3 /* TAPSearchField.m in Sources */,
@@ -4014,7 +4016,6 @@
 				9561EE041A72A44B00770485 /* UIView+BorderAdditions.m in Sources */,
 				95B298E31A189045000EC199 /* TAPSummonerManager.m in Sources */,
 				89A86C0B19F8E60300477FC6 /* TAPStartGameViewController.m in Sources */,
-				8984EF3419F61FC100C442FC /* LemonNotes.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4247,13 +4248,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		8984EF3219F61FC100C442FC /* LemonNotes.xcdatamodeld */ = {
+		950F19D01A80986D008EB05B /* LemonNotes.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				95BA1A271A7DCE640075594D /* LemonNotes 2.xcdatamodel */,
-				8984EF3319F61FC100C442FC /* LemonNotes.xcdatamodel */,
+				950F19D11A80986D008EB05B /* LemonNotes 2.xcdatamodel */,
+				950F19D21A80986D008EB05B /* LemonNotes 3.xcdatamodel */,
+				950F19D31A80986D008EB05B /* LemonNotes.xcdatamodel */,
 			);
-			currentVersion = 95BA1A271A7DCE640075594D /* LemonNotes 2.xcdatamodel */;
+			currentVersion = 950F19D21A80986D008EB05B /* LemonNotes 3.xcdatamodel */;
 			path = LemonNotes.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
