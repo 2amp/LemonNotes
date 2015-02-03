@@ -22,15 +22,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //for now clear defaults
-    //NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-    //[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+//    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+//    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
     
     //data updates
 //    [[DataManager sharedManager] updateChampionIds];
 //    [[DataManager sharedManager] updateSummonerSpells];
     [[TAPDataManager sharedManager] updateAllData];
-//    [[DataManager sharedManager] deleteAllSummoners];
-//    [[DataManager sharedManager] summonerDump];
+//    [[TAPDataManager sharedManager] deleteAllSummoners];
+//    [[TAPDataManager sharedManager] summonerDump];
 
 //    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"currentSummoner"];
 //    NSDictionary *currentSummoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];

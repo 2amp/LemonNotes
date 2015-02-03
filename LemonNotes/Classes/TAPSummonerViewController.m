@@ -534,11 +534,11 @@
     [summonerIcon2ImageView setBorderRadius:3.0f];
     
     //Score labels
-    int kills   = [stats[@"kills"] intValue];
-    int deaths  = [stats[@"deaths"] intValue];
-    int assists = [stats[@"assists"] intValue];
+    float kills   = [stats[@"kills"] floatValue];
+    float deaths  = [stats[@"deaths"] floatValue];
+    float assists = [stats[@"assists"] floatValue];
     float kda = (deaths == 0) ? -1 : (kills + assists)/deaths;
-    [scoreLabel setText: [NSString stringWithFormat:@"%d/%d/%d", kills, deaths, assists]];
+    [scoreLabel setText: [NSString stringWithFormat:@"%.0f/%.0f/%.0f", kills, deaths, assists]];
     [kdaLabel   setText: [NSString stringWithFormat:@"%@ KDA", (kda < 0) ? @"Perfect" : [NSString stringWithFormat:@"%.2f", kda]]];
     
     //Stat labels

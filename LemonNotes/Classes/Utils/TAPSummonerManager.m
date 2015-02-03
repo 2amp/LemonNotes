@@ -12,7 +12,6 @@
     dispatch_queue_t loadQueue;
     
     long newestLoadedMatchId;
-    long oldestLoadedMatchId;
     long newestSavedMatchId;
     
     int lastFetchIndex;
@@ -63,7 +62,6 @@
         
         //numbers to keep track
         newestLoadedMatchId = -1;
-        oldestLoadedMatchId = -1;
         lastFetchIndex = 0;
         
         //make ephemeral session
@@ -204,7 +202,6 @@
         //set data
         index += newestMatches.count;
         [self.mutableMatches addObjectsFromArray:newestMatches];
-        oldestLoadedMatchId = [[self.mutableMatches lastObject][@"matchId"] longValue];
         newestLoadedMatchId = [[self.mutableMatches firstObject][@"matchId"] longValue];
         
         //report to delegate
@@ -332,7 +329,6 @@
     }
     
     [self.mutableMatches addObjectsFromArray:oldMatches];
-    oldestLoadedMatchId = [[self.mutableMatches lastObject][@"matchId"] longValue];
     
     return numLoad;
 }
@@ -368,12 +364,13 @@
     //add to loaded
     int numLoaded = (int)oldMatches.count;
     [self.mutableMatches addObjectsFromArray:oldMatches];
-    oldestLoadedMatchId = [[self.mutableMatches lastObject][@"matchId"] longValue];
     
     return numLoaded;
 }
 
 /**
+ * @method loadFromServer:
+ * 
  * Calculates index range of the specified number of next oldest matches.
  * Increments endMatchIndex accordingly and returns matches fetched by
  * matchHistoryFrom:To:
@@ -382,15 +379,17 @@
  */
 - (NSArray *)loadFromServer:(int)numberOfMatches
 {
-    NSLog(@"[loadFromServer]");
+    NSLog(@"[loadFromServer:]");
     NSMutableArray *matches = [[NSMutableArray alloc] init];
-    do
+    
+    while (numberOfMatches > 0)
     {
-        [matches addObjectsFromArray:[self matchHistoryFrom:lastFetchIndex]];
-        lastFetchIndex += 15;
-        numberOfMatches -= 15;
+        int fetchLimit = (int)MIN(15, numberOfMatches);
+        int count = (int)matches.count;
+        [matches addObjectsFromArray:[self matchHistoryFrom:count to:count + fetchLimit]];
+        
+        numberOfMatches -= fetchLimit;
     }
-    while(numberOfMatches > 15);
     return matches;
 }
 
@@ -430,7 +429,7 @@
     return newMatches;
 }
 
-#pragma mark - Private Fetch/Save Helpers
+#pragma mark - Core Data Helpers
 /**
  * @method hasSavedMatches
  *
@@ -485,26 +484,44 @@
     [self saveContext];
 }
 
+#pragma mark - Match History API
 /**
  * @method matchHistoryFrom:
  *
- * Given an index, fetches [index, index+15) from MatchHistoryAPI.
- * The resulting array might not be 15 matches
- * if summoner has less than 15 matches starting from index.
- *
- * @note MatchHistoryAPI gives the array of matches in chronological order.
- *       The array given by this method is in reverse chronological order.
- *
- * @note This method is synchronous and should be called accordingly.
+ * Gets match history from [index, index+15) using MatchHistoryAPI
  *
  * @param index - to start fetch from
  * @return NSArray of the requested match history
  */
 - (NSArray *)matchHistoryFrom:(int)index
 {
-    NSLog(@"matchHistoryFrom:%d to:%d", index, index+15);
-    NSString *beginIndex = [NSString stringWithFormat:@"beginIndex=%d", index];
-    NSString *endIndex   = [NSString stringWithFormat:@"endIndex=%d", index+15];
+    return [self matchHistoryFrom:index to:index+15];
+}
+
+/**
+ * @method matchHistoryFrom: to:
+ *
+ * Given a range, fetches [begin, end) from MatchHistoryAPI.
+ * The resulting array might not be (end - begin) matches
+ * if summoner does not have that many matches starting at index begin
+ *
+ * @note MatchHistoryAPI gives the array of matches in chronological order.
+ *       The array given by this method is in reverse chronological order.
+ *
+ * @note This method is synchronous and should be called accordingly.
+ *
+ * @param begin - index to fetch from
+ * @param end   - index to fetch from
+ * @return NSArray of the requested match history
+ */
+- (NSArray *)matchHistoryFrom:(int)begin to:(int)end
+{
+    if (begin > end)
+        return nil;
+
+    NSLog(@"matchHistoryFrom:%d to:%d", begin, end);
+    NSString *beginIndex = [NSString stringWithFormat:@"beginIndex=%d", begin];
+    NSString *endIndex   = [NSString stringWithFormat:@"endIndex=%d", end];
     NSURL *url = apiURL(kLoLMatchHistory, self.summonerInfo[@"region"], [self.summonerInfo[@"id"] stringValue], @[beginIndex, endIndex]);
     
     NSError *error;
