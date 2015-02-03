@@ -352,26 +352,15 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OKg-Xv-NXD" customClass="CPTGraphHostingView">
-                                <rect key="frame" x="0.0" y="64" width="600" height="300"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="t1X-bQ-yd0"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="OKg-Xv-NXD" secondAttribute="trailing" constant="-16" id="06M-tG-svY"/>
                             <constraint firstAttribute="centerX" secondItem="uet-Dw-LZJ" secondAttribute="centerX" id="4ih-Au-WRx"/>
                             <constraint firstItem="Uk9-Da-BTV" firstAttribute="top" secondItem="uet-Dw-LZJ" secondAttribute="bottom" constant="134" id="80v-Fx-uwc"/>
-                            <constraint firstItem="OKg-Xv-NXD" firstAttribute="leading" secondItem="5tx-a1-s1e" secondAttribute="leadingMargin" constant="-16" id="D8z-pX-5ed"/>
-                            <constraint firstItem="OKg-Xv-NXD" firstAttribute="top" secondItem="CbR-wZ-e4z" secondAttribute="bottom" id="lWp-7k-yu6"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="champLabel" destination="uet-Dw-LZJ" id="spk-nF-llZ"/>
-                        <outlet property="hostView" destination="OKg-Xv-NXD" id="SWi-nm-GgA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="owF-Wl-i2S" userLabel="First Responder" sceneMemberID="firstResponder"/>

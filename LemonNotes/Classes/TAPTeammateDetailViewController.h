@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CorePlot/CorePlot-CocoaTouch.h>
+#import <PNChart/PNBarChart.h>
 
-@interface TAPTeammateDetailViewController : UIViewController <CPTBarPlotDataSource, CPTBarPlotDelegate>
+@interface TAPTeammateDetailViewController : UIViewController <PNChartDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *champLabel;
-@property (weak, nonatomic) IBOutlet CPTGraphHostingView *hostView;
+@property PNBarChart *barChart;
 @property NSDictionary *teammateStats;
 
 

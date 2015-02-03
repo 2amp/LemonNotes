@@ -4,12 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-CorePlot.xcscheme</key>
+		<key>Pods-PNChart.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>Pods-TRVSURLSessionOperation.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-UICountingLabel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>174D3DAF77979796679D6B75</key>
+		<key>0981F2CB5D071FEDA2356400</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CCA5E69750AE6C441CB0F3CA</key>
+		<key>298D081DB5A8B1539102C7A7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E69A7AD1ADDC1428837629F8</key>
+		<key>38A2636D94FE6053B4062FAC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4CCB128F821BB479C3E9740D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

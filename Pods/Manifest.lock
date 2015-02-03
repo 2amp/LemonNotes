@@ -1,13 +1,16 @@
 PODS:
-  - CorePlot (1.5.1)
+  - PNChart (0.7.5):
+    - UICountingLabel (~> 1.0.0)
   - TRVSURLSessionOperation (0.0.1)
+  - UICountingLabel (1.0.0)
 
 DEPENDENCIES:
-  - CorePlot (~> 1.4)
+  - PNChart
   - TRVSURLSessionOperation (~> 0.0.1)
 
 SPEC CHECKSUMS:
-  CorePlot: b15cb1a9a687b9576545104248d6e22033e678bb
+  PNChart: 18d4c57f43df3357ab14b3847a930f36d1fbce48
   TRVSURLSessionOperation: ae875db17f1414bf39cf781b59beaf4f5b4802c5
+  UICountingLabel: 0a0e9e34bf4690dbd127aaec552d19ed938087a9
 
 COCOAPODS: 0.35.0

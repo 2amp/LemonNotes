@@ -6,15 +6,21 @@
 // project.
 
 
-// CorePlot
-#define COCOAPODS_POD_AVAILABLE_CorePlot
-#define COCOAPODS_VERSION_MAJOR_CorePlot 1
-#define COCOAPODS_VERSION_MINOR_CorePlot 5
-#define COCOAPODS_VERSION_PATCH_CorePlot 1
+// PNChart
+#define COCOAPODS_POD_AVAILABLE_PNChart
+#define COCOAPODS_VERSION_MAJOR_PNChart 0
+#define COCOAPODS_VERSION_MINOR_PNChart 7
+#define COCOAPODS_VERSION_PATCH_PNChart 5
 
 // TRVSURLSessionOperation
 #define COCOAPODS_POD_AVAILABLE_TRVSURLSessionOperation
 #define COCOAPODS_VERSION_MAJOR_TRVSURLSessionOperation 0
 #define COCOAPODS_VERSION_MINOR_TRVSURLSessionOperation 0
 #define COCOAPODS_VERSION_PATCH_TRVSURLSessionOperation 1
+
+// UICountingLabel
+#define COCOAPODS_POD_AVAILABLE_UICountingLabel
+#define COCOAPODS_VERSION_MAJOR_UICountingLabel 1
+#define COCOAPODS_VERSION_MINOR_UICountingLabel 0
+#define COCOAPODS_VERSION_PATCH_UICountingLabel 0
 
