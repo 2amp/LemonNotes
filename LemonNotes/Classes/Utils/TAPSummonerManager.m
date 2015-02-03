@@ -12,7 +12,6 @@
     dispatch_queue_t loadQueue;
     
     long newestLoadedMatchId;
-    long oldestLoadedMatchId;
     long newestSavedMatchId;
     
     int lastFetchIndex;
@@ -63,7 +62,6 @@
         
         //numbers to keep track
         newestLoadedMatchId = -1;
-        oldestLoadedMatchId = -1;
         lastFetchIndex = 0;
         
         //make ephemeral session
@@ -204,7 +202,6 @@
         //set data
         index += newestMatches.count;
         [self.mutableMatches addObjectsFromArray:newestMatches];
-        oldestLoadedMatchId = [[self.mutableMatches lastObject][@"matchId"] longValue];
         newestLoadedMatchId = [[self.mutableMatches firstObject][@"matchId"] longValue];
         
         //report to delegate
@@ -332,7 +329,6 @@
     }
     
     [self.mutableMatches addObjectsFromArray:oldMatches];
-    oldestLoadedMatchId = [[self.mutableMatches lastObject][@"matchId"] longValue];
     
     return numLoad;
 }
@@ -368,7 +364,6 @@
     //add to loaded
     int numLoaded = (int)oldMatches.count;
     [self.mutableMatches addObjectsFromArray:oldMatches];
-    oldestLoadedMatchId = [[self.mutableMatches lastObject][@"matchId"] longValue];
     
     return numLoaded;
 }
