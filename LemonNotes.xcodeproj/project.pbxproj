@@ -12,8 +12,6 @@
 		8948D65B1A4745BE00CAEA4D /* TAPMoreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8948D65A1A4745BE00CAEA4D /* TAPMoreTableViewController.m */; };
 		894B15971A52B60200B61D03 /* TAPPickerTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 894B15961A52B60200B61D03 /* TAPPickerTextField.m */; };
 		894BF63B1A008858009A1F1F /* UIImage+UIImageAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 894BF63A1A008858009A1F1F /* UIImage+UIImageAdditions.m */; };
-		89591DD51A03130B00F00637 /* 2AM Productions Logo.idraw in Resources */ = {isa = PBXBuildFile; fileRef = 89591B5C1A03130B00F00637 /* 2AM Productions Logo.idraw */; };
-		89591DD61A03130B00F00637 /* Lemon Notes Logo.idraw in Resources */ = {isa = PBXBuildFile; fileRef = 89591B5D1A03130B00F00637 /* Lemon Notes Logo.idraw */; };
 		895920651A0330F600F00637 /* Aatrox.png in Resources */ = {isa = PBXBuildFile; fileRef = 89591DEF1A0330F500F00637 /* Aatrox.png */; };
 		895920661A0330F600F00637 /* Ahri.png in Resources */ = {isa = PBXBuildFile; fileRef = 89591DF01A0330F500F00637 /* Ahri.png */; };
 		895920671A0330F600F00637 /* Akali.png in Resources */ = {isa = PBXBuildFile; fileRef = 89591DF11A0330F500F00637 /* Akali.png */; };
@@ -770,6 +768,8 @@
 		9522BCAF1A2E93DA0037F84C /* Lemon Indicator 8.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BCAE1A2E93DA0037F84C /* Lemon Indicator 8.png */; };
 		953C75151A19E75000832A55 /* TAPLemonRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 953C75141A19E75000832A55 /* TAPLemonRefreshControl.m */; };
 		953C75261A1A749200832A55 /* 0000.png in Resources */ = {isa = PBXBuildFile; fileRef = 953C75251A1A749200832A55 /* 0000.png */; };
+		954809381A82E3BA0030883C /* more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 954809371A82E3BA0030883C /* more@2x.png */; };
+		9548093A1A82E7780030883C /* profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 954809391A82E7780030883C /* profile@2x.png */; };
 		9554F9721A47909C00E14E56 /* TAPScrollNavBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9554F9711A47909C00E14E56 /* TAPScrollNavBarController.m */; };
 		955F28141A81BD11008C75CD /* TAPMatchDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 955F28131A81BD11008C75CD /* TAPMatchDetailViewController.m */; };
 		956116A41A3FB7200074D3A3 /* Kalista_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 956116A21A3FB7200074D3A3 /* Kalista_0.jpg */; };
@@ -927,8 +927,6 @@
 		894B15961A52B60200B61D03 /* TAPPickerTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPPickerTextField.m; sourceTree = "<group>"; };
 		894BF6391A008858009A1F1F /* UIImage+UIImageAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UIImageAdditions.h"; sourceTree = "<group>"; };
 		894BF63A1A008858009A1F1F /* UIImage+UIImageAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UIImageAdditions.m"; sourceTree = "<group>"; };
-		89591B5C1A03130B00F00637 /* 2AM Productions Logo.idraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = "2AM Productions Logo.idraw"; sourceTree = "<group>"; };
-		89591B5D1A03130B00F00637 /* Lemon Notes Logo.idraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lemon Notes Logo.idraw"; sourceTree = "<group>"; };
 		89591DEF1A0330F500F00637 /* Aatrox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Aatrox.png; sourceTree = "<group>"; };
 		89591DF01A0330F500F00637 /* Ahri.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ahri.png; sourceTree = "<group>"; };
 		89591DF11A0330F500F00637 /* Akali.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Akali.png; sourceTree = "<group>"; };
@@ -1699,6 +1697,8 @@
 		953C75131A19E75000832A55 /* TAPLemonRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPLemonRefreshControl.h; sourceTree = "<group>"; };
 		953C75141A19E75000832A55 /* TAPLemonRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPLemonRefreshControl.m; sourceTree = "<group>"; };
 		953C75251A1A749200832A55 /* 0000.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0000.png; sourceTree = "<group>"; };
+		954809371A82E3BA0030883C /* more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more@2x.png"; sourceTree = "<group>"; };
+		954809391A82E7780030883C /* profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile@2x.png"; sourceTree = "<group>"; };
 		9554F9701A47909C00E14E56 /* TAPScrollNavBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPScrollNavBarController.h; sourceTree = "<group>"; };
 		9554F9711A47909C00E14E56 /* TAPScrollNavBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPScrollNavBarController.m; sourceTree = "<group>"; };
 		955F28121A81BD11008C75CD /* TAPMatchDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPMatchDetailViewController.h; sourceTree = "<group>"; };
@@ -1879,21 +1879,12 @@
 			isa = PBXGroup;
 			children = (
 				9504F5931A6EE0BA0079BD5F /* UI */,
+				954809311A82E0450030883C /* Custom Icons */,
 				95153A1B1A1746D7003EA211 /* Icons */,
 				95153A5D1A1746D7003EA211 /* Logos */,
 				953C75161A19E79800832A55 /* Refresh */,
-				89591B5B1A03130B00F00637 /* Source */,
 			);
 			path = Images;
-			sourceTree = "<group>";
-		};
-		89591B5B1A03130B00F00637 /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				89591B5C1A03130B00F00637 /* 2AM Productions Logo.idraw */,
-				89591B5D1A03130B00F00637 /* Lemon Notes Logo.idraw */,
-			);
-			path = Source;
 			sourceTree = "<group>";
 		};
 		89591DE41A03131700F00637 /* LoL */ = {
@@ -2837,6 +2828,15 @@
 			path = Refresh;
 			sourceTree = "<group>";
 		};
+		954809311A82E0450030883C /* Custom Icons */ = {
+			isa = PBXGroup;
+			children = (
+				954809391A82E7780030883C /* profile@2x.png */,
+				954809371A82E3BA0030883C /* more@2x.png */,
+			);
+			path = "Custom Icons";
+			sourceTree = "<group>";
+		};
 		9591573F1A0EDFCF0098A610 /* Champion Splash */ = {
 			isa = PBXGroup;
 			children = (
@@ -3212,7 +3212,6 @@
 				95084BD71A1B37AD0052F40F /* 680.png in Resources */,
 				8959214D1A0330F600F00637 /* 3106.png in Resources */,
 				895920A61A0330F600F00637 /* Nautilus.png in Resources */,
-				89591DD61A03130B00F00637 /* Lemon Notes Logo.idraw in Resources */,
 				895920B81A0330F600F00637 /* Shyvana.png in Resources */,
 				895920E11A0330F600F00637 /* 1011.png in Resources */,
 				959157DC1A0EDFD00098A610 /* Janna_0.jpg in Resources */,
@@ -3326,6 +3325,7 @@
 				95084B151A1B37AD0052F40F /* 19.png in Resources */,
 				959157E81A0EDFD00098A610 /* KogMaw_0.jpg in Resources */,
 				895921C71A0330F600F00637 /* 3412.png in Resources */,
+				954809381A82E3BA0030883C /* more@2x.png in Resources */,
 				959157DE1A0EDFD00098A610 /* Jax_0.jpg in Resources */,
 				895920C51A0330F600F00637 /* Tristana.png in Resources */,
 				895920F11A0330F600F00637 /* 1053.png in Resources */,
@@ -3758,6 +3758,7 @@
 				959158051A0EDFD00098A610 /* Rengar_0.jpg in Resources */,
 				95084BD61A1B37AD0052F40F /* 679.png in Resources */,
 				959158041A0EDFD00098A610 /* Renekton_0.jpg in Resources */,
+				9548093A1A82E7780030883C /* profile@2x.png in Resources */,
 				95084BDB1A1B37AD0052F40F /* 684.png in Resources */,
 				895922D21A0330F600F00637 /* SummonerHeal.png in Resources */,
 				95084BB71A1B37AD0052F40F /* 648.png in Resources */,
@@ -3890,7 +3891,6 @@
 				95153A891A1746D7003EA211 /* note (fill).png in Resources */,
 				895921231A0330F600F00637 /* 3041.png in Resources */,
 				95084B5A1A1B37AD0052F40F /* 556.png in Resources */,
-				89591DD51A03130B00F00637 /* 2AM Productions Logo.idraw in Resources */,
 				959157C11A0EDFD00098A610 /* Azir_0.jpg in Resources */,
 				895921D71A0330F600F00637 /* 3455.png in Resources */,
 				895920EB1A0330F600F00637 /* 1038.png in Resources */,

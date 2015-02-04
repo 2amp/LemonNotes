@@ -25,8 +25,7 @@
 {
     [super viewDidLoad];
     
-    NSLog(@"summmoner: %@", self.summonerInfo);
-    NSLog(@"matchId: %@", self.matchId);
+    [self setupTableView];
 }
 
 /**
@@ -96,11 +95,33 @@
     return 5;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    NSString *cellID = (section == 0) ? @"BlueHeader" : @"RedHeader";
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellID];
+    
+    cell.backgroundColor = [UIColor blueColor];
+    if ([cellID isEqualToString:@"BlueHeader"])
+        cell.backgroundColor = [UIColor redColor];
+    
+    return cell;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"indexPath: %ld, %ld", (long)indexPath.section, (long)indexPath.row);
+
+    NSString *cellID = (indexPath.section == 0) ? @"BluePlayer" : @"RedPlayer";
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellID];
+
     
-    
-    return nil;
+
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0;
 }
 
 @end

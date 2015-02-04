@@ -9,16 +9,19 @@
 #ifndef LemonNotes_Constants_h
 #define LemonNotes_Constants_h
 
+#pragma mark - App Globals
+//Main app color
+#define APP_TINT_RED    (82.f/255.f)
+#define APP_TINT_GREEN  (145.f/255.f)
+#define APP_TINT_BLUE   (200.f/255.f)
+
+
+#pragma mark - Riot LoL API
 ///apiKey should be defined individually
 #import "apikeys.h"
 
 //riot api urls
 static NSString* baseURL = @"https://{server}.api.pvp.net";
-
-//regions
-static const int numRegions = 10;
-//NSString* regions[] = {@"na", @"kr", @"euw", @"eune", @"oce", @"br", @"las", @"lan", @"ru", @"tr"};
-
 
 //champion
 #define pathChampion @"api/lol/{region}/v1.2/champion"
@@ -132,6 +135,8 @@ static inline NSURL *apiURL(NSString *call, NSString *region, NSString *pathPara
     return [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 }
 
+
+#pragma mark - Misc Static Inline Funcs
 /**
  * @function getTimeAgoWith
  *

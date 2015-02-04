@@ -1,7 +1,7 @@
 
 #import "TAPAppDelegate.h"
 #import "TAPDataManager.h"
-
+#import "Constants.h"
 
 
 @interface TAPAppDelegate ()
@@ -26,15 +26,19 @@
 //    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
     
     //data updates
-//    [[DataManager sharedManager] updateChampionIds];
-//    [[DataManager sharedManager] updateSummonerSpells];
-    [[TAPDataManager sharedManager] updateAllData];
+      [[TAPDataManager sharedManager] updateAllData];
+//    [[TAPDataManager sharedManager] updateChampionIds];
+//    [[TAPDataManager sharedManager] updateSummonerSpells];
 //    [[TAPDataManager sharedManager] deleteAllSummoners];
 //    [[TAPDataManager sharedManager] summonerDump];
 
 //    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"currentSummoner"];
 //    NSDictionary *currentSummoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
 
+    //App Color
+    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UITabBar appearance] setBarTintColor:[UIColor colorWithRed:APP_TINT_RED green:APP_TINT_GREEN blue:APP_TINT_BLUE alpha:1.0]];
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

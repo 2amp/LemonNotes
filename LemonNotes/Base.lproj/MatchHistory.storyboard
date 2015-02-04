@@ -10,7 +10,9 @@
         <scene sceneID="1ca-UB-7qB">
             <objects>
                 <navigationController title="Summoner Navigation" id="fXf-nT-qFE" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Match History" id="1ab-hU-pWc"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="profile@2x.png" id="1ab-hU-pWc">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="-10" vertical="0.0"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="iVl-ab-Hit">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -502,32 +504,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="188" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2Tk-53-sLZ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="60" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="2Tk-53-sLZ">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BlueHeader" rowHeight="58" id="EaJ-Y8-N3X" userLabel="Blue Header">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BlueHeader" rowHeight="80" id="EaJ-Y8-N3X" userLabel="Blue Header">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EaJ-Y8-N3X" id="G7M-h4-5Ua">
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BluePlayer" rowHeight="188" id="FIk-10-K8v" userLabel="Blue Player">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BluePlayer" rowHeight="80" id="FIk-10-K8v" userLabel="Blue Player">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FIk-10-K8v" id="ize-ve-5AE">
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RedHeader" rowHeight="56" id="oce-2r-zdd" userLabel="Red Header">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RedHeader" rowHeight="60" id="oce-2r-zdd" userLabel="Red Header">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oce-2r-zdd" id="yqM-f3-EXC">
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RedPlayer" id="tYt-J0-zky" userLabel="Red Player">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RedPlayer" rowHeight="80" id="tYt-J0-zky" userLabel="Red Player">
                                         <rect key="frame" x="140" y="278" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tYt-J0-zky" id="MYV-Th-c0a">
@@ -539,7 +541,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="RgY-MD-g9u" firstAttribute="top" secondItem="2Tk-53-sLZ" secondAttribute="bottom" id="9Yt-D9-Mun"/>
+                            <constraint firstItem="RgY-MD-g9u" firstAttribute="top" secondItem="2Tk-53-sLZ" secondAttribute="bottom" id="6r9-u1-fC3"/>
                             <constraint firstItem="2Tk-53-sLZ" firstAttribute="leading" secondItem="MN1-yL-df3" secondAttribute="leadingMargin" constant="-16" id="Kg2-Ft-l6n"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2Tk-53-sLZ" secondAttribute="trailing" constant="-16" id="Zue-9g-T86"/>
                             <constraint firstItem="2Tk-53-sLZ" firstAttribute="top" secondItem="R5Q-44-sls" secondAttribute="bottom" id="wpG-dg-I5P"/>
@@ -557,5 +559,6 @@
     </scenes>
     <resources>
         <image name="Victory Mark.png" width="250" height="250"/>
+        <image name="profile@2x.png" width="556" height="356"/>
     </resources>
 </document>
