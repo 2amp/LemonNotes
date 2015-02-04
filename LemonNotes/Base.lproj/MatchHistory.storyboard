@@ -493,7 +493,7 @@
         <!--Match View Controller-->
         <scene sceneID="CeB-Wh-ClE">
             <objects>
-                <viewController title="Match View Controller" id="Lyo-FU-uAI" sceneMemberID="viewController">
+                <viewController title="Match View Controller" id="Lyo-FU-uAI" customClass="TAPMatchDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="R5Q-44-sls"/>
                         <viewControllerLayoutGuide type="bottom" id="RgY-MD-g9u"/>
