@@ -771,6 +771,7 @@
 		953C75151A19E75000832A55 /* TAPLemonRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 953C75141A19E75000832A55 /* TAPLemonRefreshControl.m */; };
 		953C75261A1A749200832A55 /* 0000.png in Resources */ = {isa = PBXBuildFile; fileRef = 953C75251A1A749200832A55 /* 0000.png */; };
 		9554F9721A47909C00E14E56 /* TAPScrollNavBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9554F9711A47909C00E14E56 /* TAPScrollNavBarController.m */; };
+		955F28141A81BD11008C75CD /* TAPMatchDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 955F28131A81BD11008C75CD /* TAPMatchDetailViewController.m */; };
 		956116A41A3FB7200074D3A3 /* Kalista_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 956116A21A3FB7200074D3A3 /* Kalista_0.jpg */; };
 		956116A51A3FB7200074D3A3 /* RekSai_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 956116A31A3FB7200074D3A3 /* RekSai_0.jpg */; };
 		9561EE041A72A44B00770485 /* UIView+BorderAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9561EE031A72A44B00770485 /* UIView+BorderAdditions.m */; };
@@ -1700,6 +1701,8 @@
 		953C75251A1A749200832A55 /* 0000.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0000.png; sourceTree = "<group>"; };
 		9554F9701A47909C00E14E56 /* TAPScrollNavBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPScrollNavBarController.h; sourceTree = "<group>"; };
 		9554F9711A47909C00E14E56 /* TAPScrollNavBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPScrollNavBarController.m; sourceTree = "<group>"; };
+		955F28121A81BD11008C75CD /* TAPMatchDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPMatchDetailViewController.h; sourceTree = "<group>"; };
+		955F28131A81BD11008C75CD /* TAPMatchDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPMatchDetailViewController.m; sourceTree = "<group>"; };
 		956116A21A3FB7200074D3A3 /* Kalista_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Kalista_0.jpg; sourceTree = "<group>"; };
 		956116A31A3FB7200074D3A3 /* RekSai_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RekSai_0.jpg; sourceTree = "<group>"; };
 		9561EE021A72A44B00770485 /* UIView+BorderAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+BorderAdditions.h"; sourceTree = "<group>"; };
@@ -2389,6 +2392,8 @@
 				8984EF5A19F6341000C442FC /* TAPSignInViewController.m */,
 				95F162DF1A034C9B00DECF93 /* TAPSummonerViewController.h */,
 				95F162E01A034C9B00DECF93 /* TAPSummonerViewController.m */,
+				955F28121A81BD11008C75CD /* TAPMatchDetailViewController.h */,
+				955F28131A81BD11008C75CD /* TAPMatchDetailViewController.m */,
 				89A86C0919F8E60300477FC6 /* TAPStartGameViewController.h */,
 				89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */,
 				8948D6561A46031800CAEA4D /* TAPTeammateInfoViewController.h */,
@@ -4002,6 +4007,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8984EF2E19F61FC100C442FC /* main.m in Sources */,
+				955F28141A81BD11008C75CD /* TAPMatchDetailViewController.m in Sources */,
 				894BF63B1A008858009A1F1F /* UIImage+UIImageAdditions.m in Sources */,
 				9585AB411A3B95D7007CE7A1 /* TAPManager.m in Sources */,
 				95BA1A2D1A7DCEA60075594D /* Match.m in Sources */,

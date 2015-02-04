@@ -416,13 +416,13 @@
        NSArray *fetchedMatches = [self matchHistoryFrom:index];
        index += 15;
        
-       numAdded = 0;
        for (NSDictionary *matchDict in fetchedMatches)
            if (limit < [matchDict[@"matchId"] longValue])
            {
                [newMatches addObject:matchDict];
                numAdded++;
            }
+        numAdded = 0;
     }
     while (numAdded >= 15);
     

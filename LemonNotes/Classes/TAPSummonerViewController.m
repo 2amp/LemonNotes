@@ -46,7 +46,6 @@
 
 
 @implementation TAPSummonerViewController
-
 #pragma mark View Load Cycle
 /**
  * @method viewDidLoad
@@ -85,6 +84,7 @@
     [super viewWillAppear:YES];
     
     NSLog(@"SummonerVC [viewWillAppear]");
+    [self.navbarController revertToSaved];
 }
 
 

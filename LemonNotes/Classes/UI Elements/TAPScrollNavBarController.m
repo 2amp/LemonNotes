@@ -8,6 +8,7 @@
 {
     CGFloat navbarHeight;
     CGFloat previousOffset;
+    CGFloat savedOffset;
     BOOL dragging;
 }
 
@@ -19,8 +20,7 @@
 
 
 @implementation TAPScrollNavBarController
-
-#pragma mark Init
+#pragma mark Setup
 /**
  * @method initWithNavBar
  *
@@ -37,8 +37,24 @@
         navbarHeight = navbar.frame.size.height;
         
         dragging = NO;
+        savedOffset = [self statusbarHeight];
     }
     return self;
+}
+
+/**
+ * @method revertToSaved
+ *
+ * Reverts navbar's frame to saved offset,
+ * and calls adjust opacity to modify accordingly.
+ */
+- (void)revertToSaved
+{
+    CGRect frame = self.navbar.frame;
+    frame.origin.y = savedOffset;
+    self.navbar.frame = frame;
+    
+    [self adjustItemOpacity];
 }
 
 
@@ -137,14 +153,11 @@
  */
 - (void)adjustScrollView:(UIScrollView *)scrollView toDelta:(CGFloat)delta
 {
-//    UIEdgeInsets insets = scrollView.contentInset;
-//    insets.top += delta;
-//    scrollView.contentInset = insets;
-//    scrollView.scrollIndicatorInsets = insets;
-
     UIEdgeInsets insets = scrollView.scrollIndicatorInsets;
     insets.top += delta;
     scrollView.scrollIndicatorInsets = insets;
+    
+    savedOffset = CGRectGetMinY(self.navbar.frame);
 }
 
 /**

@@ -15,6 +15,7 @@
 
 - (instancetype)initWithNavBar:(UINavigationBar *)navbar;
 
+- (void)revertToSaved;
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView;
