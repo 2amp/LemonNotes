@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *champLabel;
 @property PNBarChart *barChart;
 @property NSDictionary *teammateStats;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 
 @end

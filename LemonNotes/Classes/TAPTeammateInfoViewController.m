@@ -9,12 +9,17 @@
 #import "TAPTeammateInfoViewController.h"
 #import "TAPDataManager.h"
 #import "TAPSummonerManager.h"
+#import "TAPTeammateDetailViewController.h"
 
 @interface TAPTeammateInfoViewController ()
 
 @property NSMutableArray *mostPlayedChampions;
 @property NSMutableArray *mostPlayedChampionsKda;
 @property NSArray *teammateStats;
+@property NSDictionary *selectedTeammateStats;
+
+- (NSString *)mostPlayedChampionForTeammate:(int)teammateIndex;
+- (NSArray *)buildStats;
 
 @end
 
@@ -182,7 +187,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.selectedTeammateStats = self.teammateStats[indexPath.row];
     [self performSegueWithIdentifier:@"showTeammateDetail" sender:self];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - Navigation
@@ -192,7 +199,8 @@
 {
     if ([segue.identifier isEqualToString:@"showTeammateDetail"])
     {
-        
+        TAPTeammateDetailViewController *teammateDetailVC = segue.destinationViewController;
+        teammateDetailVC.teammateStats = self.selectedTeammateStats;
     }
 }
 

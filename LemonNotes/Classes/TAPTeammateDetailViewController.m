@@ -7,6 +7,7 @@
 //
 
 #import "TAPTeammateDetailViewController.h"
+#import "TAPDataManager.h"
 #import <PNChart/PNColor.h>
 
 const int STATUS_BAR_HEIGHT = 20;
@@ -21,12 +22,25 @@ const int TAB_BAR_HEIGHT = 49;
 
 - (void)viewDidLoad
 {
+//    NSArray *firstFiveChampions;
+    NSMutableArray *xLabels = [[NSMutableArray alloc] init];
+    NSMutableArray *yValues = [[NSMutableArray alloc] init];
+//    if (self.teammateStats.count >= 5)
+//    {
+//        firstFiveChampions = [self.teammateStats.allKeys subarrayWithRange:NSMakeRange(0, 5)];
+//    }
+//    else
+//    {
+//        firstFiveChampions = self.teammateStats.allKeys;
+//    }
+
     for (NSString *championId in self.teammateStats.allKeys)
     {
-        NSLog(@"%@", championId);
+        [xLabels addObject:[TAPDataManager sharedManager].champions[championId][@"name"]];
+        [yValues addObject:self.teammateStats[championId][@"games"]];
     }
 
-    self.barChart = [[PNBarChart alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT + NAVIGATION_BAR_HEIGHT,
+    self.barChart = [[PNBarChart alloc] initWithFrame:CGRectMake(0, self.titleLabel.frame.origin.y + self.titleLabel.frame.size.height + 20,
                                                                 [UIScreen mainScreen].bounds.size.width, 200)];
     self.barChart.backgroundColor = [UIColor clearColor];
     self.barChart.yLabelFormatter = ^(CGFloat yValue){
@@ -35,12 +49,12 @@ const int TAB_BAR_HEIGHT = 49;
         return labelText;
     };
     self.barChart.labelMarginTop = 5.0;
-    [self.barChart setXLabels:@[@"Lucian",@"Caitlyn",@"SEP 3",@"SEP 4",@"SEP 5",@"SEP 6",@"SEP 7"]];
+    self.barChart.xLabels = xLabels;
     self.barChart.rotateForXAxisText = true ;
-    [self.barChart setYValues:@[@1,@24,@12,@18,@30,@10,@21]];
-    [self.barChart setStrokeColors:@[PNGreen,PNGreen,PNRed,PNGreen,PNGreen,PNYellow,PNGreen]];
+    self.barChart.yValues = yValues;
+//    [self.barChart setStrokeColors:@[PNGreen,PNGreen,PNRed,PNGreen,PNGreen]];
     // Adding gradient
-    self.barChart.barColorGradientStart = [UIColor blueColor];
+//    self.barChart.barColorGradientStart = [UIColor blueColor];
 
     [self.barChart strokeChart];
 

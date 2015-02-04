@@ -343,10 +343,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uet-Dw-LZJ">
-                                <rect key="frame" x="207" y="445" width="186" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of matches played" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uet-Dw-LZJ">
+                                <rect key="frame" x="196" y="72" width="208" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="186" id="ChP-xV-ePp"/>
+                                    <constraint firstAttribute="width" constant="208" id="ChP-xV-ePp"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -356,11 +356,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="uet-Dw-LZJ" secondAttribute="centerX" id="4ih-Au-WRx"/>
-                            <constraint firstItem="Uk9-Da-BTV" firstAttribute="top" secondItem="uet-Dw-LZJ" secondAttribute="bottom" constant="134" id="80v-Fx-uwc"/>
+                            <constraint firstItem="Uk9-Da-BTV" firstAttribute="top" secondItem="uet-Dw-LZJ" secondAttribute="bottom" constant="507" id="80v-Fx-uwc"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="champLabel" destination="uet-Dw-LZJ" id="spk-nF-llZ"/>
+                        <outlet property="titleLabel" destination="uet-Dw-LZJ" id="Ngm-ou-gVN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="owF-Wl-i2S" userLabel="First Responder" sceneMemberID="firstResponder"/>
