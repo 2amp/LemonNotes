@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="L2u-Ic-S4e">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="L2u-Ic-S4e">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -323,10 +323,60 @@
                             <constraint firstAttribute="trailingMargin" secondItem="jWF-7w-FxA" secondAttribute="trailing" constant="-16" id="xUu-qS-mzp"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <segue destination="Apt-x3-acy" kind="show" identifier="showTeammateDetail" id="QLG-Od-2tF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PyC-XJ-5PE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3870" y="450"/>
+        </scene>
+        <!--Teammate Detail View Controller-->
+        <scene sceneID="mcb-A6-twA">
+            <objects>
+                <viewController id="Apt-x3-acy" customClass="TAPTeammateDetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="CbR-wZ-e4z"/>
+                        <viewControllerLayoutGuide type="bottom" id="Uk9-Da-BTV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5tx-a1-s1e">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uet-Dw-LZJ">
+                                <rect key="frame" x="207" y="445" width="186" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="186" id="ChP-xV-ePp"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OKg-Xv-NXD" customClass="CPTGraphHostingView">
+                                <rect key="frame" x="0.0" y="64" width="600" height="300"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="t1X-bQ-yd0"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="OKg-Xv-NXD" secondAttribute="trailing" constant="-16" id="06M-tG-svY"/>
+                            <constraint firstAttribute="centerX" secondItem="uet-Dw-LZJ" secondAttribute="centerX" id="4ih-Au-WRx"/>
+                            <constraint firstItem="Uk9-Da-BTV" firstAttribute="top" secondItem="uet-Dw-LZJ" secondAttribute="bottom" constant="134" id="80v-Fx-uwc"/>
+                            <constraint firstItem="OKg-Xv-NXD" firstAttribute="leading" secondItem="5tx-a1-s1e" secondAttribute="leadingMargin" constant="-16" id="D8z-pX-5ed"/>
+                            <constraint firstItem="OKg-Xv-NXD" firstAttribute="top" secondItem="CbR-wZ-e4z" secondAttribute="bottom" id="lWp-7k-yu6"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="champLabel" destination="uet-Dw-LZJ" id="spk-nF-llZ"/>
+                        <outlet property="hostView" destination="OKg-Xv-NXD" id="SWi-nm-GgA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="owF-Wl-i2S" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4518" y="450"/>
         </scene>
         <!--Game-->
         <scene sceneID="Pse-eY-wMJ">

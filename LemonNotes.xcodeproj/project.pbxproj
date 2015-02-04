@@ -414,6 +414,7 @@
 		8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF5819F6341000C442FC /* TAPAppDelegate.m */; };
 		8984EF5C19F6341000C442FC /* TAPSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984EF5A19F6341000C442FC /* TAPSignInViewController.m */; };
 		89A86C0B19F8E60300477FC6 /* TAPStartGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */; };
+		89AF398C1A7C000C003C3274 /* TAPTeammateDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AF398B1A7C000C003C3274 /* TAPTeammateDetailViewController.m */; };
 		9504F5971A6EE0BA0079BD5F /* Defeat Mark.png in Resources */ = {isa = PBXBuildFile; fileRef = 9504F5941A6EE0BA0079BD5F /* Defeat Mark.png */; };
 		9504F5991A6EE0BA0079BD5F /* Victory Mark.png in Resources */ = {isa = PBXBuildFile; fileRef = 9504F5961A6EE0BA0079BD5F /* Victory Mark.png */; };
 		9504F59B1A6EE1F90079BD5F /* Victory Mark (Blue).png in Resources */ = {isa = PBXBuildFile; fileRef = 9504F59A1A6EE1F90079BD5F /* Victory Mark (Blue).png */; };
@@ -1335,6 +1336,8 @@
 		8984EF5A19F6341000C442FC /* TAPSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPSignInViewController.m; sourceTree = "<group>"; };
 		89A86C0919F8E60300477FC6 /* TAPStartGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPStartGameViewController.h; sourceTree = "<group>"; };
 		89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPStartGameViewController.m; sourceTree = "<group>"; };
+		89AF398A1A7C000C003C3274 /* TAPTeammateDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPTeammateDetailViewController.h; sourceTree = "<group>"; };
+		89AF398B1A7C000C003C3274 /* TAPTeammateDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPTeammateDetailViewController.m; sourceTree = "<group>"; };
 		9504F5941A6EE0BA0079BD5F /* Defeat Mark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Defeat Mark.png"; sourceTree = "<group>"; };
 		9504F5961A6EE0BA0079BD5F /* Victory Mark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Victory Mark.png"; sourceTree = "<group>"; };
 		9504F59A1A6EE1F90079BD5F /* Victory Mark (Blue).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Victory Mark (Blue).png"; sourceTree = "<group>"; };
@@ -2395,6 +2398,8 @@
 				89A86C0A19F8E60300477FC6 /* TAPStartGameViewController.m */,
 				8948D6561A46031800CAEA4D /* TAPTeammateInfoViewController.h */,
 				8948D6571A46031800CAEA4D /* TAPTeammateInfoViewController.m */,
+				89AF398A1A7C000C003C3274 /* TAPTeammateDetailViewController.h */,
+				89AF398B1A7C000C003C3274 /* TAPTeammateDetailViewController.m */,
 				8948D6591A4745BE00CAEA4D /* TAPMoreTableViewController.h */,
 				8948D65A1A4745BE00CAEA4D /* TAPMoreTableViewController.m */,
 			);
@@ -4007,6 +4012,7 @@
 				9585AB411A3B95D7007CE7A1 /* TAPManager.m in Sources */,
 				95BA1A2D1A7DCEA60075594D /* Match.m in Sources */,
 				8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */,
+				89AF398C1A7C000C003C3274 /* TAPTeammateDetailViewController.m in Sources */,
 				953C75151A19E75000832A55 /* TAPLemonRefreshControl.m in Sources */,
 				8948D65B1A4745BE00CAEA4D /* TAPMoreTableViewController.m in Sources */,
 				950F19D41A80986D008EB05B /* LemonNotes.xcdatamodeld in Sources */,
