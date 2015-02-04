@@ -4,25 +4,79 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-CorePlot.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>Pods-PNChart.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
 		<key>Pods-TRVSURLSessionOperation.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>Pods-UICountingLabel.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
 		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>2</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>174D3DAF77979796679D6B75</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>1E612C82DF68E0883919E898</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>282FFDD1667009A5086F9AA7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AAAB6462029D953FD13584EC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CCA5E69750AE6C441CB0F3CA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>E348DB9DB4BCAEF89FEA195A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E69A7AD1ADDC1428837629F8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E7F14F3B9A58C3D36FBE28D5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E98EBE542791356BD9A085C6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
