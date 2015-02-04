@@ -11,4 +11,8 @@
 @interface TAPMatchDetailViewController : UIViewController
             <UITableViewDelegate, UITableViewDataSource>
 
+//public properties
+@property (nonatomic, strong) NSNumber *matchId;
+@property (nonatomic, strong) NSDictionary *summonerInfo;
+
 @end

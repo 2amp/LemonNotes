@@ -1,12 +1,15 @@
 
 #import "TAPSummonerViewController.h"
+#import "TAPMatchDetailViewController.h"
+
 #import "NSURLSession+SynchronousTask.h"
+#import "TAPDataManager.h"
+#import "Constants.h"
+
 #import "TAPScrollNavBarController.h"
 #import "TAPLemonRefreshControl.h"
 #import "UIView+BorderAdditions.h"
-#import "TAPDataManager.h"
 #import "TAPSearchField.h"
-#import "Constants.h"
 
 
 
@@ -583,16 +586,17 @@
  * @method tableView:didSelectRowAtIndexPath:
  *
  * Called when user taps a match history cell.
- * Performs segue to match detail VC (or should)
+ * Performs segue to MatchDetailVC
+ *
+ *
  */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"showGameDetail" sender:self];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self performSegueWithIdentifier:@"showMatchDetailVC" sender:self];
 }
 
 
-#pragma mark - Summoner Search
+#pragma mark - Navigation Events
 /**
  * @method textFieldShouldReturn:
  *
@@ -634,6 +638,27 @@
      {
          [self showAlertWithTitle:@"Error" message:errorMessage];
      }];
+}
+
+/**
+ * @method prepareForSegue:sender
+ *
+ * Called before a segue is performed.
+ * MatchDetailVC:
+ *      -
+ */
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSString *segueID = segue.identifier;
+    if ([segueID isEqualToString:@"showMatchDetailVC"])
+    {
+        NSIndexPath *selectedPath = self.tableView.indexPathForSelectedRow;
+        [self.tableView deselectRowAtIndexPath:selectedPath animated:YES];
+        
+        TAPMatchDetailViewController *targetVC = (TAPMatchDetailViewController *)segue.destinationViewController;
+        targetVC.matchId = self.matches[selectedPath.row][@"matchId"];
+        targetVC.summonerInfo = self.summonerInfo;
+    }
 }
 
 @end

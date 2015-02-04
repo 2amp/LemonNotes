@@ -25,6 +25,8 @@
 {
     [super viewDidLoad];
     
+    NSLog(@"summmoner: %@", self.summonerInfo);
+    NSLog(@"matchId: %@", self.matchId);
 }
 
 /**

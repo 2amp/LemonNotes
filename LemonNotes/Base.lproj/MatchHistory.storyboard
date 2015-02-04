@@ -483,7 +483,7 @@
                         <outlet property="summonerLevelLabel" destination="6b5-mj-uV2" id="ANS-c7-uZ5"/>
                         <outlet property="summonerNameLabel" destination="UIJ-Ii-Jmq" id="7r0-LJ-izj"/>
                         <outlet property="tableView" destination="9qO-Nu-IZm" id="Iw5-rc-wx8"/>
-                        <segue destination="Lyo-FU-uAI" kind="show" identifier="showGameDetail" id="93F-Za-uch"/>
+                        <segue destination="Lyo-FU-uAI" kind="show" identifier="showMatchDetailVC" id="93F-Za-uch"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iny-Bm-yUY" userLabel="First Responder" sceneMemberID="firstResponder"/>
