@@ -14,6 +14,9 @@
 
 
 @interface TAPSummonerViewController()
+{
+    BOOL isRootView;
+}
 
 //summoner
 @property (nonatomic, strong) TAPSummonerManager *summonerManager;
@@ -62,7 +65,8 @@
     //NSLog(@"%@ %p", self.class, self);
     NSLog(@"SummonerVC [viewDidLoad]");
     
-    if (self == [self.navigationController.viewControllers firstObject])
+    isRootView = (self == [self.navigationController.viewControllers firstObject]);
+    if (isRootView)
     {
         self.summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
         [self.summonerManager registerSummoner];
@@ -85,8 +89,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
     NSLog(@"SummonerVC [viewWillAppear]");
+    
+    self.searchField.text = isRootView ? @"" : self.summonerInfo[@"name"];
     [self.navbarController revertToSaved];
 }
 
