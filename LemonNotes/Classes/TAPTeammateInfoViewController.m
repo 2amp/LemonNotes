@@ -10,12 +10,14 @@
 #import "TAPDataManager.h"
 #import "TAPSummonerManager.h"
 #import "TAPTeammateDetailViewController.h"
+#import <PNChart/PNCircleChart.h>
 
 @interface TAPTeammateInfoViewController ()
 
 @property NSMutableArray *mostPlayedChampions;
 @property NSMutableArray *mostPlayedChampionsKda;
 @property NSArray *teammateStats;
+@property NSMutableArray *teammateWins;
 @property NSDictionary *selectedTeammateStats;
 
 - (NSString *)mostPlayedChampionForTeammate:(int)teammateIndex;
@@ -33,8 +35,16 @@
     // Array setup with magic numbers D:<
     self.mostPlayedChampions = [[NSMutableArray alloc] init];
     self.mostPlayedChampionsKda = [[NSMutableArray alloc] init];
+    self.teammateWins = [[NSMutableArray alloc] init];
     self.teammateStats = [self buildStats];
-    NSLog(@"%@", self.teammateStats);
+
+    for (int i = 0; i < self.teammateStats.count; i++)
+    {
+        [self.teammateWins addObject:[self winsForTeammate:i]];
+    }
+    NSLog(@"%@", self.teammateWins);
+
+    // FIXME: Hardcoded init
     for (int i = 0; i < 4; i++)
     {
         [self.mostPlayedChampions addObject:@-1];
@@ -84,10 +94,26 @@
 }
 
 /**
- * NSArray of NSDictionaries (one per summoner)
- * NSDictionary compiles stats for each summoner
+ *  @param teammateIndex index of the teammate
+ *
+ *  @return the win rate for the specified teammate.
+ */
+- (NSNumber *)winsForTeammate:(int)teammateIndex
+{
+    int wins = 0;
+    NSDictionary *stats = self.teammateStats[teammateIndex];
+    for (NSString *championId in self.teammateStats[teammateIndex])
+    {
+        wins += [stats[championId][@"wins"] intValue];
+    }
+    return [NSNumber numberWithInt:wins];
+}
+
+/**
+ * NSArray of NSDictionaries (one per summoner).
+ * NSDictionary compiles stats for each summoner by champion ID.
  * @{
- *      @"1": @{@"wins": 10, @"games": 20, @"kills": 100, @"deaths": 100, @"assists": 100, @"cs": 100},
+ *      @"1": @{@"wins": @10, @"games": @20, @"kills": @100, @"deaths": @100, @"assists": @100, @"cs": @100},
  * }
  */
 - (NSArray *)buildStats
@@ -155,10 +181,11 @@
     TAPDataManager *dataManager = [TAPDataManager sharedManager];
 
     // Configure the cell...
-    UILabel *name = (UILabel *)([cell viewWithTag:100]);
+    UILabel *name                    = (UILabel *)([cell viewWithTag:100]);
     UIImageView *mostPlayedImageView = (UIImageView *)([cell viewWithTag:101]);
-    UILabel *mostPlayedLabel = (UILabel *)([cell viewWithTag:102]);
-    UILabel *mostPlayedKda = (UILabel *)([cell viewWithTag:103]);
+    UILabel *mostPlayedLabel         = (UILabel *)([cell viewWithTag:102]);
+    UILabel *mostPlayedKda           = (UILabel *)([cell viewWithTag:103]);
+    UIView *winRateChartHolder       = (UIView *)([cell viewWithTag:200]);
 
     if (![self.teammateManagers[indexPath.row] isEqual:[NSNull null]])
     {
@@ -181,6 +208,20 @@
                               (((NSNumber *)self.mostPlayedChampionsKda[indexPath.row][1]).floatValue + 1)];
     }
 
+    // Win rate circle chart init
+    PNCircleChart *winRateChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(0, 0,
+                                                                                  winRateChartHolder.frame.size.width,
+                                                                                  winRateChartHolder.frame.size.height)
+                                                                 total:@20
+                                                               current:@15
+                                                             clockwise:NO
+                                                                shadow:YES];
+    winRateChart.backgroundColor = [UIColor clearColor];
+    winRateChart.strokeColor = [UIColor clearColor];
+    winRateChart.strokeColorGradientStart = [UIColor blueColor];
+    [winRateChart strokeChart];
+    NSLog(@"%@", self.teammateWins[indexPath.row]);
+    [winRateChartHolder addSubview:winRateChart];
 
     return cell;
 }

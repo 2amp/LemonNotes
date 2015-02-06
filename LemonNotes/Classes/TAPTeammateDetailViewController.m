@@ -14,6 +14,8 @@ const int STATUS_BAR_HEIGHT = 20;
 const int NAVIGATION_BAR_HEIGHT = 44;
 const int TAB_BAR_HEIGHT = 49;
 
+const int NUM_BARS = 8;
+
 @interface TAPTeammateDetailViewController ()
 
 @end
@@ -22,45 +24,72 @@ const int TAB_BAR_HEIGHT = 49;
 
 - (void)viewDidLoad
 {
-//    NSArray *firstFiveChampions;
+    [super viewDidLoad];
+    [self setUpMostPlayedBarGraph];
+}
+
+/**
+ * Creates a bar graph of the NUM_BARS most played champions. Uses
+ * self.barChartHolder as a placeholder view.
+ */
+- (void)setUpMostPlayedBarGraph
+{
+    // Sort champion ids according to the number of games played
+    NSArray *championsSortedByGames = [self.teammateStats keysSortedByValueUsingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2) {
+        if (((NSNumber *)obj1[@"games"]).intValue > ((NSNumber *)obj2[@"games"]).intValue)
+        {
+            return (NSComparisonResult)NSOrderedAscending;
+        }
+        else if (((NSNumber *)obj1[@"games"]).intValue < ((NSNumber *)obj2[@"games"]).intValue)
+        {
+            return (NSComparisonResult)NSOrderedDescending;
+        }
+        else
+        {
+            return (NSComparisonResult)NSOrderedSame;
+        }
+    }];
+    NSArray *mostPlayedChampions;
     NSMutableArray *xLabels = [[NSMutableArray alloc] init];
     NSMutableArray *yValues = [[NSMutableArray alloc] init];
-//    if (self.teammateStats.count >= 5)
-//    {
-//        firstFiveChampions = [self.teammateStats.allKeys subarrayWithRange:NSMakeRange(0, 5)];
-//    }
-//    else
-//    {
-//        firstFiveChampions = self.teammateStats.allKeys;
-//    }
+    if (championsSortedByGames.count >= NUM_BARS)
+    {
+        mostPlayedChampions = [championsSortedByGames subarrayWithRange:NSMakeRange(0, NUM_BARS)];
+    }
+    else
+    {
+        mostPlayedChampions = championsSortedByGames;
+    }
 
-    for (NSString *championId in self.teammateStats.allKeys)
+    for (NSString *championId in mostPlayedChampions)
     {
         [xLabels addObject:[TAPDataManager sharedManager].champions[championId][@"name"]];
         [yValues addObject:self.teammateStats[championId][@"games"]];
     }
 
-    self.barChart = [[PNBarChart alloc] initWithFrame:CGRectMake(0, self.titleLabel.frame.origin.y + self.titleLabel.frame.size.height + 20,
-                                                                [UIScreen mainScreen].bounds.size.width, 200)];
-    self.barChart.backgroundColor = [UIColor clearColor];
-    self.barChart.yLabelFormatter = ^(CGFloat yValue){
+    // Init PNBarChart in the placeholder parent view
+    self.mostPlayedBarChart = [[PNBarChart alloc] initWithFrame:CGRectMake(0, 0,
+                                                                 self.mostPlayedBarChartHolder.frame.size.width,
+                                                                 self.mostPlayedBarChartHolder.frame.size.height)];
+    self.mostPlayedBarChart.backgroundColor = [UIColor clearColor];
+    self.mostPlayedBarChart.yLabelFormatter = ^(CGFloat yValue){
         CGFloat yValueParsed = yValue;
         NSString *labelText = [NSString stringWithFormat:@"%1.f", yValueParsed];
         return labelText;
     };
-    self.barChart.labelMarginTop = 5.0;
-    self.barChart.xLabels = xLabels;
-    self.barChart.rotateForXAxisText = true ;
-    self.barChart.yValues = yValues;
-//    [self.barChart setStrokeColors:@[PNGreen,PNGreen,PNRed,PNGreen,PNGreen]];
+    self.mostPlayedBarChart.labelMarginTop = 5.0;
+    self.mostPlayedBarChart.xLabels = xLabels;
+    self.mostPlayedBarChart.rotateForXAxisText = true ;
+    self.mostPlayedBarChart.yValues = yValues;
+    //    [self.barChart setStrokeColors:@[PNGreen,PNGreen,PNRed,PNGreen,PNGreen]];
     // Adding gradient
-//    self.barChart.barColorGradientStart = [UIColor blueColor];
+    //    self.barChart.barColorGradientStart = [UIColor blueColor];
 
-    [self.barChart strokeChart];
+    [self.mostPlayedBarChart strokeChart];
 
-    self.barChart.delegate = self;
+    self.mostPlayedBarChart.delegate = self;
 
-    [self.view addSubview:self.barChart];
+    [self.mostPlayedBarChartHolder addSubview:self.mostPlayedBarChart];
 }
 
 - (void)didReceiveMemoryWarning {
