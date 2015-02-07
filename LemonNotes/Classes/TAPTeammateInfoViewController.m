@@ -10,6 +10,7 @@
 #import "TAPDataManager.h"
 #import "TAPSummonerManager.h"
 #import "TAPTeammateDetailViewController.h"
+#import <PNChart/PNPieChart.h>
 #import <PNChart/PNCircleChart.h>
 
 @interface TAPTeammateInfoViewController ()
@@ -208,17 +209,15 @@
                               (((NSNumber *)self.mostPlayedChampionsKda[indexPath.row][1]).floatValue + 1)];
     }
 
-    // Win rate circle chart init
-    PNCircleChart *winRateChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(0, 0,
-                                                                                  winRateChartHolder.frame.size.width,
-                                                                                  winRateChartHolder.frame.size.height)
-                                                                 total:@20
-                                                               current:@15
-                                                             clockwise:NO
-                                                                shadow:YES];
-    winRateChart.backgroundColor = [UIColor clearColor];
-    winRateChart.strokeColor = [UIColor clearColor];
-    winRateChart.strokeColorGradientStart = [UIColor blueColor];
+    // Win rate pie chart init
+    NSArray *winRateChartItems = @[[PNPieChartDataItem dataItemWithValue:[self.teammateWins[indexPath.row] intValue]
+                                                                   color:[UIColor greenColor]],
+                                   [PNPieChartDataItem dataItemWithValue:([self.teammateRecentMatches[0] count] - [self.teammateWins[indexPath.row] intValue])
+                                                                   color:[UIColor redColor]]];
+    PNPieChart *winRateChart = [[PNPieChart alloc] initWithFrame:CGRectMake(0, 0,
+                                                                            winRateChartHolder.frame.size.width, winRateChartHolder.frame.size.height)
+                                                           items:winRateChartItems];
+    winRateChart.descriptionTextFont = [UIFont fontWithName:@"Avenir-Medium" size:12.0];
     [winRateChart strokeChart];
     NSLog(@"%@", self.teammateWins[indexPath.row]);
     [winRateChartHolder addSubview:winRateChart];
