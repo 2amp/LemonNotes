@@ -15,4 +15,9 @@
 - (void)setBorderRadius:(CGFloat)radius;
 - (void)setBorderWidth:(CGFloat)width color:(UIColor *)color;
 
+- (void)addTopBorderWithColor:(UIColor *)color width:(CGFloat)width;
+- (void)addLeftBorderWithColor:(UIColor *)color width:(CGFloat)width;
+- (void)addRightBorderWithColor:(UIColor *)color width:(CGFloat)width;
+- (void)addBottomBorderWithColor:(UIColor *)color width:(CGFloat)width;
+
 @end

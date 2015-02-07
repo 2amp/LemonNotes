@@ -1,5 +1,6 @@
 
 #import "TAPMatchDetailViewController.h"
+#import "UIView+BorderAdditions.h"
 
 @interface TAPMatchDetailViewController ()
 
@@ -76,6 +77,9 @@
 {
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    
+    [self.tableView setNeedsLayout];
+    [self.tableView layoutIfNeeded];
 }
 
 
@@ -87,36 +91,33 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    NSString *cellID = (section == 0) ? @"BlueHeader" : @"RedHeader";
+    NSString *cellID = @"BlueHeader";//(section == 0) ? @"BlueHeader" : @"RedHeader";
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellID];
     
-    cell.backgroundColor = [UIColor blueColor];
-    if ([cellID isEqualToString:@"BlueHeader"])
-        cell.backgroundColor = [UIColor redColor];
+    UIView *view = [cell viewWithTag:100];
+    if (section == 0)
+    {
+        [view addLeftBorderWithColor:[UIColor blueColor] width:3.0];
+        [view addBottomBorderWithColor:[UIColor blueColor] width:1.0];
+    }
+
     
     return cell;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"indexPath: %ld, %ld", (long)indexPath.section, (long)indexPath.row);
-
-    NSString *cellID = (indexPath.section == 0) ? @"BluePlayer" : @"RedPlayer";
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellID];
-
-    
-
-    return cell;
+    return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

@@ -1705,8 +1705,8 @@
 		955F28131A81BD11008C75CD /* TAPMatchDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPMatchDetailViewController.m; sourceTree = "<group>"; };
 		956116A21A3FB7200074D3A3 /* Kalista_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Kalista_0.jpg; sourceTree = "<group>"; };
 		956116A31A3FB7200074D3A3 /* RekSai_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RekSai_0.jpg; sourceTree = "<group>"; };
-		9561EE021A72A44B00770485 /* UIView+BorderAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+BorderAdditions.h"; sourceTree = "<group>"; };
-		9561EE031A72A44B00770485 /* UIView+BorderAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+BorderAdditions.m"; sourceTree = "<group>"; };
+		9561EE021A72A44B00770485 /* UIView+BorderAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+BorderAdditions.h"; path = "../Utils/UIView+BorderAdditions.h"; sourceTree = "<group>"; };
+		9561EE031A72A44B00770485 /* UIView+BorderAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+BorderAdditions.m"; path = "../Utils/UIView+BorderAdditions.m"; sourceTree = "<group>"; };
 		9567B3091A71C85900F89EFC /* ActivityIndicator Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ActivityIndicator Background.png"; sourceTree = "<group>"; };
 		9581360E1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSession+SynchronousTask.h"; sourceTree = "<group>"; };
 		9581360F1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSession+SynchronousTask.m"; sourceTree = "<group>"; };
@@ -2718,8 +2718,6 @@
 				95B298E21A189045000EC199 /* TAPSummonerManager.m */,
 				894BF6391A008858009A1F1F /* UIImage+UIImageAdditions.h */,
 				894BF63A1A008858009A1F1F /* UIImage+UIImageAdditions.m */,
-				9561EE021A72A44B00770485 /* UIView+BorderAdditions.h */,
-				9561EE031A72A44B00770485 /* UIView+BorderAdditions.m */,
 				9581360E1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.h */,
 				9581360F1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.m */,
 			);
@@ -2978,6 +2976,8 @@
 				953C75141A19E75000832A55 /* TAPLemonRefreshControl.m */,
 				9554F9701A47909C00E14E56 /* TAPScrollNavBarController.h */,
 				9554F9711A47909C00E14E56 /* TAPScrollNavBarController.m */,
+				9561EE021A72A44B00770485 /* UIView+BorderAdditions.h */,
+				9561EE031A72A44B00770485 /* UIView+BorderAdditions.m */,
 			);
 			path = "UI Elements";
 			sourceTree = "<group>";
