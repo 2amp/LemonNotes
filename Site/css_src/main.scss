@@ -1,6 +1,9 @@
+@import 'constants';
+
 #header {
     background-color: $logo_tint;
     
-    #title 
+    #title {
         color: white;
+    }
 }
