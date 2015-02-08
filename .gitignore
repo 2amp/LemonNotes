@@ -4,3 +4,6 @@ LemonNotes.xcodeproj/project.xcworkspace/xcuserdata
 LemonNotes.xcworkspace/xcuserdata
 LemonNotes.xcodeproj/project.xcworkspace/xcuserdata/Dennis.xcuserdatad/UserInterfaceState.xcuserstate
 *.gdraw
+
+*.css.map
+.sass-cache
