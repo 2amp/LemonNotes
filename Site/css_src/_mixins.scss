@@ -1,0 +1,52 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800italic,800);
+
+
+/* Transition */
+@mixin transition($duration, $func, $delay)
+{
+    transition: $duration $func $delay;
+    -ms-transition: $duration $func $delay;
+    -moz-transition: $duration $func $delay;
+    -webkit-transition: $duration $func $delay;
+}
+
+
+/* Vertical Positioning */
+@mixin vertical-translate($per)
+{
+    position: relative;
+    top: $per;
+    transform: translateY( $per - 100% );
+    -ms-transform: translateY( $per - 100% );
+    -moz-transform: translateY( $per - 100% );
+    -webkit-transform: translateY( $per - 100% );
+}
+
+@mixin vertical-align { @include vertical-translate(50); }
+
+
+/* Sliding Underline */
+@mixin underline-center-out-template($stroke, $color, $time)
+{
+    content: '';
+    margin: auto;
+    display: block;
+    
+    height: $stroke;
+    background: $color;
+    
+    transition: width $time ease, background-color $time ease;
+    -ms-transition: width $time ease, background-color $time ease;
+    -moz-transition: width $time ease, background-color $time ease;
+    -webkit-transition: width $time ease, background-color $time ease;
+}
+.underline-center-out-pre:after
+{
+    width: 0px;
+    @include underline-center-out-template(2px, white, 0.5s);
+}
+.underline-center-out-post:after
+{
+    width: 100%;
+    @include underline-center-out-template(2px, white, 0.5s);
+}

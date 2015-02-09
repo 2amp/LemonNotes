@@ -1,9 +1,64 @@
-@import 'constants';
+@import 'mixins';
 
-#header {
+//reset all margin/padding
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Constants */
+$app_tint: #5291C8;
+$logo_tint: #87CDFF;
+$isle_width: 1200px;
+
+
+/* Main CSS */
+.main_isle 
+{ 
+    width: $isle_width;
+    height: inherit;
+    margin: 0px auto;
+}
+
+#header
+{
+    height: 800px;
+    color: white;
     background-color: $logo_tint;
+    font-family: 'Open Sans', sans-serif;
     
-    #title {
-        color: white;
+    //title
+    #title_wrap
+    {
+        width: 550px;
+        display:block;
+        margin: 0px auto;
+        text-align: center;
+        @include vertical-translate(42%);
+    }
+    #title 
+    {
+        font-size: 80px;
+        font-weight: 300;
+        line-height: 1.2;
+        display: inline-block;
+    }
+    
+    //phrase
+    p
+    {
+        font-size: 16px;
+        font-weight: 500;
+        text-align: center;
+        
+        opacity: 0;
+        @include vertical-translate(40%);
+        @include transition(0.5s, linear, 0s);
+    }
+    p.fadein
+    {
+        opacity: 1;
+        @include vertical-translate(42%);
     }
 }
