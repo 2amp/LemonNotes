@@ -12,37 +12,37 @@ $app_tint: #5291C8;
 $logo_tint: #87CDFF;
 $isle_width: 1200px;
 
-
-/* Main CSS */
 .main_isle 
 { 
     width: $isle_width;
     height: inherit;
     margin: 0px auto;
+    overflow: hidden;
 }
 
+
+/* Header */
 #header
 {
-    height: 800px;
     color: white;
+    height: 800px;
     background-color: $logo_tint;
     font-family: 'Open Sans', sans-serif;
     
     //title
+    #title 
+    {
+        width: 450px;
+        height: 100px;
+        display: inline-block;
+    }
     #title_wrap
     {
         width: 550px;
         display:block;
-        margin: 0px auto;
         text-align: center;
-        @include vertical-translate(42%);
-    }
-    #title 
-    {
-        font-size: 80px;
-        font-weight: 300;
-        line-height: 1.2;
-        display: inline-block;
+        margin: 300px auto 0px auto;
+        @include transition(0.5s, linear, 0s);
     }
     
     //phrase
@@ -51,14 +51,40 @@ $isle_width: 1200px;
         font-size: 16px;
         font-weight: 500;
         text-align: center;
+        margin-top: 10px;
         
         opacity: 0;
-        @include vertical-translate(40%);
         @include transition(0.5s, linear, 0s);
     }
     p.fadein
     {
         opacity: 1;
-        @include vertical-translate(42%);
+        margin-top: 20px;
     }
 }
+
+
+/* Navbar */
+$navbar_height: 80px;
+nav
+{
+    display: none;
+    height: $navbar_height;
+    border-bottom: 1px solid #A7A7A7;
+    
+    ul
+    {
+        list-style: none;
+        height: inherit;
+    }
+}
+
+
+
+
+
+
+
+
+
+
