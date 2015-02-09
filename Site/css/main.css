@@ -30,6 +30,9 @@
   margin: 0;
   padding: 0; }
 
+html, body {
+  height: 100%; }
+
 /* Constants */
 .main_isle {
   width: 1200px;
@@ -40,7 +43,7 @@
 /* Header */
 #header {
   color: white;
-  height: 800px;
+  height: 100%;
   background-color: #87CDFF;
   font-family: 'Open Sans', sans-serif; }
   #header #title {
@@ -51,7 +54,7 @@
     width: 550px;
     display: block;
     text-align: center;
-    margin: 300px auto 0px auto;
+    margin: 30% auto 0px auto;
     transition: 0.5s linear 0s;
     -ms-transition: 0.5s linear 0s;
     -moz-transition: 0.5s linear 0s;

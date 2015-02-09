@@ -5,6 +5,7 @@
     margin: 0;
     padding: 0;
 }
+html, body { height: 100%; }
 
 
 /* Constants */
@@ -25,7 +26,7 @@ $isle_width: 1200px;
 #header
 {
     color: white;
-    height: 800px;
+    height: 100%;//800px;
     background-color: $logo_tint;
     font-family: 'Open Sans', sans-serif;
     
@@ -41,7 +42,7 @@ $isle_width: 1200px;
         width: 550px;
         display:block;
         text-align: center;
-        margin: 300px auto 0px auto;
+        margin: 30% auto 0px auto;
         @include transition(0.5s, linear, 0s);
     }
     
