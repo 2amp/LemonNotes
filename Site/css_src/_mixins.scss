@@ -35,10 +35,10 @@
     height: $stroke;
     background: $color;
     
-    transition: width $time ease, background-color $time ease;
-    -ms-transition: width $time ease, background-color $time ease;
-    -moz-transition: width $time ease, background-color $time ease;
-    -webkit-transition: width $time ease, background-color $time ease;
+    transition: width $time ease, background $time ease;
+    -ms-transition: width $time ease, background $time ease;
+    -moz-transition: width $time ease, background $time ease;
+    -webkit-transition: width $time ease, background $time ease;
 }
 .underline-center-out-pre:after
 {

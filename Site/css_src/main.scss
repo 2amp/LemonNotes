@@ -4,6 +4,8 @@
 * {
     margin: 0;
     padding: 0;
+    border: 0px;
+    font-family: 'Open Sans', sans-serif;
 }
 html, body { height: 100%; }
 
@@ -12,6 +14,10 @@ html, body { height: 100%; }
 $app_tint: #5291C8;
 $logo_tint: #87CDFF;
 $isle_width: 1200px;
+
+$num_links: 4;
+$nav_height: 80px;
+$item_reduction: 20px;
 
 .main_isle 
 { 
@@ -25,30 +31,30 @@ $isle_width: 1200px;
 /* Header */
 #header
 {
+    height: 100%;
     color: white;
-    height: 100%;//800px;
     background-color: $logo_tint;
-    font-family: 'Open Sans', sans-serif;
     
     //title
-    #title 
-    {
+    #header_content {
+        position: relative;
+        top: 40%;
+    }
+    #title_wrap {
+        width: 550px;
+        display:block;
+        text-align: center;
+        margin: 0px auto;
+        @include transition(0.5s, linear, 0s);
+    }
+    #title {
         width: 450px;
         height: 100px;
         display: inline-block;
     }
-    #title_wrap
-    {
-        width: 550px;
-        display:block;
-        text-align: center;
-        margin: 30% auto 0px auto;
-        @include transition(0.5s, linear, 0s);
-    }
     
     //phrase
-    p
-    {
+    p {
         font-size: 16px;
         font-weight: 500;
         text-align: center;
@@ -57,8 +63,7 @@ $isle_width: 1200px;
         opacity: 0;
         @include transition(0.5s, linear, 0s);
     }
-    p.fadein
-    {
+    p.fadein {
         opacity: 1;
         margin-top: 20px;
     }
@@ -66,20 +71,50 @@ $isle_width: 1200px;
 
 
 /* Navbar */
-$navbar_height: 80px;
 nav
 {
-    display: none;
-    height: $navbar_height;
-    border-bottom: 1px solid #A7A7A7;
+    height: $nav_height;
+    background-color: $logo_tint;
     
-    ul
-    {
+    ul.main_isle {
         list-style: none;
         height: inherit;
+        box-sizing: padding-box;
+        padding-left: $item_reduction * ($num_links / 2);
+    }
+    li {
+        box-sizing: border-box;
+        height: $nav_height;
+        width: ($isle_width / $num_links) - $item_reduction;
+        
+        text-align: center;
+        display: inline-block;
+    }
+    a {
+        color: white;
+        font-size: 18px;
+        font-weight: 400;
+        text-align: center;
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+        
+        width: 120px;
+        padding-bottom: 8px;
+        display: inline-block;
+        @include vertical-translate(50%);
+        @include transition(0.2s, linear, 0s);
+    }
+    a:hover {
+        border-bottom: 2px solid orange;
     }
 }
 
+
+/* Features */
+#features
+{
+    height: 1200px;
+}
 
 
 
