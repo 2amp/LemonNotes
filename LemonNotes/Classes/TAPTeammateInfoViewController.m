@@ -10,12 +10,15 @@
 #import "TAPDataManager.h"
 #import "TAPSummonerManager.h"
 #import "TAPTeammateDetailViewController.h"
+#import <PNChart/PNPieChart.h>
+#import <PNChart/PNCircleChart.h>
 
 @interface TAPTeammateInfoViewController ()
 
 @property NSMutableArray *mostPlayedChampions;
 @property NSMutableArray *mostPlayedChampionsKda;
 @property NSArray *teammateStats;
+@property NSMutableArray *teammateWins;
 @property NSDictionary *selectedTeammateStats;
 
 - (NSString *)mostPlayedChampionForTeammate:(int)teammateIndex;
@@ -33,8 +36,16 @@
     // Array setup with magic numbers D:<
     self.mostPlayedChampions = [[NSMutableArray alloc] init];
     self.mostPlayedChampionsKda = [[NSMutableArray alloc] init];
+    self.teammateWins = [[NSMutableArray alloc] init];
     self.teammateStats = [self buildStats];
-    NSLog(@"%@", self.teammateStats);
+
+    for (int i = 0; i < self.teammateStats.count; i++)
+    {
+        [self.teammateWins addObject:[self winsForTeammate:i]];
+    }
+    NSLog(@"%@", self.teammateWins);
+
+    // FIXME: Hardcoded init
     for (int i = 0; i < 4; i++)
     {
         [self.mostPlayedChampions addObject:@-1];
@@ -84,10 +95,26 @@
 }
 
 /**
- * NSArray of NSDictionaries (one per summoner)
- * NSDictionary compiles stats for each summoner
+ *  @param teammateIndex index of the teammate
+ *
+ *  @return the win rate for the specified teammate.
+ */
+- (NSNumber *)winsForTeammate:(int)teammateIndex
+{
+    int wins = 0;
+    NSDictionary *stats = self.teammateStats[teammateIndex];
+    for (NSString *championId in self.teammateStats[teammateIndex])
+    {
+        wins += [stats[championId][@"wins"] intValue];
+    }
+    return [NSNumber numberWithInt:wins];
+}
+
+/**
+ * NSArray of NSDictionaries (one per summoner).
+ * NSDictionary compiles stats for each summoner by champion ID.
  * @{
- *      @"1": @{@"wins": 10, @"games": 20, @"kills": 100, @"deaths": 100, @"assists": 100, @"cs": 100},
+ *      @"1": @{@"wins": @10, @"games": @20, @"kills": @100, @"deaths": @100, @"assists": @100, @"cs": @100},
  * }
  */
 - (NSArray *)buildStats
@@ -155,10 +182,11 @@
     TAPDataManager *dataManager = [TAPDataManager sharedManager];
 
     // Configure the cell...
-    UILabel *name = (UILabel *)([cell viewWithTag:100]);
+    UILabel *name                    = (UILabel *)([cell viewWithTag:100]);
     UIImageView *mostPlayedImageView = (UIImageView *)([cell viewWithTag:101]);
-    UILabel *mostPlayedLabel = (UILabel *)([cell viewWithTag:102]);
-    UILabel *mostPlayedKda = (UILabel *)([cell viewWithTag:103]);
+    UILabel *mostPlayedLabel         = (UILabel *)([cell viewWithTag:102]);
+    UILabel *mostPlayedKda           = (UILabel *)([cell viewWithTag:103]);
+    UIView *winRateChartHolder       = (UIView *)([cell viewWithTag:200]);
 
     if (![self.teammateManagers[indexPath.row] isEqual:[NSNull null]])
     {
@@ -181,6 +209,18 @@
                               (((NSNumber *)self.mostPlayedChampionsKda[indexPath.row][1]).floatValue + 1)];
     }
 
+    // Win rate pie chart init
+    NSArray *winRateChartItems = @[[PNPieChartDataItem dataItemWithValue:[self.teammateWins[indexPath.row] intValue]
+                                                                   color:[UIColor greenColor]],
+                                   [PNPieChartDataItem dataItemWithValue:([self.teammateRecentMatches[0] count] - [self.teammateWins[indexPath.row] intValue])
+                                                                   color:[UIColor redColor]]];
+    PNPieChart *winRateChart = [[PNPieChart alloc] initWithFrame:CGRectMake(0, 0,
+                                                                            winRateChartHolder.frame.size.width, winRateChartHolder.frame.size.height)
+                                                           items:winRateChartItems];
+    winRateChart.descriptionTextFont = [UIFont fontWithName:@"Avenir-Medium" size:12.0];
+    [winRateChart strokeChart];
+    NSLog(@"%@", self.teammateWins[indexPath.row]);
+    [winRateChartHolder addSubview:winRateChart];
 
     return cell;
 }

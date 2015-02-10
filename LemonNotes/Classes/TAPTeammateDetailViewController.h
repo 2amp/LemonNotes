@@ -12,9 +12,10 @@
 @interface TAPTeammateDetailViewController : UIViewController <PNChartDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *champLabel;
-@property PNBarChart *barChart;
+@property PNBarChart *mostPlayedBarChart;
 @property NSDictionary *teammateStats;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *mostPlayedBarChartHolder;
 
 @end
