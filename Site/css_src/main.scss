@@ -18,6 +18,10 @@ $isle_width: 1200px;
 $num_links: 4;
 $nav_height: 80px;
 $item_reduction: 20px;
+$link_width_big: $isle_width / $num_links;
+$link_width_small: $link_width_big * ($num_links / ($num_links + 1));
+
+$features_padding: 40px;
 
 .main_isle 
 { 
@@ -71,49 +75,99 @@ $item_reduction: 20px;
 
 
 /* Navbar */
-nav
+#navbar
 {
     height: $nav_height;
     background-color: $logo_tint;
     
-    ul.main_isle {
+    #lemon_container{
+        padding-top: 12px;
+        text-align: center;
+        box-sizing: padding-box;
+        
+        position: absolute;
+        height: $nav_height;
+        width: $link_width_small - $item_reduction;
+        
+        opacity: 0;
+        a { cursor: default; }
+        @include transition(0.3s, linear, 0s);
+    }
+    #lemon_container.show{ 
+       opacity: 1;
+        a { cursor: pointer; }
+    }
+    #lemon_logo {
+        width: 50px;
+        height: auto;
+        display: inline-block;
+    }
+    
+    ul#nav_list {
         list-style: none;
+        text-align: right;
+        overflow-x:scroll;
+        
         height: inherit;
         box-sizing: padding-box;
-        padding-left: $item_reduction * ($num_links / 2);
+        padding-right: $item_reduction * ($num_links / 2);
     }
     li {
         box-sizing: border-box;
         height: $nav_height;
-        width: ($isle_width / $num_links) - $item_reduction;
+        width: $link_width_big - $item_reduction;
         
         text-align: center;
         display: inline-block;
+        @include transition(0.5s, linear, 0s);  
     }
+    li.shift-right { width: $link_width_small - $item_reduction; }
+    
     a {
+        text-align: center;
+        display: inline-block;
+        @include transition(0.1s, linear, 0s);
+        border-bottom: 2px solid transparent;
+    }
+    .nav_link {
         color: white;
         font-size: 18px;
         font-weight: 400;
-        text-align: center;
         text-decoration: none;
-        border-bottom: 2px solid transparent;
         
         width: 120px;
         padding-bottom: 8px;
-        display: inline-block;
         @include vertical-translate(50%);
-        @include transition(0.2s, linear, 0s);
     }
-    a:hover {
-        border-bottom: 2px solid orange;
-    }
+    .nav_link:hover { border-bottom: 2px solid orange; }
+}
+#navbar.sticky_navbar {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+}
+
+#fill {
+    width: 100%;
+    height: $nav_height;
+    display: none;
 }
 
 
 /* Features */
 #features
 {
-    height: 1200px;
+    height: 1000px;
+}
+#developers
+{
+    height: 1000px;
+}
+.test {
+    width: 100%;
+    height: 200px;
+    border: 1px solid black;
+    box-sizing: border-box;
 }
 
 

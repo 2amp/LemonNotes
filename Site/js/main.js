@@ -23,7 +23,7 @@ $( document ).ready(function(){
     }
     
     //click scroll, http://css-tricks.com/snippets/jquery/smooth-scrolling/
-    $('a[href*=#]:not([href=#])').click(function() 
+    $('.nav_link').click(function() 
     {
         if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') 
          || location.hostname == this.hostname) 
@@ -32,9 +32,40 @@ $( document ).ready(function(){
             target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
             if (target.length) 
             {
-                $('html,body').animate({ scrollTop: target.offset().top}, 850);
+                $('html,body').animate({ scrollTop: (target.offset().top - nav_height)}, 850);
                 return false;
             }
+        }
+    });
+    
+    //exclusive for logo link to top
+    $("#lemon_link").click(function()
+    {
+        if ($(this).css("opacity") == 1)
+            $('html,body').animate({ scrollTop: 0 }, 800);
+    });
+    
+    //window scrolled event
+    $(window).scroll(function()
+    {
+        var offset = $(window).scrollTop();
+        var height = $("#header").height();
+        
+        if (offset >= height)
+        {
+            $("#fill").css("display", "block");
+            $("#navbar").addClass("sticky_navbar");
+            
+            $("#lemon_container").addClass("show");
+            $("li.nav_item").addClass("shift-right");
+        }
+        else
+        {
+            $("#fill").css("display", "none");
+            $("#navbar").removeClass("sticky_navbar");
+            
+            $("#lemon_container").removeClass("show");
+            $("li.nav_item").removeClass("shift-right");
         }
     });
 });
