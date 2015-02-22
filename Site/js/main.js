@@ -111,6 +111,9 @@ $( document ).ready(function(){
             captionIndex--;
             var left_offset = captionIndex * -100;
             $("#caption_list").css("left", left_offset.toString() + "%");
+            
+            $(".content_link").removeClass("active");
+            $("a.content_link").eq(captionIndex).addClass("active");
         }
     });
     $("#content_right").click(function(event)
@@ -121,6 +124,9 @@ $( document ).ready(function(){
             captionIndex++;
             var left_offset = captionIndex * -100;
             $("#caption_list").css("left", left_offset.toString() + "%");
+            
+            $(".content_link").removeClass("active");
+            $("a.content_link").eq(captionIndex).addClass("active");
         }
     });
     $(".content_link").click(function(event)
