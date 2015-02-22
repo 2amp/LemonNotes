@@ -7,6 +7,7 @@
     <link rel="shortcut icon" type="image/png" href="Site/images/favicon.png">
     
     <!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="Site/css/main.css">
     
     <!-- JS -->
@@ -23,26 +24,28 @@
 <body>
     <!-- Header -->
     <div id="header" class="container">
-        <div class="main_isle row">
+        <div class="isle main_isle">
             <div id="header_content">
-                <div id="title_wrap"> <img src="Site/images/Logo_full.png" alt="LemonNotes Logo"> </div>
-                <p   id="phrase">League of Legends is about to get a whole lot simpler.</p>
+                <div id="title_wrap" class="center_text"> 
+                    <img src="Site/images/Logo_full.png" alt="LemonNotes Logo">
+                </div>
+                <p   id="phrase" class="center_text">League of Legends is about to get a whole lot simpler.</p>
             </div>
         </div>
     </div>
     
     <!-- Navbar -->
     <nav id="navbar">
-        <div class="main_isle">
+        <div class="isle main_isle">
             <!-- Logo -->
-            <div id="lemon_container">
+            <div id="lemon_container" class="center_text">
                 <a id="lemon_link" href="#"> 
                     <img id="lemon_logo" alt="lemon logo" src="Site/images/Lemon_logo.png">
                 </a>
             </div>
             
             <!-- Nav links -->
-            <ul id="nav_list" class="main_isle">
+            <ul class="main_isle hor_list">
                 <li class="nav_item"> <a class="nav_link" href="#features">  Features  </a> </li>
                 <li class="nav_item"> <a class="nav_link" href="#developers">Developers</a> </li>
                 <li class="nav_item"> <a class="nav_link" href="">Links     </a> </li>
@@ -54,17 +57,76 @@
     <div id="fill"></div>
     
     <!-- Features -->
-    <div id="features">
-        <div class="main_isle">
+    <section id="features">
+        <div class="isle content_isle">
+            
+            <h2 class="section_title">Features</h2>
+            <div class="section_body">
+                <ul id="content_nav" class="hor_list">
+                    <li class="content_item"> <a class="content_link active" href="#">Match History  </a> </li>
+                    <li class="content_item"> <a class="content_link" href="#">Summoner Search</a> </li>
+                    <li class="content_item"> <a class="content_link" href="#">Teammate Search</a> </li>
+                </ul>
+                
+                <div class="content">
+                    <!-- Left col for arrow -->
+                    <div class="col side left">
+                        <a id="content_left" class="nav_arrow" href="#">
+                            <i class="fa fa-chevron-left"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Main col for content -->
+                    <div class="col main">
+                        <!-- Box for preview -->
+                        <div id="preview" class="col">
+                            <img id="frame" src="Site/images/iphone_frame.png">
+                            <ul id="preview_list" class="hor_list container">
+                            
+                            </ul>
+                        </div>
+                        
+                        <!-- Box for caption -->
+                        <div id="caption" class="col container">
+                            <ul id="caption_list">
+                                <li class="caption_item" id="test">
+                                    <h3 class="caption_title">Match History</h3>
+                                    <p  class="caption_body">
+                                        Easily view your previous games in one glance. </p>
+                                    <p class="caption_body">
+                                        Match History shows the main information for past games, including
+                                        duration, time, champion, kda, items, gold, creep score, and wards. </p>
+                                </li>
+                                <li class="caption_item">
+                                    <h3 class="caption_title">Summoner Search</h3>
+                                    <p  class="caption_body">
+                                        Want to know how a friend has been playing? </p>
+                                    <p class="caption_body">
+                                        Search for another summoner from any region. <br>
+                                        Get the match history and look at all the details of how another 
+                                        summoner did recently (even pro players!) </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Right col for arrow -->
+                    <div class="col side right">
+                        <a id="content_right" class="nav_arrow" href="#">
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
             
         </div>
-    </div>
+    </section>
     
     <!-- Developers -->
-    <div id="developers">
+    <section id="developers">
         <div class="main_isle">
             
         </div>
-    </div>
+    </section>
 </body>
 </html>

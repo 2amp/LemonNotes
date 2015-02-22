@@ -3,11 +3,26 @@ $( document ).ready(function(){
     /* Constants */
     var nav_height = 80;
         
-    //inital setup
-    window.onload = function()
+    /* Events */
+    window.onload = setup;
+    window.onresize = adjustToResize;
+    $(window).scroll(function(){ adjustToScroll(); });
+    
+    /**
+     * @function setup 
+     * 
+     * Called upon first load.
+     * Set header height accordingly,
+     * and add classes if scroll is already lower.
+     * Do start animations anyways.
+     */
+    function setup()
     {
         //header height
         $("#header").height(window.innerHeight - nav_height);
+        
+        //add/drop classes
+        adjustToScroll();
         
         //start animations
         $("#title_wrap").addClass("underline-center-out-pre");
@@ -15,12 +30,52 @@ $( document ).ready(function(){
         setTimeout( function(){ $("#phrase").addClass("fadein"); }, 1200);
     }
     
-    //resize event
-    window.onresize = function()
+    /**
+     * @function adjustToResize
+     *
+     * Adjusts header's height according to window height.
+     * Takes window height and subtracts navbar's height.
+     */
+    function adjustToResize()
     {   
-        //header
         $("#header").height(window.innerHeight - nav_height);
     }
+    
+    /**
+     * @function adjustToScroll
+     * 
+     * Adjusts appropriate classes upon scrolling.
+     * If current offset is lower than header's height,
+     * add classes to modify navbar.
+     * Otherwise, reverse those changes.
+     */
+    function adjustToScroll()
+    {
+        var offset = $(window).scrollTop();
+        var height = $("#header").height();
+        
+        if (offset >= height/2)
+        {
+            $("#lemon_container").addClass("show");
+            $("li.nav_item").addClass("shift-right");
+        }
+        else
+        {
+            $("#lemon_container").removeClass("show");
+            $("li.nav_item").removeClass("shift-right");
+        }
+        
+        if (offset >= height)
+        {
+            $("#fill").css("display", "block");
+            $("#navbar").addClass("sticky_navbar");
+        }
+        else
+        {
+            $("#fill").css("display", "none");
+            $("#navbar").removeClass("sticky_navbar");
+        }
+    };
     
     //click scroll, http://css-tricks.com/snippets/jquery/smooth-scrolling/
     $('.nav_link').click(function() 
@@ -37,7 +92,6 @@ $( document ).ready(function(){
             }
         }
     });
-    
     //exclusive for logo link to top
     $("#lemon_link").click(function()
     {
@@ -45,27 +99,38 @@ $( document ).ready(function(){
             $('html,body').animate({ scrollTop: 0 }, 800);
     });
     
-    //window scrolled event
-    $(window).scroll(function()
+    
+    //features nav
+    var captionIndex = 0;
+    var numCaptions = $("#caption_list li").length;
+    $("#content_left").click(function(event)
     {
-        var offset = $(window).scrollTop();
-        var height = $("#header").height();
+        event.preventDefault();
+        if (captionIndex > 0)
+        {
+            captionIndex--;
+            var left_offset = captionIndex * -100;
+            $("#caption_list").css("left", left_offset.toString() + "%");
+        }
+    });
+    $("#content_right").click(function(event)
+    {
+        event.preventDefault();
+        if (captionIndex < numCaptions - 1)
+        {
+            captionIndex++;
+            var left_offset = captionIndex * -100;
+            $("#caption_list").css("left", left_offset.toString() + "%");
+        }
+    });
+    $(".content_link").click(function(event)
+    {
+        event.preventDefault();
+        var index = $("a.content_link").index(this);
+        var left_offset = index * -100;
+        $("#caption_list").css("left", left_offset.toString() + "%");
         
-        if (offset >= height)
-        {
-            $("#fill").css("display", "block");
-            $("#navbar").addClass("sticky_navbar");
-            
-            $("#lemon_container").addClass("show");
-            $("li.nav_item").addClass("shift-right");
-        }
-        else
-        {
-            $("#fill").css("display", "none");
-            $("#navbar").removeClass("sticky_navbar");
-            
-            $("#lemon_container").removeClass("show");
-            $("li.nav_item").removeClass("shift-right");
-        }
+        $(".content_link").removeClass("active");
+        $(this).addClass("active");
     });
 });
