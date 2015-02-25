@@ -27,7 +27,7 @@
         <div class="isle main_isle">
             <div id="header_content">
                 <div id="title_wrap" class="center_text"> 
-                    <img src="Site/images/Logo_full.png" alt="LemonNotes Logo">
+                    <img id="title" src="Site/images/Logo_full.png" alt="LemonNotes Logo">
                 </div>
                 <p   id="phrase" class="center_text">League of Legends is about to get a whole lot simpler.</p>
             </div>
@@ -81,15 +81,19 @@
                         <!-- Box for preview -->
                         <div id="preview" class="col">
                             <img id="frame" src="Site/images/iphone_frame.png">
-                            <ul id="preview_list" class="hor_list container">
-                            
-                            </ul>
+                            <div id="preview_window">
+                                <div id="preview_list">
+                                    <img class="preview_img" src="Site/images/match_history.png">
+                                    <img class="preview_img" src="Site/images/summoner_search.png">
+                                    <img class="preview_img" src="Site/images/teammate_search.png">
+                                </div>
+                            </div>
                         </div>
                         
                         <!-- Box for caption -->
                         <div class="caption col container">
                             <ul id="caption_list">
-                                <li class="caption_item" id="test">
+                                <li class="caption_item">
                                     <h3 class="caption_title">Match History</h3>
                                     <p  class="caption_body">
                                         Easily view your previous games in one glance. </p>
@@ -105,6 +109,15 @@
                                         Search for another summoner from any region. <br>
                                         Get the match history and look at all the details of how another 
                                         summoner did recently (even pro players!) </p>
+                                </li>
+                                <li class="caption_item">
+                                    <h3 class="caption_title">Teammate Search</h3>
+                                    <p  class="caption_body">
+                                        Want to know what you're getting yourself into? </p>
+                                    <p class="caption_body">
+                                        Search for other summoners in your ranked champ select! <br>
+                                        Get a brief summary of each teammate on their recently
+                                        played champions and performances on them!</p>
                                 </li>
                             </ul>
                         </div>
@@ -138,11 +151,11 @@
                         <p  class="prof_role">Cofounder/Developer</p>
                         <p  class="prof_job">Student, Yale University</p>
                         <p  class="prof_desc">
-                            Not yet decided on pursuing Computer Science as a major, but an avid programmer.
-                            Loves to tackle new languages and build small projects for fun.
-                            Although silly and lighthearted most of the time (note picture), 
-                            Chris gets down to work when needed. Working on the main Ban an Pick Phase 
-                            teammate search.
+                            Currently working on Teammate Search. <br>
+                            Although not a Computer Science major, Chris is an avid programmer.
+                            He loves to tackle new languages and build small programs for fun.
+                            Silly and joking on the outside(note picture), but gets serious and down to work
+                            when needed.
                         </p>
                     </div>
                     <div class="col right prof">
@@ -151,10 +164,12 @@
                         <p  class="prof_role">Cofounder/Developer</p>
                         <p  class="prof_job">Student, Unv. Southern California</p>
                         <p  class="prof_desc">
-                            Currently pursing a BS in Computer Science. 
-                            Loves to code and play video games. Also interested in design and UI/UX, 
-                            so likes make things look as pretty as possible. Mainly worked on the
-                            summoner match history section of app.
+                            Currently working on Match History. <br>
+                            Dennis is pursuing a BS in CS, and is hoping to learn outside
+                            the classroom with personal projects and fiddling. Aside from
+                            usual backend, interested in design and UI/UX.
+                            Although slow to hop onto a project unless sure, gets into the work
+                            once the ball starts rolling.
                         </p>
                     </div>
                 </div>
@@ -180,8 +195,7 @@
                  <div id="contact_content">
                     <div class="contact_box">
                          <p class="contact_name">Chris Fu</p>
-                         <a class="normal_link" href="mailto:">dummy@yale.edu</a>
-
+                         <a class="normal_link" href="mailto:christopher.fu@yale.edu">christopher.fu@yale.edu</a>
                      </div>
 
                      <div class="contact_box">

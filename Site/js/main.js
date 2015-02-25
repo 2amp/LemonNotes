@@ -87,7 +87,7 @@ $( document ).ready(function(){
             target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
             if (target.length) 
             {
-                $('html,body').animate({ scrollTop: (target.offset().top - nav_height)}, 850);
+                $('html,body').animate({ scrollTop: (target.offset().top - nav_height)}, 500);
                 return false;
             }
         }
@@ -102,41 +102,43 @@ $( document ).ready(function(){
     
     //features nav
     var captionIndex = 0;
-    var numCaptions = $("#caption_list li").length;
+    var numCaptions = $("a.content_link").length;
+    console.log(numCaptions);
     $("#content_left").click(function(event)
     {
         event.preventDefault();
+        console.log(captionIndex);
         if (captionIndex > 0)
         {
             captionIndex--;
-            var left_offset = captionIndex * -100;
-            $("#caption_list").css("left", left_offset.toString() + "%");
-            
-            $(".content_link").removeClass("active");
-            $("a.content_link").eq(captionIndex).addClass("active");
+            featureNav(captionIndex);
         }
     });
     $("#content_right").click(function(event)
     {
         event.preventDefault();
+        console.log(captionIndex);
         if (captionIndex < numCaptions - 1)
         {
             captionIndex++;
-            var left_offset = captionIndex * -100;
-            $("#caption_list").css("left", left_offset.toString() + "%");
-            
-            $(".content_link").removeClass("active");
-            $("a.content_link").eq(captionIndex).addClass("active");
+            featureNav(captionIndex);
         }
     });
     $(".content_link").click(function(event)
     {
         event.preventDefault();
-        var index = $("a.content_link").index(this);
-        var left_offset = index * -100;
-        $("#caption_list").css("left", left_offset.toString() + "%");
-        
-        $(".content_link").removeClass("active");
-        $(this).addClass("active");
+        captionIndex = $("a.content_link").index(this);
+        featureNav(captionIndex);
+        console.log(captionIndex);
     });
+    
+    function featureNav(index)
+    {
+        var offset = index * -100;
+        $("#caption_list").css("left", offset.toString() + "%");
+        $("#preview_list").css("top", offset.toString() + "%");
+        
+        $("a.content_link").removeClass("active");
+        $("a.content_link").eq(index).addClass("active");
+    }
 });

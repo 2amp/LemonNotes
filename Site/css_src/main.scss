@@ -92,7 +92,7 @@ ul { list-style: none; }
     }
     #title {
         width: 450px;
-        height: 100px;
+        height: auto;
     }
     
     //phrase
@@ -238,18 +238,31 @@ $main_col_width: $content_width * 0.90;
         left: 20px;
         position: absolute;
     }
-    #preview_list {
+    #preview_window {
         z-index: 0;
-        background: #87CDFF;
-        width: 200px;
-        height: 351px;
+        width: 210px;
+        height: 360px;
+        overflow: hidden;
         
-        top: 75px;
-        left: 45px;
+        left: 40px;
+        top: 70px;
         position: relative;
     }
+    #preview_list { 
+        height: 3 * 360px;
+        position: relative; 
+        font-size: 0;
+        top: 0%;
+        @include transition(0.5s, linear, 0s);
+    }
+    .preview_img {
+        width: 210px;
+        height: 360px;
+    }
+    
+    //captions
     #caption_list {
-        width: 200%;
+        width: 300%;
         height: 100%;
         position: relative;
         left: 0%;
