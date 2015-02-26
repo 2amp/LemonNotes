@@ -26,7 +26,6 @@
 @property (nonatomic, strong) TAPScrollNavBarController *navbarController;
 
 //table
-@property (nonatomic, weak) NSArray *matches;
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
 @property (nonatomic, strong) TAPLemonRefreshControl* lemonRefresh;
 
@@ -111,8 +110,6 @@
     _summonerInfo = summonerInfo;
     self.summonerManager = [[TAPSummonerManager alloc] initWithSummoner:summonerInfo];
     self.summonerManager.delegate = self;
-    
-    self.matches = self.summonerManager.loadedMatches;
 }
 
 /**
@@ -269,6 +266,23 @@
 {
     [self updateHeaderSplash];
     [self.tableView reloadData];
+    
+    NSLog(@"%@", self.summonerManager.loadedMatches);
+}
+
+/**
+ * @method refresh
+ *
+ * Called when user pulls to refresh.
+ * Relays message onto SummonerManager
+ */
+- (void)refresh
+{
+    double delayInSeconds = 0.5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.summonerManager loadNewMatches];
+    });
 }
 
 /**
@@ -394,21 +408,6 @@
 
 #pragma mark - TableView Events
 /**
- * @method refresh
- *
- * Called when user pulls to refresh.
- * Relays message onto SummonerManager
- */
-- (void)refresh
-{
-    double delayInSeconds = 0.5;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self.summonerManager loadNewMatches];
-    });
-}
-
-/**
  * @method numberOfSectionsInTableView:
  *
  * Returns 1 because match history only has 1 section
@@ -432,7 +431,7 @@
  */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.matches.count;
+    return self.summonerManager.loadedMatches.count;
 }
 
 /**
@@ -494,7 +493,7 @@
     
     /* GET STATIC DATA */
     TAPDataManager *dataManager = [TAPDataManager sharedManager];
-    NSDictionary *match = self.matches[indexPath.row];
+    NSDictionary *match = self.summonerManager.loadedMatches[indexPath.row];
     int summonerIndex = [match[@"summonerIndex"] intValue];
     NSDictionary *info  = match[@"participants"][summonerIndex];
     NSDictionary *stats = info[@"stats"];
@@ -573,8 +572,6 @@
     for (int i = 0; i < itemImageViews.count; i++)
     {
         NSString *itemKey = [items[i] stringValue];
-        if ([itemKey isEqualToString:@"0"]) itemKey = @"0000";
-        
         UIImageView *itemView = (UIImageView *)itemImageViews[i];
         [itemView setBorderRadius:4.0f];
         [itemView setBorderWidth:0.5f color:[UIColor whiteColor]];
@@ -661,7 +658,7 @@
         [self.tableView deselectRowAtIndexPath:selectedPath animated:YES];
         
         TAPMatchDetailViewController *targetVC = (TAPMatchDetailViewController *)segue.destinationViewController;
-        targetVC.matchId = self.matches[selectedPath.row][@"matchId"];
+        targetVC.matchId = self.summonerManager.loadedMatches[selectedPath.row][@"matchId"];
         targetVC.summonerInfo = self.summonerInfo;
     }
 }

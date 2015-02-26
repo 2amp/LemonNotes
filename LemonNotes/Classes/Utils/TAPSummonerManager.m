@@ -251,8 +251,6 @@
             [self.temporaryMatches removeAllObjects];
         }
         
-        NSLog(@"%@", newMatches);
-        
         //set
         if (numLoaded > 0)
         {
@@ -260,6 +258,8 @@
             [newMatches addObjectsFromArray:self.mutableMatches];
             self.mutableMatches = newMatches;
         }
+        
+        NSLog(@"%@", self.mutableMatches);
         
         //report to delegate
         dispatch_async(dispatch_get_main_queue(),
