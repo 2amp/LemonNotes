@@ -1,47 +1,70 @@
 
-#import "TAPScrollNavBarController.h"
-#import <objc/runtime.h>
+#import "TAPScrollNavbar.h"
 
-
-
-@interface TAPScrollNavBarController()
+@interface TAPScrollNavbar()
 {
-    CGFloat navbarHeight;
-    CGFloat previousOffset;
-    CGFloat savedOffset;
     BOOL dragging;
+    CGFloat height;
+    CGFloat savedOffset;
+    CGFloat previousOffset;
 }
 
-@property (nonatomic, weak) UINavigationBar *navbar;
+@property (nonatomic, strong) UIView *overlay;
+@property (nonatomic, weak  ) UIScrollView *scrollView;
+@property (nonatomic, strong) UIPanGestureRecognizer *gesture;
 
 @end
 #pragma mark -
 
-
-
-@implementation TAPScrollNavBarController
-#pragma mark Setup
+@implementation TAPScrollNavbar
+#pragma mark Init
 /**
- * @method initWithNavBar
+ * @method initWithNavbar
  *
- * Store a weak reference to the given navbar,
- * and its height for convenient access later on.
+ * Creates a ScrollNavbar given another navbar.
+ * Copies some basic properties over.
  *
- * @param navbar - to controll scrolling
+ * @param navbar - to use as template
  */
-- (instancetype)initWithNavBar:(UINavigationBar *)navbar
+- (instancetype)initWithNavbar:(UINavigationBar *)navbar
 {
-    if (self = [super init])
+    if(self = [self initWithFrame:navbar.frame])
     {
-        self.navbar = navbar;
-        navbarHeight = navbar.frame.size.height;
-        
-        dragging = NO;
-        savedOffset = [self statusbarHeight];
+        self.barStyle = navbar.barStyle;
+        self.tintColor = navbar.tintColor;
+        self.barTintColor = navbar.barTintColor;
     }
     return self;
 }
 
+/**
+ * @method initWithView
+ *
+ * Creates a ScrollingNavbar with the given frame
+ * @param frame - frame of navbar
+ */
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    if (self = [super initWithFrame:frame])
+    {
+        dragging = NO;
+        height = self.frame.size.height;
+        
+        //overlay
+        self.overlay = [[UIView alloc] initWithFrame:frame];
+        [self addSubview:self.overlay];
+        [self bringSubviewToFront:self.overlay];
+        
+        //gesture
+//        self.gesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(scrollHandler)];
+//        self.gesture.maximumNumberOfTouches = 1;
+//        self.gesture.delegate = self;
+    }
+    return self;
+}
+
+
+#pragma mark - Setup
 /**
  * @method revertToSaved
  *
@@ -50,10 +73,67 @@
  */
 - (void)revertToSaved
 {
-    CGRect frame = self.navbar.frame;
+    CGRect frame = self.frame;
     frame.origin.y = savedOffset;
-    self.navbar.frame = frame;
+    self.frame = frame;
     
+    [self adjustItemOpacity];
+}
+
+/**
+ * @method unfollowCurrentView
+ *
+ * ScrollNavbar stops reacting to scroll of currently set view
+ */
+- (void)unfollowCurrentView
+{
+    if (self.scrollView)
+    {
+        [self.scrollView removeGestureRecognizer:self.gesture];
+        self.scrollView = nil;
+    }
+}
+
+/**
+ * @method followView
+ *
+ * ScrollingNavbar reacts to the scroll of given view
+ * by attaching PanGestureRecognizer to the view.
+ *
+ * @param scrollView - to follow and adjust to
+ */
+- (void)followView:(UIScrollView *)scrollView
+{
+    [self unfollowCurrentView];
+    
+    self.scrollView = scrollView;
+    [self.scrollView addGestureRecognizer:self.gesture];
+}
+
+
+#pragma mark - Scroll Events
+/**
+ * @method scrollHandler
+ *
+ * Callback for PanGestureRecognizer for when following view is scrolled.
+ * Calculates delta from last states and adjsts navbar accordingly.
+ */
+- (void)scrollHandler
+{
+    CGFloat currentOffset = self.scrollView.contentOffset.y;
+    CGFloat delta = [self validDelta:(previousOffset - currentOffset)];
+    
+    if ([self isValidOffset:currentOffset] || [self isValidOffset:previousOffset])
+    {
+        [self scrollNavbarWithDelta:delta];
+        [self adjustScrollView:self.scrollView toDelta:delta];
+    }
+    previousOffset = currentOffset;
+    
+    if ([self.gesture state] == UIGestureRecognizerStateEnded || [self.gesture state] == UIGestureRecognizerStateCancelled)
+    {
+        [self preventPartialScroll:self.scrollView];
+    }
     [self adjustItemOpacity];
 }
 
@@ -131,14 +211,14 @@
  *
  * Given a delta value which the user scrolled,
  * scrolls the navbar by the same delta if possible.
- * 
+ *
  * @param delta - value of user's scroll
  */
 - (void)scrollNavbarWithDelta:(CGFloat)delta
 {
-    CGRect frame = self.navbar.frame;
+    CGRect frame = self.frame;
     frame.origin.y += delta;
-    self.navbar.frame = frame;
+    self.frame = frame;
 }
 
 /**
@@ -157,7 +237,7 @@
     insets.top += delta;
     scrollView.scrollIndicatorInsets = insets;
     
-    savedOffset = CGRectGetMinY(self.navbar.frame);
+    savedOffset = CGRectGetMinY(self.frame);
 }
 
 /**
@@ -168,16 +248,24 @@
  */
 - (void)adjustItemOpacity
 {
-    CGFloat navbarEdge = [self navbarBottomEdge] - [self statusbarHeight];
-    CGFloat alpha = navbarEdge / navbarHeight;
-    UINavigationItem *topItem = self.navbar.topItem;
+    CGFloat navbarEdge = [self bottomEdge] - [self statusbarHeight];
+    CGFloat alpha = navbarEdge / height;
+
+    //overlay and tint
+    [self.overlay setAlpha:1 - alpha];
+    self.tintColor = [self.tintColor colorWithAlphaComponent:alpha];
     
-    //set transparency
-    topItem.titleView.alpha = navbarEdge / navbarHeight;
-    for (UIView *view in topItem.leftBarButtonItems)
-        view.alpha = alpha;
-    for (UIView *view in topItem.rightBarButtonItems)
-        view.alpha = alpha;
+    //top item
+    UINavigationItem *topItem = self.topItem;
+    topItem.titleView.alpha = alpha;
+    [topItem.leftBarButtonItems enumerateObjectsUsingBlock:^(UIBarButtonItem *obj, NSUInteger idx, BOOL *stop) {
+        obj.customView.alpha = alpha;
+    }];
+    topItem.leftBarButtonItem.customView.alpha = alpha;
+    [topItem.rightBarButtonItems enumerateObjectsUsingBlock:^(UIBarButtonItem *obj, NSUInteger idx, BOOL *stop) {
+        obj.customView.alpha = alpha;
+    }];
+    topItem.rightBarButtonItem.customView.alpha = alpha;
 }
 
 /**
@@ -195,11 +283,11 @@
  */
 - (void)preventPartialScroll:(UIScrollView *)scrollView
 {
-    CGRect frame = self.navbar.frame;
+    CGRect frame = self.frame;
     CGFloat bottomEdge = CGRectGetMaxY(frame);
     
     //navbar is not fully scrolled to top or bottom limit
-    if ([self statusbarHeight] < bottomEdge && bottomEdge < [self navbarBottomLimit])
+    if ([self statusbarHeight] < bottomEdge && bottomEdge < [self bottomLimit])
     {
         CGFloat deltaToStatusBar = [self statusbarHeight] - CGRectGetMaxY(frame);
         
@@ -216,6 +304,7 @@
 }
 
 
+
 #pragma mark - Helper Methods
 /**
  * @method statusBarHeight
@@ -230,20 +319,20 @@
 }
 
 /**
- * @method navbarBottomEdge
+ * @method bottomEdge
  *
  * Returns the current y-value of the navbar's bottom edge,
  * which is computed as its offset + height.
  *
  * @return MaxY or bottom edge value of navbar
  */
-- (CGFloat)navbarBottomEdge
+- (CGFloat)bottomEdge
 {
-    return CGRectGetMaxY(self.navbar.frame);
+    return CGRectGetMaxY(self.frame);
 }
 
 /**
- * @method navbarBottomLimit
+ * @method bottomLimit
  *
  * Returns the max bottom edge value navbar can take on,
  * which is the statusbar + navbar's height.
@@ -252,9 +341,9 @@
  *
  * @return bottom limit or furthest navbar can be pulled down
  */
-- (CGFloat)navbarBottomLimit
+- (CGFloat)bottomLimit
 {
-    return [self statusbarHeight] + navbarHeight;
+    return [self statusbarHeight] + height;
 }
 
 /**
@@ -269,7 +358,7 @@
  */
 - (BOOL)isValidOffset:(CGFloat)offset;
 {
-   return -offset < [self statusbarHeight] + navbarHeight;
+    return -offset < [self statusbarHeight] + height;
 }
 
 /**
@@ -287,10 +376,10 @@
 - (CGFloat)validDelta:(CGFloat)delta
 {
     CGFloat limit = [self statusbarHeight];
-    if (delta > 0) limit += navbarHeight;
+    if (delta > 0) limit += height;
     
-    //get displacement
-    CGFloat displ = limit - [self navbarBottomEdge];
+        //get displacement
+    CGFloat displ = limit - [self bottomEdge];
     return ( fabsf(delta) < fabsf(displ) ) ? delta : displ;
 }
 

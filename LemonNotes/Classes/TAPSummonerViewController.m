@@ -6,11 +6,10 @@
 #import "TAPDataManager.h"
 #import "Constants.h"
 
-#import "TAPScrollNavBarController.h"
 #import "TAPLemonRefreshControl.h"
 #import "UIView+BorderAdditions.h"
+#import "TAPScrollNavbar.h"
 #import "TAPSearchField.h"
-
 
 
 @interface TAPSummonerViewController()
@@ -22,8 +21,8 @@
 @property (nonatomic, strong) TAPSummonerManager *summonerManager;
 
 //Nav bar
-@property (nonatomic, strong) TAPSearchField* searchField;
-@property (nonatomic, strong) TAPScrollNavBarController *navbarController;
+@property (nonatomic, strong) TAPSearchField *searchField;
+@property (nonatomic, strong) TAPScrollNavbar *scrollNavbar;
 
 //table
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
@@ -91,7 +90,7 @@
     NSLog(@"SummonerVC [viewWillAppear]");
     
     self.searchField.text = isRootView ? @"" : self.summonerInfo[@"name"];
-    [self.navbarController revertToSaved];
+    [self.scrollNavbar revertToSaved];
 }
 
 
@@ -133,8 +132,13 @@
     if (self == [self.navigationController.viewControllers firstObject])
     {
         self.searchField.text = @"";
-        self.navbarController = [[TAPScrollNavBarController alloc] initWithNavBar:self.navigationController.navigationBar];
+//        self.navbarController = [[TAPScrollNavBarController alloc] initWithNavBar:self.navigationController.navigationBar];
+
+        UINavigationBar *navbar = self.navigationController.navigationBar;
+        self.scrollNavbar = [[TAPScrollNavbar alloc] initWithNavbar:navbar];
+        [self.navigationController setValue:self.scrollNavbar forKeyPath:@"navigationBar"];
     }
+    self.scrollNavbar = (TAPScrollNavbar *)self.navigationController.navigationBar;
 }
 
 /**
@@ -266,8 +270,6 @@
 {
     [self updateHeaderSplash];
     [self.tableView reloadData];
-    
-    NSLog(@"%@", self.summonerManager.loadedMatches);
 }
 
 /**
@@ -328,7 +330,7 @@
  */
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    [self.navbarController scrollViewWillBeginDragging:scrollView];
+    [self.scrollNavbar scrollViewWillBeginDragging:scrollView];
     [self.lemonRefresh scrollViewWillBegingDragging:scrollView];
 }
 
@@ -341,7 +343,7 @@
  */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self.navbarController scrollViewDidScroll:scrollView];
+    [self.scrollNavbar scrollViewDidScroll:scrollView];
     [self.lemonRefresh scrollViewDidScroll:scrollView];
     
     if (!self.loadLock) [self checkForLoad];
@@ -358,7 +360,7 @@
  */
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    [self.navbarController scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
+    [self.scrollNavbar scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
     [self.lemonRefresh scrollViewDidEndDragging:scrollView];
 }
 
@@ -372,7 +374,7 @@
  */
 - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
 {
-    [self.navbarController scrollViewDidScrollToTop:scrollView];
+    [self.scrollNavbar scrollViewDidScrollToTop:scrollView];
 }
 
 /**
