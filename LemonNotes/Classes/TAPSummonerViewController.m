@@ -8,6 +8,7 @@
 
 #import "TAPLemonRefreshControl.h"
 #import "UIView+BorderAdditions.h"
+#import "TAPBannerManager.h"
 #import "TAPScrollNavbar.h"
 #import "TAPSearchField.h"
 
@@ -50,7 +51,7 @@
 
 
 @implementation TAPSummonerViewController
-#pragma mark View Load Cycle
+#pragma mark Load & Setup
 /**
  * @method viewDidLoad
  *
@@ -77,25 +78,6 @@
     [self.summonerManager initalLoad];
 }
 
-/**
- * @method: viewWillAppear:
- *
- * Called when this view is about to appear.
- * Setup all necessary components,
- * then tell manager to load matches.
- */
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
-    NSLog(@"SummonerVC [viewWillAppear]");
-    
-    self.searchField.text = isRootView ? @"" : self.summonerInfo[@"name"];
-    [self.scrollNavbar revertToSaved];
-}
-
-
-
-#pragma mark - Setup
 /**
  * @method setSummonerInfo:
  *
@@ -194,6 +176,30 @@
     
     //footer
     [self showFooter:YES];
+}
+
+
+#pragma mark - View Appear Phase
+/**
+ * @method: viewWillAppear:
+ *
+ * Called when this view is about to appear.
+ * Setup all necessary components,
+ * then tell manager to load matches.
+ */
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    NSLog(@"SummonerVC [viewWillAppear]");
+    
+    self.searchField.text = isRootView ? @"" : self.summonerInfo[@"name"];
+    [self.scrollNavbar revertToSaved];
+    
+    [[TAPBannerManager sharedManager] addBannerWithType:BannerTypeIncomplete text:@"No Internet Connection" delay:1
+                                                 toView:self.scrollNavbar
+                                                    top:NO
+                                                   down:YES
+                                                  front:NO];
 }
 
 

@@ -378,9 +378,25 @@
     CGFloat limit = [self statusbarHeight];
     if (delta > 0) limit += height;
     
-        //get displacement
+    //get displacement
     CGFloat displ = limit - [self bottomEdge];
     return ( fabsf(delta) < fabsf(displ) ) ? delta : displ;
+}
+
+
+#pragma mark - Hit Event Overrides
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    NSEnumerator *rEnum = [self.subviews reverseObjectEnumerator];
+    
+    UIView *subview;
+    while ((subview = [rEnum nextObject]))
+    {
+        UIView *viewWasHit = [subview hitTest:[self convertPoint:point toView:subview] withEvent:event];
+        if(viewWasHit)
+            return viewWasHit;
+    }
+    return [super hitTest:point withEvent:event];
 }
 
 @end

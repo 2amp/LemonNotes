@@ -3,6 +3,7 @@
 #import "NSURLSession+SynchronousTask.h"
 #import "TAPSearchField.h"
 #import "TAPDataManager.h"
+#import "TAPBannerManager.h"
 #import "Constants.h"
 
 
@@ -48,6 +49,11 @@
     }
 
     NSLog(@"%@ %p", self.class, self);
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [[TAPBannerManager sharedManager] addBannerWithType:BannerTypeWarning text:@"Loading" delay:0.5 toView:self.view top:YES down:YES front:YES];
 }
 
 /**

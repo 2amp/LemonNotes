@@ -259,8 +259,6 @@
             self.mutableMatches = newMatches;
         }
         
-        NSLog(@"%@", self.mutableMatches);
-        
         //report to delegate
         dispatch_async(dispatch_get_main_queue(),
         ^{

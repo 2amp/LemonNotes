@@ -776,6 +776,7 @@
 		956116A51A3FB7200074D3A3 /* RekSai_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 956116A31A3FB7200074D3A3 /* RekSai_0.jpg */; };
 		9561EE041A72A44B00770485 /* UIView+BorderAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9561EE031A72A44B00770485 /* UIView+BorderAdditions.m */; };
 		9567B30A1A71C85900F89EFC /* ActivityIndicator Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 9567B3091A71C85900F89EFC /* ActivityIndicator Background.png */; };
+		957C8C331AA126FE007D171C /* TAPBannerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 957C8C321AA126FE007D171C /* TAPBannerManager.m */; };
 		958136101A0C8B69000D8D43 /* NSURLSession+SynchronousTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581360F1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.m */; };
 		9585AB411A3B95D7007CE7A1 /* TAPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9585AB401A3B95D7007CE7A1 /* TAPManager.m */; };
 		959157B91A0EDFD00098A610 /* Aatrox_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 959157401A0EDFCF0098A610 /* Aatrox_0.jpg */; };
@@ -1708,6 +1709,8 @@
 		9561EE021A72A44B00770485 /* UIView+BorderAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+BorderAdditions.h"; path = "../Utils/UIView+BorderAdditions.h"; sourceTree = "<group>"; };
 		9561EE031A72A44B00770485 /* UIView+BorderAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+BorderAdditions.m"; path = "../Utils/UIView+BorderAdditions.m"; sourceTree = "<group>"; };
 		9567B3091A71C85900F89EFC /* ActivityIndicator Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ActivityIndicator Background.png"; sourceTree = "<group>"; };
+		957C8C311AA126FE007D171C /* TAPBannerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPBannerManager.h; sourceTree = "<group>"; };
+		957C8C321AA126FE007D171C /* TAPBannerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPBannerManager.m; sourceTree = "<group>"; };
 		9581360E1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSession+SynchronousTask.h"; sourceTree = "<group>"; };
 		9581360F1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSession+SynchronousTask.m"; sourceTree = "<group>"; };
 		9585AB3F1A3B95D7007CE7A1 /* TAPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPManager.h; sourceTree = "<group>"; };
@@ -2974,6 +2977,8 @@
 				894B15961A52B60200B61D03 /* TAPPickerTextField.m */,
 				953A1C3E1AA0D4A4008131A8 /* TAPScrollNavbar.h */,
 				953A1C3F1AA0D4A4008131A8 /* TAPScrollNavbar.m */,
+				957C8C311AA126FE007D171C /* TAPBannerManager.h */,
+				957C8C321AA126FE007D171C /* TAPBannerManager.m */,
 				953C75131A19E75000832A55 /* TAPLemonRefreshControl.h */,
 				953C75141A19E75000832A55 /* TAPLemonRefreshControl.m */,
 				9561EE021A72A44B00770485 /* UIView+BorderAdditions.h */,
@@ -4012,6 +4017,7 @@
 				9585AB411A3B95D7007CE7A1 /* TAPManager.m in Sources */,
 				95BA1A2D1A7DCEA60075594D /* Match.m in Sources */,
 				8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */,
+				957C8C331AA126FE007D171C /* TAPBannerManager.m in Sources */,
 				89AF398C1A7C000C003C3274 /* TAPTeammateDetailViewController.m in Sources */,
 				953C75151A19E75000832A55 /* TAPLemonRefreshControl.m in Sources */,
 				8948D65B1A4745BE00CAEA4D /* TAPMoreTableViewController.m in Sources */,
