@@ -4,7 +4,7 @@
 
 #import "NSURLSession+SynchronousTask.h"
 #import "TAPDataManager.h"
-#import "Constants.h"
+#import "TAPUtil.h"
 
 #import "TAPLemonRefreshControl.h"
 #import "UIView+BorderAdditions.h"
@@ -114,8 +114,7 @@
     if (self == [self.navigationController.viewControllers firstObject])
     {
         self.searchField.text = @"";
-//        self.navbarController = [[TAPScrollNavBarController alloc] initWithNavBar:self.navigationController.navigationBar];
-
+        
         UINavigationBar *navbar = self.navigationController.navigationBar;
         self.scrollNavbar = [[TAPScrollNavbar alloc] initWithNavbar:navbar];
         [self.navigationController setValue:self.scrollNavbar forKeyPath:@"navigationBar"];
@@ -194,33 +193,10 @@
     
     self.searchField.text = isRootView ? @"" : self.summonerInfo[@"name"];
     [self.scrollNavbar revertToSaved];
-    
-    [[TAPBannerManager sharedManager] addBannerWithType:BannerTypeIncomplete text:@"No Internet Connection" delay:1
-                                                 toView:self.scrollNavbar
-                                                    top:NO
-                                                   down:YES
-                                                  front:NO];
 }
 
 
 #pragma mark - UI Control
-/**
- * @method showAlertWithTitle:message:
- *
- * Creates an UIAlertView object with the given title & message
- * along with self as delegate, "OK" as cancel button, and no other buttons.
- * Immediately shows the window
- */
-- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message
-{
-    [[[UIAlertView alloc] initWithTitle:title
-                                message:message
-                               delegate:nil
-                      cancelButtonTitle:@"OK"
-                      otherButtonTitles:nil]
-     show];
-}
-
 /**
  * @updateHeaderSplash
  *
@@ -637,7 +613,7 @@
     //FILL: start activity indicator
     
     //async fetch/search summoner
-    [TAPDataManager getSummonerForName:name region:region
+    [[TAPDataManager sharedManager] getSummonerForName:name region:region
      successHandler:^(NSDictionary *summoner)
      {
          TAPSummonerViewController *nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"summonerVC"];

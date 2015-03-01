@@ -74,7 +74,7 @@
             ((UIImageView *)self.teammateChecks[index]).image = nil;
             [self.teammateIndicators[index] startAnimating];
         });
-        [TAPDataManager getSummonerForName:textField.text
+        [[TAPDataManager sharedManager] getSummonerForName:textField.text
                                  region:@"na"
                          successHandler:^(NSDictionary *summoner) {
                              TAPSummonerManager *manager = [[TAPSummonerManager alloc] initWithSummoner:summoner];

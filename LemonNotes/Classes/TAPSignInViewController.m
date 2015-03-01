@@ -4,7 +4,7 @@
 #import "TAPSearchField.h"
 #import "TAPDataManager.h"
 #import "TAPBannerManager.h"
-#import "Constants.h"
+#import "TAPUtil.h"
 
 
 @interface TAPSignInViewController ()
@@ -19,7 +19,6 @@
 @property (nonatomic, strong) NSString *summonerName;
 @property (nonatomic, strong) NSString *summonerRegion;
 - (void)signIn;
-- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message;
 
 @end
 
@@ -37,23 +36,30 @@
 {
     [super viewDidLoad];
     
+    NSLog(@"%@ %p", self.class, self);
+    
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
     self.urlSession = [NSURLSession sessionWithConfiguration:config];
-    [TAPDataManager sharedManager].delegate = self;
 
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"] != nil)
+    NSDictionary *summoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
+    if (summoner != nil)
     {
-        self.signInField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"][@"name"];
-        [self.loadingIndicator startAnimating];
         [self.view setUserInteractionEnabled:NO];
+        self.signInField.text = summoner[@"name"];
+        
+        [self.loadingIndicator startAnimating];
+        [[TAPDataManager sharedManager] updateDataWithRegion:summoner[@"region"]
+        completionHandler:^(NSError *error)
+        {
+            self.view.userInteractionEnabled = YES;
+            [self.loadingIndicator stopAnimating];
+            
+            if (!error)
+                [self performSegueWithIdentifier:@"showTabBarController" sender:self];
+            else
+                [[TAPBannerManager sharedManager] addTopDownBannerToView:self.view type:BannerTypeError text:error.domain delay:0];
+        }];
     }
-
-    NSLog(@"%@ %p", self.class, self);
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [[TAPBannerManager sharedManager] addBannerWithType:BannerTypeWarning text:@"Loading" delay:0.5 toView:self.view top:YES down:YES front:YES];
 }
 
 /**
@@ -105,7 +111,7 @@
     [self.activityIndicator startAnimating];
 
     //async search/fetch summoner
-    [TAPDataManager getSummonerForName:self.summonerName region:self.summonerRegion
+    [[TAPDataManager sharedManager] getSummonerForName:self.summonerName region:self.summonerRegion
      successHandler:^(NSDictionary *summoner)
      {
          [self.activityIndicator stopAnimating];
@@ -118,30 +124,9 @@
      }
      failureHandler:^(NSString *errorMessage) {
          [self.activityIndicator stopAnimating];
-         [self showAlertWithTitle:@"Error" message:errorMessage];
+         [[TAPBannerManager sharedManager] addTopDownBannerToView:self.view type:BannerTypeError text:@"Summoner Not Found" delay:0.25];
      }];
 }
-
-
-
-#pragma mark - Alert Methods
-/**
- * @method showAlertWithTitle:message:
- *
- * Creates an UIAlertView object with the given title & message
- * along with self as delegate, "OK" as cancel button, and no other buttons.
- * Immediately shows the window
- */
-- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message
-{
-    [[[UIAlertView alloc] initWithTitle:title
-                                message:message
-                               delegate:nil
-                      cancelButtonTitle:@"OK"
-                      otherButtonTitles:nil]
-     show];
-}
-
 
 
 #pragma mark - Navigation Events
@@ -162,18 +147,6 @@
         UINavigationController *startGameVNC = [gameStartStoryboard instantiateInitialViewController];
         UINavigationController *moreVNC = [moreStoryboard instantiateInitialViewController];
         tabBarController.viewControllers = @[summonerVNC, startGameVNC, moreVNC];
-    }
-}
-
-- (void)didFinishLoadingData
-{
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"] != nil)
-    {
-        self.view.userInteractionEnabled = YES;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.loadingIndicator stopAnimating];
-            [self performSegueWithIdentifier:@"showTabBarController" sender:self];
-        });
     }
 }
 

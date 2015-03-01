@@ -24,14 +24,6 @@
     //for now clear defaults
 //    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
 //    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-    
-    //data updates
-      [[TAPDataManager sharedManager] updateAllData];
-//    [[TAPDataManager sharedManager] updateChampionIds];
-//    [[TAPDataManager sharedManager] updateSummonerSpells];
-//    [[TAPDataManager sharedManager] deleteAllSummoners];
-//    [[TAPDataManager sharedManager] summonerDump];
-
 //    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"currentSummoner"];
 //    NSDictionary *currentSummoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
 

@@ -1,16 +1,6 @@
 
 #import <UIKit/UIKit.h>
 #import "TAPManager.h"
-#import "Summoner.h"
-
-
-
-@protocol TAPDataManagerDelegate
-
-@optional
-- (void)didFinishLoadingData;
-
-@end
 
 /**
  * @class DataManager
@@ -28,27 +18,19 @@
 @interface TAPDataManager : TAPManager
 
 + (instancetype)sharedManager;
-+ (void)getSummonerForName:(NSString *)name
-                    region:(NSString *)region
-            successHandler:(void (^)(NSDictionary *summoner))successHandler
-            failureHandler:(void (^)(NSString *errorMessage))failureHandler;
-
-//accounts
-- (void)summonerDump;
-- (void)deleteAllSummoners;
-
-//recent games
-
-
-// delegate
-@property (nonatomic, weak) id<TAPDataManagerDelegate> delegate;
 
 //static data
 @property (nonatomic) NSArray *regions;
 @property (nonatomic) NSDictionary *champions;
 @property (nonatomic) NSDictionary *summonerSpells;
-- (void)updateChampionIds;
-- (void)updateSummonerSpells;
-- (void)updateAllData;
+- (void)updateDataWithRegion:(NSString *)region completionHandler:(void (^)(NSError *))handler;
+
+//accounts
+- (void)printSummoners;
+- (void)deleteAllSummoners;
+- (void)getSummonerForName:(NSString *)name
+                    region:(NSString *)region
+            successHandler:(void (^)(NSDictionary *summoner))successHandler
+            failureHandler:(void (^)(NSString *errorMessage))failureHandler;
 
 @end

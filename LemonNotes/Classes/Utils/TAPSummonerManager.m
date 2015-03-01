@@ -2,7 +2,7 @@
 #import "NSURLSession+SynchronousTask.h"
 #import "TAPSummonerManager.h"
 #import "TAPDataManager.h"
-#import "Constants.h"
+#import "TAPUtil.h"
 #import "Summoner.h"
 #import "Match.h"
 

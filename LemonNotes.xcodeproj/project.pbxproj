@@ -1843,6 +1843,7 @@
 		95BA1A2B1A7DCEA60075594D /* Match.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Match.h; sourceTree = "<group>"; };
 		95BA1A2C1A7DCEA60075594D /* Match.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Match.m; sourceTree = "<group>"; };
 		95CF56CE1A71F6DB0000AF92 /* Button Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Button Background.png"; sourceTree = "<group>"; };
+		95E0D7781AA310D3007FE628 /* TAPUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPUtil.h; sourceTree = "<group>"; };
 		95F162DF1A034C9B00DECF93 /* TAPSummonerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSummonerViewController.h; sourceTree = "<group>"; };
 		95F162E01A034C9B00DECF93 /* TAPSummonerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPSummonerViewController.m; sourceTree = "<group>"; };
 		95F9F9161A1696E000CFEAF3 /* TAPSearchField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPSearchField.h; sourceTree = "<group>"; };
@@ -2711,8 +2712,9 @@
 		950FB68B19FE37B1005F870F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				950FB68C19FE37B1005F870F /* apikeys.h */,
 				950FB68D19FE37B1005F870F /* Constants.h */,
+				950FB68C19FE37B1005F870F /* apikeys.h */,
+				95E0D7781AA310D3007FE628 /* TAPUtil.h */,
 				9585AB3F1A3B95D7007CE7A1 /* TAPManager.h */,
 				9585AB401A3B95D7007CE7A1 /* TAPManager.m */,
 				950B2C401A00296A00DD8A23 /* TAPDataManager.h */,

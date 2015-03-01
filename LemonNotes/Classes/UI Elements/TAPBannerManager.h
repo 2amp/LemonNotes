@@ -25,10 +25,11 @@ typedef NS_ENUM(int, BannerType)
 
 //adding banners
 - (void)removeBanner;
-- (void)addBannerWithType:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
-                   toView:(UIView *)view
-                      top:(BOOL)top
-                     down:(BOOL)down
-                    front:(BOOL)front;
+- (void)addTopDownBannerToView:(UIView *)view type:(BannerType)type
+                          text:(NSString *)text delay:(CGFloat)delay;
+- (void)addBottomUpBannerToView:(UIView *)view type:(BannerType)type
+                           text:(NSString *)text delay:(CGFloat)delay;
+- (void)addBottomDownBannerToView:(UIView *)view type:(BannerType)type
+                             text:(NSString *)text delay:(CGFloat)delay;
 
 @end

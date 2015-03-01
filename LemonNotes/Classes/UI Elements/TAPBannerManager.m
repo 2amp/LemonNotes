@@ -29,6 +29,8 @@
 - (UIColor *)colorForBannerType:(BannerType)type;
 - (void)tapHandler:(UITapGestureRecognizer *)gesture;
 - (UIView *)bannerWithFrame:(CGRect)frame type:(BannerType)type text:(NSString *)text;
+- (void)addBannerToView:(UIView *)view type:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
+                    top:(BOOL)top down:(BOOL)down front:(BOOL)front;
 
 @end
 #pragma mark -
@@ -78,23 +80,73 @@
 
 #pragma mark - Banner Management
 /**
+ * @method hideBanner
+ *
+ * Hides current banner
+ */
+- (void)removeBanner
+{
+    [UIView animateWithDuration:self.animationDuration
+     animations:^
+     {
+         self.currentBanner.frame = self.hideFrame;
+     }
+     completion:^(BOOL finished){}];
+}
+
+/**
+ * @method addTopDownBannerToView:type:text:delay
+ *
+ * Adds a banner of the given type and text with delay
+ * to the view at the top so that it drops down.
+ * @note this banner will be in front of other subview in view
+ */
+- (void)addTopDownBannerToView:(UIView *)view type:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
+{
+    [self addBannerToView:view type:type text:text delay:delay top:YES down:YES front:YES];
+}
+
+/**
+ * @method addBottomUpBannerToView:type:text:delay
+ *
+ * Adds a banner of the given type and text with delay
+ * to the view at the bottom so that it drops down.
+ * @note this banner will be in behind of other subview in view
+ */
+- (void)addBottomUpBannerToView:(UIView *)view type:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
+{
+    [self addBannerToView:view type:type text:text delay:delay top:NO down:NO front:NO];
+}
+
+/**
+ * @method addBottomDownBannerToView:type:text:delay
+ *
+ * Adds a banner of the given type and text with delay
+ * to the view at the bottom so that it drops down.
+ * @note this banner will be in behind of other subview in view
+ */
+- (void)addBottomDownBannerToView:(UIView *)view type:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
+{
+    [self addBannerToView:view type:type text:text delay:delay top:NO down:YES front:NO];
+}
+
+
+#pragma mark - Private Banner
+/**
  * @method addBannerWithType:text:toView:top:down:front:
  *
  * Adds a banner with a bunch of options to the given view.
  *
+ * @param view  - to display in
  * @param type  - of banner (changes color)
  * @param text  - to display
  * @param delay - before showing
- * @param view  - to display in
  * @param top   - bool to place near top or bot
  * @param down  - bool to slide down or up
  * @param front - bool to place front or behind
  */
-- (void)addBannerWithType:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
-                   toView:(UIView *)view
-                      top:(BOOL)top
-                     down:(BOOL)down
-                    front:(BOOL)front
+- (void)addBannerToView:(UIView *)view type:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
+                    top:(BOOL)top down:(BOOL)down front:(BOOL)front
 {
     CGRect frame = view.frame;
     UIView *banner = [self bannerWithFrame:frame type:type text:text];
@@ -135,21 +187,9 @@
 }
 
 /**
- * @method statusBarHeight
- *
- * Gives the status bar height according to orientation & visibility
- *
- * @return CGFloat of status bar height
- */
-- (CGFloat)statusbarHeight
-{
-    return [[UIApplication sharedApplication] isStatusBarHidden] ? 0 : 20;
-}
-
-/**
  * @method showBanner
  *
- *
+ * Shows the current banner with givne delay;
  */
 - (void)showBannerWithDelay:(CGFloat)delay
 {
@@ -162,20 +202,10 @@
 }
 
 /**
- * @method hideBanner
+ * @method hideBannerWithHandler
  *
- *
+ * Hides the current banner and calls handler upon completion.
  */
-- (void)removeBanner
-{
-    [UIView animateWithDuration:self.animationDuration
-    animations:^
-    {
-       self.currentBanner.frame = self.hideFrame;
-    }
-    completion:^(BOOL finished){}];
-}
-
 - (void)hideBannerWithHandler:(void (^)(BOOL))hander
 {
     [UIView animateWithDuration:self.animationDuration
@@ -186,7 +216,19 @@
     completion:hander];
 }
 
-#pragma mark - Banner
+#pragma mark - Private Helpers
+/**
+ * @method statusBarHeight
+ *
+ * Gives the status bar height according to orientation & visibility
+ *
+ * @return CGFloat of status bar height
+ */
+- (CGFloat)statusbarHeight
+{
+    return [[UIApplication sharedApplication] isStatusBarHidden] ? 0 : 20;
+}
+
 /**
  * @method colorForBannerType:
  *
