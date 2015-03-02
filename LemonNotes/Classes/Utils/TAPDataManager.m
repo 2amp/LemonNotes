@@ -9,10 +9,12 @@
 @interface TAPDataManager()
 {
     dispatch_queue_t fetchQueue;
+    dispatch_queue_t loadQueue;
 }
 
 //session
 @property (nonatomic, strong) NSURLSession *urlSession;
+@property (nonatomic, weak) NSFileManager *fileManager;
 
 @end
 #pragma mark -
@@ -52,14 +54,32 @@
     if (self)
     {
         fetchQueue = dispatch_queue_create("TAPDataManager Data Fetch Queue", DISPATCH_QUEUE_CONCURRENT);
+        loadQueue  = dispatch_queue_create("TAPDataManager Image Load Queue", DISPATCH_QUEUE_CONCURRENT);
         
-        NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
-        self.urlSession = [NSURLSession sessionWithConfiguration:config];
+        self.urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]];
+        self.fileManager = [NSFileManager defaultManager];
         
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         self.regions = @[@"br", @"eune", @"euw", @"kr", @"lan", @"las", @"na", @"oce", @"ru", @"tr"];
+        self.champList = [defaults objectForKey:@"champList"];
+        self.spellList = [defaults objectForKey:@"spellList"];
     }
     return self;
 }
+
+/**
+ * @method dealloc
+ *
+ * Destructor for TAPDataManager.
+ * Saves current champion and summoner spell list to UserDefaults.
+ */
+- (void)dealloc
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:self.champList forKey:@"champList"];
+    [defaults setObject:self.spellList forKey:@"spellList"];
+}
+
 
 #pragma mark - Static Data
 /**
@@ -81,7 +101,6 @@
         NSData *champListData = [self.urlSession sendSynchronousDataTaskWithURL:champListURL
                                                              returningResponse:&champResponse
                                                                          error:&champError];
-       
         //spells list
         NSError *spellError = nil;
         NSHTTPURLResponse *spellResponse = nil;
@@ -90,11 +109,9 @@
                                                              returningResponse:&spellResponse
                                                                          error:&spellError];
        
-        if (!champError)
-            self.champions = [NSJSONSerialization JSONObjectWithData:champListData options:kNilOptions error:nil][@"data"];
-        if (!spellError)
-            self.summonerSpells = [NSJSONSerialization JSONObjectWithData:spellListData options:kNilOptions error:nil][@"data"];
-       
+        if (!champError) self.champList = [NSJSONSerialization JSONObjectWithData:champListData options:kNilOptions error:nil][@"data"];
+        if (!spellError) self.spellList = [NSJSONSerialization JSONObjectWithData:spellListData options:kNilOptions error:nil][@"data"];
+        
         //callback
         NSError *error = nil;
         if (champError || spellError)
@@ -102,6 +119,169 @@
        
         dispatch_async(dispatch_get_main_queue(), ^{ handler(error); });
     });
+}
+
+
+#pragma mark - Image Data
+/**
+ * @method setItemIconWithKey:toView:
+ *
+ * Given an item key and an UIImagView,
+ * gets the icon in real time and sets it as ImageView's image.
+ * 
+ * If icon exists at the spcified path, just create image from data.
+ * Otherwise, download from ddragon assets and create data from url.
+ * 
+ * @param key  - item key number
+ * @param view - UIImageView to set item icon to
+ */
+- (void)setItemIconWithKey:(NSString *)key toView:(UIImageView *)view
+{
+    dispatch_async(loadQueue,
+    ^{
+        NSString *filename = [NSString stringWithFormat:@"%@.png", key];
+        UIImage *img = [self fetchIfDoesNotExistUsingFolder:@"item_icon" filename:filename url:imgURL(kLoLItemIcon, @"5.4.1", key)];
+        dispatch_async(dispatch_get_main_queue(), ^{ view.image = img; });
+    });
+}
+
+/**
+ * @method setChampIconWithKey:toView:
+ *
+ * Given a champ key and an UIImageView,
+ * gets the icon in real time and sets it as ImageView's image.
+ *
+ * @param key  - champ key name
+ * @param view - UIImageView to set champ icon to
+ */
+- (void)setSpellIconWithKey:(NSString *)key toView:(UIImageView *)view
+{
+    dispatch_async(loadQueue,
+    ^{
+        NSString *filename = [NSString stringWithFormat:@"%@.png", key];
+        UIImage *img = [self fetchIfDoesNotExistUsingFolder:@"spell_icon" filename:filename url:imgURL(kLoLSpellIcon, @"5.4.1", key)];
+        dispatch_async(dispatch_get_main_queue(), ^{ view.image = img; });
+    });
+}
+
+/**
+ * @method setChampIconWithKey:toView:
+ *
+ * Given a champ key and an UIImageView,
+ * gets the icon in real time and sets it as ImageView's image.
+ *
+ * @param key  - champ key name
+ * @param view - UIImageView to set champ icon to
+ */
+- (void)setChampIconWithKey:(NSString *)key toView:(UIImageView *)view
+{
+    dispatch_async(loadQueue,
+    ^{
+        NSString *filename = [NSString stringWithFormat:@"%@.png", key];
+        UIImage *img = [self fetchIfOutdatedUsingFolder:@"champ_icon" filename:filename url:imgURL(kLoLChampIcon, @"5.4.1", key)];
+        dispatch_async(dispatch_get_main_queue(), ^{ view.image = img; });
+    });
+}
+
+/**
+ * @method setChampSplashWithKey:toView:
+ *
+ * Given a champ key and and UIImageView,
+ * get the splash in real time and set it as ImageView's image.
+ * Check if splash exists:
+ * - no:  download
+ * - yes: check last update time, and if longer than month, download.
+ *
+ * @param key  - champ key name
+ * @param view - UIImageView to set champ splash to
+ */
+- (void)setChampSplashWithKey:(NSString *)key toView:(UIImageView *)view
+{
+    dispatch_async(loadQueue,
+    ^{
+        NSString *filename = [NSString stringWithFormat:@"%@_0.jpg", key];
+        UIImage *img = [self fetchIfOutdatedUsingFolder:@"champ_splash" filename:filename url:imgURL(kLoLChampSplash, @"", key)];
+        dispatch_async(dispatch_get_main_queue(), ^{ view.image = img; });
+    });
+}
+
+/**
+ * @method fetchIfDoesNotExistUsingFolder:filename:url:
+ *
+ * Given the parameters, returns an UIImage under the following conditions:
+ * - image exists at expected path
+ *      > fetch from local image data
+ * - image doesn't exist at path
+ *      > fetch image asset from ddragon
+ *
+ * @param folder   - for image of this category
+ * @param filename - of image
+ * @param url      - to fetch from
+ * @return UIImage using given categories
+ */
+- (UIImage*)fetchIfDoesNotExistUsingFolder:(NSString *)folder filename:(NSString *)filename url:(NSURL *)url
+{
+    NSString *document  = [self applicationDocumentsDirectory].path;
+    NSString *folders   = [@"resources/images/" stringByAppendingPathComponent:folder];
+    NSString *directory = [document stringByAppendingPathComponent:folders];
+    NSString *filepath  = [directory stringByAppendingPathComponent:filename];
+
+    NSData *data = [NSData dataWithContentsOfFile:filepath];
+    if (!data)
+    {
+        data = [NSData dataWithContentsOfURL:url];
+        [self.fileManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil];
+        [data writeToFile:filepath atomically:YES];
+    }
+    return [UIImage imageWithData:data];
+}
+
+/**
+ * @method fetchIfOutdatedUsingFolder:filename:url:
+ *
+ * Given the parameters, returns an UIImage under the following conditions:
+ * - image doesn't exists at expected path OR exists but is outdated (1+ months)
+ *      > fetch image asset from ddragon
+ * - image exists and is not oudated
+ *      > fetch from local image data
+ *
+ * @param folder   - for image of this category
+ * @param filename - of image
+ * @param url      - to fetch from
+ * @return UIImage using given categories
+ */
+- (UIImage*)fetchIfOutdatedUsingFolder:(NSString *)folder filename:(NSString *)filename url:(NSURL *)url
+{
+    NSString *document  = [self applicationDocumentsDirectory].path;
+    NSString *folders   = [@"resources/images/" stringByAppendingPathComponent:folder];
+    NSString *directory = [document stringByAppendingPathComponent:folders];
+    NSString *filepath  = [directory stringByAppendingPathComponent:filename];
+    
+    BOOL needsUpdate = NO;
+    NSData *data = [NSData dataWithContentsOfFile:filepath];
+    if (!data) needsUpdate = YES; //no image, fetch
+    else
+    {
+        //get creation date
+        NSDictionary *attributes = [self.fileManager attributesOfItemAtPath:filepath error:nil];
+        NSDate *creationDate = (NSDate*)[attributes objectForKey: NSFileCreationDate];
+        
+        //get months
+        unsigned int flags = NSCalendarUnitMonth;
+        NSDateComponents *comps = [[NSCalendar currentCalendar] components:flags fromDate:creationDate toDate:[NSDate date] options:0];
+        if ([comps month] >= 1)
+            needsUpdate = YES;
+    }
+    
+    //fetch if needs update
+    if (needsUpdate)
+    {
+        data = [NSData dataWithContentsOfURL:url];
+        [self.fileManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil];
+        [data writeToFile:filepath atomically:YES];
+    }
+    
+    return [UIImage imageWithData:data];
 }
 
 
@@ -122,9 +302,7 @@
     
     NSLog(@"Summoners in CoreData:");
     for (Summoner *summoner in result)
-    {
         NSLog(@"%@ (region: %@)", summoner.name, summoner.region);
-    }
 }
 
 /**

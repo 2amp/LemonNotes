@@ -1,15 +1,6 @@
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-
-
-typedef NS_ENUM(int, BannerType)
-{
-    BannerTypeIncomplete = 0,
-    BannerTypeComplete,
-    BannerTypeWarning,
-    BannerTypeError
-};
+#import "TAPBanner.h"
 
 /**
  * @class TAPBannerManager

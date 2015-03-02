@@ -205,12 +205,14 @@
  */
 - (void)updateHeaderSplash
 {
+    TAPDataManager *dataManager = [TAPDataManager sharedManager];
+
     NSDictionary *match = [self.summonerManager.loadedMatches firstObject];
     int summonerIndex = [match[@"summonerIndex"] intValue];
     NSString *champId = [match[@"participants"][summonerIndex][@"championId"] stringValue];
-    NSString *champKey = [TAPDataManager sharedManager].champions[champId][@"key"];
-    [[self.tableView tableHeaderView] sendSubviewToBack:self.championSplashView];
-    self.championSplashView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_0.jpg", champKey]];
+    NSString *champKey = dataManager.champList[champId][@"key"];
+    
+    [dataManager setChampSplashWithKey:champKey toView:self.championSplashView];
 }
 
 /**
@@ -510,19 +512,19 @@
     [creationLabel setText:getTimeAgoWith(date)];
     
     //Champion labels
-    NSString *champion = dataManager.champions[ [info[@"championId"] stringValue] ][@"key"];
-    NSString *champName = dataManager.champions[ [info[@"championId"] stringValue] ][@"name"];
+    NSString *champion  = dataManager.champList[ [info[@"championId"] stringValue] ][@"key"];
+    NSString *champName = dataManager.champList[ [info[@"championId"] stringValue] ][@"name"];
     [championName setText: champName];//[champName uppercaseString]];
     [championImageView setBorderWidth:2.0f color:[UIColor blackColor]];
     [championImageView setBorderRadius: CGRectGetWidth(championImageView.frame)/2];
-    [championImageView setImage: [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", champion]]];
+    [dataManager setChampIconWithKey:champion toView:championImageView];
     
-    NSString *spell1   = dataManager.summonerSpells[ [info[@"spell1Id"] stringValue] ][@"key"];
-    NSString *spell2   = dataManager.summonerSpells[ [info[@"spell2Id"] stringValue] ][@"key"];
-    [summonerIcon1ImageView setImage: [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", spell1]]];
-    [summonerIcon2ImageView setImage: [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", spell2]]];
+    NSString *spell1   = dataManager.spellList[ [info[@"spell1Id"] stringValue] ][@"key"];
+    NSString *spell2   = dataManager.spellList[ [info[@"spell2Id"] stringValue] ][@"key"];
     [summonerIcon1ImageView setBorderRadius:3.0f];
     [summonerIcon2ImageView setBorderRadius:3.0f];
+    [dataManager setSpellIconWithKey:spell1 toView:summonerIcon1ImageView];
+    [dataManager setSpellIconWithKey:spell2 toView:summonerIcon2ImageView];
     
     //Score labels
     float kills   = [stats[@"kills"] floatValue];
@@ -559,7 +561,12 @@
         UIImageView *itemView = (UIImageView *)itemImageViews[i];
         [itemView setBorderRadius:4.0f];
         [itemView setBorderWidth:0.5f color:[UIColor whiteColor]];
-        [itemView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png", itemKey]]];
+        [dataManager setItemIconWithKey:itemKey toView:itemView];
+        if ([itemKey isEqualToString:@"0"])
+        {
+            NSLog(@"hi");
+            itemView.image = [UIImage imageNamed:@"0.png"];
+        }
     }
     
     // debug
@@ -622,7 +629,7 @@
      }
      failureHandler:^(NSString *errorMessage)
      {
-         [self showAlertWithTitle:@"Error" message:errorMessage];
+         [[TAPBannerManager sharedManager] addBottomDownBannerToView:self.scrollNavbar type:BannerTypeError text:@"Summoner Not Found" delay:0.25];
      }];
 }
 

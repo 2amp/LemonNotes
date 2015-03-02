@@ -21,9 +21,15 @@
 
 //static data
 @property (nonatomic) NSArray *regions;
-@property (nonatomic) NSDictionary *champions;
-@property (nonatomic) NSDictionary *summonerSpells;
+@property (nonatomic) NSDictionary *champList;
+@property (nonatomic) NSDictionary *spellList;
 - (void)updateDataWithRegion:(NSString *)region completionHandler:(void (^)(NSError *))handler;
+
+//images
+- (void)setItemIconWithKey:(NSString *)key toView:(UIImageView *)view;
+- (void)setSpellIconWithKey:(NSString *)key toView:(UIImageView *)view;
+- (void)setChampIconWithKey:(NSString *)key toView:(UIImageView *)view;
+- (void)setChampSplashWithKey:(NSString *)key toView:(UIImageView *)view;
 
 //accounts
 - (void)printSummoners;

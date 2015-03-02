@@ -72,6 +72,13 @@ static NSString* kLoLTeamBySummoner      = pathTeam    "/by-summoner/{path}"; //
 static NSString* kLoLTeam                = pathTeam    "/{path}";             //{teamIds}
 
 
+//image assets
+#define ddragon @"https://ddragon.leagueoflegends.com/cdn"
+static NSString* kLoLChampSplash = ddragon "/img/champion/splash/%@_0.jpg";
+static NSString* kLoLChampIcon   = ddragon "/%@/img/champion/%@.png";
+static NSString* kLoLSpellIcon   = ddragon "/%@/img/spell/%@.png";
+static NSString* kLoLItemIcon    = ddragon "/%@/img/item/%@.png";
+
 
 /**
  * @function apiURL
@@ -121,6 +128,27 @@ static inline NSURL* apiURL(NSString *call, NSString *region, NSString *pathPara
     
     return [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 }
+
+/**
+ * @function imgURL
+ *
+ * Given one of the call formats, version, and key,
+ * returns the url to the ddragon asset accordingly.
+ *
+ * @param call - path to ddragon url
+ * @param ver  - version of current patch
+ * @param key  - of champ/spell/item to get
+ */
+static inline NSURL* imgURL(NSString *call, NSString *ver, NSString *key)
+{
+    NSString *url = [NSString stringWithFormat:call, ver, key];
+    if ([call isEqualToString:kLoLChampSplash])
+        url = [NSString stringWithFormat:call, key];
+    
+    return [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+}
+
+
 
 #pragma mark - Misc Static Inline Funcs
 /**

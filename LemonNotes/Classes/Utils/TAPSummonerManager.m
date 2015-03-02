@@ -415,11 +415,13 @@
        index += 15;
        
        for (NSDictionary *matchDict in fetchedMatches)
+       {
            if (limit < [matchDict[@"matchId"] longValue])
            {
                [newMatches addObject:matchDict];
                numAdded++;
            }
+        }
         numAdded = 0;
     }
     while (numAdded >= 15);
