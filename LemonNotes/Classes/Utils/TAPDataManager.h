@@ -12,17 +12,20 @@
  * 
  * @note Currently only contains a dictionary of champion ID number to info mappings.
  *
- * @author Bohui Moon, Chris Fu
+ * @author Bohui Moon
  * @version 0.1
  */
 @interface TAPDataManager : TAPManager
 
 + (instancetype)sharedManager;
+- (void)loadData;
+- (void)saveData;
 
 //static data
-@property (nonatomic) NSArray *regions;
-@property (nonatomic) NSDictionary *champList;
-@property (nonatomic) NSDictionary *spellList;
+@property (nonatomic, strong) NSArray *regions;
+@property (nonatomic, strong) NSDictionary *realms;
+@property (nonatomic, strong) NSDictionary *champList;
+@property (nonatomic, strong) NSDictionary *spellList;
 - (void)updateDataWithRegion:(NSString *)region completionHandler:(void (^)(NSError *))handler;
 
 //images
@@ -30,6 +33,7 @@
 - (void)setSpellIconWithKey:(NSString *)key toView:(UIImageView *)view;
 - (void)setChampIconWithKey:(NSString *)key toView:(UIImageView *)view;
 - (void)setChampSplashWithKey:(NSString *)key toView:(UIImageView *)view;
+- (void)setProfileIconWithKey:(NSString *)key toView:(UIImageView *)view;
 
 //accounts
 - (void)printSummoners;

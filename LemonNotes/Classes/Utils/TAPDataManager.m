@@ -59,25 +59,41 @@
         self.urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]];
         self.fileManager = [NSFileManager defaultManager];
         
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        self.regions = @[@"br", @"eune", @"euw", @"kr", @"lan", @"las", @"na", @"oce", @"ru", @"tr"];
-        self.champList = [defaults objectForKey:@"champList"];
-        self.spellList = [defaults objectForKey:@"spellList"];
+        [self loadData];
     }
     return self;
 }
 
+
+#pragma mark - Load & Save
 /**
- * @method dealloc
+ * @method loadData
  *
- * Destructor for TAPDataManager.
- * Saves current champion and summoner spell list to UserDefaults.
+ * Loads saved data from UserDefaults.
+ * If not in defaults, results in nil.
+ * To be called in -[init]
  */
-- (void)dealloc
+- (void)loadData
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.regions = @[@"br", @"eune", @"euw", @"kr", @"lan", @"las", @"na", @"oce", @"ru", @"tr"];
+    self.champList = [defaults objectForKey:@"champList"];
+    self.spellList = [defaults objectForKey:@"spellList"];
+    self.realms = [defaults objectForKey:@"realms"];
+}
+
+/**
+ * @method saveData
+ *
+ * Saves currently loaded data to UserDefaults.
+ * To be called when app enters background (home button).
+ */
+- (void)saveData
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:self.champList forKey:@"champList"];
     [defaults setObject:self.spellList forKey:@"spellList"];
+    [defaults setObject:self.realms forKey:@"realms"];
 }
 
 
@@ -94,6 +110,13 @@
 {
     dispatch_async(fetchQueue,
     ^{
+        //realm data
+        NSError *realmError = nil;
+        NSHTTPURLResponse *realmResponse = nil;
+        NSURL *realmURL = apiURL(kLoLStaticRealm, region, @"", @[]);
+        NSData *realmData = [self.urlSession sendSynchronousDataTaskWithURL:realmURL
+                                                          returningResponse:&realmResponse
+                                                                      error:&realmError];
         //champion list
         NSError *champError = nil;
         NSHTTPURLResponse *champResponse = nil;
@@ -109,6 +132,7 @@
                                                              returningResponse:&spellResponse
                                                                          error:&spellError];
        
+        if (!realmError) self.realms = [NSJSONSerialization JSONObjectWithData:realmData options:kNilOptions error:nil];
         if (!champError) self.champList = [NSJSONSerialization JSONObjectWithData:champListData options:kNilOptions error:nil][@"data"];
         if (!spellError) self.spellList = [NSJSONSerialization JSONObjectWithData:spellListData options:kNilOptions error:nil][@"data"];
         
@@ -140,7 +164,8 @@
     dispatch_async(loadQueue,
     ^{
         NSString *filename = [NSString stringWithFormat:@"%@.png", key];
-        UIImage *img = [self fetchIfDoesNotExistUsingFolder:@"item_icon" filename:filename url:imgURL(kLoLItemIcon, @"5.4.1", key)];
+        UIImage *img = [self fetchIfDoesNotExistUsingFolder:@"item_icon" filename:filename
+                                                        url:imgURL(kLoLItemIcon, self.realms[@"v"], key)];
         dispatch_async(dispatch_get_main_queue(), ^{ view.image = img; });
     });
 }
@@ -159,7 +184,8 @@
     dispatch_async(loadQueue,
     ^{
         NSString *filename = [NSString stringWithFormat:@"%@.png", key];
-        UIImage *img = [self fetchIfDoesNotExistUsingFolder:@"spell_icon" filename:filename url:imgURL(kLoLSpellIcon, @"5.4.1", key)];
+        UIImage *img = [self fetchIfDoesNotExistUsingFolder:@"spell_icon" filename:filename
+                                                        url:imgURL(kLoLSpellIcon, self.realms[@"v"], key)];
         dispatch_async(dispatch_get_main_queue(), ^{ view.image = img; });
     });
 }
@@ -178,7 +204,8 @@
     dispatch_async(loadQueue,
     ^{
         NSString *filename = [NSString stringWithFormat:@"%@.png", key];
-        UIImage *img = [self fetchIfOutdatedUsingFolder:@"champ_icon" filename:filename url:imgURL(kLoLChampIcon, @"5.4.1", key)];
+        UIImage *img = [self fetchIfOutdatedUsingFolder:@"champ_icon" filename:filename
+                                                    url:imgURL(kLoLChampIcon, self.realms[@"v"], key)];
         dispatch_async(dispatch_get_main_queue(), ^{ view.image = img; });
     });
 }
@@ -201,6 +228,29 @@
     ^{
         NSString *filename = [NSString stringWithFormat:@"%@_0.jpg", key];
         UIImage *img = [self fetchIfOutdatedUsingFolder:@"champ_splash" filename:filename url:imgURL(kLoLChampSplash, @"", key)];
+        dispatch_async(dispatch_get_main_queue(), ^{ view.image = img; });
+    });
+}
+
+/**
+ * @method setChampSplashWithKey:toView:
+ *
+ * Given a champ key and and UIImageView,
+ * get the splash in real time and set it as ImageView's image.
+ * Check if splash exists:
+ * - no:  download
+ * - yes: check last update time, and if longer than month, download.
+ *
+ * @param key  - champ key name
+ * @param view - UIImageView to set champ splash to
+ */
+- (void)setProfileIconWithKey:(NSString *)key toView:(UIImageView *)view
+{
+    dispatch_async(loadQueue,
+    ^{
+        NSString *filename = [NSString stringWithFormat:@"%@.png", key];
+        UIImage *img = [self fetchIfDoesNotExistUsingFolder:@"profile_icon" filename:filename
+                                                        url:imgURL(kLoLProfileIcon, self.realms[@"v"], key)];
         dispatch_async(dispatch_get_main_queue(), ^{ view.image = img; });
     });
 }

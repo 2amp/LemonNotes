@@ -765,6 +765,7 @@
 		9522BCAC1A2E71830037F84C /* Lemon Indicator.idraw in Resources */ = {isa = PBXBuildFile; fileRef = 9522BCA11A2E71830037F84C /* Lemon Indicator.idraw */; };
 		9522BCAD1A2E71830037F84C /* Lemon Indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BCA21A2E71830037F84C /* Lemon Indicator.png */; };
 		9522BCAF1A2E93DA0037F84C /* Lemon Indicator 8.png in Resources */ = {isa = PBXBuildFile; fileRef = 9522BCAE1A2E93DA0037F84C /* Lemon Indicator 8.png */; };
+		952C27FC1AA45F3C008A5D31 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 952C27FB1AA45F3C008A5D31 /* Reachability.m */; };
 		953A1C401AA0D4A4008131A8 /* TAPScrollNavbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 953A1C3F1AA0D4A4008131A8 /* TAPScrollNavbar.m */; };
 		953C75151A19E75000832A55 /* TAPLemonRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 953C75141A19E75000832A55 /* TAPLemonRefreshControl.m */; };
 		953C75261A1A749200832A55 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = 953C75251A1A749200832A55 /* 0.png */; };
@@ -1696,6 +1697,8 @@
 		9522BCA11A2E71830037F84C /* Lemon Indicator.idraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lemon Indicator.idraw"; sourceTree = "<group>"; };
 		9522BCA21A2E71830037F84C /* Lemon Indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator.png"; sourceTree = "<group>"; };
 		9522BCAE1A2E93DA0037F84C /* Lemon Indicator 8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lemon Indicator 8.png"; sourceTree = "<group>"; };
+		952C27FA1AA45F3C008A5D31 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		952C27FB1AA45F3C008A5D31 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		953A1C3E1AA0D4A4008131A8 /* TAPScrollNavbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPScrollNavbar.h; sourceTree = "<group>"; };
 		953A1C3F1AA0D4A4008131A8 /* TAPScrollNavbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPScrollNavbar.m; sourceTree = "<group>"; };
 		953C75131A19E75000832A55 /* TAPLemonRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPLemonRefreshControl.h; sourceTree = "<group>"; };
@@ -2719,6 +2722,8 @@
 				950FB68D19FE37B1005F870F /* Constants.h */,
 				950FB68C19FE37B1005F870F /* apikeys.h */,
 				95E0D7781AA310D3007FE628 /* TAPUtil.h */,
+				952C27FA1AA45F3C008A5D31 /* Reachability.h */,
+				952C27FB1AA45F3C008A5D31 /* Reachability.m */,
 				9585AB3F1A3B95D7007CE7A1 /* TAPManager.h */,
 				9585AB401A3B95D7007CE7A1 /* TAPManager.m */,
 				950B2C401A00296A00DD8A23 /* TAPDataManager.h */,
@@ -4024,6 +4029,7 @@
 				955F28141A81BD11008C75CD /* TAPMatchDetailViewController.m in Sources */,
 				894BF63B1A008858009A1F1F /* UIImage+UIImageAdditions.m in Sources */,
 				9585AB411A3B95D7007CE7A1 /* TAPManager.m in Sources */,
+				952C27FC1AA45F3C008A5D31 /* Reachability.m in Sources */,
 				95BA1A2D1A7DCEA60075594D /* Match.m in Sources */,
 				8984EF5B19F6341000C442FC /* TAPAppDelegate.m in Sources */,
 				957C8C331AA126FE007D171C /* TAPBannerManager.m in Sources */,

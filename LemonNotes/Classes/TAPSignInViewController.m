@@ -54,10 +54,8 @@
             self.view.userInteractionEnabled = YES;
             [self.loadingIndicator stopAnimating];
             
-            if (!error)
-                [self performSegueWithIdentifier:@"showTabBarController" sender:self];
-            else
-                [[TAPBannerManager sharedManager] addTopDownBannerToView:self.view type:BannerTypeError text:error.domain delay:0];
+            if (!error) [self performSegueWithIdentifier:@"showTabBarController" sender:self];
+            else        [[TAPBannerManager sharedManager] addTopDownBannerToView:self.view type:BannerTypeError text:error.domain delay:0];
         }];
     }
 }

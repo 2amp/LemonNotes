@@ -29,16 +29,20 @@ static NSString* kLoLLeagueChallenger    = pathLeague "/challenger";            
 
 //static-data
 #define pathStatic @"api/lol/static-data/{region}/v1.2"
-static NSString* kLoLStaticChampionList  = pathStatic "/champion";
-static NSString* kLoLStaticChampion      = pathStatic "/champion/{path}";    //{id}
-static NSString* kLoLStaticItemList      = pathStatic "/item";
-static NSString* kLoLStaticItem          = pathStatic "/item/{path}";        //{id}
-static NSString* kLoLStaticMasteryList   = pathStatic "/mastery";
-static NSString* kLoLStaticMastery       = pathStatic "/mastery/{path}";     //{id}
-static NSString* kLoLStaticRuneList      = pathStatic "/rune";
-static NSString* kLoLStaticRune          = pathStatic "/rune/{path}";
-static NSString* kLoLStaticSpellList     = pathStatic "/summoner-spell";
-static NSString* kLoLStaticSpell         = pathStatic "/summoner-spell/{path}";
+static NSString* kLoLStaticChampionList    = pathStatic "/champion";
+static NSString* kLoLStaticChampion        = pathStatic "/champion/{path}";    //{id}
+static NSString* kLoLStaticItemList        = pathStatic "/item";
+static NSString* kLoLStaticItem            = pathStatic "/item/{path}";        //{id}
+static NSString* kLoLStaticMasteryList     = pathStatic "/mastery";
+static NSString* kLoLStaticMastery         = pathStatic "/mastery/{path}";     //{id}
+static NSString* kLoLStaticRuneList        = pathStatic "/rune";
+static NSString* kLoLStaticRune            = pathStatic "/rune/{path}";
+static NSString* kLoLStaticSpellList       = pathStatic "/summoner-spell";
+static NSString* kLoLStaticSpell           = pathStatic "/summoner-spell/{path}";
+static NSString* kLoLStaticRealm           = pathStatic "/realm";
+static NSString* kLoLStaticVersions        = pathStatic "/versions";
+static NSString* kLoLStaticLanguages       = pathStatic "/languages";
+static NSString* kLoLStaticLanguageStrings = pathStatic "/language-strings";
 
 //status
 #define pathStatus @"shards"
@@ -74,6 +78,7 @@ static NSString* kLoLTeam                = pathTeam    "/{path}";             //
 
 //image assets
 #define ddragon @"https://ddragon.leagueoflegends.com/cdn"
+static NSString* kLoLProfileIcon = ddragon "/%@/img/profileicon/%@.png";
 static NSString* kLoLChampSplash = ddragon "/img/champion/splash/%@_0.jpg";
 static NSString* kLoLChampIcon   = ddragon "/%@/img/champion/%@.png";
 static NSString* kLoLSpellIcon   = ddragon "/%@/img/spell/%@.png";

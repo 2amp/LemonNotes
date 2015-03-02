@@ -163,7 +163,7 @@
     //setup basic header elems
     self.summonerNameLabel.text  = self.summonerInfo[@"name"];
     self.summonerLevelLabel.text = [NSString stringWithFormat:@"Level: %@", self.summonerInfo[@"summonerLevel"]];
-    self.summonerIconView.image  = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", self.summonerInfo[@"profileIconId"]]];
+    [[TAPDataManager sharedManager] setProfileIconWithKey:self.summonerInfo[@"profileIconId"] toView:self.summonerIconView];
     
     //white border for summoner icon
     [self.summonerIconView.layer setBorderWidth:2.0];
@@ -563,10 +563,7 @@
         [itemView setBorderWidth:0.5f color:[UIColor whiteColor]];
         [dataManager setItemIconWithKey:itemKey toView:itemView];
         if ([itemKey isEqualToString:@"0"])
-        {
-            NSLog(@"hi");
             itemView.image = [UIImage imageNamed:@"0.png"];
-        }
     }
     
     // debug
