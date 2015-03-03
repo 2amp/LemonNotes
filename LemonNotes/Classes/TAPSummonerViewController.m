@@ -192,6 +192,7 @@
     NSLog(@"SummonerVC [viewWillAppear]");
     
     self.searchField.text = isRootView ? @"" : self.summonerInfo[@"name"];
+    [[TAPBannerManager sharedManager] removeBannerWithAnimation:NO];
     [self.scrollNavbar revertToSaved];
 }
 
@@ -561,9 +562,10 @@
         UIImageView *itemView = (UIImageView *)itemImageViews[i];
         [itemView setBorderRadius:4.0f];
         [itemView setBorderWidth:0.5f color:[UIColor whiteColor]];
-        [dataManager setItemIconWithKey:itemKey toView:itemView];
         if ([itemKey isEqualToString:@"0"])
             itemView.image = [UIImage imageNamed:@"0.png"];
+        else
+            [dataManager setItemIconWithKey:itemKey toView:itemView];
     }
     
     // debug
@@ -622,6 +624,7 @@
      {
          TAPSummonerViewController *nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"summonerVC"];
          nextVC.summonerInfo = summoner;
+         
          [self.navigationController pushViewController:nextVC animated:YES];
      }
      failureHandler:^(NSString *errorMessage)

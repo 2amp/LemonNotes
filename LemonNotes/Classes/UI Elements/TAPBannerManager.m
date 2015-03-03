@@ -1,34 +1,16 @@
 
 #import "TAPBannerManager.h"
 
+#define DEFAULT_HEIGHT 30.f
+#define DEFAULT_DURATION 0.25f
 
 @interface TAPBannerManager()
 
-//default
-@property (nonatomic) CGRect showFrame;
-@property (nonatomic) CGRect hideFrame;
-@property (nonatomic) CGFloat defaultHeight;
-@property (nonatomic) CGFloat defaultHorMargin;
-@property (nonatomic) CGFloat defaultVerMargin;
-@property (nonatomic) CGFloat animationDuration;
-@property (nonatomic, strong) UIFont *defaultFont;
-
-//setting
-
 //private properties
-@property (nonatomic, strong) UIView *currentView;
-@property (nonatomic, strong) UIView *currentBanner;
-
-//private methods
-- (instancetype)init;
-- (void)removeBanner;
-- (void)showBannerWithDelay:(CGFloat)delay;
-- (void)hideBannerWithHandler:(void (^)(BOOL))hander;
+@property (nonatomic, strong) TAPBanner *banner;
 
 //banner
-- (UIColor *)colorForBannerType:(BannerType)type;
 - (void)tapHandler:(UITapGestureRecognizer *)gesture;
-- (UIView *)bannerWithFrame:(CGRect)frame type:(BannerType)type text:(NSString *)text;
 - (void)addBannerToView:(UIView *)view type:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
                     top:(BOOL)top down:(BOOL)down front:(BOOL)front;
 
@@ -57,41 +39,21 @@
     return sharedManager;
 }
 
-/**
- * @method init
- *
- * Initializer for sharedManager.
- * Other classes should not be able to create a new BannerManager.
- * Sets up all necessary default values.
- */
-- (instancetype)init
-{
-    if (self = [super init])
-    {
-        self.defaultHeight = 30.f;
-        self.defaultVerMargin = 0.f;
-        self.defaultHorMargin = 20.f;
-        self.animationDuration = 0.25f;
-        self.defaultFont = [UIFont fontWithName:@"HelveticaNeue" size:14.f];
-    }
-    return self;
-}
-
 
 #pragma mark - Banner Management
-/**
- * @method hideBanner
- *
- * Hides current banner
- */
-- (void)removeBanner
+- (void)removeBannerWithAnimation:(BOOL)animation
 {
-    [UIView animateWithDuration:self.animationDuration
-     animations:^
+    NSTimeInterval dur = (animation) ? DEFAULT_DURATION : 0;
+
+    [self.banner hideWithDuration:dur delay:0
+     handler:^(BOOL finished)
      {
-         self.currentBanner.frame = self.hideFrame;
-     }
-     completion:^(BOOL finished){}];
+         UITapGestureRecognizer *gesture = [self.banner gestureRecognizers][0];
+         [self.banner removeGestureRecognizer:gesture];
+         [self.banner removeFromSuperview];
+         
+         self.banner = nil;
+     }];
 }
 
 /**
@@ -148,10 +110,21 @@
 - (void)addBannerToView:(UIView *)view type:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
                     top:(BOOL)top down:(BOOL)down front:(BOOL)front
 {
-    CGRect frame = view.frame;
-    UIView *banner = [self bannerWithFrame:frame type:type text:text];
+    TAPBanner *banner = [TAPBanner bannerWithType:type text:text];
     
-    //subview & z-index
+    //size calculations
+    CGFloat width  = view.frame.size.width;
+    CGFloat height = DEFAULT_HEIGHT;
+    if (top) height += [self statusbarHeight];
+    CGFloat edge  = top  ? 0 : view.frame.size.height;
+    CGFloat delta = down ? height : -height;
+    
+    //set frames
+    banner.hideFrame = (CGRect){0, edge - delta, width, height};
+    banner.showFrame = (CGRect){0, edge,         width, height};
+    banner.frame = banner.hideFrame;
+
+    //add to view
     [view addSubview:banner];
     if (front) [view bringSubviewToFront:banner];
     else       [view sendSubviewToBack:banner];
@@ -161,59 +134,23 @@
     [banner addGestureRecognizer:gesture];
     
     //showing new
-    void (^handler)(BOOL) = ^(BOOL finished)
+    void (^completionHandler)(BOOL) = ^(BOOL finished)
     {
-        self.currentView = view;
-        self.currentBanner = banner;
+        UITapGestureRecognizer *gesture = [self.banner gestureRecognizers][0];
+        [self.banner removeGestureRecognizer:gesture];
+        [self.banner removeFromSuperview];
         
-        CGFloat width  = banner.frame.size.width;
-        CGFloat height = banner.frame.size.height;
-        if (top) height += [self statusbarHeight];
-        
-        CGFloat edge  = top  ? 0 : view.frame.size.height;
-        CGFloat delta = down ? height : -height;
-        self.hideFrame = (CGRect){0, edge - delta, width, height};
-        self.showFrame = (CGRect){0, edge,         width, height};
-        
-        banner.frame = self.hideFrame;
-        [self showBannerWithDelay:delay];
+        self.banner = banner;
+        [self.banner show];
     };
     
-    //hiding old
-    if (self.currentView && self.currentBanner)
-        [self hideBannerWithHandler:handler];
+    if (!self.banner)
+    {
+        self.banner = banner;
+        [self.banner show];
+    }
     else
-        handler(YES);
-}
-
-/**
- * @method showBanner
- *
- * Shows the current banner with givne delay;
- */
-- (void)showBannerWithDelay:(CGFloat)delay
-{
-    [UIView animateWithDuration:self.animationDuration delay:delay options:UIViewAnimationOptionCurveLinear
-    animations:^
-    {
-        self.currentBanner.frame = self.showFrame;
-    }
-    completion:^(BOOL finished){}];
-}
-
-/**
- * @method hideBannerWithHandler
- *
- * Hides the current banner and calls handler upon completion.
- */
-- (void)hideBannerWithHandler:(void (^)(BOOL))hander
-{
-    [UIView animateWithDuration:self.animationDuration
-    animations:^
-    {
-        self.currentBanner.frame = self.hideFrame;
-    }
-    completion:hander];
+        [self.banner hideWithHandler:completionHandler];
 }
 
 #pragma mark - Private Helpers
@@ -230,23 +167,6 @@
 }
 
 /**
- * @method colorForBannerType:
- *
- * Given a banner type, returns correspoding color.
- */
-- (UIColor *)colorForBannerType:(BannerType)type
-{
-    switch (type)
-    {
-        case BannerTypeIncomplete: return [UIColor blackColor];
-        case BannerTypeComplete:   return [UIColor greenColor];
-        case BannerTypeWarning:    return [UIColor orangeColor];
-        case BannerTypeError:      return [UIColor redColor];
-    }
-    return [UIColor blackColor];
-}
-
-/**
  * @method tapHandler
  *
  * Callback for tap on banner.
@@ -254,40 +174,7 @@
  */
 - (void)tapHandler:(UITapGestureRecognizer *)gesture
 {
-    [self.currentBanner removeGestureRecognizer:gesture];
-    [self removeBanner];
-}
-
-/**
- * @method bannerWithType:text:
- *
- * Creates a banner with the specified type and text.
- *
- * @param type - BannerType (color)
- * @param text - message to display
- */
-- (UIView *)bannerWithFrame:(CGRect)frame type:(BannerType)type text:(NSString *)text
-{
-    //banner
-    CGRect bannerFrame = frame;
-    bannerFrame.size.height = self.defaultHeight;
-    
-    UIView *banner = [[UIView alloc] initWithFrame:bannerFrame];
-    banner.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    banner.backgroundColor = [self colorForBannerType:type];
-    
-    
-    //message
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(banner.bounds, self.defaultHorMargin, self.defaultVerMargin)];
-    label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor whiteColor];
-    label.font = self.defaultFont;
-    label.text = text;
-    
-    [banner addSubview:label];
-
-    return banner;
+    [self removeBannerWithAnimation:YES];
 }
 
 @end

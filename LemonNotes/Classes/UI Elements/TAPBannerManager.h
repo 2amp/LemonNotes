@@ -15,7 +15,7 @@
 + (instancetype)sharedManager;
 
 //adding banners
-- (void)removeBanner;
+- (void)removeBannerWithAnimation:(BOOL)animation;
 - (void)addTopDownBannerToView:(UIView *)view type:(BannerType)type
                           text:(NSString *)text delay:(CGFloat)delay;
 - (void)addBottomUpBannerToView:(UIView *)view type:(BannerType)type
