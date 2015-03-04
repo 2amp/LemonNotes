@@ -10,6 +10,7 @@
 @property (nonatomic, strong) TAPBanner *banner;
 
 //banner
+- (UIColor *)colorForBannerType:(BannerType)type;
 - (void)tapHandler:(UITapGestureRecognizer *)gesture;
 - (void)addBannerToView:(UIView *)view type:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
                     top:(BOOL)top down:(BOOL)down front:(BOOL)front;
@@ -40,7 +41,20 @@
 }
 
 
+#pragma mark - Accessors
+- (void)setBanner:(TAPBanner *)banner
+{
+    _banner = banner;
+    [_banner show];
+}
+
+
 #pragma mark - Banner Management
+/**
+ * @method
+ *
+ *
+ */
 - (void)removeBannerWithAnimation:(BOOL)animation
 {
     NSTimeInterval dur = (animation) ? DEFAULT_DURATION : 0;
@@ -48,8 +62,6 @@
     [self.banner hideWithDuration:dur delay:0
      handler:^(BOOL finished)
      {
-         UITapGestureRecognizer *gesture = [self.banner gestureRecognizers][0];
-         [self.banner removeGestureRecognizer:gesture];
          [self.banner removeFromSuperview];
          
          self.banner = nil;
@@ -63,21 +75,11 @@
  * to the view at the top so that it drops down.
  * @note this banner will be in front of other subview in view
  */
-- (void)addTopDownBannerToView:(UIView *)view type:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
+- (void)addBannerToTopOfView:(UIView *)view withType:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
+                  tapHandler:(void (^)())tapHandler cancelHandler:(void (^)())cancelHandler
 {
-    [self addBannerToView:view type:type text:text delay:delay top:YES down:YES front:YES];
-}
-
-/**
- * @method addBottomUpBannerToView:type:text:delay
- *
- * Adds a banner of the given type and text with delay
- * to the view at the bottom so that it drops down.
- * @note this banner will be in behind of other subview in view
- */
-- (void)addBottomUpBannerToView:(UIView *)view type:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
-{
-    [self addBannerToView:view type:type text:text delay:delay top:NO down:NO front:NO];
+    [self addBannerToView:view withType:type text:text delay:delay top:YES down:YES front:YES
+               tapHandler:tapHandler cancelHandler:cancelHandler];
 }
 
 /**
@@ -87,9 +89,11 @@
  * to the view at the bottom so that it drops down.
  * @note this banner will be in behind of other subview in view
  */
-- (void)addBottomDownBannerToView:(UIView *)view type:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
+- (void)addBannerToBottomOfView:(UIView *)view withType:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
+                       tapHandler:(void (^)())tapHandler cancelHandler:(void (^)())cancelHandler
 {
-    [self addBannerToView:view type:type text:text delay:delay top:NO down:YES front:NO];
+    [self addBannerToView:view withType:type text:text delay:delay top:NO down:YES front:NO
+               tapHandler:tapHandler cancelHandler:cancelHandler];
 }
 
 
@@ -107,10 +111,12 @@
  * @param down  - bool to slide down or up
  * @param front - bool to place front or behind
  */
-- (void)addBannerToView:(UIView *)view type:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
+- (void)addBannerToView:(UIView *)view withType:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
                     top:(BOOL)top down:(BOOL)down front:(BOOL)front
+             tapHandler:(void (^)())tapHandler cancelHandler:(void (^)())cancelHandler
 {
-    TAPBanner *banner = [TAPBanner bannerWithType:type text:text];
+    TAPBanner *banner = [TAPBanner bannerWithText:text];
+    banner.backgroundColor = [self colorForBannerType:type];
     
     //size calculations
     CGFloat width  = view.frame.size.width;
@@ -123,37 +129,64 @@
     banner.hideFrame = (CGRect){0, edge - delta, width, height};
     banner.showFrame = (CGRect){0, edge,         width, height};
     banner.frame = banner.hideFrame;
-
+    
+    //event handler
+    [banner addCancelEventTarget:self action:@selector(cancelHandler:)];
+    [banner addTapEventTarget:self action:@selector(tapHandler:)];
+    banner.cancelHandler = cancelHandler;
+    banner.tapHandler = tapHandler;
+    
     //add to view
     [view addSubview:banner];
     if (front) [view bringSubviewToFront:banner];
     else       [view sendSubviewToBack:banner];
     
-    //gesture
-    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHandler:)];
-    [banner addGestureRecognizer:gesture];
-    
     //showing new
-    void (^completionHandler)(BOOL) = ^(BOOL finished)
-    {
-        UITapGestureRecognizer *gesture = [self.banner gestureRecognizers][0];
-        [self.banner removeGestureRecognizer:gesture];
-        [self.banner removeFromSuperview];
-        
-        self.banner = banner;
-        [self.banner show];
-    };
-    
-    if (!self.banner)
-    {
-        self.banner = banner;
-        [self.banner show];
-    }
-    else
-        [self.banner hideWithHandler:completionHandler];
+    [self.banner removeFromSuperview];
+    self.banner = banner;
 }
 
-#pragma mark - Private Helpers
+
+#pragma mark - Event Callback
+/**
+ * @method tapHandler
+ *
+ * Callback for tap on banner.
+ * Remove current banner and call its tapHandler().
+ */
+- (void)tapHandler:(UITapGestureRecognizer *)gesture
+{
+    [self.banner hideWithDuration:DEFAULT_DURATION delay:0
+     handler:^(BOOL finished)
+     {
+         if (self.banner.tapHandler)
+             self.banner.tapHandler();
+         
+         [self.banner removeFromSuperview];
+         self.banner = nil;
+     }];
+}
+
+/**
+ * @method cancelHandler
+ *
+ * Callback for cancel button press on banner.
+ * Remove current banner and call its cancelHandler().
+ */
+- (void)cancelHandler:(UIButton *)button
+{
+    [self.banner hideWithDuration:DEFAULT_DURATION delay:0
+     handler:^(BOOL finished)
+     {
+         if (self.banner.cancelHandler)
+             self.banner.cancelHandler();
+     
+         [self.banner removeFromSuperview];
+         self.banner = nil;
+     }];
+}
+
+#pragma mark - Helpers
 /**
  * @method statusBarHeight
  *
@@ -167,14 +200,23 @@
 }
 
 /**
- * @method tapHandler
+ * @method colorForBannerType:
  *
- * Callback for tap on banner.
- * Removes gestureRecognizer from banner and hides it.
+ * Given a banner type, returns correspoding color.
+ *
+ * @param type - banner type
+ * @return color accordingly to banner type
  */
-- (void)tapHandler:(UITapGestureRecognizer *)gesture
+- (UIColor *)colorForBannerType:(BannerType)type
 {
-    [self removeBannerWithAnimation:YES];
+    switch (type)
+    {
+        case BannerTypeIncomplete: return [UIColor blackColor];
+        case BannerTypeComplete:   return [UIColor greenColor];
+        case BannerTypeWarning:    return [UIColor orangeColor];
+        case BannerTypeError:      return [UIColor redColor];
+    }
+    return [UIColor blackColor];
 }
 
 @end

@@ -1,17 +1,6 @@
 
 #import <UIKit/UIKit.h>
 
-//banner types
-#define DEFAULT_VER_MARGIN 0.f
-#define DEFAULT_HOR_MARGIN 20.f
-typedef NS_ENUM(int, BannerType)
-{
-    BannerTypeIncomplete = 0,
-    BannerTypeComplete,
-    BannerTypeWarning,
-    BannerTypeError
-};
-
 /**
  * @class TAPBanner
  * @brief TAPBanner
@@ -22,16 +11,23 @@ typedef NS_ENUM(int, BannerType)
  */
 @interface TAPBanner : UIView
 
-+ (instancetype)bannerWithType:(BannerType)type text:(NSString *)text;
++ (instancetype)bannerWithText:(NSString *)text;
 
-//frames
-@property (nonatomic) BOOL isHidden;
+//properties
 @property (nonatomic) CGRect hideFrame;
 @property (nonatomic) CGRect showFrame;
+@property (nonatomic, readonly) BOOL isHidden;
 
 //UI
-@property (nonatomic, readonly) BannerType type;
-@property (nonatomic, strong, readonly) UILabel *label;
+@property (nonatomic, strong) UILabel *label;
+@property (nonatomic, strong) UIButton *button;
+
+//callback
+@property (nonatomic, strong) UITapGestureRecognizer *gesture;
+@property (copy) void (^tapHandler)();
+@property (copy) void (^cancelHandler)();
+- (void)addTapEventTarget:(id)target action:(SEL)action;
+- (void)addCancelEventTarget:(id)target action:(SEL)action;
 
 //animations
 - (void)show;

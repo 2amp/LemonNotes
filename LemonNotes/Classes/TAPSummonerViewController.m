@@ -51,7 +51,7 @@
 
 
 @implementation TAPSummonerViewController
-#pragma mark Load & Setup
+#pragma mark View Cycle
 /**
  * @method viewDidLoad
  *
@@ -78,6 +78,36 @@
     [self.summonerManager initalLoad];
 }
 
+/**
+ * @method: viewWillAppear:
+ *
+ * Called when this view is about to appear.
+ * Setup all necessary components,
+ * then tell manager to load matches.
+ */
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    NSLog(@"SummonerVC [viewWillAppear]");
+    
+    //navbar setting
+    self.searchField.text = isRootView ? @"" : self.summonerInfo[@"name"];
+    [self.scrollNavbar revertToSaved];
+    
+    //banner management
+    TAPBannerManager *bannerManager = [TAPBannerManager sharedManager];
+    [bannerManager removeBannerWithAnimation:NO];
+    [bannerManager addBannerToBottomOfView:self.scrollNavbar withType:BannerTypeIncomplete text:@"No Internet Connection" delay:1
+     tapHandler:^{
+         NSLog(@"tap dismiss!");
+     }
+     cancelHandler:^{
+        NSLog(@"cancel dismiss");
+     }];
+}
+
+
+#pragma mark - Setup
 /**
  * @method setSummonerInfo:
  *
@@ -175,25 +205,6 @@
     
     //footer
     [self showFooter:YES];
-}
-
-
-#pragma mark - View Appear Phase
-/**
- * @method: viewWillAppear:
- *
- * Called when this view is about to appear.
- * Setup all necessary components,
- * then tell manager to load matches.
- */
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
-    NSLog(@"SummonerVC [viewWillAppear]");
-    
-    self.searchField.text = isRootView ? @"" : self.summonerInfo[@"name"];
-    [[TAPBannerManager sharedManager] removeBannerWithAnimation:NO];
-    [self.scrollNavbar revertToSaved];
 }
 
 
@@ -629,7 +640,13 @@
      }
      failureHandler:^(NSString *errorMessage)
      {
-         [[TAPBannerManager sharedManager] addBottomDownBannerToView:self.scrollNavbar type:BannerTypeError text:@"Summoner Not Found" delay:0.25];
+         [[TAPBannerManager sharedManager] addBannerToBottomOfView:self.scrollNavbar withType:BannerTypeError text:@"Summoner Not Found" delay:0.25
+          tapHandler:^{
+              NSLog(@"k summoner not found");
+          }
+          cancelHandler:^{
+              NSLog(@"NO I REFUSE");
+          }];
      }];
 }
 

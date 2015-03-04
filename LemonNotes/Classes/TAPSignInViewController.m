@@ -55,7 +55,11 @@
             [self.loadingIndicator stopAnimating];
             
             if (!error) [self performSegueWithIdentifier:@"showTabBarController" sender:self];
-            else        [[TAPBannerManager sharedManager] addTopDownBannerToView:self.view type:BannerTypeError text:error.domain delay:0];
+            else
+            {
+                [[TAPBannerManager sharedManager] addBannerToBottomOfView:self.view withType:BannerTypeError text:error.domain delay:0
+                 tapHandler:NULL cancelHandler:NULL];
+            }
         }];
     }
 }
@@ -120,9 +124,12 @@
          [[NSUserDefaults standardUserDefaults] setObject:summoner forKey:@"currentSummoner"];
          [self performSegueWithIdentifier:@"showTabBarController" sender:self];
      }
-     failureHandler:^(NSString *errorMessage) {
+     failureHandler:^(NSString *errorMessage)
+     {
          [self.activityIndicator stopAnimating];
-         [[TAPBannerManager sharedManager] addTopDownBannerToView:self.view type:BannerTypeError text:@"Summoner Not Found" delay:0.25];
+         [[TAPBannerManager sharedManager] addBannerToTopOfView:self.view withType:BannerTypeError text:@"Summoner Not Found" delay:0.25
+          tapHandler:NULL
+          cancelHandler:NULL];
      }];
 }
 

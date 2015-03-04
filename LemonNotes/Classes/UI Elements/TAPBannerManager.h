@@ -2,6 +2,14 @@
 #import <UIKit/UIKit.h>
 #import "TAPBanner.h"
 
+typedef NS_ENUM(int, BannerType)
+{
+    BannerTypeIncomplete = 0,
+    BannerTypeComplete,
+    BannerTypeWarning,
+    BannerTypeError
+};
+
 /**
  * @class TAPBannerManager
  * @brief TAPBannerManager
@@ -16,11 +24,13 @@
 
 //adding banners
 - (void)removeBannerWithAnimation:(BOOL)animation;
-- (void)addTopDownBannerToView:(UIView *)view type:(BannerType)type
-                          text:(NSString *)text delay:(CGFloat)delay;
-- (void)addBottomUpBannerToView:(UIView *)view type:(BannerType)type
-                           text:(NSString *)text delay:(CGFloat)delay;
-- (void)addBottomDownBannerToView:(UIView *)view type:(BannerType)type
-                             text:(NSString *)text delay:(CGFloat)delay;
+- (void)addBannerToTopOfView:(UIView *)view withType:(BannerType)type text:(NSString *)text
+                       delay:(CGFloat)delay
+                  tapHandler:(void (^)())tapHandler
+               cancelHandler:(void (^)())cancelHandler;
+- (void)addBannerToBottomOfView:(UIView *)view withType:(BannerType)type text:(NSString *)text
+                          delay:(CGFloat)delay
+                     tapHandler:(void (^)())tapHandler
+                  cancelHandler:(void (^)())cancelHandler;
 
 @end

@@ -1,10 +1,6 @@
 
 #import "TAPBanner.h"
 
-@interface TAPBanner()
-
-@end
-
 
 @implementation TAPBanner
 #pragma mark Init
@@ -14,9 +10,9 @@
  * Returns a banner with the given properties.
  * Convenience class method to shortcut [[TAPBanner alloc] init]
  */
-+ (instancetype)bannerWithType:(BannerType)type text:(NSString *)text
++ (instancetype)bannerWithText:(NSString *)text
 {
-    return [[TAPBanner alloc] initWithType:type text:text];
+    return [[TAPBanner alloc] initWithText:text];
 }
 
 /**
@@ -26,26 +22,34 @@
  * creates a banner using some other default properties.
  * Banner's width is flexible and message label is bottom aligned.
  *
- * @param type  - banner type to determine color
  * @param text  - message text to display
  * @instancetype TAPBanner instance
  */
-- (instancetype)initWithType:(BannerType)type text:(NSString *)text
+- (instancetype)initWithText:(NSString *)text
 {
     if (self = [super init])
     {
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
-        _type = type;
-        self.backgroundColor = [self colorForBannerType:type];
-        
-        _label = [[UILabel alloc] init];
-        _label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-        _label.textAlignment = NSTextAlignmentCenter;
-        _label.textColor = [UIColor whiteColor];
-        _label.font = [UIFont fontWithName:@"HelveticaNeue" size:14.f];
-        _label.text = text;
+        //label
+        self.label = [[UILabel alloc] init];
+        self.label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+        self.label.textAlignment = NSTextAlignmentCenter;
+        self.label.textColor = [UIColor whiteColor];
+        self.label.font = [UIFont fontWithName:@"HelveticaNeue" size:14.f];
+        self.label.text = text;
         [self addSubview:self.label];
+        
+        //button
+        self.button = [UIButton buttonWithType:UIButtonTypeSystem];
+        self.button.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
+        [self.button setImage:[UIImage imageNamed:@"cross.png"] forState:UIControlStateNormal];
+        self.button.tintColor = [UIColor whiteColor];
+        [self addSubview:self.button];
+        
+        //tap gesture
+        self.gesture = [[UITapGestureRecognizer alloc] init];
+        [self addGestureRecognizer:self.gesture];
         
         _isHidden = YES;
     }
@@ -54,11 +58,61 @@
 
 
 #pragma mark - Accessors
+/**
+ * @method setFrame:
+ *
+ * Called everytime banner's frame is changed.
+ * Call UIView's setFrame and 
+ * modify lable and button accordingly.
+ *
+ * @param frame - new CGRect frame to apply
+ */
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
     
-    _label.frame = CGRectInset(self.bounds, DEFAULT_HOR_MARGIN, 0);
+    //label
+    CGFloat horMargin = 20.f;
+    self.label.frame = CGRectInset(self.bounds, horMargin, 0);
+    
+    //button
+    CGFloat allMargin = 10.f;
+    CGFloat sideLength = 10.f;
+    self.button.frame = (CGRect){self.frame.size.width - sideLength - allMargin,
+                                 self.frame.size.height - sideLength - allMargin,
+                                 sideLength, sideLength};
+}
+
+
+#pragma mark - Callback
+/**
+ * @method addTapEventTarget:action
+ *
+ * Given a receiver and selector action,
+ * adds it to banner to be called when
+ * anywhere inside the banner is tapped.
+ *
+ * @param target - target to send action to
+ * @param action - action to send to target
+ */
+- (void)addTapEventTarget:(id)target action:(SEL)action
+{
+    [self.gesture addTarget:target action:action];
+}
+
+/**
+ * @method addCancelEventTarget:action:
+ *
+ * Given a receiver and selector action,
+ * adds it to button to be called when
+ * the cancel button is clicked inside banner
+ *
+ * @param target - target to send action to
+ * @param action - action to send to target
+ */
+- (void)addCancelEventTarget:(id)target action:(SEL)action
+{
+    [self.button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 }
 
 
@@ -124,7 +178,7 @@
     }
     completion:^(BOOL finished)
     {
-        self.isHidden = NO;
+        _isHidden = NO;
         if (handler) handler(finished);
     }];
 }
@@ -191,31 +245,10 @@
     }
     completion:^(BOOL finished)
     {
-        self.isHidden = YES;
+        _isHidden = YES;
         if (handler) handler(finished);
     }];
 }
 
-
-#pragma mark - Private helpers
-/**
- * @method colorForBannerType:
- *
- * Given a banner type, returns correspoding color.
- *
- * @param type - banner type
- * @return color accordingly to banner type
- */
-- (UIColor *)colorForBannerType:(BannerType)type
-{
-    switch (type)
-    {
-        case BannerTypeIncomplete: return [UIColor blackColor];
-        case BannerTypeComplete:   return [UIColor greenColor];
-        case BannerTypeWarning:    return [UIColor orangeColor];
-        case BannerTypeError:      return [UIColor redColor];
-    }
-    return [UIColor blackColor];
-}
 
 @end
