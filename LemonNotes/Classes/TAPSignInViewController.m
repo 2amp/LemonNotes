@@ -1,10 +1,13 @@
 
 #import "TAPSignInViewController.h"
+
 #import "NSURLSession+SynchronousTask.h"
-#import "TAPSearchField.h"
+#import "Reachability.h"
 #import "TAPDataManager.h"
-#import "TAPBannerManager.h"
 #import "TAPUtil.h"
+
+#import "TAPBannerManager.h"
+#import "TAPSearchField.h"
 
 
 @interface TAPSignInViewController ()
@@ -12,13 +15,13 @@
 //UI
 @property (nonatomic, weak) IBOutlet TAPSearchField *signInField;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *loadingIndicator;
 
 //Private
 @property (nonatomic, strong) NSURLSession *urlSession;
-@property (nonatomic, strong) NSString *summonerName;
-@property (nonatomic, strong) NSString *summonerRegion;
-- (void)signIn;
+@property (nonatomic, strong) Reachability *reachability;
+@property (nonatomic, strong) NSDictionary *summonerInfo;
+- (void)signInWithName:(NSString *)name region:(NSString *)region;
 
 @end
 
@@ -38,29 +41,19 @@
     
     NSLog(@"%@ %p", self.class, self);
     
-    NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
-    self.urlSession = [NSURLSession sessionWithConfiguration:config];
-
-    NSDictionary *summoner = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
-    if (summoner != nil)
+    self.urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]];
+    self.reachability = [Reachability reachabilityForInternetConnection];
+    
+    self.summonerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentSummoner"];
+    if (self.summonerInfo != nil)
     {
-        [self.view setUserInteractionEnabled:NO];
-        self.signInField.text = summoner[@"name"];
-        
-        [self.loadingIndicator startAnimating];
-        [[TAPDataManager sharedManager] updateDataWithRegion:summoner[@"region"]
-        completionHandler:^(NSError *error)
-        {
-            self.view.userInteractionEnabled = YES;
-            [self.loadingIndicator stopAnimating];
-            
-            if (!error) [self performSegueWithIdentifier:@"showTabBarController" sender:self];
-            else
-            {
-                [[TAPBannerManager sharedManager] addBannerToBottomOfView:self.view withType:BannerTypeError text:error.domain delay:0
-                 tapHandler:NULL cancelHandler:NULL];
-            }
-        }];
+        self.signInField.text = self.summonerInfo[@"name"];
+        [self performSegueWithIdentifier:@"showTabBarController" sender:self];
+    }
+    else
+    {
+        if (![self.reachability isReachable])
+            [[TAPBannerManager sharedManager] addBannerToTopOfView:self.view withType:BannerTypeIncomplete text:@"No Internet Connection" delay:0.5];
     }
 }
 
@@ -73,7 +66,6 @@
 {
     [super didReceiveMemoryWarning];
 }
-
 
 
 #pragma mark - Controller Event Callbacks
@@ -89,11 +81,37 @@
  */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    self.summonerName = self.signInField.text;
-    self.summonerRegion = self.signInField.selectedRegion;
     [textField resignFirstResponder];
     
-    [self signIn];
+    TAPBannerManager *bm = [TAPBannerManager sharedManager];
+    if (![self.reachability isReachable])
+    {
+        [bm addBannerToBottomOfView:self.view withType:BannerTypeIncomplete text:@"No Internet Connection." delay:0];
+    }
+    else if ([self.reachability isReachableViaWiFi])
+    {
+        [[TAPDataManager sharedManager] updateDataWithRegion:self.signInField.selectedRegion
+        completionHandler:^(NSError *error)
+        {
+            if (!error)
+                [self signInWithName:self.signInField.text region:self.signInField.selectedRegion];
+        }];
+    }
+    else if ([self.reachability isReachableViaWWAN])
+    {
+        [bm addBannerToTopOfView:self.view withType:BannerTypeWarning text:@"On 3G/LTE. Tap to Continue." delay:0
+        tapHandler:^()
+        {
+            [[TAPDataManager sharedManager] updateDataWithRegion:self.signInField.selectedRegion
+            completionHandler:^(NSError *error)
+            {
+                if (!error)
+                    [self signInWithName:self.signInField.text region:self.signInField.selectedRegion];
+            }];
+        }
+        cancelHandler:NULL];
+    }
+    
     return YES;
 }
 
@@ -105,22 +123,17 @@
  * Otherwise, segue to the start game view controller with the provided summoner info.
  * In addition, add the summoner name and ID numbers to the standard user defaults.
  */
-- (void)signIn
+- (void)signInWithName:(NSString *)name region:(NSString *)region
 {
-    NSLog(@"[SignInVC signIn]");
-    
     //start rolling
     [self.activityIndicator startAnimating];
 
     //async search/fetch summoner
-    [[TAPDataManager sharedManager] getSummonerForName:self.summonerName region:self.summonerRegion
+    [[TAPDataManager sharedManager] getSummonerForName:name region:region
      successHandler:^(NSDictionary *summoner)
      {
          [self.activityIndicator stopAnimating];
-         if (summoner == nil)
-         {
-             NSLog(@"summoner %@", summoner);
-         }
+         
          [[NSUserDefaults standardUserDefaults] setObject:summoner forKey:@"currentSummoner"];
          [self performSegueWithIdentifier:@"showTabBarController" sender:self];
      }

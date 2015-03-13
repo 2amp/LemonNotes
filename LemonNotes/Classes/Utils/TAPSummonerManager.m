@@ -182,7 +182,6 @@
  *
  * Loads the first 15 matches for this summoner on a background queue
  * and reports back to the delegate with number actually loaded.
- *
  */
 - (void)initalLoad
 {
@@ -196,8 +195,6 @@
         //load 15 from server
         int index = 0;
         NSArray *newestMatches = [self matchHistoryFrom:index];
-        
-        NSLog(@"newestFetched:%@", [newestMatches firstObject][@"matchId"]);
         
         //set data
         index += newestMatches.count;
@@ -275,7 +272,6 @@
  */
 - (void)loadOldMatches
 {
-    NSLog(@"-[SummonerManager loadOldMatches]");
     dispatch_async(loadQueue,
     ^{
         int numLoaded = registered ? [self loadFromLocal] : [self loadFromServer];
@@ -287,6 +283,7 @@
         });
     });
 }
+
 
 #pragma mark - Private Intermeidate Methods
 /**
@@ -302,15 +299,13 @@
  */
 - (int)loadFromLocal
 {
-    NSLog(@"-[SummonerManager loadFromLocal]");
-    
-    int saved   = (int)self.summoner.matches.count;
-    int loaded  = (int)self.mutableMatches.count;
-    int numLoad = (int)MIN(15, saved - loaded);
+    int saved  = (int)self.summoner.matches.count;
+    int loaded = (int)self.mutableMatches.count;
+    int toLoad = (int)MIN(15, saved - loaded);
     int startIndex = saved - loaded - 1;
     
     NSMutableArray *oldMatches = [[NSMutableArray alloc] init];
-    for (int i = startIndex; i >= startIndex - numLoad; i--)
+    for (int i = startIndex; i >= startIndex - toLoad; i--)
     {
         //get match entity
         Match* match = [self.summoner.matches objectAtIndex:i];
@@ -328,7 +323,7 @@
     
     [self.mutableMatches addObjectsFromArray:oldMatches];
     
-    return numLoad;
+    return toLoad;
 }
 
 /**

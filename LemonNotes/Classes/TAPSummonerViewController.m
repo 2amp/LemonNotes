@@ -97,13 +97,6 @@
     //banner management
     TAPBannerManager *bannerManager = [TAPBannerManager sharedManager];
     [bannerManager removeBannerWithAnimation:NO];
-    [bannerManager addBannerToBottomOfView:self.scrollNavbar withType:BannerTypeIncomplete text:@"No Internet Connection" delay:1
-     tapHandler:^{
-         NSLog(@"tap dismiss!");
-     }
-     cancelHandler:^{
-        NSLog(@"cancel dismiss");
-     }];
 }
 
 
@@ -255,19 +248,7 @@
 }
 
 
-#pragma mark - Summoner Manager Delegate Methods
-/**
- * @method didFinishInitalLoadMatches
- *
- * Callback by SummonerManager once inital matches have been loaded.
- * Update the header splash and reload the table
- */
-- (void)didFinishInitalLoadMatches:(int)numLoaded
-{
-    [self updateHeaderSplash];
-    [self.tableView reloadData];
-}
-
+#pragma mark - SummonerManager Delegate
 /**
  * @method refresh
  *
@@ -281,6 +262,18 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self.summonerManager loadNewMatches];
     });
+}
+
+/**
+ * @method didFinishInitalLoadMatches
+ *
+ * Callback by SummonerManager once inital matches have been loaded.
+ * Update the header splash and reload the table
+ */
+- (void)didFinishInitalLoadMatches:(int)numLoaded
+{
+    [self updateHeaderSplash];
+    [self.tableView reloadData];
 }
 
 /**
@@ -303,16 +296,16 @@
  */
 - (void)didFinishLoadingOldMatches:(int)numLoaded
 {
-    if (numLoaded > 0)
+    if (numLoaded == 0)
+        return;
+
+    self.loadLock = NO;
+    [self.tableView reloadData];
+    
+    if (numLoaded < 15)
     {
-        self.loadLock = NO;
-        [self.tableView reloadData];
-        
-        if (numLoaded < 15)
-        {
-            self.loadLock = YES;
-            [self showFooter:YES];
-        }
+        self.loadLock = YES;
+        [self showFooter:YES];
     }
 }
 

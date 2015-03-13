@@ -1716,8 +1716,8 @@
 		9572F8EF1AA3CDD200A0F414 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9572F8F11AA3D0B100A0F414 /* TAPBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPBanner.h; sourceTree = "<group>"; };
 		9572F8F21AA3D0B100A0F414 /* TAPBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPBanner.m; sourceTree = "<group>"; };
-		957C8C311AA126FE007D171C /* TAPBannerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPBannerManager.h; sourceTree = "<group>"; };
-		957C8C321AA126FE007D171C /* TAPBannerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPBannerManager.m; sourceTree = "<group>"; };
+		957C8C311AA126FE007D171C /* TAPBannerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAPBannerManager.h; path = "../UI Elements/TAPBannerManager.h"; sourceTree = "<group>"; };
+		957C8C321AA126FE007D171C /* TAPBannerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAPBannerManager.m; path = "../UI Elements/TAPBannerManager.m"; sourceTree = "<group>"; };
 		9581360E1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSession+SynchronousTask.h"; sourceTree = "<group>"; };
 		9581360F1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSession+SynchronousTask.m"; sourceTree = "<group>"; };
 		9585AB3F1A3B95D7007CE7A1 /* TAPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPManager.h; sourceTree = "<group>"; };
@@ -2730,6 +2730,8 @@
 				950B2C411A00296A00DD8A23 /* TAPDataManager.m */,
 				95B298E11A189045000EC199 /* TAPSummonerManager.h */,
 				95B298E21A189045000EC199 /* TAPSummonerManager.m */,
+				957C8C311AA126FE007D171C /* TAPBannerManager.h */,
+				957C8C321AA126FE007D171C /* TAPBannerManager.m */,
 				894BF6391A008858009A1F1F /* UIImage+UIImageAdditions.h */,
 				894BF63A1A008858009A1F1F /* UIImage+UIImageAdditions.m */,
 				9581360E1A0C8B69000D8D43 /* NSURLSession+SynchronousTask.h */,
@@ -2990,8 +2992,6 @@
 				953A1C3F1AA0D4A4008131A8 /* TAPScrollNavbar.m */,
 				9572F8F11AA3D0B100A0F414 /* TAPBanner.h */,
 				9572F8F21AA3D0B100A0F414 /* TAPBanner.m */,
-				957C8C311AA126FE007D171C /* TAPBannerManager.h */,
-				957C8C321AA126FE007D171C /* TAPBannerManager.m */,
 				953C75131A19E75000832A55 /* TAPLemonRefreshControl.h */,
 				953C75141A19E75000832A55 /* TAPLemonRefreshControl.m */,
 				9561EE021A72A44B00770485 /* UIView+BorderAdditions.h */,

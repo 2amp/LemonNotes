@@ -8,6 +8,8 @@
  * Standalone class of a drop-down banner notification.
  * Contains several UI related properties,
  * in addition to its predetermined show and hide frames.
+ *
+ * @author Bohui Moon
  */
 @interface TAPBanner : UIView
 

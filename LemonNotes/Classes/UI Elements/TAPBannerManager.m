@@ -10,10 +10,17 @@
 @property (nonatomic, strong) TAPBanner *banner;
 
 //banner
+- (void)addBannerToView:(UIView *)view withType:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
+                    top:(BOOL)top down:(BOOL)down front:(BOOL)front
+             tapHandler:(void (^)())tapHandler cancelHandler:(void (^)())cancelHandler;
+
+//callback
+- (void)tapHandler;
+- (void)cancelHandler;
+
+//helper
+- (CGFloat)statusbarHeight;
 - (UIColor *)colorForBannerType:(BannerType)type;
-- (void)tapHandler:(UITapGestureRecognizer *)gesture;
-- (void)addBannerToView:(UIView *)view type:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
-                    top:(BOOL)top down:(BOOL)down front:(BOOL)front;
 
 @end
 #pragma mark -
@@ -42,6 +49,12 @@
 
 
 #pragma mark - Accessors
+/**
+ * @method setBanner
+ *
+ * Setter for pointer to current banner.
+ * Whenever a new banner is set, call show on it.
+ */
 - (void)setBanner:(TAPBanner *)banner
 {
     _banner = banner;
@@ -51,28 +64,71 @@
 
 #pragma mark - Banner Management
 /**
- * @method
+ * @method removeBannerWithAnimation:
  *
+ * Removes the current banner with animation if specified.
+ * No callback upon completion, banner will just disappear.
  *
+ * @param animation - flag to animate hiding banner
  */
 - (void)removeBannerWithAnimation:(BOOL)animation
+{
+    [self removeBannerWithAnimation:animation handler:NULL];
+}
+
+/**
+ * @method removeBannerWithAnimation:handler
+ *
+ * Removes the current banner with aniamtion if specified,
+ * and calls the given handler once animation completes.
+ *
+ * @param animation - flag to animate hiding banner
+ * @param handler   - block to run upon completion
+ */
+- (void)removeBannerWithAnimation:(BOOL)animation handler:(void (^)())handler
 {
     NSTimeInterval dur = (animation) ? DEFAULT_DURATION : 0;
 
     [self.banner hideWithDuration:dur delay:0
      handler:^(BOOL finished)
      {
+         if (handler) handler();
          [self.banner removeFromSuperview];
-         
          self.banner = nil;
      }];
 }
 
+
 /**
- * @method addTopDownBannerToView:type:text:delay
+ * @method addBannerToBottomOfView:view:withType:text:delay
+ *
+ * Adds a banner of the given type and text with delay
+ * to the view at the bottom so that it drops down.
+ * Nothing is done when banner is tapped or canceled.
+ */
+- (void)addBannerToTopOfView:(UIView *)view withType:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
+{
+    [self addBannerToTopOfView:view withType:type text:text delay:delay tapHandler:NULL cancelHandler:NULL];
+}
+
+/**
+ * @method addBannerToBottomOfView:view:withType:text:delay
+ *
+ * Adds a banner of the given type and text with dleay
+ * to the view at the top so that it drops down.
+ * Nothing is done when banner is tapped or canceled.
+ */
+- (void)addBannerToBottomOfView:(UIView *)view withType:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
+{
+    [self addBannerToBottomOfView:view withType:type text:text delay:delay tapHandler:NULL cancelHandler:NULL];
+}
+
+/**
+ * @method addTopDownBannerToView:withType:text:delay:tapHandler:cancelHandler
  *
  * Adds a banner of the given type and text with delay
  * to the view at the top so that it drops down.
+ * Respective handlers are called when banner is tapped or canceled.
  * @note this banner will be in front of other subview in view
  */
 - (void)addBannerToTopOfView:(UIView *)view withType:(BannerType)type text:(NSString *)text delay:(CGFloat)delay
@@ -131,10 +187,10 @@
     banner.frame = banner.hideFrame;
     
     //event handler
-    [banner addCancelEventTarget:self action:@selector(cancelHandler:)];
-    [banner addTapEventTarget:self action:@selector(tapHandler:)];
-    banner.cancelHandler = cancelHandler;
     banner.tapHandler = tapHandler;
+    banner.cancelHandler = cancelHandler;
+    [banner addTapEventTarget:self action:@selector(tapHandler)];
+    [banner addCancelEventTarget:self action:@selector(cancelHandler)];
     
     //add to view
     [view addSubview:banner];
@@ -143,7 +199,10 @@
     
     //showing new
     [self.banner removeFromSuperview];
-    self.banner = banner;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(),
+    ^{
+        self.banner = banner;
+    });
 }
 
 
@@ -154,17 +213,12 @@
  * Callback for tap on banner.
  * Remove current banner and call its tapHandler().
  */
-- (void)tapHandler:(UITapGestureRecognizer *)gesture
+- (void)tapHandler
 {
-    [self.banner hideWithDuration:DEFAULT_DURATION delay:0
-     handler:^(BOOL finished)
-     {
-         if (self.banner.tapHandler)
-             self.banner.tapHandler();
-         
-         [self.banner removeFromSuperview];
-         self.banner = nil;
-     }];
+    [self removeBannerWithAnimation:YES handler:^{
+        if (self.banner.tapHandler)
+            self.banner.tapHandler();
+    }];
 }
 
 /**
@@ -173,17 +227,12 @@
  * Callback for cancel button press on banner.
  * Remove current banner and call its cancelHandler().
  */
-- (void)cancelHandler:(UIButton *)button
+- (void)cancelHandler
 {
-    [self.banner hideWithDuration:DEFAULT_DURATION delay:0
-     handler:^(BOOL finished)
-     {
-         if (self.banner.cancelHandler)
-             self.banner.cancelHandler();
-     
-         [self.banner removeFromSuperview];
-         self.banner = nil;
-     }];
+    [self removeBannerWithAnimation:YES handler:^{
+        if (self.banner.cancelHandler)
+            self.banner.cancelHandler();
+    }];
 }
 
 #pragma mark - Helpers

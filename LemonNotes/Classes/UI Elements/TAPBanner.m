@@ -32,11 +32,12 @@
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
         //label
-        self.label = [[UILabel alloc] init];
+        CGFloat labelHeight = 30.f;
+        self.label = [[UILabel alloc] initWithFrame:(CGRect){0, -labelHeight, 0, labelHeight}];
         self.label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+        self.label.font = [UIFont fontWithName:@"HelveticaNeue" size:14.f];
         self.label.textAlignment = NSTextAlignmentCenter;
         self.label.textColor = [UIColor whiteColor];
-        self.label.font = [UIFont fontWithName:@"HelveticaNeue" size:14.f];
         self.label.text = text;
         [self addSubview:self.label];
         
@@ -70,17 +71,14 @@
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    
-    //label
-    CGFloat horMargin = 20.f;
-    self.label.frame = CGRectInset(self.bounds, horMargin, 0);
+
+    CGFloat width  = frame.size.width;
+    CGFloat height = frame.size.height;
     
     //button
     CGFloat allMargin = 10.f;
     CGFloat sideLength = 10.f;
-    self.button.frame = (CGRect){self.frame.size.width - sideLength - allMargin,
-                                 self.frame.size.height - sideLength - allMargin,
-                                 sideLength, sideLength};
+    self.button.frame = (CGRect){width - sideLength - allMargin, height - sideLength - allMargin, sideLength, sideLength};
 }
 
 

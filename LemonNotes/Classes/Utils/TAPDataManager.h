@@ -26,7 +26,8 @@
 @property (nonatomic, strong) NSDictionary *realms;
 @property (nonatomic, strong) NSDictionary *champList;
 @property (nonatomic, strong) NSDictionary *spellList;
-- (void)updateDataWithRegion:(NSString *)region completionHandler:(void (^)(NSError *))handler;
+- (void)updateDataWithRegion:(NSString *)region
+           completionHandler:(void (^)(NSError *))handler;
 
 //images
 - (void)setItemIconWithKey:(NSString *)key toView:(UIImageView *)view;
